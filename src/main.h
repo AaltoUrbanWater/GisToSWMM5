@@ -1,8 +1,3 @@
-#ifndef _OMP_H_
-#define _OMP_H_
-#include <omp.h>
-#endif
-
 #ifndef _IOSTREAM_H_
 #define _IOSTREAM_H_
 #include <iostream>
