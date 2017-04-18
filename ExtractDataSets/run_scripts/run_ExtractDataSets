@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Replace ./test1.rpt with a path to SWMM5 report file
+# Modify .INS files as necessary
+
+../ExtractDataSets/bin/ExtractDataSets \
+./date.INS \
+./test1.rpt \
+./time.INS \
+./test1.rpt \
+./discharge.INS \
+./test1.rpt \
+./simulation_results.csv \
