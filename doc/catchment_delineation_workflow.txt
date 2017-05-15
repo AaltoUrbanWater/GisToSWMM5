@@ -1,0 +1,10 @@
+15.5.2017 Tero Niemi
+
+A draft for workflow to delineate a catchment area using QGIS and GRASS.
+
+Rajauksen teko on kuvattu Outi Raudaskosken diplomityön liitteessä 1, joita seuraamalla rajauksen teko onnistuu aika mutkattomasti. 
+Erona Outin käyttämään menetelmään lopullinen valuma-aluerajauks luodaan r.water.outlet työkalulla r.watershed työkalun sijaan. 
+(r.watershed luo jatkuvasti liian ison valuma-alueen, mutta r.water.outlet työkalulla pystyy antamaan pisteen jonka ympärille valuma-alue luodaan.)
+Pisteen koordinaattien löytäminen voi olla hankalaa, ilmeisesti koordinaatit pitää antaa GRASS:n (tai flow direction layerin) koordinaattijärjestelmässä (EPSG:3067), mutta QGIS antaa ne latitudina ja longitudina. 
+Kunhan muuttaa pisteen koordinaatit oikeaan järjestelmään saa luotua valuma-alueen virtaamamittarin asennusputken aukon pisteelle. 
+Koordinaatit oikeassa koordinaattijärjestelmässä voi poimia esim. Teron RasterRC-työkalulla.

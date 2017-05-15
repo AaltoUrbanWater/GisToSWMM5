@@ -1,0 +1,129 @@
+28 Apr 2017 Tero Niemi
+
+Workflow for HSY land cover information (2016)
+
+1. Import HSY land cover data to QGIS as shapefiles
+
+2. Clip land cover shapefiles with cut polygon to (URCA_catchment_areas_ETRS3879.shp) get land cover data only covering the catchments
+	Processing Toolbox -> QGIS geoalgorithms -> Vector overlay tools -> Clip
+	Save the new smaller shapefiles as:
+	SMPA_2016_Helsinki_alaluokka_11.shp -> Tiet_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_12.shp -> Rakennukset_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_13.shp -> Vetta_lapaisemattomat_pinnat_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_21.shp -> Matala_kasvillisuus_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_22.shp -> Puusto_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_31.shp -> Avokalliot_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_41.shp -> Paljas_maa_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_51.shp -> Vedet_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_52.shp -> Meret_HSY_2016.shp
+	SMPA_2016_Helsinki_alaluokka_99.shp -> Luokittelematon_HSY_2016.shp
+	
+3. Merge individual land cover shapefiles into one.
+	Using ogr2ogr from terminal: 
+	(http://www.northrivergeographic.com/ogr2ogr-merge-shapefiles)
+	
+	$ ogr2ogr -f 'ESRI Shapefile' HSY_land_use_2016.shp Tiet_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Rakennukset_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Vetta_lapaisemattomat_pinnat_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Matala_kasvillisuus_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Puusto_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Avokalliot_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Paljas_maa_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Vedet_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Meret_HSY_2016.shp
+	$ ogr2ogr -f 'ESRI Shapefile' -update -append HSY_land_use_2016.shp Luokittelematon_HSY_2016.shp
+	
+	Final merged shapefile is in file 'HSY_land_use_2016.shp'
+
+4. Cut merged shapefile with catchment boundaries to create land cover shapefiles for each catchment individually.
+	Processing Toolbox -> QGIS geoalgorithms -> Vector overlay tools -> Clip
+	Save the new catchment shapefiles as:
+	Pihlajamaki_areas_landuse_HSY_2016.shp
+	Pasila_areas_landuse_HSY_2016.shp
+	Verajamaki_areas_landuse_HSY_2016.shp
+
+(5. If necessary, save the shapefile in the same coordinate system as DEM, here EPSG:3067
+	This may be necessary also earlier...)
+
+6. Create a copy of DEM to use as a basis for the landuse raster
+	Right click the dem .asc-file
+	Save as
+	Keep DEM extent, resolution and spatial coordinate system (here EPSG:3067)
+	Set all values to nodata by ticking 'No data values' and giving large range (e.g. 0 - 100)
+	Use the name of the new landuse files:
+	pihlajamaki_raster_landuse_2x2m_HSY_2016.tif
+	pasila_raster_landuse_2x2m_HSY_2016.tif
+	verajamaki_raster_landuse_2x2m_HSY_2016.tif
+	
+7. Export landuse information to the new tif files.
+	Raster -> Conversion -> Rasterize (Vector to raster)
+	Select "KOODI" as attribute field.
+	Keep existing raster size and resolution.
+	Save as GeoTiff.
+	Save the new catchment landuse files as (i.e. overwrite the DEM info):
+	pihlajamaki_raster_landuse_2x2m_HSY_2016.tif
+	pasila_raster_landuse_2x2m_HSY_2016.tif
+	verajamaki_raster_landuse_2x2m_HSY_2016.tif
+	
+8. Export catchment landuse shapefiles to ASCII files (.asc)
+	Raster -> Conversion -> Translate (Convert format)
+	Set 'Target SRS' (here EPSG:3067) 
+	Set 'No data' as 0	
+	Save the new catchment landuse files as (output file type Arc/Info ASCII Grid):
+	pihlajamaki_raster_landuse_2x2m_HSY_2016.asc
+	pasila_raster_landuse_2x2m_HSY_2016.asc
+	verajamaki_raster_landuse_2x2m_HSY_2016.asc
+	(It may be necessary to replace the NODATA_value in the .asc file manually after the file is created)
+	
+9. Create catchment properties table corresponding to land use classification.
+	The parameters are assigned using the same classification as in Warsta et al. (2017a) UWJ,
+	i.e., by grouping the subclasses into broader classes and parameterized according to Krebs et al. (2014) JH.
+	Save files as:
+	pihlajamaki_table_catchment_props_HSY_2016.csv
+	pasila_table_catchment_props_HSY_2016.csv
+	verajamaki_table_catchment_props_HSY_2016.csv
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+********************************************************************************
+	
+4. 	In case a suitable field classifying the land use is not readily available, it has to be created.
+	This is one way to create such field.
+	Create a land-use index field 'id' to the merged shapefile.
+	Open attribute table -> Toggle editing mode -> New field (type: integer)
+	
+	Populate the id field with land use class.
+	Open attribute table -> Open field calculator
+	Select 'Udate exisiting field' (id)
+	Enter the following expression:
+	
+	CASE WHEN  "KOODI" = 111 THEN 40
+	 WHEN  "KOODI" = 112 THEN 30
+	 WHEN  "KOODI"  = 121 THEN 20
+	 WHEN  "KOODI"  = 130 THEN 40
+	 WHEN  "KOODI"  = 211 THEN 60
+	 WHEN  "KOODI"  = 212 THEN 60
+	 WHEN  "KOODI"  = 221 THEN 60
+	 WHEN  "KOODI"  = 222 THEN 60
+	 WHEN  "KOODI"  = 223 THEN 60
+	 WHEN  "KOODI"  = 224 THEN 60
+	 WHEN  "KOODI"  = 310 THEN 10
+	 WHEN  "KOODI"  = 410 THEN 30
+	 WHEN  "KOODI"  = 510 THEN 70
+	 ELSE NULL
+	END
+	
+	'Muu vettä läpäisemätön pinta' (130) is characterized here as asphalt (40)
+	and all vegetation in one group (60)
