@@ -1,6 +1,6 @@
 28 Apr 2017 Tero Niemi
 
-Workflow for HSY land cover information (2016)
+Workflow for creating GisToSWMM landuse input raster from HSY land cover information (2016)
 
 1. Import HSY land cover data to QGIS as shapefiles
 
@@ -54,52 +54,8 @@ Workflow for HSY land cover information (2016)
 	pihlajamaki_raster_landuse_2x2m_HSY_2016.tif
 	pasila_raster_landuse_2x2m_HSY_2016.tif
 	verajamaki_raster_landuse_2x2m_HSY_2016.tif
-	
-7. Export landuse information to the new tif files.
-	Raster -> Conversion -> Rasterize (Vector to raster)
-	Select "KOODI" as attribute field.
-	Keep existing raster size and resolution.
-	Save as GeoTiff.
-	Save the new catchment landuse files as (i.e. overwrite the DEM info):
-	pihlajamaki_raster_landuse_2x2m_HSY_2016.tif
-	pasila_raster_landuse_2x2m_HSY_2016.tif
-	verajamaki_raster_landuse_2x2m_HSY_2016.tif
-	
-8. Export catchment landuse shapefiles to ASCII files (.asc)
-	Raster -> Conversion -> Translate (Convert format)
-	Set 'Target SRS' (here EPSG:3067) 
-	Set 'No data' as 0	
-	Save the new catchment landuse files as (output file type Arc/Info ASCII Grid):
-	pihlajamaki_raster_landuse_2x2m_HSY_2016.asc
-	pasila_raster_landuse_2x2m_HSY_2016.asc
-	verajamaki_raster_landuse_2x2m_HSY_2016.asc
-	(It may be necessary to replace the NODATA_value in the .asc file manually after the file is created)
-	
-9. Create catchment properties table corresponding to land use classification.
-	The parameters are assigned using the same classification as in Warsta et al. (2017a) UWJ,
-	i.e., by grouping the subclasses into broader classes and parameterized according to Krebs et al. (2014) JH.
-	Save files as:
-	pihlajamaki_table_catchment_props_HSY_2016.csv
-	pasila_table_catchment_props_HSY_2016.csv
-	verajamaki_table_catchment_props_HSY_2016.csv
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-********************************************************************************
-	
-4. 	In case a suitable field classifying the land use is not readily available, it has to be created.
+
+7. In case a suitable field classifying the land use is not readily available, it has to be created.
 	This is one way to create such field.
 	Create a land-use index field 'id' to the merged shapefile.
 	Open attribute table -> Toggle editing mode -> New field (type: integer)
@@ -127,3 +83,55 @@ Workflow for HSY land cover information (2016)
 	
 	'Muu vettä läpäisemätön pinta' (130) is characterized here as asphalt (40)
 	and all vegetation in one group (60)
+	
+8. Export landuse information to the new tif files.
+	Raster -> Conversion -> Rasterize (Vector to raster)
+	Select "KOODI" as attribute field.
+	Keep existing raster size and resolution.
+	Save as GeoTiff.
+	Save the new catchment landuse files as (i.e. overwrite the DEM info):
+	pihlajamaki_raster_landuse_2x2m_HSY_2016.tif
+	pasila_raster_landuse_2x2m_HSY_2016.tif
+	verajamaki_raster_landuse_2x2m_HSY_2016.tif
+	
+9. Export catchment landuse shapefiles to ASCII files (.asc)
+	Raster -> Conversion -> Translate (Convert format)
+	Set 'Target SRS' (here EPSG:3067) 
+	Set 'No data' as 0	
+	Save the new catchment landuse files as (output file type Arc/Info ASCII Grid):
+	pihlajamaki_raster_landuse_2x2m_HSY_2016.asc
+	pasila_raster_landuse_2x2m_HSY_2016.asc
+	verajamaki_raster_landuse_2x2m_HSY_2016.asc
+	(It may be necessary to replace the NODATA_value in the .asc file manually after the file is created)
+	
+10. Create catchment properties table corresponding to land use classification.
+	The parameters are assigned using the same classification as in Warsta et al. (2017a) UWJ,
+	i.e., by grouping the subclasses into broader classes and parameterized according to Krebs et al. (2014) JH.
+	Save files as:
+	pihlajamaki_table_catchment_props_HSY_2016.csv
+	pasila_table_catchment_props_HSY_2016.csv
+	verajamaki_table_catchment_props_HSY_2016.csv
+
+
+
+***********************************
+NOTES:
+
+Currently GisToSWMM requires the landuse to be characterized according to 
+following codes and their derivatives, since the codes have been hard-coded
+to GisToSWMM source file Definitions.h and Gird.cpp:
+
+ID	LANDUSE
+10	Rock outcrop
+20	Roof not connected to storm water network
+21	Roof connected to storm water network
+30	Sand and gravel
+40	Asphalt
+50	Stone paver
+60	Vegetation
+70	Water
+
+In future it would be better to allow any integer to be used as landuse index.
+This would require changing the logic in GisToSWMM regarding routing of water 
+form pervious and impervious areas.
+ 
