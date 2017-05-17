@@ -1,7 +1,7 @@
 // gcc
 #ifndef _CSTDLIB_H_
 #define _CSTDLIB_H_
-#include <cstdlib> 
+#include <cstdlib>
 #endif
 
 // gcc
@@ -47,7 +47,7 @@
 
 class Grid
 {
-	public: 
+	public:
 		// Methods.
 		Grid();
 		//Grid(int nColsNew, int nRowsNew);
@@ -56,8 +56,8 @@ class Grid
 		int create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster);
 		~Grid();
 		void clear();
-		
-		void subdivideCell(double cellSize, double llcornerx, double llcornery, int index, int numberOfCells, 
+
+		void subdivideCell(double cellSize, double llcornerx, double llcornery, int index, int numberOfCells,
 			Raster &landuseRaster, int subdivisions, int maxSubdivisions, std::vector<Cell> &cellsAdaptive);
 		void setCellNames();
 		void computeCellDimensions(double cellSizeNew);
@@ -73,12 +73,13 @@ class Grid
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
 		void saveRaster(std::string path);
-		
+		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
+
 		void saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
-			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, 
+			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable,
 			Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path);
 		void printReport(Table &catchPropTable);
-		void computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount, 
+		void computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount,
 			double lowerLeftCornerX, double lowerLeftCornerY, double cellSizeLoc, Raster &landuseRaster);
 		bool isSingleLanduse(double lowerLeftCornerX, double lowerLeftCornerY, double cellSizeLoc, Raster &landuseRaster);
 

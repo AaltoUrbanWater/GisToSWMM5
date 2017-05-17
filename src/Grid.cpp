@@ -34,7 +34,7 @@ int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster)
 		nCols = landuseRaster.nCols;
 		nRows = landuseRaster.nRows;
 		cells = new Cell[ nCols * nRows ];
-		
+
 		return 0;
 	}
 	else
@@ -63,8 +63,8 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
 		std::vector<Cell> cellsAdaptive;
 
 		for (int i = 0; i < numberOfCellsX * numberOfCellsY; i++)
-		{	
-			subdivideCell(cellSizeMax, lowerLeftCornerX, lowerLeftCornerY, i, numberOfCellsX, 
+		{
+			subdivideCell(cellSizeMax, lowerLeftCornerX, lowerLeftCornerY, i, numberOfCellsX,
 				landuseRaster, subdivisions, maxSubdivisions, cellsAdaptive);
 		}
 
@@ -81,7 +81,7 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
 			cells[i].centerCoordY = cellsAdaptive[i].centerCoordY;
 			cells[i].landuse = cellsAdaptive[i].landuse;
 		}
-		
+
 		return 0;
 	}
 	else
@@ -89,12 +89,12 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
 		std::cout << "\n-> Error, when using the adaptive discretiztion algorithm ";
 		std::cout << "check that the maximum cell width is above zero and maximum number of subdivisions ";
 		std::cout << "is equal to or above zero.";
-		
+
 		return 1;
 	}
 }
 
-void Grid::subdivideCell(double cellSize, double llcornerx, double llcornery, int index, int numberOfCells, 
+void Grid::subdivideCell(double cellSize, double llcornerx, double llcornery, int index, int numberOfCells,
 	Raster &landuseRaster, int subdivisions, int maxSubdivisions, std::vector<Cell> &cellsAdaptive)
 {
 	int cellIndexX = index % numberOfCells;
@@ -115,16 +115,16 @@ void Grid::subdivideCell(double cellSize, double llcornerx, double llcornery, in
 	else
 	{
 		subdivisions++;
-		
+
 		for (int i = 0; i < 4; i++)
 		{
-			subdivideCell(0.5 * cellSize, llcornerx, llcornery, i, 2, 
+			subdivideCell(0.5 * cellSize, llcornerx, llcornery, i, 2,
 				landuseRaster, subdivisions, maxSubdivisions, cellsAdaptive);
 		}
 	}
 }
 
-void Grid::computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount, 
+void Grid::computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount,
 	double lowerLeftCornerX, double lowerLeftCornerY, double cellSizeLoc, Raster &landuseRaster)
 {
 	catLabels.clear();
@@ -150,7 +150,7 @@ void Grid::computeHistogram(std::vector<std::string> &catLabels, std::vector<int
 	{
 		indexMaxY = landuseRaster.nRows;
 	}
-	
+
 	for (int j = indexMinY; j < indexMaxY; j++)
 	{
 		for (int i = indexMinX; i < indexMaxX; i++)
@@ -217,7 +217,7 @@ void Grid::setCellNames()
 void Grid::computeCellDimensions(double cellSizeNew)
 {
 	cellSize = cellSizeNew;
-	
+
 	for (int i = 0; i < nCols * nRows; i++)
 	{
 		cells[i].area = cellSize * cellSize;
@@ -229,7 +229,7 @@ void Grid::computeCellCenterpoints(double xllCornerNew, double yllCornerNew)
 {
 	xllCorner = xllCornerNew; // is this needed anymore here?
 	yllCorner = yllCornerNew; // is this needed anymore here?
-	
+
 	for (int j = 0; j < nRows; j++)
 	{
 		for (int i = 0; i < nCols; i++)
@@ -260,7 +260,7 @@ void Grid::setCellElevations(Raster &demRaster)
 		{
 			std::vector<std::string> catLabels;
 			std::vector<int> catCount;
-			computeHistogram(catLabels, catCount, cells[i].centerCoordX - 0.5 * cells[i].cellSize, 
+			computeHistogram(catLabels, catCount, cells[i].centerCoordX - 0.5 * cells[i].cellSize,
 				cells[i].centerCoordY - 0.5 * cells[i].cellSize, cells[i].cellSize, demRaster);
 			double elevation = 0;
 			int count = 0;
@@ -317,7 +317,7 @@ void Grid::computeGridExtents()
 			{
 				urcorner[0] = cells[i].centerCoordX;
 			}
-						
+
 			if (cells[i].centerCoordY < llcorner[1])
 			{
 				llcorner[1] = cells[i].centerCoordY;
@@ -363,7 +363,7 @@ void Grid::findCellNeighbours()
 	if (gridType == 0)
 	{
 		//std::cout << "\n-> Grid type " << gridType;
-		
+
 		for (int j = 0; j < nRows; j++)
 		{
 			for (int i = 0; i < nCols; i++)
@@ -425,19 +425,19 @@ void Grid::findCellNeighbours()
 
 			for (int j = 0; j < nRows * nCols; j++ )
 			{
-				if 
+				if
 				(
 					// Corner points.
 					(
 						(
 						fabs((cells[i].centerCoordX + 0.5 * cells[i].cellSize) - (cells[j].centerCoordX - 0.5 * cells[j].cellSize)) < thresholdDistance
-						|| 
+						||
 						fabs((cells[i].centerCoordX - 0.5 * cells[i].cellSize) - (cells[j].centerCoordX + 0.5 * cells[j].cellSize)) < thresholdDistance
 						)
 						&&
 						(
 						fabs((cells[i].centerCoordY + 0.5 * cells[i].cellSize) - (cells[j].centerCoordY - 0.5 * cells[j].cellSize)) < thresholdDistance
-						|| 
+						||
 						fabs((cells[i].centerCoordY - 0.5 * cells[i].cellSize) - (cells[j].centerCoordY + 0.5 * cells[j].cellSize)) < thresholdDistance
 						)
 					)
@@ -447,7 +447,7 @@ void Grid::findCellNeighbours()
 						(
 						(
 						fabs((cells[i].centerCoordX + 0.5 * cells[i].cellSize) - (cells[j].centerCoordX - 0.5 * cells[j].cellSize)) < thresholdDistance
-						|| 
+						||
 						fabs((cells[i].centerCoordX - 0.5 * cells[i].cellSize) - (cells[j].centerCoordX + 0.5 * cells[j].cellSize)) < thresholdDistance
 						)
 						&&
@@ -457,13 +457,13 @@ void Grid::findCellNeighbours()
 						cells[j].centerCoordY + 0.5 * cells[j].cellSize >= cells[i].centerCoordY && cells[j].centerCoordY - 0.5 * cells[j].cellSize <= cells[i].centerCoordY
 						)
 						)
-						
+
 						||
-						
+
 						(
 						(
 						fabs((cells[i].centerCoordY + 0.5 * cells[i].cellSize) - (cells[j].centerCoordY - 0.5 * cells[j].cellSize)) < thresholdDistance
-						|| 
+						||
 						fabs((cells[i].centerCoordY - 0.5 * cells[i].cellSize) - (cells[j].centerCoordY + 0.5 * cells[j].cellSize)) < thresholdDistance
 						)
 						&&
@@ -497,28 +497,28 @@ void Grid::routeCells()
 		int neighCellIndex = -1;
 		cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
 		int flowDirection = -1;
-		
+
 		// Compute distances between neighbour cells.
 		for (int j = 0; j < (int)cells[i].neighCellIndices.size(); j++)
 		{
 			if (cells[i].neighCellIndices[j] != -1)
 			{
-				double distance = sqrt( (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX) 
-				* (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX) 
-				+ (cells[i].centerCoordY - cells[ cells[i].neighCellIndices[j] ].centerCoordY) 
+				double distance = sqrt( (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX)
+				* (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX)
+				+ (cells[i].centerCoordY - cells[ cells[i].neighCellIndices[j] ].centerCoordY)
 				* (cells[i].centerCoordY - cells[ cells[i].neighCellIndices[j] ].centerCoordY) );
-			
+
 				if (distance > 0.0)
 				{
 					cells[i].distanceToNeighbours[j] = distance;
 				}
 				else
 				{
-					std::cout << "\n-> Error, distance between cell " << i << " and cell " << j << " is zero or below zero"; 
+					std::cout << "\n-> Error, distance between cell " << i << " and cell " << j << " is zero or below zero";
 				}
 			}
 		}
-		
+
 		// Find outlet.
 		for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
 		{
@@ -534,12 +534,12 @@ void Grid::routeCells()
 				}
 			}
 		}
-		
+
 		// Save the outlet name and compute flow width.
 		if (neighCellIndex != -1)
 		{
 			cells[i].outlet = cells[neighCellIndex].name;
-			
+
 			if (cells[i].distanceToNeighbours[flowDirection] > 0.0)
 			{
 				cells[i].flowWidth = cells[i].area / cells[i].distanceToNeighbours[flowDirection];
@@ -548,7 +548,7 @@ void Grid::routeCells()
 			//{
 			//	cells[i].flowWidth = 0.0;
 			//}
-			
+
 			// Update flow width if the flow direction is in a diagonal direction.
 			//if (gridType == 0 && flowDirection != -1 && flowDirection % 2 != 0)
 			//{
@@ -565,7 +565,7 @@ void Grid::computeCellSlopes()
 	{
 		double slope = 0.0;
 		int slopeCount = 0;
-		
+
 		//if (cells[i].landuse != LANDUSE_NONE && (int)cells[i].neighCellIndices.size() > 0)
 		//{
 		//	std::cout << "\n-> Cell " << i << " neighbour count: " <<  (int)cells[i].neighCellIndices.size();
@@ -579,7 +579,7 @@ void Grid::computeCellSlopes()
 			{
 				// Compute slope between cells.
 				//double distance = 0.0;
-				
+
 				//if (gridType == 0)
 				//{
 				//	distance = cells[i].cellSize;
@@ -594,9 +594,9 @@ void Grid::computeCellSlopes()
 				//{
 				//	distance = 0.5 * (cells[i].cellSize + cells[ cells[i].neighCellIndices[k] ].cellSize);
 				//}
-				
+
 				double distance = cells[i].distanceToNeighbours[k];
-				
+
 				if (distance > 0.0)
 				{
 					slope += fabs((cells[i].elevation - cells[ cells[i].neighCellIndices[k] ].elevation) / distance);
@@ -636,18 +636,18 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 		double juncPosX = atof( juncTable.data[k * juncTable.nCols].c_str() );
 		double juncPosY = atof( juncTable.data[k * juncTable.nCols + 1].c_str() );
 		int isOpen = atoi( juncTable.data[k * juncTable.nCols + 6].c_str() );
-		
+
 		// Reglar grid.
 		if (gridType == 0)
 		{
-			if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize 
+			if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize
 				&& juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
 			{
 				if (nCols > 0 && nRows > 0 && cellSize > 0.0)
 				{
 					int col = (int)((juncPosX - xllCorner) / cellSize);
 					int row = (int)((juncPosY - yllCorner) / cellSize);
-			
+
 					if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
 					{
 						cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
@@ -679,9 +679,9 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 {
 	// Route paved pit cells and connected rooftop cells to junctions.
-	double distanceMaxSquared = (urcorner[0] - llcorner[0]) * (urcorner[0] - llcorner[0]) + 
+	double distanceMaxSquared = (urcorner[0] - llcorner[0]) * (urcorner[0] - llcorner[0]) +
 		(urcorner[1] - llcorner[1]) * (urcorner[1] - llcorner[1]);
-	
+
 	for (int i = 0; i < nCols * nRows; i++)
 	{
 		if (cells[i].landuse == LANDUSE_ROOF_CONNECTED // should this be here?
@@ -689,9 +689,9 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 			|| (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
 			|| (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
 		{
-			
+
 			double distanceSquared = distanceMaxSquared;
-						
+
 			for (int j = 1; j < juncTable.nRows; j++) // pass the header line
 			{
 				double juncPosX = atof( juncTable.data[j * juncTable.nCols].c_str() );
@@ -707,21 +707,21 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 					cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
 				}
 			}
-			
+
 			//cells[i].outlet = cells[i].name;
 		}
 	}
-	
+
 	// Route unconnected rooftop cells to the nearest non-roof cells.
 	for (int i = 0; i < nCols * nRows; i++)
 	{
 		if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)
 		{
 			double distanceSquared = distanceMaxSquared;
-			
+
 			for (int j = 0; j < nCols * nRows; j++)
 			{
-				if (cells[j].landuse != LANDUSE_ROOF_CONNECTED && cells[j].landuse != LANDUSE_ROOF_UNCONNECTED 
+				if (cells[j].landuse != LANDUSE_ROOF_CONNECTED && cells[j].landuse != LANDUSE_ROOF_UNCONNECTED
 					&& cells[j].landuse != LANDUSE_NONE)
 				{
 					double dx = cells[i].centerCoordX - cells[j].centerCoordX;
@@ -743,12 +743,12 @@ void Grid::routePitCells()
 {
 	for (int i = 0; i < nCols * nRows; i++)
 	{
-		if (cells[i].outlet ==  "*" && 
+		if (cells[i].outlet ==  "*" &&
 			(cells[i].landuse == LANDUSE_SAND || cells[i].landuse == LANDUSE_VEGETATION
 			|| cells[i].landuse == LANDUSE_WATER || cells[i].landuse == LANDUSE_BEDROCK))
 		{
 			cells[i].outlet = cells[i].name;
-			
+
                         // Set depression storage of pit cells in permeable areas to a very high value ...
                         // ... to prevent loss of water from the system.
                         cells[i].S_Imperv = "50000";
@@ -795,7 +795,55 @@ void Grid::saveRaster(std::string path)
 	outputRaster.save( outputRaster.pathName );
 }
 
-void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable, 
+// TJN 17 May 2017 START
+void Grid::saveSubcatchmentPolygon(std::string path)
+{
+	std::stringstream sstream;
+	sstream << std::fixed;
+
+	sstream << "id;";
+    sstream << "wkt;";
+    sstream << "name;";
+    sstream << "area_m2;";
+    sstream << "slope_pct;";
+    sstream << "landuse;";
+    sstream << "imperviousness_pct";
+	// Write polygon vertex coordinates.
+	int polyId = 0;
+	for (int i = 1; i < nRows * nCols; i++)
+	{
+		if (cells[i].landuse != LANDUSE_NONE)
+		{
+		    sstream << "\n" << polyId << ";POLYGON((";
+			sstream.precision(2);
+			sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << " ";
+			sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
+			sstream << ",";
+			sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << " ";
+			sstream << std::fixed << cells[i].centerCoordY - 0.5 * cells[i].cellSize;
+			sstream << ",";
+			sstream << std::fixed << cells[i].centerCoordX + 0.5 * cells[i].cellSize << " ";
+			sstream << std::fixed << cells[i].centerCoordY - 0.5 * cells[i].cellSize;
+			sstream << ",";
+			sstream << std::fixed << cells[i].centerCoordX + 0.5 * cells[i].cellSize << " ";
+			sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
+			sstream << "));" << cells[i].name;
+			sstream.precision(5);
+			sstream <<  ";" << cells[i].area;
+			sstream <<  ";" << cells[i].slope * 100.0; // convert fraction to percentage * 100.0
+			sstream <<  ";" << cells[i].landuse;
+			sstream <<  ";" << cells[i].imperv;
+			polyId++;
+		}
+	}
+
+    // Write the file to disk.
+	FileIO fileio;
+	int res = fileio.saveAsciiFile( path, sstream.str() );
+}
+// TJN 17 May 2017 END
+
+void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
 	Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path)
 {
 	std::stringstream sstream;
@@ -818,7 +866,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;Option Value";
 	headerTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write the evaporation table.
 	std::cout << "\n-> Writing evaporation table";
 	sstream << "\n[EVAPORATION]";
@@ -826,7 +874,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ----------------";
 	evaporationTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write the temperature table.
 	std::cout << "\n-> Writing temperature table";
 	sstream << "\n[TEMPERATURE]";
@@ -847,7 +895,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[SUBCATCHMENTS]";
 	sstream << "\n;;Subcatchment   Rain Gage        Outlet           Area     %Imperv  Width    %Slope   CurbLen  Snow Pack       ";
 	sstream << "\n;;-------------- ---------------- ---------------- -------- -------- -------- -------- -------- ----------------";
-			
+
 	for (int i = 0; i < nRows * nCols; i++)
 	{
 		if (cells[i].landuse != LANDUSE_NONE)
@@ -868,7 +916,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 			sstream << cells[i].snowPack << "   ";
 		}
 	}
-			
+
 	sstream << "\n";
 
 	// Write subarea properties.
@@ -876,7 +924,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[SUBAREAS]";
 	sstream << "\n;;Subcatchment   N-Imperv   N-Perv     S-Imperv   S-Perv     PctZero    RouteTo    PctRouted ";
 	sstream << "\n;;-------------- ---------- ---------- ---------- ---------- ---------- ---------- ----------";
-			
+
 	for (int i = 0; i < nRows * nCols; i++)
 	{
 		if (cells[i].landuse != LANDUSE_NONE)
@@ -893,7 +941,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 			sstream << cells[i].PctRouted << "   ";
 		}
 	}
-			
+
 	sstream << "\n";
 
 	// Write infiltration properties.
@@ -901,7 +949,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[INFILTRATION]";
 	sstream << "\n;;Subcatchment   Suction    HydCon     IMDmax    ";
 	sstream << "\n;;-------------- ---------- ---------- ----------";
-			
+
 	for (int i = 0; i < nRows * nCols; i++)
 	{
 		if (cells[i].landuse != LANDUSE_NONE)
@@ -925,13 +973,13 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ---------- ----------";
 	snowpacksTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write junction properties.
 	std::cout << "\n-> Writing junction properties";
 	sstream << "\n[JUNCTIONS]";
 	sstream << "\n;;Junction       Invert     MaxDepth   InitDepth  SurDepth   Aponded   ";
 	sstream << "\n;;-------------- ---------- ---------- ---------- ---------- ----------";
-			
+
 	for (int i = 1; i < juncTable.nRows; i++)
 	{
 		sstream << "\n" << juncTable.getData(i, 2) << "   ";
@@ -941,7 +989,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 		sstream << juncTable.getData(i, 8) << "   ";
 		sstream << juncTable.getData(i, 9) << "   ";
 	}
-	
+
 	sstream << "\n";
 
 	// Write outfall properties.
@@ -949,7 +997,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[OUTFALLS]";
 	sstream << "\n;;Outfall        Invert     Type       Stage Data       Gated   ";
 	sstream << "\n;;-------------- ---------- ---------- ---------------- --------";
-	
+
 	for (int i = 1; i < outfallsTable.nRows; i++)
 	{
 		sstream << "\n" << outfallsTable.data[i * outfallsTable.nCols + 2] << "   ";
@@ -958,15 +1006,15 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 		sstream << outfallsTable.data[i * outfallsTable.nCols + 5] << "   ";
 		sstream << outfallsTable.data[i * outfallsTable.nCols + 6] << "   ";
 	}
-	
+
 	sstream << "\n";
-	
+
 	// Write storage properties.
 	std::cout << "\n-> Writing storage properties";
 	sstream << "\n[STORAGE]";
 	sstream << "\n;;Name           Elev.    MaxDepth   InitDepth  Shape      Curve Name/Params                     Fevap    Psi      Ksat     IMD    ";
 	sstream << "\n;;-------------- -------- ---------- ----------- ---------- ---------------------------- -------- --------          -------- --------";
-	
+
 	for (int i = 1; i < storageTable.nRows; i++)
 	{
 		sstream << "\n" << storageTable.getData(i, 2) << "   ";
@@ -977,7 +1025,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 		sstream << storageTable.getData(i, 7) << "   ";
 		sstream << storageTable.getData(i, 8) << "   ";
 	}
-	
+
 	sstream << "\n";
 
 	// Write conduits properties.
@@ -985,7 +1033,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[CONDUITS]";
 	sstream << "\n;;Conduit        From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   ";
 	sstream << "\n;;-------------- ---------------- ---------------- ---------- ---------- ---------- ---------- ---------- ----------";
-			
+
 	for (int i = 1; i < condTable.nRows; i++)
 	{
 		sstream << "\n" << condTable.data[i * condTable.nCols + 4] << "   ";
@@ -1000,7 +1048,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	}
 
 	sstream << "\n";
-	
+
 	// Write pump properties.
 	std::cout << "\n-> Writing pumps";
 	sstream << "\n[PUMPS]";
@@ -1008,7 +1056,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;------	------	------	------	------	------	------";
 	pumpsTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write conduit cross section properties.
 	std::cout << "\n-> Writing conduit cross section properties";
 	sstream << "\n[XSECTIONS]";
@@ -1016,7 +1064,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ------------ ---------------- ---------- ---------- ---------- ----------";
 	xsectionTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
         // Write losses table.
         std::cout << "\n-> Writing losses table";
 	sstream << "\n[LOSSES]";
@@ -1024,15 +1072,15 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ---------- ---------- ---------- ---------- ----------";
 	lossesTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write pump curve properties.
 	std::cout << "\n-> Writing pump curves";
-	sstream << "\n[CURVES]";	
+	sstream << "\n[CURVES]";
 	sstream << "\n;;Name	Type	X-value	Y-value";
 	sstream << "\n;;------	------	------	------";
 	pumpCurvesTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
         // Write inflows table.
 	std::cout << "\n-> Writing inflows table";
 	sstream << "\n[INFLOWS]";
@@ -1040,7 +1088,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------";
 	inflowsTable.writeToStringStream(sstream);
 	sstream << "\n";
-        
+
         // Write time series table.
         std::cout << "\n-> Writing time series table";
 	sstream << "\n[TIMESERIES]";
@@ -1048,7 +1096,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ---------- ---------- ----------";
 	timeseriesTable.writeToStringStream(sstream);
         sstream << "\n";
-        
+
         // Write dry weather flow table.
         std::cout << "\n-> Writing dry weather flow table";
 	sstream << "\n[DWF]";
@@ -1064,14 +1112,14 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n;;-------------- ---------- -----------";
 	patternsTable.writeToStringStream(sstream);
 	sstream << "\n";
-	
+
 	// Write reporting settings.
 	std::cout << "\n-> Writing reporting settings";
 	sstream << "\n[REPORT]";
 	sstream << "\n;;Reporting Options";
 	reportTable.writeToStringStream(sstream);
         sstream << "\n";
-	
+
 	// Write tags.
 	sstream << "\n[TAGS]";
 	sstream << "\n";
@@ -1107,14 +1155,14 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 		sstream << outfallsTable.data[i * outfallsTable.nCols] << "   ";
 		sstream << outfallsTable.data[i * outfallsTable.nCols + 1] << "   ";
 	}
-	
+
 	for (int i = 1; i < storageTable.nRows; i++)
 	{
 		sstream << "\n" << storageTable.getData(i, 2) << "   ";
 		sstream << storageTable.getData(i, 0) << "   ";
 		sstream << storageTable.getData(i, 1) << "   ";
 	}
-	
+
 	sstream << "\n";
 	sstream << "\n[VERTICES]";
 	sstream << "\n;;Link           X-Coord            Y-Coord           ";
@@ -1126,7 +1174,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	sstream << "\n[Polygons]";
 	sstream << "\n;;Subcatchment   X-Coord            Y-Coord           ";
 	sstream << "\n;;-------------- ------------------ ------------------";
-			
+
 	for (int i = 1; i < nRows * nCols; i++)
 	{
 		if (cells[i].landuse != LANDUSE_NONE)
@@ -1146,7 +1194,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 			sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
 		}
 	}
-			
+
 	sstream << "\n";
 
 	// Write symbols.
@@ -1157,9 +1205,9 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	symbolsTable.writeToStringStream(sstream);
 	sstream << "\n";
 	sstream << "\n";
-	
+
 	// Write the file to disk.
-	std::cout << "\n-> Writing the file to disk";	
+	std::cout << "\n-> Writing the file to disk";
 	FileIO fileio;
 	int res = fileio.saveAsciiFile( path, sstream.str() );
 }
@@ -1186,17 +1234,17 @@ void Grid::printReport(Table &catchPropTable)
 	{
 		landUseClassIds[i] = atoi(catchPropTable.data[(i + 1) * catchPropTable.nCols].c_str());
 	}
-	
+
 	int numOfActiveCells = 0;
-	int numOfActiveCellsNoRoofs = 0;	
-		
+	int numOfActiveCellsNoRoofs = 0;
+
 	for (int i = 0; i < nCols * nRows; i++)
 	{
 		if (cells[i].landuse != LANDUSE_NONE)
 		{
 			numOfActiveCells += 1;
 			elevationAverage += cells[i].elevation;
-			
+
 			if (cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
 			{
 				slopeAverage += cells[i].slope;
@@ -1214,19 +1262,19 @@ void Grid::printReport(Table &catchPropTable)
 			}
 		}
 	}
-	
+
 	double area = 0.0;
-	
+
 	for (int i = 0; i < numOfLandUseClasses; i++)
 	{
 		area += areasInlandUseClass[i];
-	}	
+	}
 
 	if (numOfActiveCells > 0)
 	{
 		elevationAverage /= (double)(numOfActiveCells);
 	}
-	
+
 	if (numOfActiveCellsNoRoofs > 0)
 	{
 		slopeAverage /= (double)(numOfActiveCellsNoRoofs);
@@ -1241,9 +1289,9 @@ void Grid::printReport(Table &catchPropTable)
 
 	for (int i = 0; i < (int)cellsInlandUseClass.size(); i++)
 	{
-		std::cout << "\n" 
-		<< "\t" << landUseClassIds[i] 
-		<< "\t" << cellsInlandUseClass[i] 
+		std::cout << "\n"
+		<< "\t" << landUseClassIds[i]
+		<< "\t" << cellsInlandUseClass[i]
 		<< "\t" << areasInlandUseClass[i] / 10000.0
 		<< "\t" << areasInlandUseClass[i] / area * 100.0;
 	}

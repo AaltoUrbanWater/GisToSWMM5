@@ -32,7 +32,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Cell.cpp" />
+		<Unit filename="Cell.h" />
+		<Unit filename="Definitions.h" />
+		<Unit filename="FileIO.cpp" />
+		<Unit filename="FileIO.h" />
+		<Unit filename="Grid.cpp" />
+		<Unit filename="Grid.h" />
+		<Unit filename="Raster.cpp" />
+		<Unit filename="Raster.h" />
+		<Unit filename="Table.cpp" />
+		<Unit filename="Table.h" />
+		<Unit filename="Vertex.cpp" />
+		<Unit filename="Vertex.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

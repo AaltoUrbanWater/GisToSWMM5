@@ -24,7 +24,7 @@
 ../data/table_xsections.csv \
 ../data/table_report.csv \
 ../data/table_symbols.csv \
-../out/raster_output.asc \
+../out/polygon_output.wkt \
 ../out/SWMM5_input.inp
 16
 3

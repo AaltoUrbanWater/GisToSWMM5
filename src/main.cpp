@@ -14,8 +14,8 @@ int main (int argc, char* cArgv[])
 
 	// Print header.
 	std::cout << "\n\n************************************************************";
-	std::cout << "\n*                       GisToSWMM5                         *"; 
-	std::cout << "\n*           Creates a SWMM5 computational model.           *"; 
+	std::cout << "\n*                       GisToSWMM5                         *";
+	std::cout << "\n*           Creates a SWMM5 computational model.           *";
 	std::cout << "\n*     The program is developed under the MIT license.      *";
 	std::cout << "\n*                (C) Aalto University 2016.                *";
 	std::cout << "\n************************************************************";
@@ -29,24 +29,24 @@ int main (int argc, char* cArgv[])
 	}
 
 	if (argc == regGridParams || argc == adapGridParams)
-	{		
+	{
 		std::cout << "\n\nLoading data:";
-		
+
 		// Load the digital elevation map raster file.
 		std::cout << "\n-> Loading digital elevation map raster";
 		Raster demRaster;
 		int resDem = demRaster.load( cArgv[1] );
-		
+
 		// Load the landuse raster file
 		std::cout << "\n-> Loading landuse raster";
 		Raster landuseRaster;
 		int resLanduse = landuseRaster.load( cArgv[2] );
-		
+
 		// Load catchment properties table.
 		std::cout << "\n-> Loading catchment properties table";
 		Table catchPropTable;
 		int resCatchProp = catchPropTable.load( cArgv[3] );
-		
+
 		// Load network junctions table.
 		std::cout << "\n-> Loading network junctions table";
 		Table juncTable;
@@ -56,17 +56,17 @@ int main (int argc, char* cArgv[])
 		std::cout << "\n-> Loading network conduits table";
 		Table condTable;
 		int resCond = condTable.load( cArgv[5] );
-		
+
 		// Load network outfalls table.
 		std::cout << "\n-> Loading network outfalls table";
 		Table outfallsTable;
 		int resOutfalls = outfallsTable.load( cArgv[6] );
-		
+
 		// Load input file header.
 		std::cout << "\n-> Loading input file header table";
 		Table headerTable;
 		int resHeader = headerTable.load( cArgv[7] );
-		
+
 		// Load input file evaporation settings.
 		std::cout << "\n-> Loading input file evaporation table";
 		Table evaporationTable;
@@ -81,12 +81,12 @@ int main (int argc, char* cArgv[])
 		std::cout << "\n-> Loading input file snowpacks table";
 		Table snowpacksTable;
 		int resSnowpacks = snowpacksTable.load( cArgv[10] );
-		
+
 		// Load raingage table.
 		std::cout << "\n-> Loading input file raingages table";
 		Table raingagesTable;
 		int resRaingages = raingagesTable.load( cArgv[11] );
-		
+
                 // Load inflows table.
                 std::cout << "\n-> Loading inflows table";
                 Table inflowsTable;
@@ -96,42 +96,42 @@ int main (int argc, char* cArgv[])
                 std::cout << "\n-> Loading time series table";
                 Table timeseriesTable;
                 int resTimeseries = timeseriesTable.load(cArgv[13]);
-                
+
                 // Load pump table.
                 std::cout << "\n-> Loading pump table";
                 Table pumpsTable;
                 int resPumps = pumpsTable.load(cArgv[14]);
-                
+
                 // Load pump curves table.
                 std::cout << "\n-> Loading pump curves table";
                 Table pumpCurvesTable;
                 int resPumpCurves = pumpCurvesTable.load(cArgv[15]);
-                
+
                 // Load storage table.
                 std::cout << "\n-> Loading storage table";
                 Table storageTable;
                 int resStorages = storageTable.load(cArgv[16]);
-                
+
                 // Load dwf table.
                 std::cout << "\n-> Loading dwf table";
                 Table dwfTable;
                 int resDwf = dwfTable.load(cArgv[17]);
-                
+
                 // Load patterns table.
                 std::cout << "\n-> Loading patterns table";
                 Table patternsTable;
                 int resPatterns = patternsTable.load(cArgv[18]);
-                
+
                 // Load losses table.
                 std::cout << "\n-> Loading losses table";
                 Table lossesTable;
                 int resLosses = lossesTable.load(cArgv[19]);
-                
+
                 // Load xsections table.
                 std::cout << "\n-> Loading xsection table";
                 Table xsectionTable;
                 int resXsections = xsectionTable.load(cArgv[20]);
-                
+
 		// Load input file report settings.
 		std::cout << "\n-> Loading input file report settings table";
 		Table reportTable;
@@ -141,10 +141,10 @@ int main (int argc, char* cArgv[])
 		std::cout << "\n-> Loading input file symbols table";
 		Table symbolsTable;
 		int resSymbols = symbolsTable.load( cArgv[22] );
-				
-		if (resDem == 0 && resLanduse == 0 && resCatchProp == 0 && resCatchProp == 0 && 
-			resCond == 0 && resOutfalls == 0 && resHeader == 0 && resEvaporation == 0 && 
-			resTemperature == 0 && resRaingages == 0 && resInflows == 0 && resTimeseries == 0 
+
+		if (resDem == 0 && resLanduse == 0 && resCatchProp == 0 && resCatchProp == 0 &&
+			resCond == 0 && resOutfalls == 0 && resHeader == 0 && resEvaporation == 0 &&
+			resTemperature == 0 && resRaingages == 0 && resInflows == 0 && resTimeseries == 0
 			&& resPumps == 0 && resPumpCurves == 0 && resStorages == 0 && resDwf == 0 && resPatterns == 0 && resLosses == 0 && resXsections == 0 && resReport == 0 && resSymbols == 0 && resSnowpacks == 0)
 		{
 			// Create the computational grid.
@@ -152,7 +152,7 @@ int main (int argc, char* cArgv[])
 			int gridType = -1;
 			Grid grid;
 			int resDiscretization = 1;
-			
+
 			if (argc == regGridParams)
 			{
 				// Print discretization method.
@@ -170,14 +170,14 @@ int main (int argc, char* cArgv[])
 				resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]), landuseRaster, demRaster);
 
 			}
-			
+
 			if (resDiscretization != 0)
 			{
 				std::cout << "\n-> Error in the discretization stage of the grid creation.";
-				
+
 				return 1;
 			}
-			
+
 			// Set cell names.
 			std::cout << "\n-> Setting cell names";
 			grid.setCellNames();
@@ -187,43 +187,43 @@ int main (int argc, char* cArgv[])
 				// Set cell dimensions.
 				std::cout << "\n-> Setting cell dimensions";
 				grid.computeCellDimensions(landuseRaster.cellSize);
-			
+
 				// Compute cell centerpoints.
 				std::cout << "\n-> Computing cell centerpoint coordinates";
 				grid.computeCellCenterpoints(landuseRaster.xllCorner, landuseRaster.yllCorner);
 			}
-			
+
 			// Set cell elevations.
 			std::cout << "\n-> Setting cell elevations";
 			grid.setCellElevations(demRaster);
-			
+
 			if (argc == regGridParams)
-			{			
+			{
 				// Set cell landuse.
 				std::cout << "\n-> Setting cell landuses";
 				grid.setCellLanduse(landuseRaster);
 			}
-			
+
 			// Compute active grid extents.
 			std::cout << "\n-> Computing active grid extents";
 			grid.computeGridExtents();
-			
+
 			// Save cell properties.
 			std::cout << "\n-> Saving cell properties";
 			grid.setSubcatchmentProperties(catchPropTable);
-			
+
 			// Find cell neighbours.
 			std::cout << "\n-> Finding cell neighbours";
 			grid.findCellNeighbours();
-			
+
 			// Route cells to a neighbour cells. Also update flow width parameter of cells.
 			std::cout << "\n-> Routing cells to neighbour cells and updating flow width parameter";
 			grid.routeCells();
-			
+
 			// Compute cell slopes.
 			std::cout << "\n-> Computing cell slopes";
 			grid.computeCellSlopes();
-			
+
 			// Set the outlets of cells with junctions to the junctions.
 			std::cout << "\n-> Connecting cells to junctions";
 			grid.connectCellsToJunctions(juncTable);
@@ -231,26 +231,33 @@ int main (int argc, char* cArgv[])
 			// Set outlet of rooftops cells and cells withouth outlets to the nearest junction.
 			std::cout << "\n-> Routing rooftop cells and other artificial impermeable pit cells to the nearest junctions";
 			grid.routePavedPitAndRooftopCells(juncTable);
-			
+
 			// Set outlets of cells without outlets to themselves.
 			std::cout << "\n-> Routing natural (rock, vegetation and sand) pit cells to themselves";
 			grid.routePitCells();
-			
-			if (argc == regGridParams)
-			{
-				// Create and save a raster for inspection.
-				std::cout << "\n-> Creating an output raster for inspection";
-				grid.saveRaster(cArgv[23]);
-			}
-			
+
+			// TJN 17 May 2017 START
+			// Create vector output of the SWMM subcatchment grid instead of raster grid
+//			if (argc == regGridParams)
+//			{
+//				// Create and save a raster for inspection.
+//				std::cout << "\n-> Creating an output raster for inspection";
+//				grid.saveRaster(cArgv[23]);
+//			}
+
+			// Create and save a WKT vector file of subcatchment polygons
+            std::cout << "\n-> Creating a subcatchment polygon file for inspection";
+            grid.saveSubcatchmentPolygon(cArgv[23]);
+            // TJN 17 May 2017 END
+
 			// Create the SWMM5 file.
 			std::cout << "\n\nCreating the SWMM5 model input file:";
-			grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable, timeseriesTable, 
+			grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable, timeseriesTable,
 				reportTable, snowpacksTable, raingagesTable, symbolsTable, juncTable, outfallsTable, condTable, pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable, xsectionTable, cArgv[24]);
-			
+
 			// Print report.
 			std::cout << "\n\nReport:";
-			std::cout << "\n-> Running time: ";		
+			std::cout << "\n-> Running time: ";
 			std::cout << (double)(clock() - iStartClock)/(double)(CLOCKS_PER_SEC * 60) << " minutes";
 			grid.printReport(catchPropTable);
 			std::cout << "\n\n";
@@ -311,7 +318,7 @@ int main (int argc, char* cArgv[])
 			{
 				std::cout << "\nError, input file raingages table was not succesfully loaded.";
 			}
-			
+
                         if (resInflows > 0)
                         {
                                 std::cout << "\nError, inflows table was not succesfully loaded.";
@@ -321,42 +328,42 @@ int main (int argc, char* cArgv[])
                         {
                                 std::cout << "\nError, time series table was not succesfully loaded.";
                         }
-                        
+
                         if (resPumps > 0)
                         {
                                 std::cout << "\nError, pump table was not succesfully loaded.";
                         }
-                        
+
                         if (resPumpCurves > 0)
                         {
                                 std::cout << "\nError, pump curve table was not succesfully loaded.";
                         }
-                        
+
                         if (resStorages > 0)
                         {
                                 std::cout << "\nError, storage table was not succesfully loaded.";
                         }
-                        
+
                         if (resDwf > 0)
                         {
                                 std::cout << "\nError, dwf table was not succesfully loaded.";
                         }
-                        
+
                         if (resPatterns > 0)
                         {
                                 std::cout << "\nError, patterns table was not succesfully loaded.";
                         }
-                        
+
                         if (resLosses > 0)
                         {
                                 std::cout << "\nError, losses table was not succesfully loaded.";
                         }
-                        
+
                         if (resXsections > 0)
                         {
                                 std::cout << "\nError, xsection table was not succesfully loaded.";
                         }
-			
+
 			if (resReport > 0)
 			{
 				std::cout << "\nError, input file report table was not succesfully loaded.";
@@ -372,7 +379,7 @@ int main (int argc, char* cArgv[])
 	{
 		std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " <<  adapGridParams;
 	}
-	
+
 	return 0;
 }
 
