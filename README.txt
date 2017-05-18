@@ -34,20 +34,25 @@ to the GisToSWMM5:
 [PATH TO CROSSECTIONS TABLE IN .csv FORMAT] \
 [PATH TO REPORT TABLE IN .csv FORMAT] \
 [PATH TO SYMBOLS TABLE IN .csv FORMAT] \
-[PATH TO OUTPUT SUBCATCHMENT POLYGON FILE IN .wkt FORMAT] \
-[PATH TO OUTPUT SWMM INPUT FILE IN .inp FORMAT] \
+[PATH TO OUTPUT BASE FILENAME] \
 [*OPTIONAL* INITIAL GRID CELL SIDE LENGTH] \
-[*OPTIONAL* NUMBER OF SUBDIVISIONS FOR GRID CELLS] \
+[*OPTIONAL* NUMBER OF SUBDIVISIONS FOR GRID CELLS]
 
 Note that DEM raster and landuse raster have to be defined with the same
-grid and that the cell size of these grids defines the minimum size of 
-the final subcatchment grid size.
+grid. Note also that the cell size of these grids defines the minimum 
+size of the final subcatchment grid size.
+
+GisToSWMM outputs a SWMM input file ([PATH TO OUTPUT BASE FILENAME].inp)
+as well as files defining the subcatchments ([PATH TO OUTPUT BASE 
+FILENAME]_subcatchments.wkt) and their routing ([PATH TO OUTPUT BASE 
+FILENAME]_subcatchment_routing.wkt) as defined in SWMM in Well Known 
+Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files.
 
 When using the tool please refer to the publication: 
 Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, 
 H., & Kokkonen, T. (2017). Development and application of an automated 
-subcatchment generator for SWMM using open data. Urban Water Journal, 
-submitted manuscript.
+subcatchment generator for SWMM using open data. Urban Water Journal. 
+DOI:10.1080/1573062X.2017.1325496.
 
 Details regarding GisToSWMM5 input files are available from:
 Rautiainen, M. (2016, October 17). Hulevesimallinnus ja tulvariskin 
