@@ -4,7 +4,7 @@ EXEC = bin/GisToSWMM5
 CPP_FILES = $(wildcard src/*.cpp)
 OBJ_FILES = $(patsubst src/%.cpp,obj/%.o,$(CPP_FILES))
 LD_FLAGS = -L/usr/lib/
-CC_FLAGS = -O2
+CC_FLAGS = -O2 -std=c++11
 CC = g++
 
 

@@ -10,11 +10,11 @@
 
 class Cell
 {
-	public: 
+	public:
 		// Methods.
 		Cell();
 		~Cell();
-	
+
 		// Variables.
 		std::string name;
 		double centerCoordX;
@@ -24,7 +24,9 @@ class Cell
 		double slope;                // Average surface slope (%)
 		double area;                 // Area of subcatchment (ha)
 		double flowWidth;            // Width of overland flow (m)
-		int landuse;                 
+		int landuse;
+		double outletCoordX;         // X coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
+		double outletCoordY;         // Y coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
 		std::string outlet;          // Name of node or another subcatchment that receives runoff
 		std::string raingage;        // Rain gage assigned to subcatchment (name)
 		std::string imperv;          // Percent of impervious area (%)

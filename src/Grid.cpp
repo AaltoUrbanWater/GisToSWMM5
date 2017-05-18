@@ -539,6 +539,10 @@ void Grid::routeCells()
 		if (neighCellIndex != -1)
 		{
 			cells[i].outlet = cells[neighCellIndex].name;
+			// TJN 18 May 2017 START
+			cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
+			cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
+			// TJN 18 May 2017 END
 
 			if (cells[i].distanceToNeighbours[flowDirection] > 0.0)
 			{
@@ -652,6 +656,10 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 					{
 						cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
 						cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
+						// TJN 18 May 2017 START
+						cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
+                        cells[ col + row * nCols ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
+						// TJN 18 May 2017 END
 					}
 				}
 			}
@@ -670,6 +678,10 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 				{
 					cells[i].outlet = juncTable.data[k * juncTable.nCols + 2];
 					cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
+                    // TJN 18 May 2017 START
+                    cells[i].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
+                    cells[i].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
+                    // TJN 18 May 2017 END
 				}
 			}
 		}
@@ -705,6 +717,10 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 					distanceSquared = dx * dx + dy * dy;
 					cells[i].outlet = juncTable.data[j * juncTable.nCols + 2];
 					cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
+                    // TJN 18 May 2017 START
+                    cells[i].outletCoordX = stod(juncTable.data[j * juncTable.nCols + 0]);
+                    cells[i].outletCoordY = stod(juncTable.data[j * juncTable.nCols + 1]);
+                    // TJN 18 May 2017 END
 				}
 			}
 
@@ -732,6 +748,10 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 						distanceSquared = dx * dx + dy * dy;
 						cells[i].outlet = cells[j].name;
 						cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
+                        // TJN 18 May 2017 START
+                        cells[i].outletCoordX = cells[j].centerCoordX;
+                        cells[i].outletCoordY = cells[j].centerCoordY;
+                        // TJN 18 May 2017 END
 					}
 				}
 			}
@@ -749,10 +769,15 @@ void Grid::routePitCells()
 		{
 			cells[i].outlet = cells[i].name;
 
-                        // Set depression storage of pit cells in permeable areas to a very high value ...
-                        // ... to prevent loss of water from the system.
-                        cells[i].S_Imperv = "50000";
-                        cells[i].S_Perv = "50000";
+            // Set depression storage of pit cells in permeable areas to a very high value ...
+            // ... to prevent loss of water from the system.
+            cells[i].S_Imperv = "50000";
+            cells[i].S_Perv = "50000";
+
+            // TJN 18 May 2017 START
+            cells[i].outletCoordX = cells[i].centerCoordX;
+            cells[i].outletCoordY = cells[i].centerCoordY;
+            // TJN 18 May 2017 END
 		}
 	}
 }
@@ -807,7 +832,9 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "area_m2;";
     sstream << "slope_pct;";
     sstream << "landuse;";
-    sstream << "imperviousness_pct";
+    sstream << "imperviousness_pct;";
+    sstream << "outlet";
+
 	// Write polygon vertex coordinates.
 	int polyId = 0;
 	for (int i = 1; i < nRows * nCols; i++)
@@ -833,15 +860,54 @@ void Grid::saveSubcatchmentPolygon(std::string path)
 			sstream <<  ";" << cells[i].slope * 100.0; // convert fraction to percentage * 100.0
 			sstream <<  ";" << cells[i].landuse;
 			sstream <<  ";" << cells[i].imperv;
+			sstream <<  ";" << cells[i].outlet;
 			polyId++;
 		}
 	}
 
     // Write the file to disk.
 	FileIO fileio;
+	path += "_subcatchments.wkt";
 	int res = fileio.saveAsciiFile( path, sstream.str() );
 }
 // TJN 17 May 2017 END
+
+// TJN 18 May 2017 START
+void Grid::saveSubcatchmentRouting(std::string path)
+{
+    std::stringstream sstream;
+    sstream << std::fixed;
+
+    sstream << "id;";
+    sstream << "wkt;";
+    sstream << "from;";
+    sstream << "to";
+
+    // Write polygon vertex coordinates.
+    int lineId = 0;
+    for (int i = 1; i < nRows * nCols; i++)
+    {
+        if (cells[i].landuse != LANDUSE_NONE)
+        {
+            sstream << "\n" << lineId << ";LINESTRING(";
+            sstream.precision(2);
+            sstream << std::fixed << cells[i].centerCoordX << " ";
+            sstream << std::fixed << cells[i].centerCoordY;
+            sstream << ",";
+            sstream << std::fixed << cells[i].outletCoordX << " ";
+            sstream << std::fixed << cells[i].outletCoordY;
+            sstream << ");" << cells[i].name;
+            sstream <<  ";" << cells[i].outlet;
+            lineId++;
+        }
+    }
+
+    // Write the file to disk.
+    FileIO fileio;
+    path += "_subcatchment_routing.wkt";
+    int res = fileio.saveAsciiFile( path, sstream.str() );
+}
+// TJN 18 May 2017 END
 
 void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
 	Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path)
@@ -1209,6 +1275,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 	// Write the file to disk.
 	std::cout << "\n-> Writing the file to disk";
 	FileIO fileio;
+	path += ".inp";
 	int res = fileio.saveAsciiFile( path, sstream.str() );
 }
 

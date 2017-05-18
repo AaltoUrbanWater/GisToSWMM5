@@ -4,8 +4,8 @@
 #endif
 
 // Number of command line parameters.
-const int regGridParams = 25;
-const int adapGridParams = 27;
+const int regGridParams = 24;       // TJN 18 May 2017 25 -> 24
+const int adapGridParams = 26;      // TJN 18 May 2017 27 -> 26
 
 int main (int argc, char* cArgv[])
 {
@@ -164,10 +164,10 @@ int main (int argc, char* cArgv[])
 			{
 				// Print discretization method.
 				std::cout << "\n-> Discretizing the area with an adaptive grid:";
-				std::cout << "\n-> Initial grid cell size: " << cArgv[25] << "x" << cArgv[25] << "m^2";
-				std::cout << "\n-> Number of subdivisions: " << cArgv[26];
+				std::cout << "\n-> Initial grid cell size: " << cArgv[24] << "x" << cArgv[24] << "m^2";
+				std::cout << "\n-> Number of subdivisions: " << cArgv[25];
 				gridType = 1;
-				resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]), landuseRaster, demRaster);
+				resDiscretization = grid.create(gridType, atof(cArgv[24]), atoi(cArgv[25]), landuseRaster, demRaster);
 
 			}
 
@@ -237,7 +237,8 @@ int main (int argc, char* cArgv[])
 			grid.routePitCells();
 
 			// TJN 17 May 2017 START
-			// Create vector output of the SWMM subcatchment grid instead of raster grid
+			// Create a vector output of the SWMM subcatchment grid instead of raster grid
+
 //			if (argc == regGridParams)
 //			{
 //				// Create and save a raster for inspection.
@@ -250,10 +251,16 @@ int main (int argc, char* cArgv[])
             grid.saveSubcatchmentPolygon(cArgv[23]);
             // TJN 17 May 2017 END
 
+            // TJN 18 May 2017 START
+            // Create and save a WKT vector file of subcatchment routing
+            std::cout << "\n-> Creating a subcatchment routing file for inspection";
+            grid.saveSubcatchmentRouting(cArgv[23]);
+            // TJN 18 May 2017 END
+
 			// Create the SWMM5 file.
 			std::cout << "\n\nCreating the SWMM5 model input file:";
 			grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable, timeseriesTable,
-				reportTable, snowpacksTable, raingagesTable, symbolsTable, juncTable, outfallsTable, condTable, pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable, xsectionTable, cArgv[24]);
+				reportTable, snowpacksTable, raingagesTable, symbolsTable, juncTable, outfallsTable, condTable, pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable, xsectionTable, cArgv[23]);
 
 			// Print report.
 			std::cout << "\n\nReport:";

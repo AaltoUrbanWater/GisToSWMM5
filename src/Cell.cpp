@@ -12,6 +12,8 @@ Cell::Cell()
 	area = 0.0;
 	flowWidth = 0.0;
 	landuse = 0;
+	outletCoordX = 0.0;      // TJN 18 May 2017
+	outletCoordY = 0.0;      // TJN 18 May 2017
 	outlet = "*";
 	raingage = "r1";
 	imperv = "25.0";
@@ -36,5 +38,5 @@ Cell::Cell()
 
 Cell::~Cell()
 {
-	
+
 }
