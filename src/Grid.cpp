@@ -833,13 +833,13 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "area_m2;";      // Area of subcatchment (m2)
     sstream << "slope_pct;";    // Average surface slope (%)
     sstream << "landuse;";      // Code for landuse type
-    sstream << "imperv_pct;";   // Percent of impervious area (%)
-    sstream << "n_imperv;";     // Mannings N for impervious area (-)
-    sstream << "n_perv;";       // Mannings N for pervious area (-)
-    sstream << "S_imperv_mm;";  // Depth of depression storage on impervious area (mm)
-    sstream << "S_perv_mm;";    // Depth of depression storage on pervious area (mm)
-    sstream << "suction_mm;";   // Soil capillary suction head (mm)
-    sstream << "hydCon_mmhr;";  // Soil saturated hydraulic conductivity (mm/hr)
+    sstream << "imp_pct;";      // Percent of impervious area (%)
+    sstream << "n_imp;";        // Mannings N for impervious area (-)
+    sstream << "n_per;";        // Mannings N for pervious area (-)
+    sstream << "S_imp_mm;";     // Depth of depression storage on impervious area (mm)
+    sstream << "S_per_mm;";     // Depth of depression storage on pervious area (mm)
+    sstream << "suct_mm;";      // Soil capillary suction head (mm)
+    sstream << "Ksat_mmhr;";    // Soil saturated hydraulic conductivity (mm/hr)
     sstream << "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
 
 
@@ -861,6 +861,9 @@ void Grid::saveSubcatchmentPolygon(std::string path)
             sstream << std::fixed << cells[i].centerCoordY - 0.5 * cells[i].cellSize;
             sstream << ",";
             sstream << std::fixed << cells[i].centerCoordX + 0.5 * cells[i].cellSize << " ";
+            sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
+            sstream << ",";
+            sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << " ";
             sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
             sstream << "));" << cells[i].name;
             sstream <<  ";" << cells[i].outlet;

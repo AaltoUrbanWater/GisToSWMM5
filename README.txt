@@ -57,13 +57,13 @@ following attributes:
 "area_m2;";      // Area of subcatchment (m2)
 "slope_pct;";    // Average surface slope (%)
 "landuse;";      // Code for landuse type
-"imperv_pct;";   // Percent of impervious area (%)
-"n_imperv;";     // Mannings N for impervious area (-)
-"n_perv;";       // Mannings N for pervious area (-)
-"S_imperv_mm;";  // Depth of depression storage on impervious area (mm)
-"S_perv_mm;";    // Depth of depression storage on pervious area (mm)
-"suction_mm;";   // Soil capillary suction head (mm)
-"hydCon_mmhr;";  // Soil saturated hydraulic conductivity (mm/hr)
+"imp_pct;";   // Percent of impervious area (%)
+"n_imp;";     // Mannings N for impervious area (-)
+"n_per;";       // Mannings N for pervious area (-)
+"S_imp_mm;";  // Depth of depression storage on impervious area (mm)
+"S_per_mm;";    // Depth of depression storage on pervious area (mm)
+"suct_mm;";   // Soil capillary suction head (mm)
+"Ksat_mmhr;";  // Soil saturated hydraulic conductivity (mm/hr)
 "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
 
 The "[PATH TO OUTPUT BASE FILENAME]_subcatchment_routing.wkt" file has 
