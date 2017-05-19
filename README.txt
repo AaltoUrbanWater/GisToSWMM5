@@ -48,6 +48,32 @@ FILENAME]_subcatchments.wkt) and their routing ([PATH TO OUTPUT BASE
 FILENAME]_subcatchment_routing.wkt) as defined in SWMM in Well Known 
 Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files.
 
+The "[PATH TO OUTPUT BASE FILENAME]_subcatchments.wkt" file has the 
+following attributes:
+"id;";
+"wkt;";          // Polygon defining the shape of the  subcatchment
+"name;";         // Name of the  subcatchment
+"outlet;";       // Name of node or another subcatchment that receives runoff
+"area_m2;";      // Area of subcatchment (m2)
+"slope_pct;";    // Average surface slope (%)
+"landuse;";      // Code for landuse type
+"imperv_pct;";   // Percent of impervious area (%)
+"n_imperv;";     // Mannings N for impervious area (-)
+"n_perv;";       // Mannings N for pervious area (-)
+"S_imperv_mm;";  // Depth of depression storage on impervious area (mm)
+"S_perv_mm;";    // Depth of depression storage on pervious area (mm)
+"suction_mm;";   // Soil capillary suction head (mm)
+"hydCon_mmhr;";  // Soil saturated hydraulic conductivity (mm/hr)
+"IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
+
+The "[PATH TO OUTPUT BASE FILENAME]_subcatchment_routing.wkt" file has 
+the following attributes: 
+"id;";
+"wkt;";      // Line object defining the route between "from" and "to" subcatchments
+"from;";     // Name of the origin subcatchment
+"to";        // Name of the target subcatchment
+
+
 When using the tool please refer to the publication: 
 Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, 
 H., & Kokkonen, T. (2017). Development and application of an automated 
