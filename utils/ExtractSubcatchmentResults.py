@@ -3,6 +3,7 @@
 
 import sys
 import pandas as pd
+import os
 
 # Check input parameters
 if (len(sys.argv) != 4):
@@ -41,17 +42,21 @@ with open(sys.argv[2], 'rt') as rpt_file:
                     data.append(row.split())
 # ... and create a dataframe from data
 df2 = pd.DataFrame(data, columns=['name',
-                                  'tot_precip_mm',
-                                  'tot_runon_mm',
-                                  'tot_evap_mm',
-                                  'tot_infil_mm',
-                                  'tot_runoff_mm',
-                                  'tot_runoff_ML',
-                                  'peak_runoff_LPS',
-                                  'runoff_coeff'])
+                                  'precip_mm',
+                                  'runon_mm',
+                                  'evap_mm',
+                                  'infil_mm',
+                                  'runoff_mm',
+                                  'runoff_ML',
+                                  'Q_peak_LPS',
+                                  'Cr'])
 
 # Merge spatial dataframe with data dataframe
 df3 = pd.merge(df1, df2, on='name')
 
 # Write final dataframe into a wkt file
 df3.to_csv(sys.argv[3], sep=';', index_label='id')
+# Write a .csvt file describing the field type information of the .wkt file
+# (This is only necessary for ogr2ogr conversion of .wkt to shapefile)
+with open(os.path.splitext(sys.argv[3])[0] + '.csvt', 'w') as f:
+    f.write('''"Integer","WKT","String","Real","Real","Real","Real","Real","Real","Real","Real"''')
