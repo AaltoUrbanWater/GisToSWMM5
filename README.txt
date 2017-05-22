@@ -46,7 +46,9 @@ GisToSWMM outputs a SWMM input file ([PATH TO OUTPUT BASE FILENAME].inp)
 as well as files defining the subcatchments ([PATH TO OUTPUT BASE
 FILENAME]_subcatchments.wkt) and their routing ([PATH TO OUTPUT BASE
 FILENAME]_subcatchment_routing.wkt) as defined in SWMM in Well Known
-Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files. 
+Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files, 
+for conversion to shapefiles using ogr2ogr a .csvt file defining the
+field types of .wkt file is created. 
 
 
 Folder 'utils' contains utility programs for various tasks. 

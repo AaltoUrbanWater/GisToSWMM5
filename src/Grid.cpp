@@ -824,6 +824,7 @@ void Grid::saveRaster(std::string path)
 void Grid::saveSubcatchmentPolygon(std::string path)
 {
     std::stringstream sstream;
+    std::stringstream sstream_csvt;
     sstream << std::fixed;
 
     sstream << "id;";
@@ -841,6 +842,23 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "suct_mm;";      // Soil capillary suction head (mm)
     sstream << "Ksat_mmhr;";    // Soil saturated hydraulic conductivity (mm/hr)
     sstream << "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
+
+    // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
+    sstream_csvt << "Integer,";
+    sstream_csvt << "WKT,";
+    sstream_csvt << "String,";
+    sstream_csvt << "String,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real";
 
 
     // Write polygon vertex coordinates.
@@ -886,10 +904,12 @@ void Grid::saveSubcatchmentPolygon(std::string path)
         }
     }
 
-    // Write the file to disk.
+    // Write files to disk.
     FileIO fileio;
+    std::string path_csvt = path + "_subcatchments.csvt";
     path += "_subcatchments.wkt";
     int res = fileio.saveAsciiFile( path, sstream.str() );
+    res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
 // TJN 17 May 2017 END
 
@@ -897,12 +917,19 @@ void Grid::saveSubcatchmentPolygon(std::string path)
 void Grid::saveSubcatchmentRouting(std::string path)
 {
     std::stringstream sstream;
+    std::stringstream sstream_csvt;
     sstream << std::fixed;
 
     sstream << "id;";
     sstream << "wkt;";      // Line object defining the route between "from" and "to" subcatchments
     sstream << "from;";     // Name of the origin subcatchment
     sstream << "to";        // Name of the target subcatchment
+
+    // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
+    sstream_csvt << "Integer,";
+    sstream_csvt << "WKT,";
+    sstream_csvt << "String,";
+    sstream_csvt << "String,";
 
     // Write polygon vertex coordinates.
     int lineId = 0;
@@ -923,10 +950,12 @@ void Grid::saveSubcatchmentRouting(std::string path)
         }
     }
 
-    // Write the file to disk.
+    // Write files to disk.
     FileIO fileio;
+    std::string path_csvt = path + "_subcatchment_routing.csvt";
     path += "_subcatchment_routing.wkt";
     int res = fileio.saveAsciiFile( path, sstream.str() );
+    res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
 // TJN 18 May 2017 END
 
