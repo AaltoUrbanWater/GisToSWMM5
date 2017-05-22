@@ -46,27 +46,31 @@ GisToSWMM outputs a SWMM input file ([PATH TO OUTPUT BASE FILENAME].inp)
 as well as files defining the subcatchments ([PATH TO OUTPUT BASE
 FILENAME]_subcatchments.wkt) and their routing ([PATH TO OUTPUT BASE
 FILENAME]_subcatchment_routing.wkt) as defined in SWMM in Well Known
-Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files. To
-convert the .wkt files into shapefiles (e.g. for ArcMap) the wkt2shp.sh tool can
-be used.
+Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files. 
+
+
+Folder 'utils' contains utility programs for various tasks. 
+
+To convert the .wkt files into shapefiles (e.g. for ArcMap) the 
+wkt2shp.sh tool can be used.
 
 The "[PATH TO OUTPUT BASE FILENAME]_subcatchments.wkt" file has the
 following attributes:
 "id;";
-"wkt;";          // Polygon defining the shape of the  subcatchment
-"name;";         // Name of the  subcatchment
-"outlet;";       // Name of node or another subcatchment that receives runoff
-"area_m2;";      // Area of subcatchment (m2)
-"slope_pct;";    // Average surface slope (%)
-"landuse;";      // Code for landuse type
-"imp_pct;";   // Percent of impervious area (%)
-"n_imp;";     // Mannings N for impervious area (-)
+"wkt;";         // Polygon defining the shape of the  subcatchment
+"name;";        // Name of the  subcatchment
+"outlet;";      // Name of node or another subcatchment that receives runoff
+"area_m2;";     // Area of subcatchment (m2)
+"slope_pct;";   // Average surface slope (%)
+"landuse;";     // Code for landuse type
+"imp_pct;";  	// Percent of impervious area (%)
+"n_imp;";     	// Mannings N for impervious area (-)
 "n_per;";       // Mannings N for pervious area (-)
-"S_imp_mm;";  // Depth of depression storage on impervious area (mm)
+"S_imp_mm;";  	// Depth of depression storage on impervious area (mm)
 "S_per_mm;";    // Depth of depression storage on pervious area (mm)
-"suct_mm;";   // Soil capillary suction head (mm)
-"Ksat_mmhr;";  // Soil saturated hydraulic conductivity (mm/hr)
-"IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
+"suct_mm;";   	// Soil capillary suction head (mm)
+"Ksat_mmhr;";	// Soil saturated hydraulic conductivity (mm/hr)
+"IMDmax;";      // Difference between soil porosity and initial moisture content (a fraction)
 
 The "[PATH TO OUTPUT BASE FILENAME]_subcatchment_routing.wkt" file has
 the following attributes:
@@ -74,6 +78,13 @@ the following attributes:
 "wkt;";      // Line object defining the route between "from" and "to" subcatchments
 "from;";     // Name of the origin subcatchment
 "to";        // Name of the target subcatchment
+
+To collate time series data from (several) SWMM5 report file(s) into a 
+single .csv file the tool ExtractDataSets.py can be used. 
+
+To extract subcatchment runoff summary results from SWMM report file and
+to present them as attributes of a shapefile of runoff subcatchments the
+ExtractSubcatchmentResults.py tool can be used.
 
 
 When using the GisToSWMM5 tool please refer to the publication:
