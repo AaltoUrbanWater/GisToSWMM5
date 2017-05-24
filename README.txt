@@ -88,6 +88,11 @@ To extract subcatchment runoff summary results from SWMM report file and
 to present them as attributes of a shapefile of runoff subcatchments the
 ExtractSubcatchmentResults.py tool can be used.
 
+To extract subcatchment polygons and routing between subcatchments from
+a SWMM input file (*.inp) the tool inp2gis.py can be used. The tool 
+saves the subcatchments as a polygon shapefile and the routing between
+the subcatchment polygon centroids as a line shapefile. 
+
 
 When using the GisToSWMM5 tool please refer to the publication:
 Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo,
