@@ -168,6 +168,10 @@ polygon_df = pd.DataFrame(polygon_data, columns=coordinate_col_names)
 polygon_df['XY'] = polygon_df['X'].map(str) + ' ' + polygon_df['Y'].map(str)
 polygon_df = polygon_df.groupby('Name').agg({'XY': lambda x: ','.join(x)})
 polygon_df['wktcolumn'] = 'POLYGON((' + polygon_df['XY'].map(str) + '))'
+# Check that polygons are closed and report if not
+for idx, row in polygon_df.iterrows():
+    if(row['XY'].split(',')[0] != row['XY'].split(',')[-1]):
+        print('Error: ' + str(idx) + ' is not a closed polygon.')
 polygon_df = polygon_df.drop('XY', axis=1)
 polygon_df.reset_index(inplace=True)
 
