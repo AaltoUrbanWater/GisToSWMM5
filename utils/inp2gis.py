@@ -1,20 +1,33 @@
 #!/usr/bin/env python
 """Extract subcatchment and routing information from SWMM input file to GIS."""
 
+import os
 import sys
 import pandas as pd
 import geopandas as gpd
 import shapely.wkt
 
+
+crs = {'init': 'epsg:4326'}  # Default Coordinate Reference System
 # Check input parameters
-if (len(sys.argv) != 2):
+if (len(sys.argv) < 2 or len(sys.argv) > 3):
     print("Usage:\n"
-          "$ python inp2gis.py [PATH TO *.inp FILE]")
+          """$ python inp2gis.py [PATH TO *.inp FILE] 'EPSG:[XXXX]'""")
     sys.exit()
-if (not sys.argv[1].lower().endswith('.inp')):
-    print("Usage:\n"
-          "$ python inp2gis.py [PATH TO *.inp FILE]")
-    sys.exit()
+else:
+    if (not sys.argv[1].lower().endswith('.inp')):
+        print("Usage:\n"
+              """$ python inp2gis.py [PATH TO *.inp FILE] 'EPSG:[XXXX]'""")
+        sys.exit()
+    if (len(sys.argv) == 2):
+        print('Using EPSG:4326 as default Coordinate Reference System.')
+    elif (len(sys.argv) == 3):
+        if not (sys.argv[2].lower().startswith('epsg:')):
+            print("Usage:\n"
+                  """$ python inp2gis.py [PATH TO *.inp FILE] 'EPSG:[XXXX]'""")
+            sys.exit()
+        else:
+            crs = {'init': sys.argv[2].lower()}  # Custom CRS
 
 subcatchment_data = []
 subarea_data = []
@@ -151,34 +164,57 @@ coordinate_col_names = ['Name', 'X', 'Y']
 coordinate_df = pd.DataFrame(coordinate_data, columns=coordinate_col_names)
 polygon_df = pd.DataFrame(polygon_data, columns=coordinate_col_names)
 
-# Create WKT geometries from polygon corner point information
+# Create WKT geometries from subcatchment polygon corner point information
 polygon_df['XY'] = polygon_df['X'].map(str) + ' ' + polygon_df['Y'].map(str)
 polygon_df = polygon_df.groupby('Name').agg({'XY': lambda x: ','.join(x)})
 polygon_df['wktcolumn'] = 'POLYGON((' + polygon_df['XY'].map(str) + '))'
 polygon_df = polygon_df.drop('XY', axis=1)
 polygon_df.reset_index(inplace=True)
 
-# Convert to geodatabase
+# Convert to geodatabase for subcatchments
 geometry = polygon_df['wktcolumn'].map(shapely.wkt.loads)
 polygon_df = polygon_df.drop('wktcolumn', axis=1)
-crs = {'init': 'epsg:3047'}
 subcatchment_gdf = gpd.GeoDataFrame(polygon_df, crs=crs, geometry=geometry)
-subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid
+subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid.map(lambda p: p.x).map(str) + ' ' + \
+                               subcatchment_gdf['geometry'].centroid.map(lambda p: p.y).map(str)
 
 # Merge subcatchment dataframes
 subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='Name')
 subcatchment_gdf = subcatchment_gdf.merge(subarea_df, on='Name')
 subcatchment_gdf = subcatchment_gdf.merge(infiltration_df, on='Name')
 
-# Routing ...
+# Create WKT geometries from junction point information
+coordinate_df['centroid'] = coordinate_df['X'].map(str) + ' ' + \
+                      coordinate_df['Y'].map(str)
 
-print(subcatchment_df)
-print(subarea_df)
-print(infiltration_df)
-print(coordinate_df)
-print(polygon_df)
-print(subcatchment_gdf)
+# Create a dictionary of (Name, coordinate) pairs for routing
+junction_dict = dict(zip(coordinate_df['Name'], coordinate_df['centroid']))
+subcatchment_dict = dict(zip(subcatchment_gdf['Name'],
+                             subcatchment_gdf['centroid']))
+coordinate_dict = junction_dict.copy()
+coordinate_dict.update(subcatchment_dict)
+
+# Create a WKT polyline of routing between subcatchments
+subcatchment_df['wktcolumn'] = 'LINESTRING(' + \
+                               subcatchment_df['Name'].map(coordinate_dict).map(str) + ',' + \
+                               subcatchment_df['OutID'].map(coordinate_dict).map(str) + ')'
+# Convert to geodatabase for routing
+geometry = subcatchment_df['wktcolumn'].map(shapely.wkt.loads)
+subcatchment_df = subcatchment_df.drop('wktcolumn', axis=1)
+routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
+
+# print(subcatchment_df)
+# print(subarea_df)
+# print(infiltration_df)
+# print(coordinate_df)
+# print(polygon_df)
+# print(subcatchment_gdf)
+# print(coordinate_dict)
+# print(routing_gdf)
 
 # Save subcatchments as shapefile
-subcatchment_gdf = subcatchment_gdf.drop('centroid', axis=1)
-subcatchment_gdf.to_file('MyGeometries.shp', driver='ESRI Shapefile')
+subcatchment_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
+                         '_subcatchments.shp', driver='ESRI Shapefile')
+# Save subcatchment routing as shapefile
+routing_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
+                    '_subcatchment_routing.shp', driver='ESRI Shapefile')
