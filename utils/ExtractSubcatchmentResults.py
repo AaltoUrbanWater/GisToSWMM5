@@ -56,7 +56,10 @@ df3 = pd.merge(df1, df2, on='name')
 
 # Write final dataframe into a wkt file
 df3.to_csv(sys.argv[3], sep=';', index_label='id')
+print('Saved subcatchment runoff results to ' + sys.argv[3])
 # Write a .csvt file describing the field type information of the .wkt file
 # (This is only necessary for ogr2ogr conversion of .wkt to shapefile)
 with open(os.path.splitext(sys.argv[3])[0] + '.csvt', 'w') as f:
     f.write('''"Integer","WKT","String","Real","Real","Real","Real","Real","Real","Real","Real"''')
+print('Saved field type information to ' + os.path.splitext(sys.argv[3])[0] +
+      '.csvt')

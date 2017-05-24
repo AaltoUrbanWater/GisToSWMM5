@@ -219,6 +219,10 @@ routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
 # Save subcatchments as shapefile
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                          '_subcatchments.shp', driver='ESRI Shapefile')
+print('Saved subcatchments to ' + os.path.splitext(sys.argv[1])[0] +
+      '_subcatchments.shp')
 # Save subcatchment routing as shapefile
 routing_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                     '_subcatchment_routing.shp', driver='ESRI Shapefile')
+print('Saved subcatchment routing to ' + os.path.splitext(sys.argv[1])[0] +
+      '_subcatchment_routing.shp')

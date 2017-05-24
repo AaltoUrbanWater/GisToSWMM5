@@ -64,3 +64,4 @@ print('\n')
 
 # Export all results to csv file
 df_all.to_csv(sys.argv[-1], columns=cols, index=False)
+print('Saved time series to ' + sys.argv[-1])
