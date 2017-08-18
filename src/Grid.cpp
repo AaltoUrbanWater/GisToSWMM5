@@ -520,6 +520,11 @@ void Grid::routeCells()
         }
 
         // Find outlet.
+        // TJN 18 Aug 2017 START
+        // This is apparently wrong, the routing seems to be based only on elevation, not on slope (i.e. elevation/distance)
+        // We should use something like D8 from Dominique & Jensen (1988)...
+        // Or maybe even better we should take flow direction and slope raster directly as input instead of computing them here.
+        // TJN 18 Aug 2017 END
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
@@ -1308,6 +1313,9 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
             sstream << "\n" << cells[i].name << "   ";
             sstream << std::fixed << cells[i].centerCoordX + 0.5 * cells[i].cellSize << "   ";
             sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
+            sstream << "\n" << cells[i].name << "   ";      // TJN 1 Jun 2017
+            sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << "   ";  // TJN 1 Jun 2017
+            sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;  // TJN 1 Jun 2017
         }
     }
 
