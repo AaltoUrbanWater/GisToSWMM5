@@ -525,6 +525,9 @@ void Grid::routeCells()
         // We should use something like D8 from Dominique & Jensen (1988)...
         // Or maybe even better we should take flow direction and slope raster directly as input instead of computing them here.
         // TJN 18 Aug 2017 END
+        // TJN 07 Sep 2017 SATRT
+        // Taking flow direction and slope raster directly as input does not work for adaptive grids, we have to route the cells here...
+        // TJN 07 Sep 2017 END
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
