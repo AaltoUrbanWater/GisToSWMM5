@@ -493,6 +493,8 @@ void Grid::routeCells()
 {
     for (int i = 0; i < nCols * nRows; i++)
     {
+        double slope = 0.0;             // TJN 20170908 Use slope instead of elevation to route flow
+        double maxSlope = -1.0;         // TJN 20170908 Use slope instead of elevation to route flow
         double elevation = cells[i].elevation;
         int neighCellIndex = -1;
         cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
@@ -520,26 +522,33 @@ void Grid::routeCells()
         }
 
         // Find outlet.
-        // TJN 18 Aug 2017 START
-        // This is apparently wrong, the routing seems to be based only on elevation, not on slope (i.e. elevation/distance)
-        // We should use something like D8 from Dominique & Jensen (1988)...
-        // Or maybe even better we should take flow direction and slope raster directly as input instead of computing them here.
-        // TJN 18 Aug 2017 END
-        // TJN 07 Sep 2017 SATRT
-        // Taking flow direction and slope raster directly as input does not work for adaptive grids, we have to route the cells here...
-        // TJN 07 Sep 2017 END
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
                     && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_UNCONNECTED
                     && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_NONE)
             {
-                if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation)
+                // TJN 20170908 START
+                // Bug fix: Use slope instead of elevation to route flow
+                double distance = cells[i].distanceToNeighbours[k];
+                if (distance > 0.0)
+                    slope = fabs((cells[i].elevation - cells[ cells[i].neighCellIndices[k] ].elevation) / distance);
+
+                if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation && slope > maxSlope)
                 {
                     elevation = cells[ cells[i].neighCellIndices[k] ].elevation;
                     neighCellIndex = cells[i].neighCellIndices[k];
                     flowDirection = k;
+                    maxSlope = slope;
                 }
+
+//                if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation)
+//                {
+//                    elevation = cells[ cells[i].neighCellIndices[k] ].elevation;
+//                    neighCellIndex = cells[i].neighCellIndices[k];
+//                    flowDirection = k;
+//                }
+                // TJN 20170908 END
             }
         }
 
@@ -638,9 +647,17 @@ void Grid::computeCellSlopes()
         {
             cells[i].slope = 0.001;
         }
+
+        // TJN 20170908 Bug fix: Restart slope counters
+        slope = 0.0;
+        slopeCount = 0;
     }
 }
 
+
+// TJN 20170908 This relies (implicitly) that the cell connected to junction is a local
+// pit in the DEM, if it is not (and e.g. the next cell is) most of the water flows past
+// the junction...
 void Grid::connectCellsToJunctions(Table &juncTable)
 {
     for (int k = 1; k < juncTable.nRows; k++) // pass the header line
@@ -675,13 +692,13 @@ void Grid::connectCellsToJunctions(Table &juncTable)
         // Irregular grid.
         else if (gridType == 1)
         {
-            // THIS IS MISSING!
             for (int i = 0; i < nCols * nRows; i++)
             {
                 if (cells[i].centerCoordX - 0.5 * cells[i].cellSize <= juncPosX // modified
                         && cells[i].centerCoordX + 0.5 * cells[i].cellSize > juncPosX
                         && cells[i].centerCoordY - 0.5 * cells[i].cellSize <= juncPosY // modified
                         && cells[i].centerCoordY + 0.5 * cells[i].cellSize > juncPosY
+                        && isOpen == 1      // TJN 20170908 pass closed junctions
                    )
                 {
                     cells[i].outlet = juncTable.data[k * juncTable.nCols + 2];
