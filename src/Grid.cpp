@@ -647,10 +647,6 @@ void Grid::computeCellSlopes()
         {
             cells[i].slope = 0.001;
         }
-
-        // TJN 20170908 Bug fix: Restart slope counters
-        slope = 0.0;
-        slopeCount = 0;
     }
 }
 
