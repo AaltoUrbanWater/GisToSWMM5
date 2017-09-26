@@ -45,4 +45,6 @@ class Cell
 		std::vector<int> neighCellIndices;
 		//int flowDirection;           // To save diagonal direction.
 		std::vector<double> distanceToNeighbours;
+		int isSink;                  // Indcator for the cells GisToSWMM determines as local sinks in the catchment // TJN 25 Sep 2017
+                                     // By default all cells are routed (0), pervious sinks are marked with 1 and impervious with 2
 };

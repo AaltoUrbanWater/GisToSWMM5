@@ -746,6 +746,10 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
             }
 
             //cells[i].outlet = cells[i].name;
+
+            // TJN 25 Sep 2017
+            // Mark local pits in impervious areas
+            cells[i].isSink = 2;
         }
     }
 
@@ -799,6 +803,10 @@ void Grid::routePitCells()
             cells[i].outletCoordX = cells[i].centerCoordX;
             cells[i].outletCoordY = cells[i].centerCoordY;
             // TJN 18 May 2017 END
+
+            // TJN 25 Sep 2017
+            // Mark local pits in pervious areas
+            cells[i].isSink = 1;
         }
     }
 }
@@ -854,6 +862,7 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "outlet;";       // Name of node or another subcatchment that receives runoff
     sstream << "area_m2;";      // Area of subcatchment (m2)
     sstream << "slope_pct;";    // Average surface slope (%)
+    sstream << "elevation;";    // Elevation of the subcatchment
     sstream << "landuse;";      // Code for landuse type
     sstream << "imp_pct;";      // Percent of impervious area (%)
     sstream << "n_imp;";        // Mannings N for impervious area (-)
@@ -863,6 +872,7 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "suct_mm;";      // Soil capillary suction head (mm)
     sstream << "Ksat_mmhr;";    // Soil saturated hydraulic conductivity (mm/hr)
     sstream << "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
+    sstream << "isSink;";       // Cell is a local sink
 
     // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
     sstream_csvt << "Integer,";
@@ -879,7 +889,9 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     sstream_csvt << "Real,";
     sstream_csvt << "Real,";
     sstream_csvt << "Real,";
-    sstream_csvt << "Real";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Real,";
+    sstream_csvt << "Integer";
 
 
     // Write polygon vertex coordinates.
@@ -909,6 +921,7 @@ void Grid::saveSubcatchmentPolygon(std::string path)
             sstream.precision(5);
             sstream <<  ";" << cells[i].area;
             sstream <<  ";" << cells[i].slope * 100.0; // convert fraction to percentage * 100.0
+            sstream <<  ";" << cells[i].elevation;
             sstream <<  ";" << cells[i].landuse;
             sstream <<  ";" << cells[i].imperv;
             sstream.precision(3);
@@ -920,6 +933,7 @@ void Grid::saveSubcatchmentPolygon(std::string path)
             sstream <<  ";" << cells[i].Suction;
             sstream <<  ";" << cells[i].HydCon;
             sstream <<  ";" << cells[i].IMDmax;
+            sstream <<  ";" << cells[i].isSink;
 
             polyId++;
         }

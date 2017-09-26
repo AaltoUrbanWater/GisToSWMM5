@@ -73,6 +73,7 @@ following attributes:
 "suct_mm;";   	// Soil capillary suction head (mm)
 "Ksat_mmhr;";	// Soil saturated hydraulic conductivity (mm/hr)
 "IMDmax;";      // Difference between soil porosity and initial moisture content (a fraction)
+"isSink";		// An indicator showing if the cell is a local sink in the catchment
 
 The "[PATH TO OUTPUT BASE FILENAME]_subcatchment_routing.wkt" file has
 the following attributes:
