@@ -20,6 +20,7 @@ class Cell
 		double centerCoordX;
 		double centerCoordY;
 		double elevation;
+		int flowdir;
 		double cellSize;
 		double slope;                // Average surface slope (%)
 		double area;                 // Area of subcatchment (ha)

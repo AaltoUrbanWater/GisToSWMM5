@@ -7,6 +7,7 @@ Cell::Cell()
 	centerCoordX = 0.0;
 	centerCoordY = 0.0;
 	elevation = 0.0;
+	flowdir = -1;
 	cellSize = 0.0;
 	slope = 0.0;
 	area = 0.0;

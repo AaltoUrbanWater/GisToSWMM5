@@ -284,6 +284,18 @@ void Grid::setCellElevations(Raster &demRaster)
     }
 }
 
+
+// TJN 29 Sep 2017 START
+void Grid::setCellFlowdirs(Raster &flowdirRaster)
+{
+    for (int i = 0; i < nCols * nRows; i++)
+    {
+        std::string flowdir = flowdirRaster.getPixelValue( cells[i].centerCoordX, cells[i].centerCoordY );
+        cells[i].flowdir = atoi(flowdirRaster.c_str());
+    }
+}
+// TJN 29 Sep 2017 END
+
 void Grid::setCellLanduse(Raster &landuseRaster)
 {
     for (int j = 0; j < nRows; j++)
@@ -489,6 +501,8 @@ void Grid::findCellNeighbours()
     }
 }
 
+// TJN 29 Sep 2017 START
+// Use "traditional" routing for adaptive grid
 void Grid::routeCells()
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -536,7 +550,7 @@ void Grid::routeCells()
 
                 if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation && slope > maxSlope)
                 {
-                    elevation = cells[ cells[i].neighCellIndices[k] ].elevation;
+//                    elevation = cells[ cells[i].neighCellIndices[k] ].elevation;  // TJN 29 Sep 2017 Bug fix
                     neighCellIndex = cells[i].neighCellIndices[k];
                     flowDirection = k;
                     maxSlope = slope;
@@ -579,6 +593,62 @@ void Grid::routeCells()
         }
     }
 }
+
+// Use flow direction raster to route cells instead of DEM raster when grid is regular
+// THIS SHOULD BE CHECKED AND OPTIMIZED BY REMOVING UNNECESSARY DISTANCE COMPUTATIONS!
+void Grid::routeCellsReg()
+{
+    for (int i = 0; i < nCols * nRows; i++)
+    {
+        int neighCellIndex = -1;
+        cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
+        int flowDirection = -1;
+
+        // Compute distances between neighbour cells.
+        for (int j = 0; j < (int)cells[i].neighCellIndices.size(); j++)
+        {
+            if (cells[i].neighCellIndices[j] != -1)
+            {
+                double distance = sqrt( (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX)
+                                        * (cells[i].centerCoordX - cells[ cells[i].neighCellIndices[j] ].centerCoordX)
+                                        + (cells[i].centerCoordY - cells[ cells[i].neighCellIndices[j] ].centerCoordY)
+                                        * (cells[i].centerCoordY - cells[ cells[i].neighCellIndices[j] ].centerCoordY) );
+
+                if (distance > 0.0)
+                {
+                    cells[i].distanceToNeighbours[j] = distance;
+                }
+                else
+                {
+                    std::cout << "\n-> Error, distance between cell " << i << " and cell " << j << " is zero or below zero";
+                }
+            }
+        }
+
+        // Find outlet.
+        flowDirection = cells[i].flowdir - 1;
+        if (cells[i].neighCellIndices[flowDirection] != -1 && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_CONNECTED
+        && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_UNCONNECTED
+        && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_NONE)
+        {
+            neighCellIndex = cells[i].neighCellIndices[flowDirection];
+        }
+
+        // Save the outlet name and compute flow width.
+        if (neighCellIndex != -1)
+        {
+            cells[i].outlet = cells[neighCellIndex].name;
+            cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
+            cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
+
+            if (cells[i].distanceToNeighbours[flowDirection] > 0.0)
+            {
+                cells[i].flowWidth = cells[i].area / cells[i].distanceToNeighbours[flowDirection];
+            }
+        }
+    }
+}
+// TJN 29 Sep 2017 END
 
 void Grid::computeCellSlopes()
 {

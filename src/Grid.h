@@ -70,11 +70,13 @@ class Grid
 		void computeCellDimensions(double cellSizeNew);
 		void computeCellCenterpoints(double xllCornerNew, double yllCornerNew);
 		void setCellElevations(Raster &demRaster);
+		void setCellFlowdirs(Raster &flowdirRaster);
 		void setCellLanduse(Raster &landuseRaster);
 		void computeGridExtents();
 		void setSubcatchmentProperties(Table &catchPropTable);
 		void findCellNeighbours();
 		void routeCells();
+		void routeCellsReg();   // TJN 29 Sep 2017
 		void computeCellSlopes();
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
