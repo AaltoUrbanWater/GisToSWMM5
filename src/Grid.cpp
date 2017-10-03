@@ -291,7 +291,7 @@ void Grid::setCellFlowdirs(Raster &flowdirRaster)
     for (int i = 0; i < nCols * nRows; i++)
     {
         std::string flowdir = flowdirRaster.getPixelValue( cells[i].centerCoordX, cells[i].centerCoordY );
-        cells[i].flowdir = atoi(flowdirRaster.c_str());
+        cells[i].flowdir = atoi(flowdir.c_str());
     }
 }
 // TJN 29 Sep 2017 END
@@ -384,45 +384,49 @@ void Grid::findCellNeighbours()
                 cells[currentCell].neighCellIndices.assign(8, -1);
                 cells[currentCell].distanceToNeighbours.assign(8, 0.0 );
 
+                // TJN 2 Oct 2017 START
+                // Change routing of cells to AGNGPS format (1-8 [here 0-8]) with smallest
+                // number pointing North and numbers increasing in clockwise direction
                 if (j < nRows - 1)
                 {
-                    cells[currentCell].neighCellIndices[0] = currentCell + nCols;
+                    cells[currentCell].neighCellIndices[0] = currentCell + nCols;       // OK
                 }
 
                 if (j < nRows - 1 && i > 0)
                 {
-                    cells[currentCell].neighCellIndices[1] = currentCell + nCols - 1;
+                    cells[currentCell].neighCellIndices[1] = currentCell + nCols + 1;   // OK
                 }
 
                 if (i > 0)
                 {
-                    cells[currentCell].neighCellIndices[2] = currentCell - 1;
+                    cells[currentCell].neighCellIndices[2] = currentCell + 1;           // OK
                 }
 
                 if (j > 0 && i > 0)
                 {
-                    cells[currentCell].neighCellIndices[3] = currentCell - nCols - 1;
+                    cells[currentCell].neighCellIndices[3] = currentCell + 1 - nCols;   // OK
                 }
 
                 if (j > 0)
                 {
-                    cells[currentCell].neighCellIndices[4] = currentCell - nCols;
+                    cells[currentCell].neighCellIndices[4] = currentCell - nCols;   // OK
                 }
 
                 if (i < nCols - 1 && j > 0)
                 {
-                    cells[currentCell].neighCellIndices[5] = currentCell + 1 - nCols;
+                    cells[currentCell].neighCellIndices[5] = currentCell - nCols - 1;   // OK
                 }
 
                 if (i < nCols - 1)
                 {
-                    cells[currentCell].neighCellIndices[6] = currentCell + 1;
+                    cells[currentCell].neighCellIndices[6] = currentCell - 1;       // OK
                 }
 
                 if (i < nCols - 1 && j < nRows - 1)
                 {
-                    cells[currentCell].neighCellIndices[7] = currentCell + nCols + 1;
+                    cells[currentCell].neighCellIndices[7] = currentCell + nCols - 1;   //OK
                 }
+                // TJN 2 Oct 2017 END
             }
         }
     }
@@ -595,7 +599,6 @@ void Grid::routeCells()
 }
 
 // Use flow direction raster to route cells instead of DEM raster when grid is regular
-// THIS SHOULD BE CHECKED AND OPTIMIZED BY REMOVING UNNECESSARY DISTANCE COMPUTATIONS!
 void Grid::routeCellsReg()
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -641,9 +644,9 @@ void Grid::routeCellsReg()
             cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
             cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
 
-            if (cells[i].distanceToNeighbours[flowDirection] > 0.0)
+            if (cells[i].distanceToNeighbours[flowDirection]  > 0.0)
             {
-                cells[i].flowWidth = cells[i].area / cells[i].distanceToNeighbours[flowDirection];
+                cells[i].flowWidth = cells[i].area / cells[i].distanceToNeighbours[flowDirection] ;
             }
         }
     }
