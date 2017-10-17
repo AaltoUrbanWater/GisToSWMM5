@@ -13,6 +13,7 @@ to the GisToSWMM5:
 
 [PATH TO GisToSWMM5 EXECUTABLE] \
 [PATH TO DEM RASTER IN .asc FORMAT] \
+[PATH TO FLOW DIRECTION RASTER IN .asc FORMAT] \
 [PATH TO LANDUSE RASTER IN .asc FORMAT] \
 [PATH TO CATCHMENT PROPERTIES TABLE IN .csv FORMAT] \
 [PATH TO JUNCTIONS TABLE IN .csv FORMAT] \
@@ -46,14 +47,14 @@ GisToSWMM outputs a SWMM input file ([PATH TO OUTPUT BASE FILENAME].inp)
 as well as files defining the subcatchments ([PATH TO OUTPUT BASE
 FILENAME]_subcatchments.wkt) and their routing ([PATH TO OUTPUT BASE
 FILENAME]_subcatchment_routing.wkt) as defined in SWMM in Well Known
-Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files, 
+Text (wkt) vector format. E.g. QGIS can natively understand .wkt-files,
 for conversion to shapefiles using ogr2ogr a .csvt file defining the
-field types of .wkt file is created. 
+field types of .wkt file is created.
 
 
-Folder 'utils' contains utility programs for various tasks. 
+Folder 'utils' contains utility programs for various tasks.
 
-To convert the .wkt files into shapefiles (e.g. for ArcMap) the 
+To convert the .wkt files into shapefiles (e.g. for ArcMap) the
 wkt2shp.sh tool can be used.
 
 The "[PATH TO OUTPUT BASE FILENAME]_subcatchments.wkt" file has the
@@ -82,17 +83,17 @@ the following attributes:
 "from;";     // Name of the origin subcatchment
 "to";        // Name of the target subcatchment
 
-To collate time series data from (several) SWMM5 report file(s) into a 
-single .csv file the tool ExtractDataSets.py can be used. 
+To collate time series data from (several) SWMM5 report file(s) into a
+single .csv file the tool ExtractDataSets.py can be used.
 
 To extract subcatchment runoff summary results from SWMM report file and
 to present them as attributes of a shapefile of runoff subcatchments the
 ExtractSubcatchmentResults.py tool can be used.
 
 To extract subcatchment polygons and routing between subcatchments from
-a SWMM input file (*.inp) the tool inp2gis.py can be used. The tool 
+a SWMM input file (*.inp) the tool inp2gis.py can be used. The tool
 saves the subcatchments as a polygon shapefile and the routing between
-the subcatchment polygon centroids as a line shapefile. 
+the subcatchment polygon centroids as a line shapefile.
 
 
 When using the GisToSWMM5 tool please refer to the publication:
