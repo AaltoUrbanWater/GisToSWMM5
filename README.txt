@@ -1,4 +1,4 @@
-17 Feb 2017 Tero Niemi
+18 Oct 2017 Tero Niemi
 
 GisToSWMM is a tool for automatically constructing SWMM5 model
 descriptions.
@@ -39,9 +39,12 @@ to the GisToSWMM5:
 [*OPTIONAL* INITIAL GRID CELL SIDE LENGTH] \
 [*OPTIONAL* NUMBER OF SUBDIVISIONS FOR GRID CELLS]
 
-Note that DEM raster and landuse raster have to be defined with the same
-grid. Note also that the cell size of these grids defines the minimum
-size of the final subcatchment grid size.
+NOTES:
+DEM, landuse, and flow direction rasters have to be defined with the same
+grid. The cell size of these grids defines the minimum
+size of the final subcatchment grid size. Flow direction raster uses notation
+where flow directions are marked with numbers from 1-8 so that 1 corresponds to
+flow to Northeast and numbers increase in counterclockwise direction.
 
 GisToSWMM outputs a SWMM input file ([PATH TO OUTPUT BASE FILENAME].inp)
 as well as files defining the subcatchments ([PATH TO OUTPUT BASE

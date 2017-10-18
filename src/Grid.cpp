@@ -385,46 +385,47 @@ void Grid::findCellNeighbours()
                 cells[currentCell].distanceToNeighbours.assign(8, 0.0 );
 
                 // TJN 2 Oct 2017 START
-                // Change routing of cells to AGNGPS format (1-8 [here 0-8]) with smallest
-                // number pointing North and numbers increasing in clockwise direction
+                // Change routing of cells so that flow directions go from (1-8
+                // [here 0-8]) with 0 pointing Northeast and numbers increasing
+                // in counterclockwise direction
                 if (j < nRows - 1)
                 {
-                    cells[currentCell].neighCellIndices[0] = currentCell + nCols;       // OK
+                    cells[currentCell].neighCellIndices[1] = currentCell + nCols;
                 }
 
                 if (j < nRows - 1 && i > 0)
                 {
-                    cells[currentCell].neighCellIndices[1] = currentCell + nCols + 1;   // OK
+                    cells[currentCell].neighCellIndices[2] = currentCell + nCols - 1;
                 }
 
                 if (i > 0)
                 {
-                    cells[currentCell].neighCellIndices[2] = currentCell + 1;           // OK
+                    cells[currentCell].neighCellIndices[3] = currentCell - 1;
                 }
 
                 if (j > 0 && i > 0)
                 {
-                    cells[currentCell].neighCellIndices[3] = currentCell + 1 - nCols;   // OK
+                    cells[currentCell].neighCellIndices[4] = currentCell - nCols - 1;
                 }
 
                 if (j > 0)
                 {
-                    cells[currentCell].neighCellIndices[4] = currentCell - nCols;   // OK
+                    cells[currentCell].neighCellIndices[5] = currentCell - nCols;
                 }
 
                 if (i < nCols - 1 && j > 0)
                 {
-                    cells[currentCell].neighCellIndices[5] = currentCell - nCols - 1;   // OK
+                    cells[currentCell].neighCellIndices[6] = currentCell + 1 - nCols;
                 }
 
                 if (i < nCols - 1)
                 {
-                    cells[currentCell].neighCellIndices[6] = currentCell - 1;       // OK
+                    cells[currentCell].neighCellIndices[7] =  currentCell + 1;
                 }
 
                 if (i < nCols - 1 && j < nRows - 1)
                 {
-                    cells[currentCell].neighCellIndices[7] = currentCell + nCols - 1;   //OK
+                    cells[currentCell].neighCellIndices[0] = currentCell + nCols + 1;
                 }
                 // TJN 2 Oct 2017 END
             }
