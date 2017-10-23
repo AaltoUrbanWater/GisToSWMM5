@@ -632,8 +632,8 @@ void Grid::routeCellsReg()
         // Find outlet.
         flowDirection = cells[i].flowdir - 1;
         if (cells[i].neighCellIndices[flowDirection] != -1 && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_CONNECTED
-        && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_UNCONNECTED
-        && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_NONE)
+                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_UNCONNECTED
+                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_NONE)
         {
             neighCellIndex = cells[i].neighCellIndices[flowDirection];
         }
@@ -728,6 +728,7 @@ void Grid::computeCellSlopes()
 // TJN 20170908 This relies (implicitly) that the cell connected to junction is a local
 // pit in the DEM, if it is not (and e.g. the next cell is) most of the water flows past
 // the junction...
+// TJN 23 Oct 2017 UPDATE: Using 3x3 area surrounding junctions as the collecting area for water
 void Grid::connectCellsToJunctions(Table &juncTable)
 {
     for (int k = 1; k < juncTable.nRows; k++) // pass the header line
@@ -740,7 +741,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
         if (gridType == 0)
         {
             if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize
-                    && juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
+            && juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
             {
                 if (nCols > 0 && nRows > 0 && cellSize > 0.0)
                 {
@@ -755,6 +756,25 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                         cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                         cells[ col + row * nCols ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
                         // TJN 18 May 2017 END
+
+                        // TJN 23 Oct 2017 START
+                        // Use the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
+                        // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
+                        // to collect water
+                        for (int i = 0; i < (int)cells[ col + row * nCols ].neighCellIndices.size(); i++)
+                        {
+                            if (cells[ col + row * nCols ].neighCellIndices[i] != -1
+                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_CONNECTED
+                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_UNCONNECTED
+                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_NONE)
+                            {
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
+                            }
+                        }
+                        // TJN 23 Oct 2017 END
                     }
                 }
             }
