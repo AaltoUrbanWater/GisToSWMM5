@@ -146,17 +146,18 @@ Outfalls table defines the outfall nodes of the drainage system, i.e., the final
 File format is _.csv_ where each row defines the properties of one outfall in the system. The file can be directly produced using e.g. ArcMap or QGIS.    
 The file must have a header row with the following attributes that are defined on following rows for each outfall.
 
-| Attribute |              | Notes |
-| :--------:|:-------------||
-| x-coord | x-coordinate of the outfall ||
-| y-coord | y-coordinate of the outfall ||
-| Outfall | unique name of the outfall (e.g. o1, o2, ..., on) ||
-| Invert | invert (bottom) elevation of the outfall ||
-| Type | type of the outfall (```FREE```, ```NORMAL```, ```FIXED```, ```TIDAL```, or ```TIMESERIES```; default ```FREE```) ||
-| Stage_data | depending on the _Type_ of outfall, either elevation of fixed stage outfall (m) OR name of curve containing tidal height OR name of time series describing how outfall stage varies in time; default [empty] ||
-| Gated | ```YES``` or ```NO``` depending on whether a flap gate is present that prevents reverse flow; default ```NO``` |||
+| Attribute |              |
+| :--------:|:-------------|
+| x-coord | x-coordinate of the outfall |
+| y-coord | y-coordinate of the outfall |
+| Outfall | unique name of the outfall (e.g. o1, o2, ..., on) |
+| Invert | invert (bottom) elevation of the outfall |
+| Type | type of the outfall (```FREE```, ```NORMAL```, ```FIXED```, ```TIDAL```, or ```TIMESERIES```; default ```FREE```) |
+| Stage_data | depending on the _Type_ of outfall, either elevation of fixed stage outfall (m) OR name of curve containing tidal height OR name of time series describing how outfall stage varies in time; default [empty] |
+| Gated | ```YES``` or ```NO``` depending on whether a flap gate is present that prevents reverse flow; default ```NO``` |
 
 ## Header table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -165,6 +166,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Evaporation table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -173,6 +175,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Temperature table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -181,6 +184,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Snowpack table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -189,6 +193,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Raingage table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -197,6 +202,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Inflow table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -205,6 +211,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Timeseries table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -213,6 +220,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Pump table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -221,6 +229,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Pump curve table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -229,6 +238,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Storage table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -237,6 +247,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## DWF table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -245,6 +256,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Patterns table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -253,6 +265,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Losses table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -261,6 +274,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Crossections table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -269,6 +283,7 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Report table
+
 | Attribute |              | Notes |
 | :--------:|:-------------||
 |  |  ||
@@ -277,7 +292,6 @@ The file must have a header row with the following attributes that are defined o
 |  |  |||
 
 ## Symbols table
-
 
 | Attribute |              | Notes |
 | :--------:|:-------------||
