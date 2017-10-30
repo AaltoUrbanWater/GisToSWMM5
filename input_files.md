@@ -118,7 +118,7 @@ The file must have a header row with the following attributes that are defined o
 | InitDepth | water depth at the start of simulation (m; default 0) ||
 | SurDepth  | maximum additional head above ground elevation that the manhole can sustain under surcharge conditions (m; default 0) ||
 | Aponded   |ponded surface area when water depth exceeds max_depth (m^2; default 0) ||
-| routing   | ```0``` or ```1``` depending on whether the junction is usable for routing water from roofs and pits in impervious areas (```0``` = non-routable, ```1``` = routable; default ```0```) |||
+| routing   | ```0``` or ```1``` depending on whether the junction is usable for routing water from roofs and pits in impervious areas (```0``` = non-routable, ```1``` = routable; default ```1```) |||
 
 ## Conduits table
 Conduits table defines the conduits (pipes, links) of the drainage system, i.e., the pipes and channels that convey the water from one node to another.  
