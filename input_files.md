@@ -126,7 +126,7 @@ File format is _.csv_ where each row defines the properties of one conduit in th
 The file must have a header row with the following attributes that are defined on following rows for each conduit.
 
 | Attribute |              | Notes |
-| :--------:|:-------------||
+| :--------:|:-------------|-------|
 | x0 | x-coordinate of the conduit start point ||
 | y0 | y-coordinate of the conduit start point ||
 | x1 | x-coordinate of the conduit end point ||
