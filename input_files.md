@@ -273,14 +273,20 @@ The file must have a header row with the following attributes that are defined o
 |  |  ||
 |  |  |||
 
-## Crossections table
+## Cross sections table
+Cross sections table defines the geometries for all the conduits (pipes, channels, junctions) and regulator links (orifices, weirs) in the drainage system. File format is _.csv_ where each row defines the properties of one conduit in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+The file must have a header row with the following attributes that are defined on the following rows for each conduit.
 
 | Attribute |              | Notes |
-| :--------:|:-------------||
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| :--------:|:-------------|-------|
+| Link | unique name of the conduit, orifice or weir ||
+| Cshape | cross-secion shape (```CIRCULAR```, ```FORCE_MAIN```, ```FILLED_CIRCULAR```, ```RECT_CLOSED```, ```RECT_OPEN```, ```TRAPEZOIDAL```, ```TRIANGULAR```, ```HORIZ_ELLIPSE```, ```VERT_ELLIPSE```, ```ARCH```, ```PARABOLIC```, ```POWER```, ```RECT_TRIANGULAR```, ```RECT_ROUND```, ```MODBASKETHANDLE```, ```EGG```, ```HORSESHOE```, ```GOTHIC```, ```CATENARY```, ```SEMIELLIPTIC```, ```BASKETHANDLE```, ```SEMICIRCULAR```) ||
+| Geom1 | full height of the cross-section (m) ||
+| Geom2 | optional parameter depending on geometry type | leave blank if not used |
+| Geom3 | optional parameter depending on geometry type |leave blank if not used |
+| Geom4 | optional parameter depending on geometry type |leave blank if not used |
+| Barrels | number of barrels (i.e. number of parallel pipes with identical properties) associated with a conduit (default ```1```)||
+| Culvert | optional code number for the conduit's inlet geometry if it is a culvert | leave blank if not used ||
 
 ## Report table
 
