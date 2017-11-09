@@ -164,7 +164,7 @@ The file must have a header row and the necessary parameters from the following 
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Ipnut File Format, "Section: ```OPTIONS```"
 
 | Option | Value             | Notes |
-| :--------|:-------------||
+| :--------|:-------------|-------|
 | FLOW_UNITS | ```CFS``` / ```GPM``` / ```MGD``` / ```CMS``` / ```LPS``` / ```MLD``` | Choice of flow units. All quantities in the model are according to this option. Default: ```CFS``` |
 | INFILTRATION | ```HORTON``` / ```MODIFIED_HORTON``` / ```GREEN_AMPT``` / ```MODIFIED_GREEN_AMPT``` / ```CURVE_NUMBER``` | A model for computing infiltration of rainfall into the upper soil zone of subcatchments. Default: ```HORTON``` |
 | FLOW_ROUTING | ```STEADY``` / ```KINWAVE``` / ```DYNWAVE``` | A method used to route flows through the drainage system. Default: ```KINWAVE```|
