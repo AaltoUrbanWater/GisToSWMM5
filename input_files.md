@@ -157,13 +157,53 @@ The file must have a header row with the following attributes that are defined o
 | Gated | ```YES``` or ```NO``` depending on whether a flap gate is present that prevents reverse flow; default ```NO``` |
 
 ## Header table
+Header table provides the values for various analysis options used by SWMM.
+File format is _.csv_ where each row defines a value for a single SWMM analysis option.
+Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+The file must have a header row and the necessary parameters from the following table defining model analysis options.  
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Ipnut File Format, "Section: ```OPTIONS```"
 
-| Attribute |              | Notes |
-| :--------:|:-------------||
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| Option | Value             | Notes |
+| :--------|:-------------||
+| FLOW_UNITS | ```CFS``` / ```GPM``` / ```MGD``` / ```CMS``` / ```LPS``` / ```MLD``` | Choice of flow units. All quantities in the model are according to this option. Default: ```CFS``` |
+| INFILTRATION | ```HORTON``` / ```MODIFIED_HORTON``` / ```GREEN_AMPT``` / ```MODIFIED_GREEN_AMPT``` / ```CURVE_NUMBER``` | A model for computing infiltration of rainfall into the upper soil zone of subcatchments. Default: ```HORTON``` |
+| FLOW_ROUTING | ```STEADY``` / ```KINWAVE``` / ```DYNWAVE``` | A method used to route flows through the drainage system. Default: ```KINWAVE```|
+| LINK_OFFSETS | ```DEPTH``` / ```ELEVATION``` | The convention used to specify the position of a link offset above the invert of its connecting node. Default: ```DEPTH```, which is also assumed in this document.|
+| FORCE_MAIN_EQUATION | ```H-W``` / ```D-W``` | Whether the Hazen-Williams (```H-W```) or the Darcy-Weisbach (```D-W```) equation will be used to compute friction losses for pressurized flow in conduits assigned with Circular Force Main cross-section shape. Default: ```H-W``` |
+| IGNORE_RAINFALL | ```YES``` / ```NO``` | ```YES``` if all rainfall data and runoff calculations should be ignored. Default: ```NO``` |
+| IGNORE_SNOWMELT | ```YES``` / ```NO``` | ```YES``` if snowmelt calculations should be ignored. Default: ```NO``` |
+| IGNORE_GROUNDWATER | ```YES``` / ```NO``` | ```YES``` if groundwater calculations should be ignored. Default: ```NO``` |
+| IGNORE_RDII | ```YES``` / ```NO``` | ```YES``` if rainfall dependent inflow/infiltration should be ignored. Default: ```NO``` |
+| IGNORE_ROUTING | ```YES``` / ```NO``` | ```YES``` if only runoff should be computed. Default: ```NO``` |
+| IGNORE_QUALITY | ```YES``` / ```NO``` | ```YES``` if pollutant washoff, routing, and treatment should be ignored. Default: ```NO``` |
+| ALLOW_PONDING | ```YES``` / ```NO``` | Whether excess water is allowed to collect atop nodes and be re-introduced into the system as conditions permit. Default: ```NO``` |
+| SKIP_STEADY_STATE | ```YES``` / ```NO``` | ```YES``` if flow routing computations should be skipped during steady state periods of a simulation during which the last set of computed flows will be used. Default: ```NO``` |
+| SYS_FLOW_TOL | value | The maximum percent difference between total system inflow and total system outflow which can occur in order for the ```SKIP_STEADY_STATE```  option to take effect. Default: 5%|
+| LAT_FLOW_TOL | value | The maximum percent difference between the current and previous lateral inflow at all nodes in the conveyance system in order for the ```SKIP_STEADY_STATE``` option to take effect. Default: 5%|
+| START_DATE | month/day/year | The date when the simulation begins.|
+| START_TIME | hours:minutes | The time of day on the starting date when the simulation begins. Default: midnight (0:00:00)|
+| END_DATE | month/day/year | The date when the simulation is to end. Default: start date |
+| END_TIME | hours:minutes | The time of day on the ending date when the simulation will end. Default: 24:00:00 |
+| REPORT_START_DATE | month/day/year | The date when reporting of results is to begin. Default: simulation start date|
+| REPORT_START_TIME | hours:minutes | The time of day on the report starting date when reporting is to begin. Default: simulation start time|
+| SWEEP_START | month/day | The date (month/day) when street sweeping operations begin. Default: 1/1 |
+| SWEEP_END | month/day | The date (month/day) when street sweeping operations end. Default: 12/31 |
+| DRY_DAYS | days | The number of days with no rainfall prior to the start of the simulation. Default: 0|
+| REPORT_STEP | hours:minutes:seconds | The time interval for reporting of computed results. Default: 0:15:00|
+| WET_STEP | hours:minutes:seconds | The time step for runoff computations during periods of rainfall or when ponded water still remains on the surface. Default: 0:05:00 |
+| DRY_STEP | hours:minutes:seconds | The time step for runoff computations during periods with no rainfall and no ponded water. Default: 1:00:00 |
+| ROUTING_STEP | seconds | The time step for routing through the conveyance system. Default: 600 s (5 min). Should be shorter for dynamic wave routing.|
+| LENGTHENING_STEP | seconds | The time step for lengthening conduits under dynamic wave routing, in order to meet the Courant stability criterion under full-flow conditions. Default: 0 (no lengthening)|
+| VARIABLE_STEP | value | A safety factor applied to a variable time step computed for each time period under dynamic wave flow routing to satisfy the Courant stability criterion while staying below ```ROUTING_STEP``` value. Default: 0 (no variable time step)|
+| MINIMUM_STEP | seconds | The smallest allowed time step for variable time steps used for dynamic wave flow routing. Default: 0.5 s |
+| INERTIAL_DAMPING | ```NONE``` / ```PARTIAL``` / ```FULL``` | Indicates handling the inertial terms of the Saint Venant momentum equation under dynamic wave flow routing. Default: ? |
+| NORMAL_FLOW_LIMITED | ```SLOPE``` / ```FROUDE``` / ```BOTH``` | Condition to determine if flow in a conduit is supercritical and thus limited to normal flow. Default: ```BOTH``` |
+| MIN_SURFAREA | value | A minimum surface area used at nodes when computing changes in water depth under dynamic wave routing. Default: 0 (uses 12.566 ft², i.e., the area of 4-ft diameter manhole)|
+| MIN_SLOPE | value | The minimum value allowed for a conduit’s slope (%). Default: 0 (uses 0.001 ft / 0.00035 m)|
+| MAX_TRIALS | value | The maximum number of trials during a time step for reaching convergence when updating hydraulic heads at nodes. Default: 8 |
+| HEAD_TOLERANCE | value | The difference in computed head at each node between successive trials below which the flow solution for the current time step is assumed to have converged. Default: 0.005 ft (0.0015 m) |
+| THREADS | value | The number of parallel computing threads used for dynamic wave flow routing. Default: 1 |
+| TEMPDIR | directory | The name of a file directory (or folder) for SWMM to write temporary files. Default: current directory ||
 
 ## Evaporation table
 
