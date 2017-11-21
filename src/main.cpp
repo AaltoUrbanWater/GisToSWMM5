@@ -5,7 +5,8 @@
 
 // Number of command line parameters.
 const int regGridParams = 25;       // TJN 18 May 2017 25 -> 24; TJN 29 Sep 2017 24 -> 25
-const int adapGridParams = 27;      // TJN 18 May 2017 27 -> 26; TJN 29 Sep 2017 26 -> 27
+const int adapGridParams = 26;      // TJN 21 Nov 2017: Enable new adaptive grid
+const int adapGridParamsOld = 27;      // TJN 18 May 2017 27 -> 26; TJN 29 Sep 2017 26 -> 27
 
 int main (int argc, char* cArgv[])
 {
@@ -28,7 +29,7 @@ int main (int argc, char* cArgv[])
         std::cout << "\n-> Argument " << i << ": " << cArgv[i];
     }
 
-    if (argc == regGridParams || argc == adapGridParams)
+    if (argc == regGridParams || argc == adapGridParams || argc == adapGridParamsOld)
     {
         std::cout << "\n\nLoading data:";
 
@@ -168,15 +169,23 @@ int main (int argc, char* cArgv[])
                 gridType = 0;
                 resDiscretization = grid.create(gridType, landuseRaster, demRaster);
             }
-            else if (argc == adapGridParams)
+            else if (argc == adapGridParamsOld)
             {
                 // Print discretization method.
-                std::cout << "\n-> Discretizing the area with an adaptive grid:";
+                std::cout << "\n-> Discretizing the area with a rectangular adaptive grid:";
                 std::cout << "\n-> Initial grid cell size: " << cArgv[25] << "x" << cArgv[25] << "m^2";
                 std::cout << "\n-> Number of subdivisions: " << cArgv[26];
                 gridType = 1;
                 resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]), landuseRaster, demRaster);
-
+            }
+            // TJN 21 Nov 2017
+            // New irregular adaptive grid based on same landuse and common outlet
+            else if (argc == adapGridParams)
+            {
+                // Print discretization method.
+                std::cout << "\n-> Discretizing the area with an irregular adaptive grid:";
+                gridType = 2;
+                resDiscretization = grid.create(gridType, landuseRaster, demRaster, flowdirRaster);
             }
 
             if (resDiscretization != 0)
@@ -205,14 +214,14 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Setting cell elevations";
             grid.setCellElevations(demRaster);
 
-            // TJN 29 Sep 2017 START
-            // Set cell flow directions
-            std::cout << "\n-> Setting cell flow directions";
-            grid.setCellFlowdirs(flowdirRaster);
-            // TJN 29 Sep 2017 END
-
             if (argc == regGridParams)
             {
+                // TJN 29 Sep 2017 START
+                // Set cell flow directions
+                std::cout << "\n-> Setting cell flow directions";
+                grid.setCellFlowdirs(flowdirRaster);
+                // TJN 29 Sep 2017 END
+
                 // Set cell landuse.
                 std::cout << "\n-> Setting cell landuses";
                 grid.setCellLanduse(landuseRaster);
@@ -414,7 +423,7 @@ int main (int argc, char* cArgv[])
     }
     else
     {
-        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " <<  adapGridParams;
+        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " <<  adapGridParamsOld;
     }
 
     return 0;

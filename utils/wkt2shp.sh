@@ -5,11 +5,11 @@
 # creates a folder 'shp' if it does not exist already,
 # and converts all *.wkt files into *.shp files.
 # Change Coordinate Reference System (CSR) as necessary.
-# Note that the utility does not overwrite files in the 'shp' folder but 
-# gives an error message if file exists. 
+# Note that the utility does not overwrite files in the 'shp' folder but
+# gives an error message if file exists.
 
 # set Coordinate Reference System
-CSR="EPSG:3067"
+CSR="EPSG:3879"
 
 # Show usage information
 if [ "$#" -ne 1 ]; then

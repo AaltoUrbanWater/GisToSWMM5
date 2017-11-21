@@ -61,6 +61,7 @@ class Grid
 		//Grid(Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster);
+		int create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster, Raster &flowdirRaster);   // TJN 21 Nov 2017
 		~Grid();
 		void clear();
 

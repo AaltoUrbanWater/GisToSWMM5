@@ -25,6 +25,7 @@ void Grid::clear()
     cells = 0;
 }
 
+// Create normal grid by treating each grid cell as a subcatchment
 int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster)
 {
     if (gridTypeNew == 0)
@@ -43,6 +44,7 @@ int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster)
     }
 }
 
+// Create adaptive grid by subdividing cells with the same landuse
 int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster)
 {
     if (gridTypeNew == 1 && cellSizeMax > 0.0 && maxSubdivisions >= 0)
@@ -90,6 +92,24 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
         std::cout << "check that the maximum cell width is above zero and maximum number of subdivisions ";
         std::cout << "is equal to or above zero.";
 
+        return 1;
+    }
+}
+
+// TJN 21 Nov 2017
+// Create adaptive grid by combining cells with the same landuse and outlet
+int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster, Raster &flowdirRaster)
+{
+    if (gridTypeNew == 2)
+    {
+        clear(); // gridType is set to -1 in clear() method
+        gridType = gridTypeNew;
+
+        return 0;
+    }
+    else
+    {
+        std::cout << "\n-> Error, when using the adaptive discretization algorithm ";
         return 1;
     }
 }
