@@ -96,24 +96,6 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
     }
 }
 
-// TJN 21 Nov 2017
-// Create adaptive grid by combining cells with the same landuse and outlet
-int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster, Raster &flowdirRaster)
-{
-    if (gridTypeNew == 2)
-    {
-        clear(); // gridType is set to -1 in clear() method
-        gridType = gridTypeNew;
-
-        return 0;
-    }
-    else
-    {
-        std::cout << "\n-> Error, when using the adaptive discretization algorithm ";
-        return 1;
-    }
-}
-
 void Grid::subdivideCell(double cellSize, double llcornerx, double llcornery, int index, int numberOfCells,
                          Raster &landuseRaster, int subdivisions, int maxSubdivisions, std::vector<Cell> &cellsAdaptive)
 {
@@ -527,7 +509,7 @@ void Grid::findCellNeighbours()
 }
 
 // TJN 29 Sep 2017 START
-// Use "traditional" routing for adaptive grid
+// Route cells in old adaptive grid
 void Grid::routeCells()
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -620,6 +602,7 @@ void Grid::routeCells()
 }
 
 // Use flow direction raster to route cells instead of DEM raster when grid is regular
+// TJN 22 Nov 2017 This could be simplified by removing unnecessary distance computations between cells other than neighbour
 void Grid::routeCellsReg()
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -661,6 +644,7 @@ void Grid::routeCellsReg()
         // Save the outlet name and compute flow width.
         if (neighCellIndex != -1)
         {
+            cells[i].outletID = neighCellIndex;
             cells[i].outlet = cells[neighCellIndex].name;
             cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
             cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
@@ -757,11 +741,11 @@ void Grid::connectCellsToJunctions(Table &juncTable)
         double juncPosY = atof( juncTable.data[k * juncTable.nCols + 1].c_str() );
         int isOpen = atoi( juncTable.data[k * juncTable.nCols + 6].c_str() );
 
-        // Reglar grid.
+        // Regular grid.
         if (gridType == 0)
         {
             if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize
-            && juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
+                    && juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
             {
                 if (nCols > 0 && nRows > 0 && cellSize > 0.0)
                 {
@@ -770,6 +754,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 
                     if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
                     {
+                        cells[ col + row * nCols ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                         cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
                         cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
                         // TJN 18 May 2017 START
@@ -784,10 +769,11 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                         for (int i = 0; i < (int)cells[ col + row * nCols ].neighCellIndices.size(); i++)
                         {
                             if (cells[ col + row * nCols ].neighCellIndices[i] != -1
-                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_CONNECTED
-                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_UNCONNECTED
-                            && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_NONE)
+                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_CONNECTED
+                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_UNCONNECTED
+                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_NONE)
                             {
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
@@ -831,12 +817,10 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 
     for (int i = 0; i < nCols * nRows; i++)
     {
-        if (cells[i].landuse == LANDUSE_ROOF_CONNECTED // should this be here?
-                || (cells[i].landuse == LANDUSE_ASPHALT_STREET && cells[i].outlet ==  "*") // the last condition is repeated...
-                || (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
-                || (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
+        // TJN 22 Nov 2017
+        // Only route connected roofs to nearest junction, route other pits to themselves
+        if (cells[i].landuse == LANDUSE_ROOF_CONNECTED) // should this be here?
         {
-
             double distanceSquared = distanceMaxSquared;
 
             for (int j = 1; j < juncTable.nRows; j++) // pass the header line
@@ -847,9 +831,13 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                 double dy = juncPosY - cells[i].centerCoordY;
                 int isroutable = atoi( juncTable.data[j * juncTable.nCols + 10].c_str() ); // modified 20160812.
 
+                int col = (int)((juncPosX - xllCorner) / cellSize);     // TJN 24 Nov 2017
+                int row = (int)((juncPosY - yllCorner) / cellSize);     // TJN 24 Nov 2017
+
                 if (dx * dx + dy * dy < distanceSquared && isroutable == 1)  // modified 20160812.
                 {
                     distanceSquared = dx * dx + dy * dy;
+                    cells[i].outletID = col + row * nCols;   // TJN 24 Nov 2017: outletID is the outletID of junction cell
                     cells[i].outlet = juncTable.data[j * juncTable.nCols + 2];
                     cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                     // TJN 18 May 2017 START
@@ -862,8 +850,20 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
             //cells[i].outlet = cells[i].name;
 
             // TJN 25 Sep 2017
-            // Mark local pits in impervious areas
+            // Mark local pits where water is routed forcefully
             cells[i].isSink = 2;
+        }
+        else if ((cells[i].landuse == LANDUSE_ASPHALT_STREET && cells[i].outlet ==  "*") // the last condition is repeated...
+                 || (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
+                 || (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
+        {
+            cells[i].outletID = i;   // TJN 24 Nov 2017
+            cells[i].outlet = cells[i].name;
+            cells[i].outletCoordX = cells[i].centerCoordX;
+            cells[i].outletCoordY = cells[i].centerCoordY;
+
+            // Mark local pits where water is not routed
+            cells[i].isSink = 1;
         }
     }
 
@@ -885,6 +885,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     if (dx * dx + dy * dy < distanceSquared)
                     {
                         distanceSquared = dx * dx + dy * dy;
+                        cells[i].outletID = j;  // TJN 23 Nov 2017
                         cells[i].outlet = cells[j].name;
                         cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                         // TJN 18 May 2017 START
@@ -906,6 +907,7 @@ void Grid::routePitCells()
                 (cells[i].landuse == LANDUSE_SAND || cells[i].landuse == LANDUSE_VEGETATION
                  || cells[i].landuse == LANDUSE_WATER || cells[i].landuse == LANDUSE_BEDROCK))
         {
+            cells[i].outletID = i;  // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
 
             // Set depression storage of pit cells in permeable areas to a very high value ...
@@ -919,14 +921,205 @@ void Grid::routePitCells()
             // TJN 18 May 2017 END
 
             // TJN 25 Sep 2017
-            // Mark local pits in pervious areas
+            // Mark local pits where water is not routed
             cells[i].isSink = 1;
         }
     }
 }
 
+// TJN 22 Nov 2017
+// Simplify grid based on common flow direction and landuse
+int Grid::simplify()
+{
+    bool newSubcathcments = true;
+    int subcatchmentIdx = 0;
+    std::vector<Cell> cellsSimplified;
+
+    // Connect cells into subcatchments starting from lower left corner
+    while (newSubcathcments)
+    {
+        newSubcathcments = false;
+        for (int i = 0; i < nCols * nRows; i++)
+        {
+            if (cells[i].landuse != LANDUSE_NONE && cells[i].outletID > -1)     //  Check that cells have routable land-use and outlet
+            {
+                int j = i;
+                // Connect cells with outlet that have the same land-use
+                while (cells[j].outletID > -1 && cells[j].landuse == cells[cells[j].outletID].landuse && j != cells[j].outletID)
+                {
+                    // Connect cell into existing subcatchment
+                    if (cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0 && cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
+                    {
+                        int oldSubcatchmentIdx = 0;
+                        if (cells[cells[j].outletID].subcatchmentID > 0)
+                        {
+                            oldSubcatchmentIdx = cells[cells[j].outletID].subcatchmentID;
+                            cells[j].subcatchmentID = oldSubcatchmentIdx;
+                        }
+                        else
+                        {
+                            oldSubcatchmentIdx = cells[j].subcatchmentID;
+                            cells[cells[j].outletID].subcatchmentID = oldSubcatchmentIdx;
+                        }
+                    }
+                    // Create a new subcatchment
+                    else
+                    {
+                        newSubcathcments = true;
+                        subcatchmentIdx++;
+                        cells[j].subcatchmentID = subcatchmentIdx;
+                        cells[cells[j].outletID].subcatchmentID = subcatchmentIdx;
+                    }
+                    j = cells[j].outletID;
+                }
+                // j to i
+                // Create a new subcatchment for individual cells that are not connected to same land-use
+                if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
+                {
+                    subcatchmentIdx++;
+                    cells[i].subcatchmentID = subcatchmentIdx;
+                }
+                else if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED)
+                {
+                    for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
+                    {
+                        // Combine unconnected roof cells with same outlet into one subcatchment
+                        if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_UNCONNECTED && cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
+                        {
+                            // Check if subcatchment exists
+                            if (cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
+                            {
+                                int oldSubcatchmentIdx = 0;
+                                if (cells[i].subcatchmentID > 0)
+                                {
+                                    oldSubcatchmentIdx = cells[i].subcatchmentID;
+                                    cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
+                                }
+                                else
+                                {
+                                    oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
+                                    cells[i].subcatchmentID = oldSubcatchmentIdx;
+                                }
+                            }
+                            else    // Subcathment does not exits - create a new subcatchment
+                            {
+                                subcatchmentIdx++;
+                                cells[i].subcatchmentID = subcatchmentIdx;
+                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
+                            }
+                        }
+                        // Combine connected roof cells with same outlet into one subcatchment
+                        if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_CONNECTED && cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
+                        {
+                            // Check if subcatchment exists
+                            if (cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
+                            {
+                                int oldSubcatchmentIdx = 0;
+                                if (cells[i].subcatchmentID > 0)
+                                {
+                                    oldSubcatchmentIdx = cells[i].subcatchmentID;
+                                    cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
+                                }
+                                else
+                                {
+                                    oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
+                                    cells[i].subcatchmentID = oldSubcatchmentIdx;
+                                }
+                            }
+                            else    // Subcathment does not exits - create a new subcatchment
+                            {
+                                subcatchmentIdx++;
+                                cells[i].subcatchmentID = subcatchmentIdx;
+                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
+                            }
+                        }
+                    }
+                    // Treat individual roof cells
+                    if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse && (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED))
+                    {
+                        subcatchmentIdx++;
+                        cells[i].subcatchmentID = subcatchmentIdx;
+                    }
+                }
+            }
+//        cellsSimplified.push_back(cells);
+        }
+    }
+
+    // Connect reimaing cells into subcatchments starting from upper right corner
+    newSubcathcments = true;
+    while (newSubcathcments)
+    {
+        newSubcathcments = false;
+        for (int i = nCols * nRows; i > 0; i--)
+        {
+            if (cells[i].landuse != LANDUSE_NONE && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].outletID > -1)    //
+            {
+                int j = i;
+
+                while (cells[j].outletID > -1 && cells[j].landuse == cells[cells[j].outletID].landuse && j != cells[j].outletID)
+                {
+                    if (cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0 && cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
+                    {
+                        int oldSubcatchmentIdx = 0;
+                        if (cells[cells[j].outletID].subcatchmentID > 0)
+                        {
+                            oldSubcatchmentIdx = cells[cells[j].outletID].subcatchmentID;
+                            cells[j].subcatchmentID = oldSubcatchmentIdx;
+                        }
+
+                        else
+                        {
+                            oldSubcatchmentIdx = cells[j].subcatchmentID;
+                            cells[cells[j].outletID].subcatchmentID = oldSubcatchmentIdx;
+                        }
+                    }
+                    else
+                    {
+                        newSubcathcments = true;
+                        subcatchmentIdx++;
+                        cells[j].subcatchmentID = subcatchmentIdx;
+                        cells[cells[j].outletID].subcatchmentID = subcatchmentIdx;
+                    }
+                    j = cells[j].outletID;
+                }
+                // Create a new subcatchment for individual cells that are not connected to same land-use
+                if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse)
+                {
+                    subcatchmentIdx++;
+                    cells[i].subcatchmentID = subcatchmentIdx;
+                }
+            }
+//        cellsSimplified.push_back(cells);
+        }
+    }
+
+
+
+
+
+    return 0;
+}
+
+// TJN 23 Nov 2017
+void Grid::merge_cells(Cell &mergeCells, int &subcatchmentIndex)
+{
+//    if (startCell.subcatchmentID > 0)
+//    {
+//        startCell.subcatchmentID = subcatchmentIndex;
+//    }
+//    else
+//    {
+//        subcatchmentIndex++;
+//        startCell.subcatchmentID = subcatchmentIndex;
+//    }
+//    startCell
+}
+
 void Grid::saveRaster(std::string path)
 {
+    path += "_subcatchments.asc";       // TJN 23 Nov 2017
+
     Raster outputRaster;
     outputRaster.pathName = path;
     outputRaster.nCols = nCols;
@@ -948,7 +1141,8 @@ void Grid::saveRaster(std::string path)
 
             if (cells[ i + j * nCols ].landuse != LANDUSE_NONE)
             {
-                sstream << cells[ i + j * nCols ].slope * 100.0;
+                sstream << cells[ i + j * nCols ].subcatchmentID;        // TJN 23 Nov 2017
+//                sstream << cells[ i + j * nCols ].slope * 100.0;
             }
             else
             {

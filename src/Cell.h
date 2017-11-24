@@ -28,6 +28,8 @@ class Cell
 		int landuse;
 		double outletCoordX;         // X coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
 		double outletCoordY;         // Y coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
+		int outletID;                // Index of the outlet cell    // TJN 23 Nov 2017
+		int subcatchmentID;          // Id of the subcatchment this cell belongs to // TJN 23 Nov 2017
 		std::string outlet;          // Name of node or another subcatchment that receives runoff
 		std::string raingage;        // Rain gage assigned to subcatchment (name)
 		std::string imperv;          // Percent of impervious area (%)
@@ -47,5 +49,8 @@ class Cell
 		//int flowDirection;           // To save diagonal direction.
 		std::vector<double> distanceToNeighbours;
 		int isSink;                  // Indcator for the cells GisToSWMM determines as local sinks in the catchment // TJN 25 Sep 2017
-                                     // By default all cells are routed (0), pervious sinks are marked with 1 and impervious with 2
+                                     // By default all cells are routed (0),
+                                     // sinks with no routing are marked with 1, and
+                                     // sinks with forceful routing (i.e. connected roofs) are marked with 2
+        std::vector<int> subcatchmentCellIndices;   // individual cells belonging to this subcatchment              // TJN 22 Nov 2017  UNNECESSARY?
 };

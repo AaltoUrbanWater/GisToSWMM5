@@ -162,7 +162,7 @@ int main (int argc, char* cArgv[])
             Grid grid;
             int resDiscretization = 1;
 
-            if (argc == regGridParams)
+            if (argc == regGridParams || argc == adapGridParams)
             {
                 // Print discretization method.
                 std::cout << "\n-> Discretizing the area with a regular grid";
@@ -178,15 +178,6 @@ int main (int argc, char* cArgv[])
                 gridType = 1;
                 resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]), landuseRaster, demRaster);
             }
-            // TJN 21 Nov 2017
-            // New irregular adaptive grid based on same landuse and common outlet
-            else if (argc == adapGridParams)
-            {
-                // Print discretization method.
-                std::cout << "\n-> Discretizing the area with an irregular adaptive grid:";
-                gridType = 2;
-                resDiscretization = grid.create(gridType, landuseRaster, demRaster, flowdirRaster);
-            }
 
             if (resDiscretization != 0)
             {
@@ -199,7 +190,7 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Setting cell names";
             grid.setCellNames();
 
-            if (argc == regGridParams)
+            if (gridType == 0)
             {
                 // Set cell dimensions.
                 std::cout << "\n-> Setting cell dimensions";
@@ -214,7 +205,7 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Setting cell elevations";
             grid.setCellElevations(demRaster);
 
-            if (argc == regGridParams)
+            if (gridType == 0)
             {
                 // TJN 29 Sep 2017 START
                 // Set cell flow directions
@@ -270,15 +261,30 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Routing natural (rock, vegetation and sand) pit cells to themselves";
             grid.routePitCells();
 
+            // TJN 22 Nov 2017 START
+            if (argc == adapGridParams)
+            {
+                int resSimplifying = 1;
+
+                std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
+                resSimplifying = grid.simplify();
+
+                if (resSimplifying != 0)
+                {
+                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
+                    return 1;
+                }
+            }
+
             // TJN 17 May 2017 START
             // Create a vector output of the SWMM subcatchment grid instead of raster grid
 
-//			if (argc == regGridParams)
-//			{
-//				// Create and save a raster for inspection.
-//				std::cout << "\n-> Creating an output raster for inspection";
-//				grid.saveRaster(cArgv[23]);
-//			}
+			if (argc == regGridParams || adapGridParams)
+			{
+				// Create and save a raster for inspection.
+				std::cout << "\n-> Creating an output raster for inspection";
+				grid.saveRaster(cArgv[24]);
+			}
 
             // Create and save a WKT vector file of subcatchment polygons
             std::cout << "\n-> Creating a subcatchment polygon file for inspection";

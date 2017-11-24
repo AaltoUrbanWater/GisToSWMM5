@@ -61,7 +61,6 @@ class Grid
 		//Grid(Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster);
-		int create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster, Raster &flowdirRaster);   // TJN 21 Nov 2017
 		~Grid();
 		void clear();
 
@@ -82,6 +81,8 @@ class Grid
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
+		int simplify();     // TJN 22 Nov 2017
+        void merge_cells(Cell &startCell, int &subcatchmentIndex);    // TJN 23 Nov 2017
 		void saveRaster(std::string path);
 		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
