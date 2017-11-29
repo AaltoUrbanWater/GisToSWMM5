@@ -1,4 +1,4 @@
-17 Feb 2017 Tero Niemi
+29 Nov 2017 Tero Niemi
 
 GisToSWMM is a tool for automatically constructing SWMM5 model
 descriptions.
@@ -13,6 +13,7 @@ to the GisToSWMM5:
 
 [PATH TO GisToSWMM5 EXECUTABLE] \
 [PATH TO DEM RASTER IN .asc FORMAT] \
+[PATH TO FLOW DIRECTION RASTER IN .asc FORMAT] \
 [PATH TO LANDUSE RASTER IN .asc FORMAT] \
 [PATH TO CATCHMENT PROPERTIES TABLE IN .csv FORMAT] \
 [PATH TO JUNCTIONS TABLE IN .csv FORMAT] \
@@ -92,6 +93,14 @@ To extract subcatchment polygons and routing between subcatchments from
 a SWMM input file (*.inp) the tool inp2gis.py can be used. The tool 
 saves the subcatchments as a polygon shapefile and the routing between
 the subcatchment polygon centroids as a line shapefile. 
+
+demo_catchment.zip contains GisToSWMM5 input files for a small imaginary catchment in Finland.
+These files can be used as an example when preparing input files for other areas and to study
+the behaviour of GisToSWMM5 tool. The .zip file also contains the catchment information as 
+GeoTiffs and shapefiles for easier import to GIS-software. A QGIS project file with the GIS-files 
+imported is also provided. In order to be able to run the generated SWMM input-file (.inp), the
+user may have to change the paths to rain gauge and climate files in the resulting .inp-file 
+according to the user's setup.
 
 
 When using the GisToSWMM5 tool please refer to the publication:
