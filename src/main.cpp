@@ -267,7 +267,7 @@ int main (int argc, char* cArgv[])
                 int resSimplifying = 1;
 
                 std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
-                resSimplifying = grid.simplify();
+                resSimplifying = grid.simplify(cArgv[24]);
 
                 if (resSimplifying != 0)
                 {
@@ -279,12 +279,12 @@ int main (int argc, char* cArgv[])
             // TJN 17 May 2017 START
             // Create a vector output of the SWMM subcatchment grid instead of raster grid
 
-			if (argc == regGridParams || adapGridParams)
-			{
-				// Create and save a raster for inspection.
-				std::cout << "\n-> Creating an output raster for inspection";
-				grid.saveRaster(cArgv[24]);
-			}
+//			if (argc == regGridParams || adapGridParams)
+//			{
+//				// Create and save a raster for inspection.
+//				std::cout << "\n-> Creating an output raster for inspection";
+//				grid.saveRaster(cArgv[24]);
+//			}
 
             // Create and save a WKT vector file of subcatchment polygons
             std::cout << "\n-> Creating a subcatchment polygon file for inspection";

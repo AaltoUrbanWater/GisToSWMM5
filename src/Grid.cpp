@@ -471,9 +471,9 @@ void Grid::findCellNeighbours()
                             )
                             &&
                             (
-                                cells[i].centerCoordY + 0.5 * cells[i].cellSize >= cells[j].centerCoordY && cells[i].centerCoordY - 0.5 * cells[i].cellSize <= cells[j].centerCoordY
+                                (cells[i].centerCoordY + 0.5 * cells[i].cellSize >= cells[j].centerCoordY && cells[i].centerCoordY - 0.5 * cells[i].cellSize <= cells[j].centerCoordY)
                                 ||
-                                cells[j].centerCoordY + 0.5 * cells[j].cellSize >= cells[i].centerCoordY && cells[j].centerCoordY - 0.5 * cells[j].cellSize <= cells[i].centerCoordY
+                                (cells[j].centerCoordY + 0.5 * cells[j].cellSize >= cells[i].centerCoordY && cells[j].centerCoordY - 0.5 * cells[j].cellSize <= cells[i].centerCoordY)
                             )
                         )
 
@@ -487,9 +487,9 @@ void Grid::findCellNeighbours()
                             )
                             &&
                             (
-                                cells[i].centerCoordX + 0.5 * cells[i].cellSize >= cells[j].centerCoordX && cells[i].centerCoordX - 0.5 * cells[i].cellSize <= cells[j].centerCoordX
+                                (cells[i].centerCoordX + 0.5 * cells[i].cellSize >= cells[j].centerCoordX && cells[i].centerCoordX - 0.5 * cells[i].cellSize <= cells[j].centerCoordX)
                                 ||
-                                cells[j].centerCoordX + 0.5 * cells[j].cellSize >= cells[i].centerCoordX && cells[j].centerCoordX - 0.5 * cells[j].cellSize <= cells[i].centerCoordX
+                                (cells[j].centerCoordX + 0.5 * cells[j].cellSize >= cells[i].centerCoordX && cells[j].centerCoordX - 0.5 * cells[j].cellSize <= cells[i].centerCoordX)
                             )
                         )
                     )
@@ -929,11 +929,10 @@ void Grid::routePitCells()
 
 // TJN 22 Nov 2017
 // Simplify grid based on common flow direction and landuse
-int Grid::simplify()
+int Grid::simplify(std::string path)
 {
     bool newSubcathcments = true;
     int subcatchmentIdx = 0;
-    std::vector<Cell> cellsSimplified;
 
     // Connect cells into subcatchments starting from lower left corner
     while (newSubcathcments)
@@ -941,14 +940,20 @@ int Grid::simplify()
         newSubcathcments = false;
         for (int i = 0; i < nCols * nRows; i++)
         {
-            if (cells[i].landuse != LANDUSE_NONE && cells[i].outletID > -1)     //  Check that cells have routable land-use and outlet
+            if (cells[i].landuse != LANDUSE_NONE && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].outletID > -1)     //  Check that cells have routable land-use and outlet
             {
                 int j = i;
                 // Connect cells with outlet that have the same land-use
-                while (cells[j].outletID > -1 && cells[j].landuse == cells[cells[j].outletID].landuse && j != cells[j].outletID)
+                while (cells[j].outletID > -1
+                        &&
+                        cells[j].landuse == cells[cells[j].outletID].landuse
+                        &&
+                        j != cells[j].outletID)
                 {
                     // Connect cell into existing subcatchment
-                    if (cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0 && cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
+                    if ((cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0)
+                            &&
+                            cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
                     {
                         int oldSubcatchmentIdx = 0;
                         if (cells[cells[j].outletID].subcatchmentID > 0)
@@ -963,7 +968,9 @@ int Grid::simplify()
                         }
                     }
                     // Create a new subcatchment
-                    else
+                    else if (cells[j].subcatchmentID == 0
+                             &&
+                             cells[cells[j].outletID].subcatchmentID == 0)
                     {
                         newSubcathcments = true;
                         subcatchmentIdx++;
@@ -972,94 +979,137 @@ int Grid::simplify()
                     }
                     j = cells[j].outletID;
                 }
-                // j to i
                 // Create a new subcatchment for individual cells that are not connected to same land-use
-                if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
+                if (cells[i].outletID > -1
+                        &&
+                        cells[i].subcatchmentID < 1
+                        &&
+                        cells[i].landuse != cells[cells[i].outletID].landuse
+                        &&
+                        cells[i].landuse != LANDUSE_ROOF_CONNECTED
+                        &&
+                        cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
                 {
                     subcatchmentIdx++;
                     cells[i].subcatchmentID = subcatchmentIdx;
                 }
-                else if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED)
+            }
+            // Roofs
+            else
+            {
+                for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
                 {
-                    for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
+                    // Combine unconnected roof cells with same outlet into one subcatchment
+                    if (cells[i].neighCellIndices[k] != -1
+                            &&
+                            cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_UNCONNECTED
+                            &&
+                            cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
                     {
-                        // Combine unconnected roof cells with same outlet into one subcatchment
-                        if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_UNCONNECTED && cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
+                        // Check if subcatchment exists
+                        if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
+                            &&
+                            cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
                         {
-                            // Check if subcatchment exists
-                            if (cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
+                            int oldSubcatchmentIdx = 0;
+                            if (cells[i].subcatchmentID > 0)
                             {
-                                int oldSubcatchmentIdx = 0;
-                                if (cells[i].subcatchmentID > 0)
-                                {
-                                    oldSubcatchmentIdx = cells[i].subcatchmentID;
-                                    cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
-                                }
-                                else
-                                {
-                                    oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
-                                    cells[i].subcatchmentID = oldSubcatchmentIdx;
-                                }
+                                oldSubcatchmentIdx = cells[i].subcatchmentID;
+                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
                             }
-                            else    // Subcathment does not exits - create a new subcatchment
+                            else
                             {
-                                subcatchmentIdx++;
-                                cells[i].subcatchmentID = subcatchmentIdx;
-                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
+                                oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
+                                cells[i].subcatchmentID = oldSubcatchmentIdx;
                             }
                         }
-                        // Combine connected roof cells with same outlet into one subcatchment
-                        if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_CONNECTED && cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
+                        // Subcathment does not exits - create a new subcatchment
+                        else if (cells[i].subcatchmentID == 0
+                                 &&
+                                 cells[cells[i].outletID].subcatchmentID == 0)
                         {
-                            // Check if subcatchment exists
-                            if (cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
-                            {
-                                int oldSubcatchmentIdx = 0;
-                                if (cells[i].subcatchmentID > 0)
-                                {
-                                    oldSubcatchmentIdx = cells[i].subcatchmentID;
-                                    cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
-                                }
-                                else
-                                {
-                                    oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
-                                    cells[i].subcatchmentID = oldSubcatchmentIdx;
-                                }
-                            }
-                            else    // Subcathment does not exits - create a new subcatchment
-                            {
-                                subcatchmentIdx++;
-                                cells[i].subcatchmentID = subcatchmentIdx;
-                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
-                            }
+                            subcatchmentIdx++;
+                            cells[i].subcatchmentID = subcatchmentIdx;
+                            cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
                         }
                     }
-                    // Treat individual roof cells
-                    if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse && (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED))
+                    // Combine connected roof cells with same outlet into one subcatchment
+                    if (cells[i].neighCellIndices[k] != -1
+                            &&
+                            cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_CONNECTED
+                            &&
+                            cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
                     {
-                        subcatchmentIdx++;
-                        cells[i].subcatchmentID = subcatchmentIdx;
+                        // Check if subcatchment exists
+                        if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
+                             &&
+                             cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
+                        {
+                            int oldSubcatchmentIdx = 0;
+                            if (cells[i].subcatchmentID > 0)
+                            {
+                                oldSubcatchmentIdx = cells[i].subcatchmentID;
+                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
+                            }
+                            else
+                            {
+                                oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
+                                cells[i].subcatchmentID = oldSubcatchmentIdx;
+                            }
+                        }
+                        // Subcathment does not exits - create a new subcatchment
+                        else if (cells[i].subcatchmentID == 0
+                                 &&
+                                 cells[cells[i].outletID].subcatchmentID == 0)
+                        {
+                            subcatchmentIdx++;
+                            cells[i].subcatchmentID = subcatchmentIdx;
+                            cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
+                        }
                     }
                 }
+                // Treat individual roof cells
+                if (cells[i].outletID > -1
+                        &&
+                        cells[i].subcatchmentID < 1
+                        &&
+                        cells[i].landuse != cells[cells[i].outletID].landuse
+                        &&
+                        (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED))
+                {
+                    subcatchmentIdx++;
+                    cells[i].subcatchmentID = subcatchmentIdx;
+                }
             }
-//        cellsSimplified.push_back(cells);
         }
     }
 
-    // Connect reimaing cells into subcatchments starting from upper right corner
+    // Connect remainig cells into subcatchments starting from upper right corner
     newSubcathcments = true;
     while (newSubcathcments)
     {
         newSubcathcments = false;
-        for (int i = nCols * nRows; i > 0; i--)
+        for (int i = nCols * nRows; i >= 0; i--)
         {
-            if (cells[i].landuse != LANDUSE_NONE && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].outletID > -1)    //
+            if (cells[i].landuse != LANDUSE_NONE
+                    &&
+                    cells[i].landuse != LANDUSE_ROOF_UNCONNECTED
+                    &&
+                    cells[i].landuse != LANDUSE_ROOF_CONNECTED
+                    &&
+                    cells[i].outletID > -1)    //
             {
                 int j = i;
 
-                while (cells[j].outletID > -1 && cells[j].landuse == cells[cells[j].outletID].landuse && j != cells[j].outletID)
+                while (cells[j].outletID > -1
+                        &&
+                        cells[j].landuse == cells[cells[j].outletID].landuse
+                        &&
+                        j != cells[j].outletID)
                 {
-                    if (cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0 && cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
+                    if ((cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0)
+                            &&
+                            cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
                     {
                         int oldSubcatchmentIdx = 0;
                         if (cells[cells[j].outletID].subcatchmentID > 0)
@@ -1074,7 +1124,9 @@ int Grid::simplify()
                             cells[cells[j].outletID].subcatchmentID = oldSubcatchmentIdx;
                         }
                     }
-                    else
+                    else if (cells[j].subcatchmentID == 0
+                             &&
+                             cells[cells[j].outletID].subcatchmentID == 0)
                     {
                         newSubcathcments = true;
                         subcatchmentIdx++;
@@ -1090,30 +1142,150 @@ int Grid::simplify()
                     cells[i].subcatchmentID = subcatchmentIdx;
                 }
             }
-//        cellsSimplified.push_back(cells);
         }
     }
 
+    // Save subcatchment raster before destroying it
+    saveRaster(path);
 
+    // Create new subcathments
+    Cell * sortedCells;
+    std::vector<Cell> mergedCells;
 
+    // Sort cells according to subcatchmentID
+    sortedCells = cells;
+    std::sort(sortedCells, sortedCells + (nCols * nRows),
+    [](Cell const & a, Cell const & b) -> bool
+    { return a.subcatchmentID < b.subcatchmentID; } );
 
+    // Go through sorted cells and keep increasing subcatchment size as long as subcatchmentID remains constant
+    int subcatchmentCount = 0;
+    for (int i = 0; i < nCols * nRows; i++)
+    {
+        if (sortedCells[i].outletID > -1)
+        {
+            // Create a new subcatchment
+            Cell newSubcatchment;
+
+            // Individual pit cell subcatchments
+            if (sortedCells[i].subcatchmentID == 0)
+            {
+                subcatchmentCount++;
+
+                std::stringstream subcatchmentName("");
+                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
+                newSubcatchment.name = subcatchmentName.str();
+                std::stringstream outletName("");
+                outletName << "s" << sortedCells[i].outletID
+                newSubcatchment.outlet = outletName.str();
+                newSubcatchment.landuse = sortedCells[i].landuse;
+                newSubcatchment.raingage = sortedCells[i].raingage;
+                newSubcatchment.isSink = sortedCells[i].isSink;
+                newSubcatchment.imperv = sortedCells[i].imperv;
+                newSubcatchment.snowPack = sortedCells[i].snowPack;
+                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
+                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
+                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
+                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
+                newSubcatchment.PctZero = sortedCells[i].PctZero;
+                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
+                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
+                newSubcatchment.Suction = sortedCells[i].Suction;
+                newSubcatchment.HydCon = sortedCells[i].HydCon;
+                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
+                newSubcatchment.elevation = sortedCells[i].elevation;
+                newSubcatchment.slope = sortedCells[i].slope;
+                newSubcatchment.area = sortedCells[i].area;
+                newSubcatchment.outletCoordX = sortedCells[i].outletCoordX;
+                newSubcatchment.outletCoordY = sortedCells[i].outletCoordY;
+                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
+            }
+            // Other subcatchments
+            else
+            {
+                int oldID = sortedCells[i].subcatchmentID;
+                int j = i;
+                int cellCount = 0;
+                subcatchmentCount++;
+
+                std::stringstream subcatchmentName("");
+                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
+                newSubcatchment.name = subcatchmentName.str();
+                std::stringstream outletName("");
+                outletName << "s" << sortedCells[i].outletID
+                newSubcatchment.outlet = outletName.str();
+                newSubcatchment.landuse = sortedCells[i].landuse;
+                newSubcatchment.raingage = sortedCells[i].raingage;
+                newSubcatchment.imperv = sortedCells[i].imperv;
+                newSubcatchment.snowPack = sortedCells[i].snowPack;
+                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
+                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
+                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
+                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
+                newSubcatchment.PctZero = sortedCells[i].PctZero;
+                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
+                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
+                newSubcatchment.Suction = sortedCells[i].Suction;
+                newSubcatchment.HydCon = sortedCells[i].HydCon;
+                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
+
+                // Add cells to the current subcatchment
+                while (sortedCells[j].subcatchmentID == oldID)
+                {
+                    if (sortedCells[i].isSink > 0)
+                    {
+                        newSubcatchment.isSink = sortedCells[i].isSink;
+                    }
+                    newSubcatchment.elevation += sortedCells[j].elevation;
+                    newSubcatchment.slope += sortedCells[j].slope;
+                    newSubcatchment.area += sortedCells[j].area;
+                    // outlet
+                    // outletCoordX
+                    // outletCoordY
+                    cellCount++;
+                    j++;
+                }
+                newSubcatchment.elevation /= (double) cellCount;
+                newSubcatchment.slope /= (double) cellCount;
+                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
+                i = j - 1;
+            }
+            mergedCells.push_back(newSubcatchment);
+        }
+    }
+
+    // Transfer adaptive cell data to the pointer array.
+    clear();
+    nCols = (int)mergedCells.size();
+    nRows = 1;
+    cells = new Cell[nRows * nCols];
+
+    for (int i = 0; i < nRows * nCols; i++ )
+    {
+        cells[i].name = mergedCells[i].name;
+        cells[i].landuse = mergedCells[i].landuse;
+        cells[i].raingage = mergedCells[i].raingage;
+        cells[i].isSink = mergedCells[i].isSink;
+        cells[i].imperv = mergedCells[i].imperv;
+        cells[i].snowPack = mergedCells[i].snowPack;
+        cells[i].N_Imperv = mergedCells[i].N_Imperv;
+        cells[i].N_Perv = mergedCells[i].N_Perv;
+        cells[i].PctZero = mergedCells[i].PctZero;
+        cells[i].RouteTo = mergedCells[i].RouteTo;
+        cells[i].PctRouted = mergedCells[i].PctRouted;
+        cells[i].Suction = mergedCells[i].Suction;
+        cells[i].HydCon = mergedCells[i].HydCon;
+        cells[i].IMDmax = mergedCells[i].IMDmax;
+        cells[i].elevation = mergedCells[i].elevation;
+        cells[i].slope = mergedCells[i].slope;
+        cells[i].flowWidth = mergedCells[i].flowWidth;
+        cells[i].area = mergedCells[i].area;
+        cells[i].outlet = mergedCells[i].outlet;
+        cells[i].outletCoordX = mergedCells[i].outletCoordX;
+        cells[i].outletCoordY = mergedCells[i].outletCoordY;
+    }
 
     return 0;
-}
-
-// TJN 23 Nov 2017
-void Grid::merge_cells(Cell &mergeCells, int &subcatchmentIndex)
-{
-//    if (startCell.subcatchmentID > 0)
-//    {
-//        startCell.subcatchmentID = subcatchmentIndex;
-//    }
-//    else
-//    {
-//        subcatchmentIndex++;
-//        startCell.subcatchmentID = subcatchmentIndex;
-//    }
-//    startCell
 }
 
 void Grid::saveRaster(std::string path)

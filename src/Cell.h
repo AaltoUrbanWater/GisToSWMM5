@@ -15,6 +15,7 @@ class Cell
 		Cell();
 		~Cell();
 
+
 		// Variables.
 		std::string name;
 		double centerCoordX;
@@ -38,7 +39,7 @@ class Cell
 		std::string N_Perv;          // Mannings N for pervious area (-)
 		std::string S_Imperv;        // Depth of depression storage on impervious area (mm)
 		std::string S_Perv;          // Depth of depression storage on pervious area (mm)
-		std::string PctZero;		 // percent of impervious area with no depression storage (%)
+		std::string PctZero;		 		 // percent of impervious area with no depression storage (%)
 		std::string RouteTo;         // choice of internal routing between pervious and impervious sub-areas (OUTLET)
 		std::string PctRouted;       // Percent of runoff routed between sub-areas (%)
 		std::string Suction;         // Soil capillary suction head (mm)

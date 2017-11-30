@@ -52,6 +52,13 @@
 #endif
 // TJN 18 May 2017 END
 
+// TJN 30 Nov 2017 START
+#ifndef _ALGORITHM_H_
+#define _ALGORITHM_H_
+#include <algorithm>
+#endif
+// TJN 30 Nov 2017 END
+
 class Grid
 {
 	public:
@@ -81,8 +88,7 @@ class Grid
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
-		int simplify();     // TJN 22 Nov 2017
-        void merge_cells(Cell &startCell, int &subcatchmentIndex);    // TJN 23 Nov 2017
+		int simplify(std::string path);     // TJN 22 Nov 2017
 		void saveRaster(std::string path);
 		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
