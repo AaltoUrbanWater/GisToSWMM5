@@ -53,5 +53,4 @@ class Cell
                                      // By default all cells are routed (0),
                                      // sinks with no routing are marked with 1, and
                                      // sinks with forceful routing (i.e. connected roofs) are marked with 2
-        std::vector<int> subcatchmentCellIndices;   // individual cells belonging to this subcatchment              // TJN 22 Nov 2017  UNNECESSARY?
 };

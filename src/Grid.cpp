@@ -1148,12 +1148,15 @@ int Grid::simplify(std::string path)
     // Save subcatchment raster before destroying it
     saveRaster(path);
 
-    // Create new subcathments
-    Cell * sortedCells;
+    // Create a copy of subcathments to be sorted
+    THIS DOES NOT WORK AT THE MOMENT - COPIES THE POINTERS, NOT VALUES!
+    Cell * sortedCells = new Cell();
+    sortedCells = cells;
+
+    // Create a vector for storing merged subcatchments
     std::vector<Cell> mergedCells;
 
     // Sort cells according to subcatchmentID
-    sortedCells = cells;
     std::sort(sortedCells, sortedCells + (nCols * nRows),
     [](Cell const & a, Cell const & b) -> bool
     { return a.subcatchmentID < b.subcatchmentID; } );
@@ -1176,7 +1179,7 @@ int Grid::simplify(std::string path)
                 subcatchmentName << "s" << sortedCells[i].subcatchmentID;
                 newSubcatchment.name = subcatchmentName.str();
                 std::stringstream outletName("");
-                outletName << "s" << sortedCells[i].outletID
+                outletName << "s" << sortedCells[i].outletID;
                 newSubcatchment.outlet = outletName.str();
                 newSubcatchment.landuse = sortedCells[i].landuse;
                 newSubcatchment.raingage = sortedCells[i].raingage;
@@ -1208,12 +1211,11 @@ int Grid::simplify(std::string path)
                 int cellCount = 0;
                 subcatchmentCount++;
 
+                // Give name for this subcatchment
                 std::stringstream subcatchmentName("");
                 subcatchmentName << "s" << sortedCells[i].subcatchmentID;
+                // Give remaining parameters that are constant for the entire subcatchment
                 newSubcatchment.name = subcatchmentName.str();
-                std::stringstream outletName("");
-                outletName << "s" << sortedCells[i].outletID
-                newSubcatchment.outlet = outletName.str();
                 newSubcatchment.landuse = sortedCells[i].landuse;
                 newSubcatchment.raingage = sortedCells[i].raingage;
                 newSubcatchment.imperv = sortedCells[i].imperv;
@@ -1229,7 +1231,7 @@ int Grid::simplify(std::string path)
                 newSubcatchment.HydCon = sortedCells[i].HydCon;
                 newSubcatchment.IMDmax = sortedCells[i].IMDmax;
 
-                // Add cells to the current subcatchment
+                // Add cells to the current subcatchment and give parameter values depenging on subcatchment size
                 while (sortedCells[j].subcatchmentID == oldID)
                 {
                     if (sortedCells[i].isSink > 0)
@@ -1239,6 +1241,27 @@ int Grid::simplify(std::string path)
                     newSubcatchment.elevation += sortedCells[j].elevation;
                     newSubcatchment.slope += sortedCells[j].slope;
                     newSubcatchment.area += sortedCells[j].area;
+                    // Find outlet
+                    std::cout << "sortedCells[j].subcatchmentID = " << sortedCells[j].subcatchmentID << "\tsortedCells[j].outletID = " << cells[j].subcatchmentID << std::endl;
+                    if (sortedCells[j].outletID > -1 && sortedCells[j].subcatchmentID != sortedCells[sortedCells[j].outletID].subcatchmentID)
+                    {
+                        // Subcatchment outlet is a pit
+                        if (sortedCells[sortedCells[j].outletID].subcatchmentID == 0)
+                        {
+                            std::stringstream outletName("");
+                            outletName << "s" << sortedCells[j].subcatchmentID;
+                            newSubcatchment.outlet = outletName.str();
+                        }
+                        // Subcatchment outlet is another subcatchment
+                        else
+                        {
+                            std::stringstream outletName("");
+                            outletName << "s" << sortedCells[sortedCells[j].outletID].subcatchmentID;
+                            newSubcatchment.outlet = outletName.str();
+                        }
+
+                    }
+
                     // outlet
                     // outletCoordX
                     // outletCoordY
