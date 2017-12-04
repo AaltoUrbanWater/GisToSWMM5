@@ -929,6 +929,23 @@ void Grid::routePitCells()
 
 // TJN 22 Nov 2017
 // Simplify grid based on common flow direction and landuse
+//
+/*
+TJN 4 Dec 2017
+Taa on turhan monimutkainen tapa tehda taa!
+Kopioi flow trace QGIS:sta tanne. Koska tunnetaan tarkalleen routtaus loppupisteelle
+pitaisi olla jopa helpompaa traceta taalla kuin QGIS puolella. Eli voidaan kayttaa
+suoraan neighCellIndices ja outlet tietoa, eika tarvitse laskea vektorin alku ja
+loppupisteita ja tarkistaa miten lahella toisiaan ne on.
+Tahan pitaisi pystya lisaamaan suht iisisti myos adaptiivisuus.
+Subcatchmenttien keskipisteet saadaan suoraan mukana olevien solujen koordinaattien
+keskiarvoina.
+Taa antaa myos suoraan koko valuma-alueen rajauksen, koska vaan ne solut jotka kontribuoi
+loppupisteelle on mukana.
+Saako tasta myos flow width arvioitua suoraan laskemalla kaikkien subcatchmentin
+sisaisten routtausten pituuden, ottamalla niista keskiarvon ja jakamalla subcathmentin
+pinta-alan routtausten (flow lenghtien) keskiarvolla?
+*/
 int Grid::simplify(std::string path)
 {
     bool newSubcathcments = true;
@@ -1097,7 +1114,7 @@ int Grid::simplify(std::string path)
                     &&
                     cells[i].landuse != LANDUSE_ROOF_CONNECTED
                     &&
-                    cells[i].outletID > -1)    //
+                    cells[i].outletID > -1)
             {
                 int j = i;
 
@@ -1149,9 +1166,43 @@ int Grid::simplify(std::string path)
     saveRaster(path);
 
     // Create a copy of subcathments to be sorted
-    THIS DOES NOT WORK AT THE MOMENT - COPIES THE POINTERS, NOT VALUES!
-    Cell * sortedCells = new Cell();
-    sortedCells = cells;
+    // This could be done in a more sophisticated way, but for now just loop through
+    // all cells...
+    Cell * sortedCells = new Cell[ nCols * nRows ];
+    for (int i = 0; i < nRows*nCols; i++)
+    {
+        sortedCells[i].name = cells[i].name;
+        sortedCells[i].centerCoordX = cells[i].centerCoordX;
+        sortedCells[i].centerCoordY = cells[i].centerCoordY;
+        sortedCells[i].elevation = cells[i].elevation;
+        sortedCells[i].flowdir = cells[i].flowdir;
+        sortedCells[i].cellSize = cells[i].cellSize;
+        sortedCells[i].slope = cells[i].slope;
+        sortedCells[i].area = cells[i].area;
+        sortedCells[i].flowWidth = cells[i].flowWidth;
+        sortedCells[i].landuse = cells[i].landuse;
+        sortedCells[i].outletCoordX = cells[i].outletCoordX;
+        sortedCells[i].outletCoordY = cells[i].outletCoordY;
+        sortedCells[i].outletID = cells[i].outletID;
+        sortedCells[i].subcatchmentID = cells[i].subcatchmentID;
+        sortedCells[i].outlet = cells[i].outlet;
+        sortedCells[i].raingage = cells[i].raingage;
+        sortedCells[i].imperv = cells[i].imperv;
+        sortedCells[i].snowPack = cells[i].snowPack;
+        sortedCells[i].N_Imperv = cells[i].N_Imperv;
+        sortedCells[i].N_Perv = cells[i].N_Perv;
+        sortedCells[i].S_Imperv = cells[i].S_Imperv;
+        sortedCells[i].S_Perv = cells[i].S_Perv;
+        sortedCells[i].PctZero = cells[i].PctZero;
+        sortedCells[i].RouteTo = cells[i].RouteTo;
+        sortedCells[i].PctRouted = cells[i].PctRouted;
+        sortedCells[i].Suction = cells[i].Suction;
+        sortedCells[i].HydCon = cells[i].HydCon;
+        sortedCells[i].IMDmax = cells[i].IMDmax;
+        sortedCells[i].neighCellIndices = cells[i].neighCellIndices;
+        sortedCells[i].distanceToNeighbours = cells[i].distanceToNeighbours;
+        sortedCells[i].isSink = cells[i].isSink;
+    }
 
     // Create a vector for storing merged subcatchments
     std::vector<Cell> mergedCells;
@@ -1162,7 +1213,6 @@ int Grid::simplify(std::string path)
     { return a.subcatchmentID < b.subcatchmentID; } );
 
     // Go through sorted cells and keep increasing subcatchment size as long as subcatchmentID remains constant
-    int subcatchmentCount = 0;
     for (int i = 0; i < nCols * nRows; i++)
     {
         if (sortedCells[i].outletID > -1)
@@ -1170,46 +1220,12 @@ int Grid::simplify(std::string path)
             // Create a new subcatchment
             Cell newSubcatchment;
 
-            // Individual pit cell subcatchments
-            if (sortedCells[i].subcatchmentID == 0)
-            {
-                subcatchmentCount++;
-
-                std::stringstream subcatchmentName("");
-                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
-                newSubcatchment.name = subcatchmentName.str();
-                std::stringstream outletName("");
-                outletName << "s" << sortedCells[i].outletID;
-                newSubcatchment.outlet = outletName.str();
-                newSubcatchment.landuse = sortedCells[i].landuse;
-                newSubcatchment.raingage = sortedCells[i].raingage;
-                newSubcatchment.isSink = sortedCells[i].isSink;
-                newSubcatchment.imperv = sortedCells[i].imperv;
-                newSubcatchment.snowPack = sortedCells[i].snowPack;
-                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
-                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
-                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
-                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
-                newSubcatchment.PctZero = sortedCells[i].PctZero;
-                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
-                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
-                newSubcatchment.Suction = sortedCells[i].Suction;
-                newSubcatchment.HydCon = sortedCells[i].HydCon;
-                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
-                newSubcatchment.elevation = sortedCells[i].elevation;
-                newSubcatchment.slope = sortedCells[i].slope;
-                newSubcatchment.area = sortedCells[i].area;
-                newSubcatchment.outletCoordX = sortedCells[i].outletCoordX;
-                newSubcatchment.outletCoordY = sortedCells[i].outletCoordY;
-                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
-            }
-            // Other subcatchments
-            else
+            // Non-pit subcatchments
+            if (sortedCells[i].subcatchmentID > 0)
             {
                 int oldID = sortedCells[i].subcatchmentID;
                 int j = i;
                 int cellCount = 0;
-                subcatchmentCount++;
 
                 // Give name for this subcatchment
                 std::stringstream subcatchmentName("");
@@ -1234,19 +1250,21 @@ int Grid::simplify(std::string path)
                 // Add cells to the current subcatchment and give parameter values depenging on subcatchment size
                 while (sortedCells[j].subcatchmentID == oldID)
                 {
-                    if (sortedCells[i].isSink > 0)
+                    if (sortedCells[j].isSink > 0)
                     {
-                        newSubcatchment.isSink = sortedCells[i].isSink;
+                        newSubcatchment.isSink = sortedCells[j].isSink;
+                        std::stringstream outletName("");
+                        outletName << "s" << sortedCells[j].subcatchmentID;
+                        newSubcatchment.outlet = outletName.str();
                     }
                     newSubcatchment.elevation += sortedCells[j].elevation;
                     newSubcatchment.slope += sortedCells[j].slope;
                     newSubcatchment.area += sortedCells[j].area;
                     // Find outlet
-                    std::cout << "sortedCells[j].subcatchmentID = " << sortedCells[j].subcatchmentID << "\tsortedCells[j].outletID = " << cells[j].subcatchmentID << std::endl;
-                    if (sortedCells[j].outletID > -1 && sortedCells[j].subcatchmentID != sortedCells[sortedCells[j].outletID].subcatchmentID)
+                    if (sortedCells[j].outletID > -1 && sortedCells[j].subcatchmentID != cells[sortedCells[j].outletID].subcatchmentID)
                     {
                         // Subcatchment outlet is a pit
-                        if (sortedCells[sortedCells[j].outletID].subcatchmentID == 0)
+                        if (cells[sortedCells[j].outletID].subcatchmentID == 0)
                         {
                             std::stringstream outletName("");
                             outletName << "s" << sortedCells[j].subcatchmentID;
@@ -1256,13 +1274,15 @@ int Grid::simplify(std::string path)
                         else
                         {
                             std::stringstream outletName("");
-                            outletName << "s" << sortedCells[sortedCells[j].outletID].subcatchmentID;
+                            outletName << "s" << cells[sortedCells[j].outletID].subcatchmentID;
                             newSubcatchment.outlet = outletName.str();
                         }
-
+                    }
+                    else if (sortedCells[j].outletID > -1 && (sortedCells[j].outlet.compare(0,1,"j") == 0))
+                    {
+                        newSubcatchment.outlet = sortedCells[j].outlet;
                     }
 
-                    // outlet
                     // outletCoordX
                     // outletCoordY
                     cellCount++;
@@ -1270,9 +1290,46 @@ int Grid::simplify(std::string path)
                 }
                 newSubcatchment.elevation /= (double) cellCount;
                 newSubcatchment.slope /= (double) cellCount;
-                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
+                newSubcatchment.flowWidth = 0.7 * std::sqrt(newSubcatchment.area);    // Krebs et al. (2014)
                 i = j - 1;
             }
+// TJN 4 Dec 2017: Leave out individual pit cells since they do not contribute to outlet in any case
+//                 (Also, naming them is difficult...)
+//            // Individual pit cell subcatchments
+//            else
+//            {
+//                subcatchmentCount++;
+//
+//                std::stringstream subcatchmentName("");
+//                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
+//                newSubcatchment.name = subcatchmentName.str();
+//                std::stringstream outletName("");
+//                outletName << "s" << sortedCells[i].outletID;
+//                newSubcatchment.outlet = outletName.str();
+//                newSubcatchment.landuse = sortedCells[i].landuse;
+//                newSubcatchment.raingage = sortedCells[i].raingage;
+//                newSubcatchment.isSink = sortedCells[i].isSink;
+//                newSubcatchment.imperv = sortedCells[i].imperv;
+//                newSubcatchment.snowPack = sortedCells[i].snowPack;
+//                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
+//                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
+//                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
+//                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
+//                newSubcatchment.PctZero = sortedCells[i].PctZero;
+//                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
+//                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
+//                newSubcatchment.Suction = sortedCells[i].Suction;
+//                newSubcatchment.HydCon = sortedCells[i].HydCon;
+//                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
+//                newSubcatchment.elevation = sortedCells[i].elevation;
+//                newSubcatchment.slope = sortedCells[i].slope;
+//                newSubcatchment.area = sortedCells[i].area;
+//                newSubcatchment.outletCoordX = sortedCells[i].outletCoordX;
+//                newSubcatchment.outletCoordY = sortedCells[i].outletCoordY;
+//                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
+//
+////                std::cout << "\nsortedCells[i].isSink = " << sortedCells[i].isSink;
+//            }
             mergedCells.push_back(newSubcatchment);
         }
     }
