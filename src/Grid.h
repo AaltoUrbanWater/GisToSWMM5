@@ -89,6 +89,7 @@ class Grid
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
 		int simplify(std::string path);     // TJN 22 Nov 2017
+		void findRouted();  // TJN 5 Dec 2017
 		void saveRaster(std::string path);
 		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017

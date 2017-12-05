@@ -1368,6 +1368,22 @@ int Grid::simplify(std::string path)
     return 0;
 }
 
+// TJN 5 Dec 2017
+// Find cells routed to outlet using the algorithm from GQIS flowTrace plugin.
+// This can be extended to handle subcatchment simplification in future.
+void Grid::findRouted()
+{
+    // Empty vectors for final list of routed subcatchments and for the temporary working list
+    std::vector<Cell> final_list;
+    std::vector<Cell> selection_list;
+
+    // Add outlet to the lists
+    final_list.push_back();
+    selection_list.push_back();
+    // ONKO ONGELMA KUN PITAIS ROUTATA VALUMA-ALUEITA MUTTA VIRTAUS MENEE OSIN PUTKISSA?
+    // KATO ONKO HOIDETTU JO AIEMMIN NIIN, ETTA ROUTATAAN SUBCATCHMENTIT NIIN KUIN OLIS PUTKET MUKANA
+}
+
 void Grid::saveRaster(std::string path)
 {
     path += "_subcatchments.asc";       // TJN 23 Nov 2017

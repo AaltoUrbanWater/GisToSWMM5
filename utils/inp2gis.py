@@ -207,15 +207,6 @@ geometry = subcatchment_df['wktcolumn'].map(shapely.wkt.loads)
 subcatchment_df = subcatchment_df.drop('wktcolumn', axis=1)
 routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
 
-# print(subcatchment_df)
-# print(subarea_df)
-# print(infiltration_df)
-# print(coordinate_df)
-# print(polygon_df)
-# print(subcatchment_gdf)
-# print(coordinate_dict)
-# print(routing_gdf)
-
 # Save subcatchments as shapefile
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                          '_subcatchments.shp', driver='ESRI Shapefile')
