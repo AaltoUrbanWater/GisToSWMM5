@@ -3,11 +3,12 @@
 
 ../GisToSWMM5/bin/GisToSWMM5 \
 ../data/raster_dem.asc \
+../data/raster_flowdir.asc \
 ../data/raster_landuse.asc \
 ../data/table_catchment_props.csv \
 ../data/table_junctions.csv \
 ../data/table_conduits.csv \
-../data/able_outfalls.csv \
+../data/table_outfalls.csv \
 ../data/table_header.csv \
 ../data/table_evaporation.csv \
 ../data/table_temperature.csv \
@@ -27,4 +28,3 @@
 ../out/SWMM5_input
 16
 3
-

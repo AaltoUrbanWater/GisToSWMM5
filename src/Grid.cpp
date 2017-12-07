@@ -646,6 +646,7 @@ void Grid::routeCellsReg()
         {
             cells[i].outletID = neighCellIndex;
             cells[i].outlet = cells[neighCellIndex].name;
+            cells[neighCellIndex].inletIDs.push_back(i);    // TJN 7 Dec 2017
             cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
             cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
 
@@ -756,6 +757,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                     {
                         cells[ col + row * nCols ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                         cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
+                        cells[col + row * nCols].inletIDs.push_back(col + row * nCols);     // TJN 7 Dec 2017   This is unnecessary?
                         cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
                         // TJN 18 May 2017 START
                         cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
@@ -775,6 +777,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                             {
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
+                                cells[col + row * nCols].inletIDs.push_back(cells[ col + row * nCols ].neighCellIndices[i]);     // TJN 7 Dec 2017   This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
@@ -839,6 +842,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     distanceSquared = dx * dx + dy * dy;
                     cells[i].outletID = col + row * nCols;   // TJN 24 Nov 2017: outletID is the outletID of junction cell
                     cells[i].outlet = juncTable.data[j * juncTable.nCols + 2];
+                    cells[col + row * nCols].inletIDs.push_back(i);     // TJN 7 Dec 2017
                     cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                     // TJN 18 May 2017 START
                     cells[i].outletCoordX = stod(juncTable.data[j * juncTable.nCols + 0]);
@@ -859,6 +863,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
         {
             cells[i].outletID = i;   // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
+            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
             cells[i].outletCoordX = cells[i].centerCoordX;
             cells[i].outletCoordY = cells[i].centerCoordY;
 
@@ -887,6 +892,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                         distanceSquared = dx * dx + dy * dy;
                         cells[i].outletID = j;  // TJN 23 Nov 2017
                         cells[i].outlet = cells[j].name;
+                        cells[j].inletIDs.push_back(i);     // TJN 7 Dec 2017
                         cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                         // TJN 18 May 2017 START
                         cells[i].outletCoordX = cells[j].centerCoordX;
@@ -909,6 +915,7 @@ void Grid::routePitCells()
         {
             cells[i].outletID = i;  // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
+            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
 
             // Set depression storage of pit cells in permeable areas to a very high value ...
             // ... to prevent loss of water from the system.
@@ -1378,8 +1385,8 @@ void Grid::findRouted()
     std::vector<Cell> selection_list;
 
     // Add outlet to the lists
-    final_list.push_back();
-    selection_list.push_back();
+//    final_list.push_back();
+//    selection_list.push_back();
     // ONKO ONGELMA KUN PITAIS ROUTATA VALUMA-ALUEITA MUTTA VIRTAUS MENEE OSIN PUTKISSA?
     // KATO ONKO HOIDETTU JO AIEMMIN NIIN, ETTA ROUTATAAN SUBCATCHMENTIT NIIN KUIN OLIS PUTKET MUKANA
 }
