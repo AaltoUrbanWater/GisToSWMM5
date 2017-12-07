@@ -262,7 +262,6 @@ int main (int argc, char* cArgv[])
             grid.routePitCells();
 
             // TJN 22 Nov 2017 START
-            if (argc == adapGridParams)
             {
                 int resSimplifying = 1;
 
@@ -274,6 +273,9 @@ int main (int argc, char* cArgv[])
                     std::cout << "\n-> Error in the simplifying stage of the grid creation.";
                     return 1;
                 }
+
+                // TJN 7 Dec 2017
+                grid.findRouted(outfallsTable, condTable, juncTable);
             }
 
             // TJN 17 May 2017 START

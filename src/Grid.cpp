@@ -1378,11 +1378,49 @@ int Grid::simplify(std::string path)
 // TJN 5 Dec 2017
 // Find cells routed to outlet using the algorithm from GQIS flowTrace plugin.
 // This can be extended to handle subcatchment simplification in future.
-void Grid::findRouted()
+void Grid::findRouted(Table &outfallsTable, Table &condTable, Table &juncTable)
 {
     // Empty vectors for final list of routed subcatchments and for the temporary working list
     std::vector<Cell> final_list;
     std::vector<Cell> selection_list;
+
+    std::vector<std::string> outfalls(outfallsTable.nRows-1);
+    std::vector<std::string> conduits(condTable.nRows-1);
+    std::vector<std::string> inJunctions(condTable.nRows-1);
+    std::vector<std::string> outJunctions(condTable.nRows-1);
+    std::vector<std::string> junctions(juncTable.nRows-1);
+
+    // Go through outfalls
+    for (int i = 1; i < outfallsTable.nRows; i++)
+    {
+        outfalls[i-1] = outfallsTable.getData(i, 2);    // Outfall name
+    }
+
+    // Go through conduits
+    for (int i = 1; i < condTable.nRows; i++)
+    {
+        conduits[i-1] = condTable.getData(i, 4);        // Conduit name
+        inJunctions[i-1] = condTable.getData(i, 8);     // From junction
+        outJunctions[i-1] = condTable.getData(i, 9);    // To junction
+    }
+
+    // Go through junctions
+    for (int i = 1; i < juncTable.nRows; i++)
+    {
+        junctions[i-1] = juncTable.getData(i, 2);       // Junction name
+    }
+
+    // For each outfall follow conduit network upstream and add open junctions into final and selection list
+    for (int i = 0; i < outfalls.size(); i++)
+    {
+        for (int j = 0; j < outJunctions.size(); j++)
+        {
+            if (outJunctions[j].compare(outfalls[i]) == 0)  // junctions[j] is routed to outfalls[i]
+            {
+                // TAHAN JOKU while LOOPPI flowTrace koodista
+            }
+        }
+    }
 
     // Add outlet to the lists
 //    final_list.push_back();
@@ -1716,12 +1754,12 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 
     for (int i = 1; i < juncTable.nRows; i++)
     {
-        sstream << "\n" << juncTable.getData(i, 2) << "   ";
-        sstream << juncTable.getData(i, 4) << "   ";
-        sstream << juncTable.getData(i, 5) << "   ";
-        sstream << juncTable.getData(i, 7) << "   ";
-        sstream << juncTable.getData(i, 8) << "   ";
-        sstream << juncTable.getData(i, 9) << "   ";
+        sstream << "\n" << juncTable.getData(i, 2) << "   ";        // Junction name
+        sstream << juncTable.getData(i, 4) << "   ";                // Invert elevation
+        sstream << juncTable.getData(i, 5) << "   ";                // Max depth
+        sstream << juncTable.getData(i, 7) << "   ";                // Initial depth
+        sstream << juncTable.getData(i, 8) << "   ";                // Surcharge dept
+        sstream << juncTable.getData(i, 9) << "   ";                // Ponded area
     }
 
     sstream << "\n";
@@ -1734,11 +1772,11 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 
     for (int i = 1; i < outfallsTable.nRows; i++)
     {
-        sstream << "\n" << outfallsTable.data[i * outfallsTable.nCols + 2] << "   ";
-        sstream << outfallsTable.data[i * outfallsTable.nCols + 3] << "   ";
-        sstream << outfallsTable.data[i * outfallsTable.nCols + 4] << "   ";
-        sstream << outfallsTable.data[i * outfallsTable.nCols + 5] << "   ";
-        sstream << outfallsTable.data[i * outfallsTable.nCols + 6] << "   ";
+        sstream << "\n" << outfallsTable.data[i * outfallsTable.nCols + 2] << "   ";    // Outfall name
+        sstream << outfallsTable.data[i * outfallsTable.nCols + 3] << "   ";            // Invert height
+        sstream << outfallsTable.data[i * outfallsTable.nCols + 4] << "   ";            // Type
+        sstream << outfallsTable.data[i * outfallsTable.nCols + 5] << "   ";            // Stage data
+        sstream << outfallsTable.data[i * outfallsTable.nCols + 6] << "   ";            // Gated
     }
 
     sstream << "\n";
