@@ -59,6 +59,13 @@
 #endif
 // TJN 30 Nov 2017 END
 
+// TJN 8 Dec 2017 START
+#ifndef _LIST_H_
+#define _LIST_H_
+#include <list>
+#endif
+// TJN 8 Dec 2017 END
+
 class Grid
 {
 	public:
@@ -89,10 +96,11 @@ class Grid
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
 		int simplify(std::string path);     // TJN 22 Nov 2017
-		void findRouted(Table &outfallsTable, Table &condTable, Table &juncTable);  // TJN 5 Dec 2017
+		void findRouted(Table &condTable, Table &juncTable);  // TJN 5 Dec 2017
 		void saveRaster(std::string path);
 		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
+		void saveNetworkRouting(std::string path, Table &condTable);      // TJN 8 Dec 2017
 
 		void saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
 			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable,

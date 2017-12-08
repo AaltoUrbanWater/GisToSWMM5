@@ -757,7 +757,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                     {
                         cells[ col + row * nCols ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                         cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
-                        cells[col + row * nCols].inletIDs.push_back(col + row * nCols);     // TJN 7 Dec 2017   This is unnecessary?
+//                        cells[col + row * nCols].inletIDs.push_back(col + row * nCols);     // TJN 7 Dec 2017   This is unnecessary?
                         cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
                         // TJN 18 May 2017 START
                         cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
@@ -777,7 +777,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                             {
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
-                                cells[col + row * nCols].inletIDs.push_back(cells[ col + row * nCols ].neighCellIndices[i]);     // TJN 7 Dec 2017   This is unnecessary?
+                                cells[col + row * nCols].inletIDs.push_back(cells[ col + row * nCols ].neighCellIndices[i]);     // TJN 7 Dec 2017
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
@@ -842,7 +842,6 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     distanceSquared = dx * dx + dy * dy;
                     cells[i].outletID = col + row * nCols;   // TJN 24 Nov 2017: outletID is the outletID of junction cell
                     cells[i].outlet = juncTable.data[j * juncTable.nCols + 2];
-                    cells[col + row * nCols].inletIDs.push_back(i);     // TJN 7 Dec 2017
                     cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                     // TJN 18 May 2017 START
                     cells[i].outletCoordX = stod(juncTable.data[j * juncTable.nCols + 0]);
@@ -850,6 +849,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     // TJN 18 May 2017 END
                 }
             }
+            cells[cells[i].outletID].inletIDs.push_back(i);     // TJN 8 Dec 2017 Save inletID only to final outletID, i.e. after the loop
 
             //cells[i].outlet = cells[i].name;
 
@@ -863,7 +863,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
         {
             cells[i].outletID = i;   // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
-            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
+//            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
             cells[i].outletCoordX = cells[i].centerCoordX;
             cells[i].outletCoordY = cells[i].centerCoordY;
 
@@ -892,7 +892,6 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                         distanceSquared = dx * dx + dy * dy;
                         cells[i].outletID = j;  // TJN 23 Nov 2017
                         cells[i].outlet = cells[j].name;
-                        cells[j].inletIDs.push_back(i);     // TJN 7 Dec 2017
                         cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
                         // TJN 18 May 2017 START
                         cells[i].outletCoordX = cells[j].centerCoordX;
@@ -901,6 +900,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     }
                 }
             }
+            cells[cells[i].outletID].inletIDs.push_back(i);     // TJN 8 Dec 2017 Save inletID only to final outletID, i.e. after the loop
         }
     }
 }
@@ -915,7 +915,7 @@ void Grid::routePitCells()
         {
             cells[i].outletID = i;  // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
-            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
+//            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
 
             // Set depression storage of pit cells in permeable areas to a very high value ...
             // ... to prevent loss of water from the system.
@@ -1032,8 +1032,8 @@ int Grid::simplify(std::string path)
                     {
                         // Check if subcatchment exists
                         if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
-                            &&
-                            cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
+                                &&
+                                cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
                         {
                             int oldSubcatchmentIdx = 0;
                             if (cells[i].subcatchmentID > 0)
@@ -1066,8 +1066,8 @@ int Grid::simplify(std::string path)
                     {
                         // Check if subcatchment exists
                         if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
-                             &&
-                             cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
+                                &&
+                                cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
                         {
                             int oldSubcatchmentIdx = 0;
                             if (cells[i].subcatchmentID > 0)
@@ -1216,7 +1216,7 @@ int Grid::simplify(std::string path)
 
     // Sort cells according to subcatchmentID
     std::sort(sortedCells, sortedCells + (nCols * nRows),
-    [](Cell const & a, Cell const & b) -> bool
+              [](Cell const & a, Cell const & b) -> bool
     { return a.subcatchmentID < b.subcatchmentID; } );
 
     // Go through sorted cells and keep increasing subcatchment size as long as subcatchmentID remains constant
@@ -1378,56 +1378,112 @@ int Grid::simplify(std::string path)
 // TJN 5 Dec 2017
 // Find cells routed to outlet using the algorithm from GQIS flowTrace plugin.
 // This can be extended to handle subcatchment simplification in future.
-void Grid::findRouted(Table &outfallsTable, Table &condTable, Table &juncTable)
+void Grid::findRouted(Table &condTable, Table &juncTable)
 {
-    // Empty vectors for final list of routed subcatchments and for the temporary working list
-    std::vector<Cell> final_list;
-    std::vector<Cell> selection_list;
 
-    std::vector<std::string> outfalls(outfallsTable.nRows-1);
-    std::vector<std::string> conduits(condTable.nRows-1);
-    std::vector<std::string> inJunctions(condTable.nRows-1);
-    std::vector<std::string> outJunctions(condTable.nRows-1);
-    std::vector<std::string> junctions(juncTable.nRows-1);
-
-    // Go through outfalls
-    for (int i = 1; i < outfallsTable.nRows; i++)
-    {
-        outfalls[i-1] = outfallsTable.getData(i, 2);    // Outfall name
+    // ONGELMA ON TASSA!
+    // TUOLLA SOLULLA EI PITAIS OLLA AINUTTAKAAN inletID:TA
+    // ILMEISESTI inletID:T ANNETAAN KAHDESTI CONNECTED ROOF SOLUILLE MISTÄ TULEE ONGELMIA
+    // PITAA KORJATA inletID:n SYOTTO!
+    std::cout << "\ncells[11512].inletIDs = ";
+    for(auto num = cells[11512].inletIDs.begin(); num != cells[11512].inletIDs.end(); ++num) {
+        std::cout << *num << ", ";
     }
 
-    // Go through conduits
-    for (int i = 1; i < condTable.nRows; i++)
-    {
-        conduits[i-1] = condTable.getData(i, 4);        // Conduit name
-        inJunctions[i-1] = condTable.getData(i, 8);     // From junction
-        outJunctions[i-1] = condTable.getData(i, 9);    // To junction
-    }
+    // Empty vectors for final list of routed subcatchments ID's and for the temporary working list of ID's
+    std::vector<int> final_IDs;
 
-    // Go through junctions
-    for (int i = 1; i < juncTable.nRows; i++)
-    {
-        junctions[i-1] = juncTable.getData(i, 2);       // Junction name
-    }
+//    std::vector<std::string> conduits(condTable.nRows-1);
+//    std::vector<std::string> inJunctions(condTable.nRows-1);
+//    std::vector<std::string> outJunctions(condTable.nRows-1);
+//    std::vector<std::string> junctions(juncTable.nRows-1);
 
-    // For each outfall follow conduit network upstream and add open junctions into final and selection list
-    for (int i = 0; i < outfalls.size(); i++)
+
+//    // Go through conduits
+//    for (int i = 1; i < condTable.nRows; i++)
+//    {
+//        conduits[i-1] = condTable.getData(i, 4).c_str();        // Conduit name
+//        inJunctions[i-1] = condTable.getData(i, 8).c_str();     // From junction
+//        outJunctions[i-1] = condTable.getData(i, 9).c_str();    // To junction
+//    }
+
+    // Go through junctions and add open junctions into final and selection lists
+//    for (int i = 1; i < juncTable.nRows; i++)
+    for (int i = 1; i < 9; i++)
     {
-        for (int j = 0; j < outJunctions.size(); j++)
+//        junctions[i-1] = juncTable.getData(i, 2).c_str();       // Junction name
+
+        double juncPosX = atof( juncTable.getData(i, 0).c_str() );
+        double juncPosY = atof( juncTable.getData(i, 1).c_str() );
+        int isOpen = atoi( juncTable.getData(i, 6).c_str() );
+
+        if (juncPosX >= xllCorner
+                &&
+                juncPosX < xllCorner + nCols * cellSize
+                &&
+                juncPosY >= yllCorner
+                &&
+                juncPosY < yllCorner + nRows * cellSize
+                &&
+                isOpen == 1) // pass closed junctions
         {
-            if (outJunctions[j].compare(outfalls[i]) == 0)  // junctions[j] is routed to outfalls[i]
+            if (nCols > 0 && nRows > 0 && cellSize > 0.0)
             {
-                // TAHAN JOKU while LOOPPI flowTrace koodista
+                int col = (int)((juncPosX - xllCorner) / cellSize);
+                int row = (int)((juncPosY - yllCorner) / cellSize);
+
+                if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
+                {
+                    std::vector<int> selection_IDs;
+                    selection_IDs.reserve(nCols*nRows); // ONKO TARPEEN???
+
+                    final_IDs.push_back(col + row * nCols);
+                    selection_IDs.push_back(col + row * nCols);
+
+                    // Go through selection list
+                    int counter = 0;
+                    while (!selection_IDs.empty() && counter < nCols*nRows)
+                    {
+                        // Get all subcatchments routed into the current cell
+                        std::list<int> inSubs = cells[selection_IDs.front()].inletIDs;
+
+                        // Make sure subcatchments routed into current cell are listed only once
+                        inSubs.sort();
+                        inSubs.unique();
+
+
+                        std::cout << "\nOutlet = " << selection_IDs.front();
+
+                        // Go through the subcatchments routed into the current cell
+                        for (std::list<int>::iterator it=inSubs.begin(); it != inSubs.end(); ++it)
+                        {
+                            final_IDs.push_back(*it);
+
+                            // TAA ON EHKA ONGELMA. SAATTAA ETSIA VAARAN KOKOISESTA ELI LIIAN PIENESTA LISTASTA ,
+                            // JOTEN EI LOYDA ARVOJA JOTKA ONKIN JO SIELLA LOPUSSA
+                            // PITAA KATTOA ETTA MYOS inSubs ON OIKEIN - ILMEISESTI NYT EI OLE KOSKA inletID:T ON VAARIN
+                            // Check if this subcatchment is already in list of selected ID's
+                            if (!(std::find(selection_IDs.begin(), selection_IDs.end(), *it) != selection_IDs.end()))
+                            {
+                                // Add subcatchment to selected subactchments if it's not there yet
+                                selection_IDs.push_back(*it);
+                            }
+                            std::cout << "\n\t\tInlet = " << *it;
+                        }
+
+                        // Remove the subcatchment from the list of selected ID's
+                        selection_IDs.erase(selection_IDs.begin());
+                        counter++;
+                    }
+                }
             }
         }
     }
-
-    // Add outlet to the lists
-//    final_list.push_back();
-//    selection_list.push_back();
-    // ONKO ONGELMA KUN PITAIS ROUTATA VALUMA-ALUEITA MUTTA VIRTAUS MENEE OSIN PUTKISSA?
-    // KATO ONKO HOIDETTU JO AIEMMIN NIIN, ETTA ROUTATAAN SUBCATCHMENTIT NIIN KUIN OLIS PUTKET MUKANA
+    for(int i = 0; i < final_IDs.size(); i++)
+        std::cout << "\nfinal_IDs[" << i << "] = " << final_IDs[i] << "\tcells[" << final_IDs[i] << "].outlet = " << cells[final_IDs[i]].outlet;
 }
+
+
 
 void Grid::saveRaster(std::string path)
 {
@@ -1614,6 +1670,52 @@ void Grid::saveSubcatchmentRouting(std::string path)
     res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
 // TJN 18 May 2017 END
+
+// TJN 8 Dec 2017 START
+void Grid::saveNetworkRouting(std::string path, Table &condTable)
+{
+    std::stringstream sstream;
+    std::stringstream sstream_csvt;
+    sstream << std::fixed;
+
+    sstream << "id;";
+    sstream << "wkt;";      // Line object defining the route between "from" and "to" junctions
+    sstream << "name;";     // Name of the conduit
+    sstream << "from;";     // Name of the origin junction
+    sstream << "to";        // Name of the target junction
+
+    // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
+    sstream_csvt << "Integer,";
+    sstream_csvt << "WKT,";
+    sstream_csvt << "String,";
+    sstream_csvt << "String,";
+    sstream_csvt << "String,";
+
+    // Write polyline vertex coordinates.
+    int lineId = 0;
+    for (int i = 1; i < condTable.nRows; i++)
+    {
+        sstream << "\n" << lineId << ";LINESTRING(";
+        sstream.precision(2);
+        sstream << std::fixed << condTable.getData(i, 0) << " ";
+        sstream << std::fixed << condTable.getData(i, 1);
+        sstream << ",";
+        sstream << std::fixed << condTable.getData(i, 2) << " ";
+        sstream << std::fixed << condTable.getData(i, 3);
+        sstream << ");" << condTable.getData(i, 4);
+        sstream <<  ";" << condTable.getData(i, 8);
+        sstream <<  ";" << condTable.getData(i, 9);
+        lineId++;
+    }
+
+    // Write files to disk.
+    FileIO fileio;
+    std::string path_csvt = path + "_network_routing.csvt";
+    path += "_network_routing.wkt";
+    int res = fileio.saveAsciiFile( path, sstream.str() );
+    res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
+}
+// TJN 8 Dec 2017 END
 
 void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
                          Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path)

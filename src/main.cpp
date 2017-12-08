@@ -263,6 +263,11 @@ int main (int argc, char* cArgv[])
 
             // TJN 22 Nov 2017 START
             {
+                // TJN 7 Dec 2017
+                grid.findRouted(condTable, juncTable);
+
+
+
                 int resSimplifying = 1;
 
                 std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
@@ -273,9 +278,6 @@ int main (int argc, char* cArgv[])
                     std::cout << "\n-> Error in the simplifying stage of the grid creation.";
                     return 1;
                 }
-
-                // TJN 7 Dec 2017
-                grid.findRouted(outfallsTable, condTable, juncTable);
             }
 
             // TJN 17 May 2017 START
@@ -298,6 +300,12 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Creating a subcatchment routing file for inspection";
             grid.saveSubcatchmentRouting(cArgv[24]);
             // TJN 18 May 2017 END
+
+//            // TJN 8 Dec 2017 START
+//            // Create and save a WKT vector file of subcatchment routing
+//            std::cout << "\n-> Creating a network routing file for inspection";
+//            grid.saveNetworkRouting(cArgv[24], condTable);
+//            // TJN 8 Dec 2017 END
 
             // Create the SWMM5 file.
             std::cout << "\n\nCreating the SWMM5 model input file:";
