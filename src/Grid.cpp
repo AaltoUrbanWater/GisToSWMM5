@@ -646,7 +646,6 @@ void Grid::routeCellsReg()
         {
             cells[i].outletID = neighCellIndex;
             cells[i].outlet = cells[neighCellIndex].name;
-            cells[neighCellIndex].inletIDs.push_back(i);    // TJN 7 Dec 2017
             cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
             cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
 
@@ -674,8 +673,8 @@ void Grid::computeCellSlopes()
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
-                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_UNCONNECTED
-                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_NONE)
+            && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_UNCONNECTED
+            && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_NONE)
             {
                 // Compute slope between cells.
                 //double distance = 0.0;
@@ -708,6 +707,7 @@ void Grid::computeCellSlopes()
                 }
             }
         }
+
 
         // Save the average slope.
         if (slopeCount > 0)
@@ -757,7 +757,6 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                     {
                         cells[ col + row * nCols ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                         cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
-//                        cells[col + row * nCols].inletIDs.push_back(col + row * nCols);     // TJN 7 Dec 2017   This is unnecessary?
                         cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
                         // TJN 18 May 2017 START
                         cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
@@ -777,7 +776,6 @@ void Grid::connectCellsToJunctions(Table &juncTable)
                             {
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
-                                cells[col + row * nCols].inletIDs.push_back(cells[ col + row * nCols ].neighCellIndices[i]);     // TJN 7 Dec 2017
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
@@ -849,7 +847,6 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     // TJN 18 May 2017 END
                 }
             }
-            cells[cells[i].outletID].inletIDs.push_back(i);     // TJN 8 Dec 2017 Save inletID only to final outletID, i.e. after the loop
 
             //cells[i].outlet = cells[i].name;
 
@@ -857,25 +854,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
             // Mark local pits where water is routed forcefully
             cells[i].isSink = 2;
         }
-        else if ((cells[i].landuse == LANDUSE_ASPHALT_STREET && cells[i].outlet ==  "*") // the last condition is repeated...
-                 || (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
-                 || (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
-        {
-            cells[i].outletID = i;   // TJN 24 Nov 2017
-            cells[i].outlet = cells[i].name;
-//            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
-            cells[i].outletCoordX = cells[i].centerCoordX;
-            cells[i].outletCoordY = cells[i].centerCoordY;
-
-            // Mark local pits where water is not routed
-            cells[i].isSink = 1;
-        }
-    }
-
-    // Route unconnected rooftop cells to the nearest non-roof cells.
-    for (int i = 0; i < nCols * nRows; i++)
-    {
-        if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)
+        else if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)     // Route unconnected rooftop cells to the nearest non-roof cells.
         {
             double distanceSquared = distanceMaxSquared;
 
@@ -900,7 +879,18 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     }
                 }
             }
-            cells[cells[i].outletID].inletIDs.push_back(i);     // TJN 8 Dec 2017 Save inletID only to final outletID, i.e. after the loop
+        }
+        else if ((cells[i].landuse == LANDUSE_ASPHALT_STREET && cells[i].outlet ==  "*") // the last condition is repeated...
+        || (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
+        || (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
+        {
+            cells[i].outletID = i;   // TJN 24 Nov 2017
+            cells[i].outlet = cells[i].name;
+            cells[i].outletCoordX = cells[i].centerCoordX;
+            cells[i].outletCoordY = cells[i].centerCoordY;
+
+            // Mark local pits where water is not routed
+            cells[i].isSink = 1;
         }
     }
 }
@@ -915,7 +905,6 @@ void Grid::routePitCells()
         {
             cells[i].outletID = i;  // TJN 24 Nov 2017
             cells[i].outlet = cells[i].name;
-//            cells[i].inletIDs.push_back(i);     // TJN 7 Dec 2017   This is unnecessary?
 
             // Set depression storage of pit cells in permeable areas to a very high value ...
             // ... to prevent loss of water from the system.
@@ -1380,39 +1369,23 @@ int Grid::simplify(std::string path)
 // This can be extended to handle subcatchment simplification in future.
 void Grid::findRouted(Table &condTable, Table &juncTable)
 {
-
-    // ONGELMA ON TASSA!
-    // TUOLLA SOLULLA EI PITAIS OLLA AINUTTAKAAN inletID:TA
-    // ILMEISESTI inletID:T ANNETAAN KAHDESTI CONNECTED ROOF SOLUILLE MISTÄ TULEE ONGELMIA
-    // PITAA KORJATA inletID:n SYOTTO!
-    std::cout << "\ncells[11512].inletIDs = ";
-    for(auto num = cells[11512].inletIDs.begin(); num != cells[11512].inletIDs.end(); ++num) {
-        std::cout << *num << ", ";
+    // set inletIDs for contributing every cell
+    for (int i = 0; i < nCols*nRows; i++)
+    {
+        if ( (cells[i].landuse != LANDUSE_NONE) && (i != cells[i].outletID) )
+        {
+            cells[cells[i].outletID].inletIDs.push_back(i);
+        }
     }
+
+
 
     // Empty vectors for final list of routed subcatchments ID's and for the temporary working list of ID's
     std::vector<int> final_IDs;
 
-//    std::vector<std::string> conduits(condTable.nRows-1);
-//    std::vector<std::string> inJunctions(condTable.nRows-1);
-//    std::vector<std::string> outJunctions(condTable.nRows-1);
-//    std::vector<std::string> junctions(juncTable.nRows-1);
-
-
-//    // Go through conduits
-//    for (int i = 1; i < condTable.nRows; i++)
-//    {
-//        conduits[i-1] = condTable.getData(i, 4).c_str();        // Conduit name
-//        inJunctions[i-1] = condTable.getData(i, 8).c_str();     // From junction
-//        outJunctions[i-1] = condTable.getData(i, 9).c_str();    // To junction
-//    }
-
     // Go through junctions and add open junctions into final and selection lists
-//    for (int i = 1; i < juncTable.nRows; i++)
-    for (int i = 1; i < 9; i++)
+    for (int i = 1; i < juncTable.nRows; i++)
     {
-//        junctions[i-1] = juncTable.getData(i, 2).c_str();       // Junction name
-
         double juncPosX = atof( juncTable.getData(i, 0).c_str() );
         double juncPosY = atof( juncTable.getData(i, 1).c_str() );
         int isOpen = atoi( juncTable.getData(i, 6).c_str() );
@@ -1445,24 +1418,15 @@ void Grid::findRouted(Table &condTable, Table &juncTable)
                     while (!selection_IDs.empty() && counter < nCols*nRows)
                     {
                         // Get all subcatchments routed into the current cell
-                        std::list<int> inSubs = cells[selection_IDs.front()].inletIDs;
-
-                        // Make sure subcatchments routed into current cell are listed only once
-                        inSubs.sort();
-                        inSubs.unique();
-
+                        std::vector<int> inSubs = cells[selection_IDs.front()].inletIDs;
 
                         std::cout << "\nOutlet = " << selection_IDs.front();
 
                         // Go through the subcatchments routed into the current cell
-                        for (std::list<int>::iterator it=inSubs.begin(); it != inSubs.end(); ++it)
+                        for (auto it=inSubs.begin(); it != inSubs.end(); ++it)
                         {
                             final_IDs.push_back(*it);
 
-                            // TAA ON EHKA ONGELMA. SAATTAA ETSIA VAARAN KOKOISESTA ELI LIIAN PIENESTA LISTASTA ,
-                            // JOTEN EI LOYDA ARVOJA JOTKA ONKIN JO SIELLA LOPUSSA
-                            // PITAA KATTOA ETTA MYOS inSubs ON OIKEIN - ILMEISESTI NYT EI OLE KOSKA inletID:T ON VAARIN
-                            // Check if this subcatchment is already in list of selected ID's
                             if (!(std::find(selection_IDs.begin(), selection_IDs.end(), *it) != selection_IDs.end()))
                             {
                                 // Add subcatchment to selected subactchments if it's not there yet
@@ -1479,8 +1443,8 @@ void Grid::findRouted(Table &condTable, Table &juncTable)
             }
         }
     }
-    for(int i = 0; i < final_IDs.size(); i++)
-        std::cout << "\nfinal_IDs[" << i << "] = " << final_IDs[i] << "\tcells[" << final_IDs[i] << "].outlet = " << cells[final_IDs[i]].outlet;
+    for (auto it=final_IDs.begin(); it != final_IDs.end(); ++it)
+        std::cout << "\nfrom: " << cells[*it].name << "\tto: " << cells[*it].outlet;
 }
 
 

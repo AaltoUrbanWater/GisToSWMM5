@@ -262,22 +262,21 @@ int main (int argc, char* cArgv[])
             grid.routePitCells();
 
             // TJN 22 Nov 2017 START
+            if (argc == adapGridParams)
             {
                 // TJN 7 Dec 2017
                 grid.findRouted(condTable, juncTable);
 
-
-
-                int resSimplifying = 1;
-
-                std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
-                resSimplifying = grid.simplify(cArgv[24]);
-
-                if (resSimplifying != 0)
-                {
-                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
-                    return 1;
-                }
+//                int resSimplifying = 1;
+//
+//                std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
+//                resSimplifying = grid.simplify(cArgv[24]);
+//
+//                if (resSimplifying != 0)
+//                {
+//                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
+//                    return 1;
+//                }
             }
 
             // TJN 17 May 2017 START
