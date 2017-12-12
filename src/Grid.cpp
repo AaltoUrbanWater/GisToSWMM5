@@ -1365,31 +1365,33 @@ int Grid::simplify(std::string path)
 }
 
 // TJN 5 Dec 2017
-// Find cells routed to outlet using the algorithm from GQIS flowTrace plugin.
-// This can be extended to handle subcatchment simplification in future.
-void Grid::findRouted(Table &condTable, Table &juncTable)
+// Find cells routed to outlet and save routing and pipe information
+void Grid::findRouted(Table &juncTable, std::string path)
 {
-    // set inletIDs for contributing every cell
+    // Set inletIDs contributing to each cell
     for (int i = 0; i < nCols*nRows; i++)
     {
-        if ( (cells[i].landuse != LANDUSE_NONE) && (i != cells[i].outletID) )
+        if ( (cells[i].landuse != LANDUSE_NONE)
+            &&
+            (cells[i].landuse != LANDUSE_ROOF_CONNECTED)    // Connected roofs are treated separately
+            &&
+            (i != cells[i].outletID) )
         {
             cells[cells[i].outletID].inletIDs.push_back(i);
         }
     }
 
-
-
-    // Empty vectors for final list of routed subcatchments ID's and for the temporary working list of ID's
+    // Empty vector for final list of routed subcatchments ID's
     std::vector<int> final_IDs;
 
-    // Go through junctions and add open junctions into final and selection lists
+    // Go through junctions
     for (int i = 1; i < juncTable.nRows; i++)
     {
         double juncPosX = atof( juncTable.getData(i, 0).c_str() );
         double juncPosY = atof( juncTable.getData(i, 1).c_str() );
         int isOpen = atoi( juncTable.getData(i, 6).c_str() );
 
+        // Add open cells with junctions to final list of subcatchments
         if (juncPosX >= xllCorner
                 &&
                 juncPosX < xllCorner + nCols * cellSize
@@ -1413,14 +1415,12 @@ void Grid::findRouted(Table &condTable, Table &juncTable)
                     final_IDs.push_back(col + row * nCols);
                     selection_IDs.push_back(col + row * nCols);
 
-                    // Go through selection list
+                    // Iterate through cells with open jucntions and add cells as they flow towrads the opening
                     int counter = 0;
                     while (!selection_IDs.empty() && counter < nCols*nRows)
                     {
                         // Get all subcatchments routed into the current cell
                         std::vector<int> inSubs = cells[selection_IDs.front()].inletIDs;
-
-                        std::cout << "\nOutlet = " << selection_IDs.front();
 
                         // Go through the subcatchments routed into the current cell
                         for (auto it=inSubs.begin(); it != inSubs.end(); ++it)
@@ -1432,7 +1432,6 @@ void Grid::findRouted(Table &condTable, Table &juncTable)
                                 // Add subcatchment to selected subactchments if it's not there yet
                                 selection_IDs.push_back(*it);
                             }
-                            std::cout << "\n\t\tInlet = " << *it;
                         }
 
                         // Remove the subcatchment from the list of selected ID's
@@ -1443,11 +1442,20 @@ void Grid::findRouted(Table &condTable, Table &juncTable)
             }
         }
     }
-    for (auto it=final_IDs.begin(); it != final_IDs.end(); ++it)
-        std::cout << "\nfrom: " << cells[*it].name << "\tto: " << cells[*it].outlet;
+
+    for (int i = 0; i < nCols*nRows; i++)
+    {
+        // Add connected roofs to final subcatchments
+        if ( (cells[i].landuse == LANDUSE_ROOF_CONNECTED) && (i != cells[i].outletID) )
+        {
+            final_IDs.push_back(i);
+        }
+    }
+
+    // Create and save a WKT vector file of subcatchment routing
+    std::string outName = path + "_subcatchments_routed";
+    saveSubcatchmentRouting(outName, final_IDs);
 }
-
-
 
 void Grid::saveRaster(std::string path)
 {
@@ -1590,7 +1598,8 @@ void Grid::saveSubcatchmentPolygon(std::string path)
 // TJN 17 May 2017 END
 
 // TJN 18 May 2017 START
-void Grid::saveSubcatchmentRouting(std::string path)
+// TJN 12 Dec 2017: Update to use std::vector<int> ellIDs
+void Grid::saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs)
 {
     std::stringstream sstream;
     std::stringstream sstream_csvt;
@@ -1609,7 +1618,7 @@ void Grid::saveSubcatchmentRouting(std::string path)
 
     // Write polygon vertex coordinates.
     int lineId = 0;
-    for (int i = 1; i < nRows * nCols; i++)
+    for (auto i : cellIDs)
     {
         if (cells[i].landuse != LANDUSE_NONE)
         {
@@ -1628,12 +1637,22 @@ void Grid::saveSubcatchmentRouting(std::string path)
 
     // Write files to disk.
     FileIO fileio;
-    std::string path_csvt = path + "_subcatchment_routing.csvt";
-    path += "_subcatchment_routing.wkt";
+    std::string path_csvt = path + ".csvt";
+    path += ".wkt";
     int res = fileio.saveAsciiFile( path, sstream.str() );
     res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
 // TJN 18 May 2017 END
+
+// TJN 12 Dec 2017: Use version with cellIDs
+void Grid::saveSubcatchmentRouting(std::string path)
+{
+    std::vector<int> ind(nCols*nRows);
+    std::iota (std::begin(ind), std::end(ind), 0); // Fill with 0, 1, ..., (nCols*nROws-1)
+
+    saveSubcatchmentRouting(path, ind);
+}
+
 
 // TJN 8 Dec 2017 START
 void Grid::saveNetworkRouting(std::string path, Table &condTable)

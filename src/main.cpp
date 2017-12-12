@@ -261,27 +261,8 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Routing natural (rock, vegetation and sand) pit cells to themselves";
             grid.routePitCells();
 
-            // TJN 22 Nov 2017 START
-            if (argc == adapGridParams)
-            {
-                // TJN 7 Dec 2017
-                grid.findRouted(condTable, juncTable);
-
-//                int resSimplifying = 1;
-//
-//                std::cout << "\n-> Simplifying subcatchments based on  landuse and routing";
-//                resSimplifying = grid.simplify(cArgv[24]);
-//
-//                if (resSimplifying != 0)
-//                {
-//                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
-//                    return 1;
-//                }
-            }
-
-            // TJN 17 May 2017 START
-            // Create a vector output of the SWMM subcatchment grid instead of raster grid
-
+            // TJN 12 Dec 2017: Note; this only works if the raster has equal sized cells,
+            //                  i.e., not for adaptive grids.
 //			if (argc == regGridParams || adapGridParams)
 //			{
 //				// Create and save a raster for inspection.
@@ -297,14 +278,39 @@ int main (int argc, char* cArgv[])
             // TJN 18 May 2017 START
             // Create and save a WKT vector file of subcatchment routing
             std::cout << "\n-> Creating a subcatchment routing file for inspection";
-            grid.saveSubcatchmentRouting(cArgv[24]);
-            // TJN 18 May 2017 END
+            std::string outName(cArgv[24]);
+            outName += "_subcatchment_routing";
+            grid.saveSubcatchmentRouting(outName);
 
-//            // TJN 8 Dec 2017 START
-//            // Create and save a WKT vector file of subcatchment routing
-//            std::cout << "\n-> Creating a network routing file for inspection";
-//            grid.saveNetworkRouting(cArgv[24], condTable);
-//            // TJN 8 Dec 2017 END
+            // TJN 8 Dec 2017 START
+            // Create and save a WKT vector file of network routing
+            std::cout << "\n-> Creating a network routing file for inspection";
+            grid.saveNetworkRouting(cArgv[24], condTable);
+            // TJN 8 Dec 2017 END
+
+            // TJN 12 Dec 2017
+            // Find routed subcatchments and save to wkt-file
+            std::cout << "\n-> Creating a file of routed subcatchments for inspection";
+            grid.findRouted(juncTable, cArgv[24]);
+
+            // TJN 22 Nov 2017 START
+            // Simplify subcatchments based on common landuse and routing
+            if (argc == adapGridParams)
+            {
+
+                // TJN 12 Dec 2017: Below is an initial working version. Updated
+                //                  version should utilize logic from findRouted
+//                int resSimplifying = 1;
+//
+//                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
+//                resSimplifying = grid.simplify(cArgv[24]);
+//
+//                if (resSimplifying != 0)
+//                {
+//                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
+//                    return 1;
+//                }
+            }
 
             // Create the SWMM5 file.
             std::cout << "\n\nCreating the SWMM5 model input file:";
