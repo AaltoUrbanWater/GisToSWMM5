@@ -32,6 +32,7 @@ Cell::Cell()
 	HydCon = "0.5";
 	IMDmax = "0.25";
 	isSink = 0; // TJN 25 Sep 2017  By default all cells are routed
+	numElements = 0;
 
 	//for (int i = 0; i < 8; i++)
 	//{

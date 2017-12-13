@@ -59,13 +59,21 @@
 #endif
 // TJN 30 Nov 2017 END
 
+// Probably not necessary?
+//// TJN 12 Dec 2017 START
+//#ifndef _NUMERIC_H_
+//#define _NUMERIC_H_
+//#include <numeric>
+//#endif
+//// TJN 12 Dec 2017 END
 
-// TJN 12 Dec 2017 START
-#ifndef _NUMERIC_H_
-#define _NUMERIC_H_
-#include <numeric>
+// TJN 13 Dec 2017 START
+#ifndef _UNORDERED_MAP_H_
+#define _UNORDERED_MAP_H_
+#include <unordered_map>
 #endif
-// TJN 12 Dec 2017 END
+// TJN 13 Dec 2017 END
+
 
 class Grid
 {
@@ -96,8 +104,9 @@ class Grid
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
-		int simplify(std::string path);     // TJN 22 Nov 2017
-		void findRouted(Table &juncTable,std::string path);  // TJN 5 Dec 2017
+		int simplifyOld(std::string path);     // TJN 22 Nov 2017
+		void findRouted(Table &juncTable, std::string path);  // TJN 5 Dec 2017
+		void simplify(Table &juncTable);    // TJN 12 Dec 2017
 		void saveRaster(std::string path);
 		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017

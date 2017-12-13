@@ -272,15 +272,17 @@ int main (int argc, char* cArgv[])
 
             // Create and save a WKT vector file of subcatchment polygons
             std::cout << "\n-> Creating a subcatchment polygon file for inspection";
-            grid.saveSubcatchmentPolygon(cArgv[24]);
+            std::string outNameSubcatchments(cArgv[24]);
+            outNameSubcatchments += "_subcatchments";
+            grid.saveSubcatchmentPolygon(outNameSubcatchments);
             // TJN 17 May 2017 END
 
             // TJN 18 May 2017 START
             // Create and save a WKT vector file of subcatchment routing
             std::cout << "\n-> Creating a subcatchment routing file for inspection";
-            std::string outName(cArgv[24]);
-            outName += "_subcatchment_routing";
-            grid.saveSubcatchmentRouting(outName);
+            std::string outNameSubcatchmentRouting(cArgv[24]);
+            outNameSubcatchmentRouting += "_subcatchment_routing";
+            grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
 
             // TJN 8 Dec 2017 START
             // Create and save a WKT vector file of network routing
@@ -291,19 +293,29 @@ int main (int argc, char* cArgv[])
             // TJN 12 Dec 2017
             // Find routed subcatchments and save to wkt-file
             std::cout << "\n-> Creating a file of routed subcatchments for inspection";
-            grid.findRouted(juncTable, cArgv[24]);
+            std::string outNameSubcatchmentRouted(cArgv[24]);
+            outNameSubcatchmentRouted += "_subcatchments_routed";
+            grid.findRouted(juncTable, outNameSubcatchmentRouted);
 
             // TJN 22 Nov 2017 START
             // Simplify subcatchments based on common landuse and routing
             if (argc == adapGridParams)
             {
+                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
+                grid.simplify(juncTable);
+
+                std::cout << "\n-> Creating a file of routed subcatchments for inspection";
+                std::string outNameSimplifiedSubcatchments(cArgv[24]);
+                outNameSimplifiedSubcatchments += "_subcatchments_simple";
+                grid.saveSubcatchmentPolygon(outNameSimplifiedSubcatchments);
+
 
                 // TJN 12 Dec 2017: Below is an initial working version. Updated
                 //                  version should utilize logic from findRouted
 //                int resSimplifying = 1;
 //
 //                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
-//                resSimplifying = grid.simplify(cArgv[24]);
+//                resSimplifying = grid.simplifyOld(cArgv[24]);
 //
 //                if (resSimplifying != 0)
 //                {

@@ -60,4 +60,5 @@ class Cell
                                      // By default all cells are routed (0),
                                      // sinks with no routing are marked with 1, and
                                      // sinks with forceful routing (i.e. connected roofs) are marked with 2
+        int numElements;             // Number of elements, i.e., individual cells in adaptive grid subcatchments
 };
