@@ -304,10 +304,22 @@ int main (int argc, char* cArgv[])
                 std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
                 grid.simplify(juncTable);
 
-                std::cout << "\n-> Creating a file of routed subcatchments for inspection";
+                // Create and save a WKT vector file of subcatchment routing
+                std::cout << "\n-> Creating a subcatchment routing file for inspection";
+                std::string outNameSubcatchmentRouting(cArgv[24]);
+                outNameSubcatchmentRouting += "_subcatchment_routing_simple";
+                grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
+
+                std::cout << "\n-> Creating a file of routed adaptive subcatchments for inspection";
                 std::string outNameSimplifiedSubcatchments(cArgv[24]);
                 outNameSimplifiedSubcatchments += "_subcatchments_simple";
-                grid.saveSubcatchmentPolygon(outNameSimplifiedSubcatchments);
+                int resSaveSimple = grid.saveSubcatchmentPolygon(outNameSimplifiedSubcatchments);
+                if (resSaveSimple != 0)
+                {
+                    std::cout << "\n-> Error in creating an adaptive subcatchment routing file for inspection.";
+
+                    return 1;
+                }
 
 
                 // TJN 12 Dec 2017: Below is an initial working version. Updated

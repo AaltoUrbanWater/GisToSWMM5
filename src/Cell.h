@@ -61,4 +61,5 @@ class Cell
                                      // sinks with no routing are marked with 1, and
                                      // sinks with forceful routing (i.e. connected roofs) are marked with 2
         int numElements;             // Number of elements, i.e., individual cells in adaptive grid subcatchments
+        int hasInlet;                // the subcatchment/cell has an open inlet which coordinates are the outlet of the catchmetn
 };

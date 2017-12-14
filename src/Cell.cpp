@@ -16,7 +16,7 @@ Cell::Cell()
 	outletCoordX = 0.0;      // TJN 18 May 2017
 	outletCoordY = 0.0;      // TJN 18 May 2017
 	outletID = -1;           // TJN 23 Nov 2017
-	subcatchmentID = 0;      // TJN 23 Nov 2017
+	subcatchmentID = -1;      // TJN 23 Nov 2017
 	outlet = "*";
 	raingage = "r1";
 	imperv = "25.0";
@@ -33,6 +33,7 @@ Cell::Cell()
 	IMDmax = "0.25";
 	isSink = 0; // TJN 25 Sep 2017  By default all cells are routed
 	numElements = 0;
+	hasInlet = 0;
 
 	//for (int i = 0; i < 8; i++)
 	//{

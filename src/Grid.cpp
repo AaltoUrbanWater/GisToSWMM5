@@ -1478,7 +1478,7 @@ void Grid::simplify(Table &juncTable)
 
     std::vector<Cell> cellsAdaptive;
     std::unordered_map<int, std::vector<Cell>::size_type> adapID;  // A lookup table of subcatchmentID's in cellsAdaptive
-    int subcatchmentID = 0;
+    int subcatchmentID = -1;
 
     // Go through junctions
     for (int i = 1; i < juncTable.nRows; i++)
@@ -1527,10 +1527,11 @@ void Grid::simplify(Table &juncTable)
                     newCell.landuse = cells[col + row * nCols].landuse;
                     newCell.imperv = cells[col + row * nCols].imperv;
                     newCell.outlet = juncTable.getData(i, 2).c_str();
-                    newCell.outletID = col + row * nCols;
+                    newCell.outletID = subcatchmentID;
                     newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
                     newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
                     newCell.subcatchmentID = subcatchmentID;
+                    newCell.hasInlet = 1;
                     newCell.numElements++;
                     std::stringstream subcatchmentName("");
                     subcatchmentName << "s" << subcatchmentID;
@@ -1560,7 +1561,7 @@ void Grid::simplify(Table &juncTable)
 
                             // Add current cell to existing adaptive subctahment or create a new one if old doesn't exist
                             if (
-                                cells[cells[*it].outletID].subcatchmentID > 0   // adaptive subcatchment exists
+                                cells[cells[*it].outletID].subcatchmentID > -1   // adaptive subcatchment exists
                                 &&
                                 cells[*it].landuse == cells[cells[*it].outletID].landuse // cell has same landuse as the downstream subcatchment
                                 )
@@ -1585,23 +1586,21 @@ void Grid::simplify(Table &juncTable)
                                 cells[*it].subcatchmentID= subcatchmentID;
 
                                 // Get index of downstream subcatchment
-                                int i = adapID[cells[cells[*it].outletID].subcatchmentID] // PITAA OLLA ALAPUOLISEN cellsAdaptive MUKAAN!
+                                int i = adapID[cells[cells[*it].outletID].subcatchmentID];
 
                                 // ... and create a new adaptive subcatchment...
                                 Cell newCell;
                                 newCell.cellSize = cellSize;
                                 newCell.area += cells[*it].area;
-                                newCell.centerCoordX = cells[*it].centerCoordX;
-                                newCell.centerCoordY = cells[*it].centerCoordY;
+                                newCell.centerCoordX += cells[*it].centerCoordX;
+                                newCell.centerCoordY += cells[*it].centerCoordY;
                                 newCell.elevation += cells[*it].elevation;
                                 newCell.slope += cells[*it].slope;
             //                    newCell.flowWidth
                                 newCell.landuse = cells[*it].landuse;
                                 newCell.imperv = cells[*it].imperv;
-                                newCell.outlet = cells[*it].outlet     // PITAA OLLA ALAPUOLISEN cellsAdaptive MUKAAN!
-                                newCell.outletID = cells[*it].outletID // PITAA OLLA ALAPUOLISEN cellsAdaptive MUKAAN!
-                                newCell.outletCoordX = cells[*it].centerCoordX // PITAA OLLA ALAPUOLISEN cellsAdaptive MUKAAN!
-                                newCell.outletCoordY = cells[*it].centerCoordY // PITAA OLLA ALAPUOLISEN cellsAdaptive MUKAAN!
+                                newCell.outlet = cellsAdaptive[i].name;
+                                newCell.outletID = cells[cells[*it].outletID].subcatchmentID;
                                 newCell.subcatchmentID = subcatchmentID;
                                 newCell.numElements++;
                                 std::stringstream subcatchmentName("");
@@ -1632,17 +1631,29 @@ void Grid::simplify(Table &juncTable)
         }
     }
 
-    // Transfer adaptive cell data to the pointer array.
+    // Save subcatchment raster before destroying it
+    saveRaster("/u/93/tjniemi/unix/LOCAL_STORAGE/urban/out/demo/SWMM_in/demo_catchment_adap");
+
     clear();
     nCols = (int)cellsAdaptive.size();
     nRows = 1;
     cells = new Cell[nRows * nCols];
 
+    // Compute average subcatchment averages
+    for (int i = 0; i < nRows * nCols; i++ )
+    {
+        cellsAdaptive[i].centerCoordX /= (double) cellsAdaptive[i].numElements;
+        cellsAdaptive[i].centerCoordY /= (double) cellsAdaptive[i].numElements;
+        cellsAdaptive[i].elevation /= (double) cellsAdaptive[i].numElements;
+        cellsAdaptive[i].slope /= (double) cellsAdaptive[i].numElements;
+    }
+
+    // Transfer adaptive cell data to the pointer array.
     for (int i = 0; i < nRows * nCols; i++ )
     {
         cells[i].name = cellsAdaptive[i].name;
-        cells[i].centerCoordX = cellsAdaptive[i].centerCoordX / (double) cellsAdaptive[i].numElements;
-		cells[i].centerCoordY = cellsAdaptive[i].centerCoordY / (double) cellsAdaptive[i].numElements;
+        cells[i].centerCoordX = cellsAdaptive[i].centerCoordX;
+		cells[i].centerCoordY = cellsAdaptive[i].centerCoordY;
         cells[i].landuse = cellsAdaptive[i].landuse;
         cells[i].raingage = cellsAdaptive[i].raingage;
         cells[i].isSink = cellsAdaptive[i].isSink;
@@ -1656,13 +1667,22 @@ void Grid::simplify(Table &juncTable)
         cells[i].Suction = cellsAdaptive[i].Suction;
         cells[i].HydCon = cellsAdaptive[i].HydCon;
         cells[i].IMDmax = cellsAdaptive[i].IMDmax;
-        cells[i].elevation = cellsAdaptive[i].elevation / (double) cellsAdaptive[i].numElements;
-        cells[i].slope = cellsAdaptive[i].slope / (double) cellsAdaptive[i].numElements;
+        cells[i].elevation = cellsAdaptive[i].elevation;
+        cells[i].slope = cellsAdaptive[i].slope;
         cells[i].flowWidth = cellsAdaptive[i].flowWidth;
         cells[i].area = cellsAdaptive[i].area;
         cells[i].outlet = cellsAdaptive[i].outlet;
-        cells[i].outletCoordX = cellsAdaptive[i].outletCoordX;
-        cells[i].outletCoordY = cellsAdaptive[i].outletCoordY;
+        cells[i].outletID = cellsAdaptive[i].outletID;
+        if (cellsAdaptive[i].hasInlet == 1) // Outlet is open junction
+        {
+            cells[i].outletCoordX = cellsAdaptive[i].outletCoordX;
+            cells[i].outletCoordY = cellsAdaptive[i].outletCoordY;
+        }
+        else    // outlet is another subcatchment
+        {
+            cells[i].outletCoordX = cellsAdaptive[cellsAdaptive[i].outletID].centerCoordX;
+            cells[i].outletCoordY = cellsAdaptive[cellsAdaptive[i].outletID].centerCoordY;
+        }
     }
 }
 
@@ -1709,7 +1729,7 @@ void Grid::saveRaster(std::string path)
 }
 
 // TJN 17 May 2017 START
-void Grid::saveSubcatchmentPolygon(std::string path)
+int Grid::saveSubcatchmentPolygon(std::string path)
 {
     std::stringstream sstream;
     std::stringstream sstream_csvt;
@@ -1755,7 +1775,7 @@ void Grid::saveSubcatchmentPolygon(std::string path)
 
     // Write polygon vertex coordinates.
     int polyId = 0;
-    for (int i = 1; i < nRows * nCols; i++)
+    for (int i = 0; i < nRows * nCols; i++)     // TJN 14 Dec 2017: i = 1 -> i = 0
     {
         if (cells[i].landuse != LANDUSE_NONE)
         {
@@ -1803,7 +1823,9 @@ void Grid::saveSubcatchmentPolygon(std::string path)
     std::string path_csvt = path + ".csvt";
     path += ".wkt";
     int res = fileio.saveAsciiFile( path, sstream.str() );
-    res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
+    res = std::min(res, fileio.saveAsciiFile( path_csvt, sstream_csvt.str() ));
+
+    return res;
 }
 // TJN 17 May 2017 END
 

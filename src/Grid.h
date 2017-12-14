@@ -108,7 +108,7 @@ class Grid
 		void findRouted(Table &juncTable, std::string path);  // TJN 5 Dec 2017
 		void simplify(Table &juncTable);    // TJN 12 Dec 2017
 		void saveRaster(std::string path);
-		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
+		int saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
 		void saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs);   // TJN 12 Dec 2017
 		void saveNetworkRouting(std::string path, Table &condTable);      // TJN 8 Dec 2017
