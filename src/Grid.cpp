@@ -923,450 +923,9 @@ void Grid::routePitCells()
     }
 }
 
-// TJN 22 Nov 2017
-// Simplify grid based on common flow direction and landuse
-//
-/*
-TJN 4 Dec 2017
-Taa on turhan monimutkainen tapa tehda taa!
-Kopioi flow trace QGIS:sta tanne. Koska tunnetaan tarkalleen routtaus loppupisteelle
-pitaisi olla jopa helpompaa traceta taalla kuin QGIS puolella. Eli voidaan kayttaa
-suoraan neighCellIndices ja outlet tietoa, eika tarvitse laskea vektorin alku ja
-loppupisteita ja tarkistaa miten lahella toisiaan ne on.
-Tahan pitaisi pystya lisaamaan suht iisisti myos adaptiivisuus.
-Subcatchmenttien keskipisteet saadaan suoraan mukana olevien solujen koordinaattien
-keskiarvoina.
-Taa antaa myos suoraan koko valuma-alueen rajauksen, koska vaan ne solut jotka kontribuoi
-loppupisteelle on mukana.
-Saako tasta myos flow width arvioitua suoraan laskemalla kaikkien subcatchmentin
-sisaisten routtausten pituuden, ottamalla niista keskiarvon ja jakamalla subcathmentin
-pinta-alan routtausten (flow lenghtien) keskiarvolla?
-*/
-int Grid::simplifyOld(std::string path)
-{
-    bool newSubcathcments = true;
-    int subcatchmentIdx = 0;
-
-    // Connect cells into subcatchments starting from lower left corner
-    while (newSubcathcments)
-    {
-        newSubcathcments = false;
-        for (int i = 0; i < nCols * nRows; i++)
-        {
-            if (cells[i].landuse != LANDUSE_NONE && cells[i].landuse != LANDUSE_ROOF_UNCONNECTED && cells[i].landuse != LANDUSE_ROOF_CONNECTED && cells[i].outletID > -1)     //  Check that cells have routable land-use and outlet
-            {
-                int j = i;
-                // Connect cells with outlet that have the same land-use
-                while (cells[j].outletID > -1
-                        &&
-                        cells[j].landuse == cells[cells[j].outletID].landuse
-                        &&
-                        j != cells[j].outletID)
-                {
-                    // Connect cell into existing subcatchment
-                    if ((cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0)
-                            &&
-                            cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
-                    {
-                        int oldSubcatchmentIdx = 0;
-                        if (cells[cells[j].outletID].subcatchmentID > 0)
-                        {
-                            oldSubcatchmentIdx = cells[cells[j].outletID].subcatchmentID;
-                            cells[j].subcatchmentID = oldSubcatchmentIdx;
-                        }
-                        else
-                        {
-                            oldSubcatchmentIdx = cells[j].subcatchmentID;
-                            cells[cells[j].outletID].subcatchmentID = oldSubcatchmentIdx;
-                        }
-                    }
-                    // Create a new subcatchment
-                    else if (cells[j].subcatchmentID == 0
-                             &&
-                             cells[cells[j].outletID].subcatchmentID == 0)
-                    {
-                        newSubcathcments = true;
-                        subcatchmentIdx++;
-                        cells[j].subcatchmentID = subcatchmentIdx;
-                        cells[cells[j].outletID].subcatchmentID = subcatchmentIdx;
-                    }
-                    j = cells[j].outletID;
-                }
-                // Create a new subcatchment for individual cells that are not connected to same land-use
-                if (cells[i].outletID > -1
-                        &&
-                        cells[i].subcatchmentID < 1
-                        &&
-                        cells[i].landuse != cells[cells[i].outletID].landuse
-                        &&
-                        cells[i].landuse != LANDUSE_ROOF_CONNECTED
-                        &&
-                        cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
-                {
-                    subcatchmentIdx++;
-                    cells[i].subcatchmentID = subcatchmentIdx;
-                }
-            }
-            // Roofs
-            else
-            {
-                for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
-                {
-                    // Combine unconnected roof cells with same outlet into one subcatchment
-                    if (cells[i].neighCellIndices[k] != -1
-                            &&
-                            cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_UNCONNECTED
-                            &&
-                            cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
-                    {
-                        // Check if subcatchment exists
-                        if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
-                                &&
-                                cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
-                        {
-                            int oldSubcatchmentIdx = 0;
-                            if (cells[i].subcatchmentID > 0)
-                            {
-                                oldSubcatchmentIdx = cells[i].subcatchmentID;
-                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
-                            }
-                            else
-                            {
-                                oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
-                                cells[i].subcatchmentID = oldSubcatchmentIdx;
-                            }
-                        }
-                        // Subcathment does not exits - create a new subcatchment
-                        else if (cells[i].subcatchmentID == 0
-                                 &&
-                                 cells[cells[i].outletID].subcatchmentID == 0)
-                        {
-                            subcatchmentIdx++;
-                            cells[i].subcatchmentID = subcatchmentIdx;
-                            cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
-                        }
-                    }
-                    // Combine connected roof cells with same outlet into one subcatchment
-                    if (cells[i].neighCellIndices[k] != -1
-                            &&
-                            cells[ cells[i].neighCellIndices[k] ].landuse == LANDUSE_ROOF_CONNECTED
-                            &&
-                            cells[i].outletID == cells[ cells[i].neighCellIndices[k] ].outletID)
-                    {
-                        // Check if subcatchment exists
-                        if ((cells[i].subcatchmentID > 0 || cells[ cells[i].neighCellIndices[k] ].subcatchmentID > 0)
-                                &&
-                                cells[i].subcatchmentID != cells[cells[i].outletID].subcatchmentID)
-                        {
-                            int oldSubcatchmentIdx = 0;
-                            if (cells[i].subcatchmentID > 0)
-                            {
-                                oldSubcatchmentIdx = cells[i].subcatchmentID;
-                                cells[ cells[i].neighCellIndices[k] ].subcatchmentID = oldSubcatchmentIdx;
-                            }
-                            else
-                            {
-                                oldSubcatchmentIdx = cells[ cells[i].neighCellIndices[k] ].subcatchmentID;
-                                cells[i].subcatchmentID = oldSubcatchmentIdx;
-                            }
-                        }
-                        // Subcathment does not exits - create a new subcatchment
-                        else if (cells[i].subcatchmentID == 0
-                                 &&
-                                 cells[cells[i].outletID].subcatchmentID == 0)
-                        {
-                            subcatchmentIdx++;
-                            cells[i].subcatchmentID = subcatchmentIdx;
-                            cells[ cells[i].neighCellIndices[k] ].subcatchmentID = subcatchmentIdx;
-                        }
-                    }
-                }
-                // Treat individual roof cells
-                if (cells[i].outletID > -1
-                        &&
-                        cells[i].subcatchmentID < 1
-                        &&
-                        cells[i].landuse != cells[cells[i].outletID].landuse
-                        &&
-                        (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED || cells[i].landuse == LANDUSE_ROOF_CONNECTED))
-                {
-                    subcatchmentIdx++;
-                    cells[i].subcatchmentID = subcatchmentIdx;
-                }
-            }
-        }
-    }
-
-    // Connect remainig cells into subcatchments starting from upper right corner
-    newSubcathcments = true;
-    while (newSubcathcments)
-    {
-        newSubcathcments = false;
-        for (int i = nCols * nRows; i >= 0; i--)
-        {
-            if (cells[i].landuse != LANDUSE_NONE
-                    &&
-                    cells[i].landuse != LANDUSE_ROOF_UNCONNECTED
-                    &&
-                    cells[i].landuse != LANDUSE_ROOF_CONNECTED
-                    &&
-                    cells[i].outletID > -1)
-            {
-                int j = i;
-
-                while (cells[j].outletID > -1
-                        &&
-                        cells[j].landuse == cells[cells[j].outletID].landuse
-                        &&
-                        j != cells[j].outletID)
-                {
-                    if ((cells[j].subcatchmentID > 0 || cells[cells[j].outletID].subcatchmentID > 0)
-                            &&
-                            cells[j].subcatchmentID != cells[cells[j].outletID].subcatchmentID)
-                    {
-                        int oldSubcatchmentIdx = 0;
-                        if (cells[cells[j].outletID].subcatchmentID > 0)
-                        {
-                            oldSubcatchmentIdx = cells[cells[j].outletID].subcatchmentID;
-                            cells[j].subcatchmentID = oldSubcatchmentIdx;
-                        }
-
-                        else
-                        {
-                            oldSubcatchmentIdx = cells[j].subcatchmentID;
-                            cells[cells[j].outletID].subcatchmentID = oldSubcatchmentIdx;
-                        }
-                    }
-                    else if (cells[j].subcatchmentID == 0
-                             &&
-                             cells[cells[j].outletID].subcatchmentID == 0)
-                    {
-                        newSubcathcments = true;
-                        subcatchmentIdx++;
-                        cells[j].subcatchmentID = subcatchmentIdx;
-                        cells[cells[j].outletID].subcatchmentID = subcatchmentIdx;
-                    }
-                    j = cells[j].outletID;
-                }
-                // Create a new subcatchment for individual cells that are not connected to same land-use
-                if (cells[i].outletID > -1 && cells[i].subcatchmentID < 1 && cells[i].landuse != cells[cells[i].outletID].landuse)
-                {
-                    subcatchmentIdx++;
-                    cells[i].subcatchmentID = subcatchmentIdx;
-                }
-            }
-        }
-    }
-
-    // Save subcatchment raster before destroying it
-    saveRaster(path);
-
-    // Create a copy of subcathments to be sorted
-    // This could be done in a more sophisticated way, but for now just loop through
-    // all cells...
-    Cell * sortedCells = new Cell[ nCols * nRows ];
-    for (int i = 0; i < nRows*nCols; i++)
-    {
-        sortedCells[i].name = cells[i].name;
-        sortedCells[i].centerCoordX = cells[i].centerCoordX;
-        sortedCells[i].centerCoordY = cells[i].centerCoordY;
-        sortedCells[i].elevation = cells[i].elevation;
-        sortedCells[i].flowdir = cells[i].flowdir;
-        sortedCells[i].cellSize = cells[i].cellSize;
-        sortedCells[i].slope = cells[i].slope;
-        sortedCells[i].area = cells[i].area;
-        sortedCells[i].flowWidth = cells[i].flowWidth;
-        sortedCells[i].landuse = cells[i].landuse;
-        sortedCells[i].outletCoordX = cells[i].outletCoordX;
-        sortedCells[i].outletCoordY = cells[i].outletCoordY;
-        sortedCells[i].outletID = cells[i].outletID;
-        sortedCells[i].subcatchmentID = cells[i].subcatchmentID;
-        sortedCells[i].outlet = cells[i].outlet;
-        sortedCells[i].raingage = cells[i].raingage;
-        sortedCells[i].imperv = cells[i].imperv;
-        sortedCells[i].snowPack = cells[i].snowPack;
-        sortedCells[i].N_Imperv = cells[i].N_Imperv;
-        sortedCells[i].N_Perv = cells[i].N_Perv;
-        sortedCells[i].S_Imperv = cells[i].S_Imperv;
-        sortedCells[i].S_Perv = cells[i].S_Perv;
-        sortedCells[i].PctZero = cells[i].PctZero;
-        sortedCells[i].RouteTo = cells[i].RouteTo;
-        sortedCells[i].PctRouted = cells[i].PctRouted;
-        sortedCells[i].Suction = cells[i].Suction;
-        sortedCells[i].HydCon = cells[i].HydCon;
-        sortedCells[i].IMDmax = cells[i].IMDmax;
-        sortedCells[i].neighCellIndices = cells[i].neighCellIndices;
-        sortedCells[i].distanceToNeighbours = cells[i].distanceToNeighbours;
-        sortedCells[i].isSink = cells[i].isSink;
-    }
-
-    // Create a vector for storing merged subcatchments
-    std::vector<Cell> mergedCells;
-
-    // Sort cells according to subcatchmentID
-    std::sort(sortedCells, sortedCells + (nCols * nRows),
-              [](Cell const & a, Cell const & b) -> bool
-    { return a.subcatchmentID < b.subcatchmentID; } );
-
-    // Go through sorted cells and keep increasing subcatchment size as long as subcatchmentID remains constant
-    for (int i = 0; i < nCols * nRows; i++)
-    {
-        if (sortedCells[i].outletID > -1)
-        {
-            // Create a new subcatchment
-            Cell newSubcatchment;
-
-            // Non-pit subcatchments
-            if (sortedCells[i].subcatchmentID > 0)
-            {
-                int oldID = sortedCells[i].subcatchmentID;
-                int j = i;
-                int cellCount = 0;
-
-                // Give name for this subcatchment
-                std::stringstream subcatchmentName("");
-                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
-                // Give remaining parameters that are constant for the entire subcatchment
-                newSubcatchment.name = subcatchmentName.str();
-                newSubcatchment.landuse = sortedCells[i].landuse;
-                newSubcatchment.raingage = sortedCells[i].raingage;
-                newSubcatchment.imperv = sortedCells[i].imperv;
-                newSubcatchment.snowPack = sortedCells[i].snowPack;
-                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
-                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
-                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
-                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
-                newSubcatchment.PctZero = sortedCells[i].PctZero;
-                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
-                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
-                newSubcatchment.Suction = sortedCells[i].Suction;
-                newSubcatchment.HydCon = sortedCells[i].HydCon;
-                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
-
-                // Add cells to the current subcatchment and give parameter values depenging on subcatchment size
-                while (sortedCells[j].subcatchmentID == oldID)
-                {
-                    if (sortedCells[j].isSink > 0)
-                    {
-                        newSubcatchment.isSink = sortedCells[j].isSink;
-                        std::stringstream outletName("");
-                        outletName << "s" << sortedCells[j].subcatchmentID;
-                        newSubcatchment.outlet = outletName.str();
-                    }
-                    newSubcatchment.elevation += sortedCells[j].elevation;
-                    newSubcatchment.slope += sortedCells[j].slope;
-                    newSubcatchment.area += sortedCells[j].area;
-                    // Find outlet
-                    if (sortedCells[j].outletID > -1 && sortedCells[j].subcatchmentID != cells[sortedCells[j].outletID].subcatchmentID)
-                    {
-                        // Subcatchment outlet is a pit
-                        if (cells[sortedCells[j].outletID].subcatchmentID == 0)
-                        {
-                            std::stringstream outletName("");
-                            outletName << "s" << sortedCells[j].subcatchmentID;
-                            newSubcatchment.outlet = outletName.str();
-                        }
-                        // Subcatchment outlet is another subcatchment
-                        else
-                        {
-                            std::stringstream outletName("");
-                            outletName << "s" << cells[sortedCells[j].outletID].subcatchmentID;
-                            newSubcatchment.outlet = outletName.str();
-                        }
-                    }
-                    else if (sortedCells[j].outletID > -1 && (sortedCells[j].outlet.compare(0,1,"j") == 0))
-                    {
-                        newSubcatchment.outlet = sortedCells[j].outlet;
-                    }
-
-                    // outletCoordX
-                    // outletCoordY
-                    cellCount++;
-                    j++;
-                }
-                newSubcatchment.elevation /= (double) cellCount;
-                newSubcatchment.slope /= (double) cellCount;
-                newSubcatchment.flowWidth = 0.7 * std::sqrt(newSubcatchment.area);    // Krebs et al. (2014)
-                i = j - 1;
-            }
-// TJN 4 Dec 2017: Leave out individual pit cells since they do not contribute to outlet in any case
-//                 (Also, naming them is difficult...)
-//            // Individual pit cell subcatchments
-//            else
-//            {
-//                subcatchmentCount++;
-//
-//                std::stringstream subcatchmentName("");
-//                subcatchmentName << "s" << sortedCells[i].subcatchmentID;
-//                newSubcatchment.name = subcatchmentName.str();
-//                std::stringstream outletName("");
-//                outletName << "s" << sortedCells[i].outletID;
-//                newSubcatchment.outlet = outletName.str();
-//                newSubcatchment.landuse = sortedCells[i].landuse;
-//                newSubcatchment.raingage = sortedCells[i].raingage;
-//                newSubcatchment.isSink = sortedCells[i].isSink;
-//                newSubcatchment.imperv = sortedCells[i].imperv;
-//                newSubcatchment.snowPack = sortedCells[i].snowPack;
-//                newSubcatchment.N_Imperv = sortedCells[i].N_Imperv;
-//                newSubcatchment.N_Perv = sortedCells[i].N_Perv;
-//                newSubcatchment.S_Imperv = sortedCells[i].S_Imperv;
-//                newSubcatchment.S_Perv = sortedCells[i].S_Perv;
-//                newSubcatchment.PctZero = sortedCells[i].PctZero;
-//                newSubcatchment.RouteTo = sortedCells[i].RouteTo;
-//                newSubcatchment.PctRouted = sortedCells[i].PctRouted;
-//                newSubcatchment.Suction = sortedCells[i].Suction;
-//                newSubcatchment.HydCon = sortedCells[i].HydCon;
-//                newSubcatchment.IMDmax = sortedCells[i].IMDmax;
-//                newSubcatchment.elevation = sortedCells[i].elevation;
-//                newSubcatchment.slope = sortedCells[i].slope;
-//                newSubcatchment.area = sortedCells[i].area;
-//                newSubcatchment.outletCoordX = sortedCells[i].outletCoordX;
-//                newSubcatchment.outletCoordY = sortedCells[i].outletCoordY;
-//                newSubcatchment.flowWidth = std::sqrt(newSubcatchment.area);    // Is there a better value for this?
-//
-////                std::cout << "\nsortedCells[i].isSink = " << sortedCells[i].isSink;
-//            }
-            mergedCells.push_back(newSubcatchment);
-        }
-    }
-
-    // Transfer adaptive cell data to the pointer array.
-    clear();
-    nCols = (int)mergedCells.size();
-    nRows = 1;
-    cells = new Cell[nRows * nCols];
-
-    for (int i = 0; i < nRows * nCols; i++ )
-    {
-        cells[i].name = mergedCells[i].name;
-        cells[i].landuse = mergedCells[i].landuse;
-        cells[i].raingage = mergedCells[i].raingage;
-        cells[i].isSink = mergedCells[i].isSink;
-        cells[i].imperv = mergedCells[i].imperv;
-        cells[i].snowPack = mergedCells[i].snowPack;
-        cells[i].N_Imperv = mergedCells[i].N_Imperv;
-        cells[i].N_Perv = mergedCells[i].N_Perv;
-        cells[i].PctZero = mergedCells[i].PctZero;
-        cells[i].RouteTo = mergedCells[i].RouteTo;
-        cells[i].PctRouted = mergedCells[i].PctRouted;
-        cells[i].Suction = mergedCells[i].Suction;
-        cells[i].HydCon = mergedCells[i].HydCon;
-        cells[i].IMDmax = mergedCells[i].IMDmax;
-        cells[i].elevation = mergedCells[i].elevation;
-        cells[i].slope = mergedCells[i].slope;
-        cells[i].flowWidth = mergedCells[i].flowWidth;
-        cells[i].area = mergedCells[i].area;
-        cells[i].outlet = mergedCells[i].outlet;
-        cells[i].outletCoordX = mergedCells[i].outletCoordX;
-        cells[i].outletCoordY = mergedCells[i].outletCoordY;
-    }
-
-    return 0;
-}
-
 // TJN 5 Dec 2017
 // Find cells routed to outlet and save routing and pipe information
-void Grid::findRouted(Table &juncTable, std::string path)
+void Grid::findRouted(Table &juncTable, std::string &path)
 {
     // Set inletIDs contributing to each cell
     for (int i = 0; i < nCols*nRows; i++)
@@ -1458,7 +1017,7 @@ void Grid::findRouted(Table &juncTable, std::string path)
 
 // TJN 12 Dec 2017
 // Simplify computation grid based on common flow direction and landuse
-void Grid::simplify(Table &juncTable)
+void Grid::simplify(Table &juncTable, std::string &path)
 {
     /*** NON-ROOF CELLS ***/
     // Ensure the are no inletIDs
@@ -1526,11 +1085,10 @@ void Grid::simplify(Table &juncTable)
                     Cell newCell;
                     newCell.cellSize = cellSize;
                     newCell.area += cells[col + row * nCols].area;
-                    newCell.centerCoordX = cells[col + row * nCols].centerCoordX;
-                    newCell.centerCoordY = cells[col + row * nCols].centerCoordY;
+                    newCell.centerCoordX += cells[col + row * nCols].centerCoordX;
+                    newCell.centerCoordY += cells[col + row * nCols].centerCoordY;
                     newCell.elevation += cells[col + row * nCols].elevation;
                     newCell.slope += cells[col + row * nCols].slope;
-//                    newCell.flowWidth
                     newCell.landuse = cells[col + row * nCols].landuse;
                     newCell.imperv = cells[col + row * nCols].imperv;
                     newCell.outlet = juncTable.getData(i, 2).c_str();
@@ -1538,6 +1096,19 @@ void Grid::simplify(Table &juncTable)
                     newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
                     newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
                     newCell.subcatchmentID = subcatchmentID;
+                    newCell.raingage = cells[col + row * nCols].raingage;
+                    newCell.snowPack = cells[col + row * nCols].snowPack;
+                    newCell.N_Imperv = cells[col + row * nCols].N_Imperv;
+                    newCell.N_Perv = cells[col + row * nCols].N_Perv;
+                    newCell.S_Imperv = cells[col + row * nCols].S_Imperv;
+                    newCell.S_Perv = cells[col + row * nCols].S_Perv;
+                    newCell.PctZero = cells[col + row * nCols].PctZero;
+                    newCell.RouteTo = cells[col + row * nCols].RouteTo;
+                    newCell.PctRouted = cells[col + row * nCols].PctRouted;
+                    newCell.Suction = cells[col + row * nCols].Suction;
+                    newCell.HydCon = cells[col + row * nCols].HydCon;
+                    newCell.IMDmax = cells[col + row * nCols].IMDmax;
+                    newCell.isSink = cells[col + row * nCols].isSink;
                     newCell.hasInlet = 1;
                     newCell.numElements++;
                     std::stringstream subcatchmentName("");
@@ -1588,7 +1159,6 @@ void Grid::simplify(Table &juncTable)
                                     cellsAdaptive[i].centerCoordY += cells[*it].centerCoordY;
                                     cellsAdaptive[i].elevation += cells[*it].elevation;
                                     cellsAdaptive[i].slope += cells[*it].slope;
-//                                cellsAdaptive[i].flowWidth
                                     cellsAdaptive[i].numElements++;
                                 }
                                 else
@@ -1608,12 +1178,24 @@ void Grid::simplify(Table &juncTable)
                                     newCell.centerCoordY += cells[*it].centerCoordY;
                                     newCell.elevation += cells[*it].elevation;
                                     newCell.slope += cells[*it].slope;
-                                    //                    newCell.flowWidth
                                     newCell.landuse = cells[*it].landuse;
                                     newCell.imperv = cells[*it].imperv;
                                     newCell.outlet = cellsAdaptive[i].name;
                                     newCell.outletID = cells[cells[*it].outletID].subcatchmentID;
                                     newCell.subcatchmentID = subcatchmentID;
+                                    newCell.raingage = cells[*it].raingage;
+                                    newCell.snowPack = cells[*it].snowPack;
+                                    newCell.N_Imperv = cells[*it].N_Imperv;
+                                    newCell.N_Perv = cells[*it].N_Perv;
+                                    newCell.S_Imperv = cells[*it].S_Imperv;
+                                    newCell.S_Perv = cells[*it].S_Perv;
+                                    newCell.PctZero = cells[*it].PctZero;
+                                    newCell.RouteTo = cells[*it].RouteTo;
+                                    newCell.PctRouted = cells[*it].PctRouted;
+                                    newCell.Suction = cells[*it].Suction;
+                                    newCell.HydCon = cells[*it].HydCon;
+                                    newCell.IMDmax = cells[*it].IMDmax;
+                                    newCell.isSink = cells[*it].isSink;
                                     newCell.numElements++;
                                     std::stringstream subcatchmentName("");
                                     subcatchmentName << "s" << subcatchmentID;
@@ -1637,16 +1219,16 @@ void Grid::simplify(Table &juncTable)
     /*** UNCONNECTED ROOFS ***/
     // Ensure the are no earlier inletIDs
     for (int i = 0; (int) i < cellsAdaptive.size(); ++i)
-            cellsAdaptive[i].inletIDs.clear();
+        cellsAdaptive[i].inletIDs.clear();
 
     // Find outlets of unconnected roof cells
     for (int i = 0; i < nCols*nRows; i++)
     {
         if ( (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)
-            &&
-            (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
-            &&
-            (i != cells[i].outletID) )
+                &&
+                (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
+                &&
+                (i != cells[i].outletID) )
         {
             // Get index of downstream subcatchment
             int j = adapID[cells[cells[i].outletID].subcatchmentID];
@@ -1676,16 +1258,28 @@ void Grid::simplify(Table &juncTable)
             Cell newCell;
             newCell.cellSize = cellSize;
             newCell.area += cells[roofCells.front()].area;
-            newCell.centerCoordX = cells[roofCells.front()].centerCoordX;
-            newCell.centerCoordY = cells[roofCells.front()].centerCoordY;
+            newCell.centerCoordX += cells[roofCells.front()].centerCoordX;
+            newCell.centerCoordY += cells[roofCells.front()].centerCoordY;
             newCell.elevation += cells[roofCells.front()].elevation;
             newCell.slope += cells[roofCells.front()].slope;
-//                    newCell.flowWidth
             newCell.landuse = cells[roofCells.front()].landuse;
             newCell.imperv = cells[roofCells.front()].imperv;
             newCell.outlet = cellsAdaptive[*it].name;
             newCell.outletID = *it;
             newCell.subcatchmentID = subcatchmentID;
+            newCell.raingage = cells[roofCells.front()].raingage;
+            newCell.snowPack = cells[roofCells.front()].snowPack;
+            newCell.N_Imperv = cells[roofCells.front()].N_Imperv;
+            newCell.N_Perv = cells[roofCells.front()].N_Perv;
+            newCell.S_Imperv = cells[roofCells.front()].S_Imperv;
+            newCell.S_Perv = cells[roofCells.front()].S_Perv;
+            newCell.PctZero = cells[roofCells.front()].PctZero;
+            newCell.RouteTo = cells[roofCells.front()].RouteTo;
+            newCell.PctRouted = cells[roofCells.front()].PctRouted;
+            newCell.Suction = cells[roofCells.front()].Suction;
+            newCell.HydCon = cells[roofCells.front()].HydCon;
+            newCell.IMDmax = cells[roofCells.front()].IMDmax;
+            newCell.isSink = cells[roofCells.front()].isSink;
             newCell.numElements++;
             std::stringstream subcatchmentName("");
             subcatchmentName << "s" << subcatchmentID;
@@ -1706,7 +1300,6 @@ void Grid::simplify(Table &juncTable)
                 newCell.centerCoordY += cells[*it].centerCoordY;
                 newCell.elevation += cells[*it].elevation;
                 newCell.slope += cells[*it].slope;
-//                newCell.flowWidth
                 newCell.numElements++;
             }
             // Save current subcatchment
@@ -1726,8 +1319,8 @@ void Grid::simplify(Table &juncTable)
     for (int i = 0; i < nCols*nRows; i++)
     {
         if ( (cells[i].landuse == LANDUSE_ROOF_CONNECTED)
-            &&
-            (i != cells[i].outletID) )
+                &&
+                (i != cells[i].outletID) )
         {
             cells[cells[i].outletID].inletIDs.push_back(i);
         }
@@ -1760,50 +1353,29 @@ void Grid::simplify(Table &juncTable)
 
                 if (j >= 0 && j < nCols * nRows)
                 {
-                    std::cout << "\nj = " << j;
+                    std::vector<int> selection_IDs;
+                    selection_IDs.reserve(nCols*nRows); // Is this necessary???
+
                     for (auto it = cells[j].inletIDs.begin(); it !=  cells[j].inletIDs.end(); ++it) // Inlet roof cell to junction i in cell j
                     {
-                        if (cells[*it].subcatchmentID < 0)
+                        // Add cell to final cells if it is not there yet
+                        if (!(std::find(final_IDs.begin(), final_IDs.end(), *it) != final_IDs.end()))
                         {
-                        std::cout << "\n\t*it = " << *it;
-                        int oldSubcatchmentID = -1;
+                            final_IDs.push_back(*it);
+                            selection_IDs.push_back(*it);
 
-                        // VOISIKO TASTA LOOPISTA TEHDA SELLAISEN, ETTA KIERTAA LAPI NEIGHCELL INDICES NIIN KAUAN KUN YHDELLAKAAN NAAPURIN NAAPURILLA ON INDEKSEJA
-                        // KIERTO LOPPUU KUN JOKO KAIKKI INDEKSIT ON KAYTY LAPI JA oldSubcatchmentID ON EDELLEEN -1 TAI KUN LOYTYY INDEKSI???
-                        for (int k = 0; k < (int) cells[*it].neighCellIndices.size(); k++)
-                        {
-                            if (cells[*it].neighCellIndices[k] != -1
-                            &&
-                            cells[cells[*it].neighCellIndices[k]].landuse == LANDUSE_ROOF_CONNECTED  // Neighbouring cell is connected roof
-                            &&
-                            cells[cells[*it].neighCellIndices[k]].outletID == cells[*it].outletID    // Neighbouring cell is connected to same junction
-                               )
-                            {
-                                if (cells[cells[*it].neighCellIndices[k]].subcatchmentID > -1)    // Neighbouring roof cell belongs to a subcatchment
-                                {
-                                    oldSubcatchmentID = cells[cells[*it].neighCellIndices[k]].subcatchmentID;
-                                }
-                            }
-                        }
-//                        std::cout << "\noldSubcatchmentID = " << oldSubcatchmentID;
-                        if (oldSubcatchmentID < 0)  // No old oldSubcatchmentID's found
-                        {
-//                            std::cout << "\n*it = " << *it << "\tcells[*it].subcatchmentID = " << cells[*it].subcatchmentID;
-
-                            // Create a new subcatchment
-                            // Update the subcatchmentID of the current cell...
+                            // Update the subcatchmentID of current cell...
                             subcatchmentID++;
-                            cells[*it].subcatchmentID  = subcatchmentID;
+                            cells[*it].subcatchmentID = subcatchmentID;
 
                             // ... create a new adaptive subcatchment...
                             Cell newCell;
                             newCell.cellSize = cellSize;
                             newCell.area += cells[*it].area;
-                            newCell.centerCoordX = cells[*it].centerCoordX;
-                            newCell.centerCoordY = cells[*it].centerCoordY;
+                            newCell.centerCoordX += cells[*it].centerCoordX;
+                            newCell.centerCoordY += cells[*it].centerCoordY;
                             newCell.elevation += cells[*it].elevation;
                             newCell.slope += cells[*it].slope;
-        //                    newCell.flowWidth
                             newCell.landuse = cells[*it].landuse;
                             newCell.imperv = cells[*it].imperv;
                             newCell.outlet = juncTable.getData(i, 2).c_str();
@@ -1811,56 +1383,76 @@ void Grid::simplify(Table &juncTable)
                             newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
                             newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
                             newCell.subcatchmentID = subcatchmentID;
-                            newCell.numElements++;
+                            newCell.raingage = cells[*it].raingage;
+                            newCell.snowPack = cells[*it].snowPack;
+                            newCell.N_Imperv = cells[*it].N_Imperv;
+                            newCell.N_Perv = cells[*it].N_Perv;
+                            newCell.S_Imperv = cells[*it].S_Imperv;
+                            newCell.S_Perv = cells[*it].S_Perv;
+                            newCell.PctZero = cells[*it].PctZero;
+                            newCell.RouteTo = cells[*it].RouteTo;
+                            newCell.PctRouted = cells[*it].PctRouted;
+                            newCell.Suction = cells[*it].Suction;
+                            newCell.HydCon = cells[*it].HydCon;
+                            newCell.IMDmax = cells[*it].IMDmax;
+                            newCell.isSink = cells[*it].isSink;
                             newCell.hasInlet = 1;
+                            newCell.numElements++;
                             std::stringstream subcatchmentName("");
                             subcatchmentName << "s" << subcatchmentID;
                             newCell.name = subcatchmentName.str();
-
-                            // Go through the neighbour cells and connect them to the same subcatchment
-                            for (int k = 0; k < (int) cells[*it].neighCellIndices.size(); k++)
-                            {
-                                if (cells[*it].neighCellIndices[k] != -1
-                                &&
-                                cells[cells[*it].neighCellIndices[k]].landuse == LANDUSE_ROOF_CONNECTED  // Neighbouring cell is connected roof
-                                &&
-                                cells[cells[*it].neighCellIndices[k]].outletID == cells[*it].outletID    // Neighbouring cell is connected to same junction
-                                   )
-                                {
-                                    // Use the newly created subcathment index
-                                    cells[cells[*it].neighCellIndices[k]].subcatchmentID = subcatchmentID;
-
-                                    // Add current cell to existing subcatchment
-                                    newCell.area += cells[*it].area;
-                                    newCell.centerCoordX += cells[cells[*it].neighCellIndices[k]].centerCoordX;
-                                    newCell.centerCoordY += cells[cells[*it].neighCellIndices[k]].centerCoordY;
-                                    newCell.elevation += cells[cells[*it].neighCellIndices[k]].elevation;
-                                    newCell.slope += cells[cells[*it].neighCellIndices[k]].slope;
-        //                                newCell.flowWidth
-                                    newCell.numElements++;
-                                }
-                            }
-
                             cellsAdaptive.push_back(newCell);
+
                             // ... and update the lookup table of subcatchments and their indexes.
                             adapID[subcatchmentID] = cellsAdaptive.size()-1;
 
-                        }
-                        else    // Neighbour cell belongs to subcatchment
-                        {
-                            // Use subcathment index from neighbour
-                            cells[*it].subcatchmentID = oldSubcatchmentID;
+                            // Iterate through neighbouring roof cells and add cells connected to same junction
+                            int counter = 0;    // Failsafe to prevent infinite while loop
+                            while (!selection_IDs.empty() && counter < nCols*nRows)
+                            {
+                                std::vector<int> neighCells = cells[selection_IDs.front()].neighCellIndices;
+                                // Go through the neighbour cells routed into the same junction
+                                for (int k = 0; k < (int) neighCells.size(); k++)
+                                {
+                                    if (neighCells[k] != -1
+                                            &&
+                                            cells[neighCells[k]].landuse == LANDUSE_ROOF_CONNECTED  // Neighbouring cell is connected roof
+                                            &&
+                                            cells[neighCells[k]].outletID == cells[selection_IDs.front()].outletID    // Neighbouring cell is connected to same junction
+                                       )
+                                    {
+                                        // Add cell to selected cells if it is not there or in final cells yet
+                                        if (!(std::find(selection_IDs.begin(), selection_IDs.end(), neighCells[k]) != selection_IDs.end())
+                                                &&
+                                                !(std::find(final_IDs.begin(), final_IDs.end(), neighCells[k]) != final_IDs.end()))
+                                        {
+                                            selection_IDs.push_back(neighCells[k]);
+                                        }
 
-                            // Add current cell to existing subcatchment
-                            int i = adapID[oldSubcatchmentID];
-                            cellsAdaptive[i].area += cells[*it].area;
-                            cellsAdaptive[i].centerCoordX += cells[*it].centerCoordX;
-                            cellsAdaptive[i].centerCoordY += cells[*it].centerCoordY;
-                            cellsAdaptive[i].elevation += cells[*it].elevation;
-                            cellsAdaptive[i].slope += cells[*it].slope;
-//                                cellsAdaptive[i].flowWidth
-                            cellsAdaptive[i].numElements++;
-                        }
+                                        // Add cell to final cells if it is not there yet
+                                        if (!(std::find(final_IDs.begin(), final_IDs.end(), neighCells[k]) != final_IDs.end()))
+                                        {
+                                            final_IDs.push_back(neighCells[k]);
+
+                                            // Update subcatchmentID of current cell ...
+                                            cells[neighCells[k]].subcatchmentID = cells[selection_IDs.front()].subcatchmentID;
+
+                                            // ... and add current cell to existing subcatchment
+                                            int i = adapID[cells[selection_IDs.front()].subcatchmentID];
+                                            cellsAdaptive[i].area += cells[neighCells[k]].area;
+                                            cellsAdaptive[i].centerCoordX += cells[neighCells[k]].centerCoordX;
+                                            cellsAdaptive[i].centerCoordY += cells[neighCells[k]].centerCoordY;
+                                            cellsAdaptive[i].elevation += cells[neighCells[k]].elevation;
+                                            cellsAdaptive[i].slope += cells[neighCells[k]].slope;
+                                            cellsAdaptive[i].numElements++;
+                                        }
+                                    }
+                                }
+
+                                // Remove the cell ID from the list of selected ID's
+                                selection_IDs.erase(selection_IDs.begin());
+                                counter++;
+                            }
                         }
                     }
                 }
@@ -1868,126 +1460,16 @@ void Grid::simplify(Table &juncTable)
         }
     }
 
-
-    // TOIMII MUTTA EI YHDISTA VIEREKKAISIA SAMAAN JUNCTIONIIN PURKAVIA KATTOSOLUJA AINA TOISIINSA
-    // KOSKA PERUSTUU PELKKAAN LINEAARISEEN NAAPURISOLUJEN LAPI KAYMISEEN
-//    // Go through junctions
-//    for (int i = 1; i < juncTable.nRows; i++)
-//    {
-//        double juncPosX = atof( juncTable.getData(i, 0).c_str() );
-//        double juncPosY = atof( juncTable.getData(i, 1).c_str() );
-//        int isRoutable = atoi( juncTable.getData(i, 10).c_str() );
-//
-//        // Check that cell is routable and within catchment
-//        if (juncPosX >= xllCorner
-//                &&
-//                juncPosX < xllCorner + nCols * cellSize
-//                &&
-//                juncPosY >= yllCorner
-//                &&
-//                juncPosY < yllCorner + nRows * cellSize
-//                &&
-//                isRoutable == 1) // pass closed junctions
-//        {
-//            if (nCols > 0 && nRows > 0 && cellSize > 0.0)
-//            {
-//                int col = (int)((juncPosX - xllCorner) / cellSize);
-//                int row = (int)((juncPosY - yllCorner) / cellSize);
-//
-//                int j = col + row * nCols;  // Cell index of junction i
-//
-//                if (j >= 0 && j < nCols * nRows)
-//                {
-//                    std::cout << "\nj = " << j;
-//                    for (auto it = cells[j].inletIDs.begin(); it !=  cells[j].inletIDs.end(); ++it) // Inlet roof cell to junction i in cell j
-//                    {
-//                        std::cout << "\n\t*it = " << *it;
-//                        int oldSubcatchmentID = -1;
-//                        for (int k = 0; k < (int) cells[*it].neighCellIndices.size(); k++)
-//                        {
-//                            if (cells[*it].neighCellIndices[k] != -1
-//                            &&
-//                            cells[cells[*it].neighCellIndices[k]].landuse == LANDUSE_ROOF_CONNECTED  // Neighbouring cell is connected roof
-//                            &&
-//                            cells[cells[*it].neighCellIndices[k]].outletID == cells[*it].outletID    // Neighbouring cell is connected to same junction
-//                               )
-//                            {
-//                                if (cells[cells[*it].neighCellIndices[k]].subcatchmentID > -1)    // Neighbouring roof cell belongs to a subcatchment
-//                                {
-//                                    oldSubcatchmentID = cells[cells[*it].neighCellIndices[k]].subcatchmentID;
-//                                }
-//                            }
-//                        }
-////                        std::cout << "\noldSubcatchmentID = " << oldSubcatchmentID;
-//                        if (oldSubcatchmentID < 0)  // No old oldSubcatchmentID's found
-//                        {
-////                            std::cout << "\n*it = " << *it << "\tcells[*it].subcatchmentID = " << cells[*it].subcatchmentID;
-//
-//                            // Create a new subcatchment
-//                            // Update the subcatchmentID of the current cell...
-//                            subcatchmentID++;
-//                            cells[*it].subcatchmentID  = subcatchmentID;
-//
-//                            // ... create a new adaptive subcatchment...
-//                            Cell newCell;
-//                            newCell.cellSize = cellSize;
-//                            newCell.area += cells[*it].area;
-//                            newCell.centerCoordX = cells[*it].centerCoordX;
-//                            newCell.centerCoordY = cells[*it].centerCoordY;
-//                            newCell.elevation += cells[*it].elevation;
-//                            newCell.slope += cells[*it].slope;
-//        //                    newCell.flowWidth
-//                            newCell.landuse = cells[*it].landuse;
-//                            newCell.imperv = cells[*it].imperv;
-//                            newCell.outlet = juncTable.getData(i, 2).c_str();
-//                            newCell.outletID = j;
-//                            newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
-//                            newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
-//                            newCell.subcatchmentID = subcatchmentID;
-//                            newCell.numElements++;
-//                            newCell.hasInlet = 1;
-//                            std::stringstream subcatchmentName("");
-//                            subcatchmentName << "s" << subcatchmentID;
-//                            newCell.name = subcatchmentName.str();
-//                            cellsAdaptive.push_back(newCell);
-//
-//                            // ... and update the lookup table of subcatchments and their indexes.
-//                            adapID[subcatchmentID] = cellsAdaptive.size()-1;
-//
-//                        }
-//                        else    // Neighbour cell belongs to subcatchment
-//                        {
-//                            // Use subcathment index from neighbour
-//                            cells[*it].subcatchmentID = oldSubcatchmentID;
-//
-//                            // Add current cell to existing subcatchment
-//                            int i = adapID[oldSubcatchmentID];
-//                            cellsAdaptive[i].area += cells[*it].area;
-//                            cellsAdaptive[i].centerCoordX += cells[*it].centerCoordX;
-//                            cellsAdaptive[i].centerCoordY += cells[*it].centerCoordY;
-//                            cellsAdaptive[i].elevation += cells[*it].elevation;
-//                            cellsAdaptive[i].slope += cells[*it].slope;
-////                                cellsAdaptive[i].flowWidth
-//                            cellsAdaptive[i].numElements++;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-
-
-
-    // Save subcatchment raster before destroying it
-    saveRaster("/u/93/tjniemi/unix/LOCAL_STORAGE/urban/out/demo/SWMM_in/demo_catchment_adap");
+    // Create and save a raster of adaptive grid for inspection before destroying the cells
+    std::cout << "\n-> Creating an output raster of adaptive grid for inspection";
+    saveRaster(path);
 
     clear();
     nCols = (int)cellsAdaptive.size();
     nRows = 1;
     cells = new Cell[nRows * nCols];
 
-    // Compute average subcatchment averages
+    // Compute adaptive subcatchment averages
     for (int i = 0; i < nRows * nCols; i++ )
     {
         if (cellsAdaptive[i].numElements > 0)
@@ -1998,7 +1480,7 @@ void Grid::simplify(Table &juncTable)
             cellsAdaptive[i].slope /= (double) cellsAdaptive[i].numElements;
         }
         else
-            std::cout << "\nError: No cells in adaptive subcatchment!";
+            std::cout << "\nError: No cells in adaptive subcatchment " << i << "!";
     }
 
     // Transfer adaptive cell data to the pointer array.
@@ -2007,26 +1489,13 @@ void Grid::simplify(Table &juncTable)
         cells[i].name = cellsAdaptive[i].name;
         cells[i].centerCoordX = cellsAdaptive[i].centerCoordX;
         cells[i].centerCoordY = cellsAdaptive[i].centerCoordY;
-        cells[i].landuse = cellsAdaptive[i].landuse;
-        cells[i].raingage = cellsAdaptive[i].raingage;
-        cells[i].isSink = cellsAdaptive[i].isSink;
-        cells[i].imperv = cellsAdaptive[i].imperv;
-        cells[i].snowPack = cellsAdaptive[i].snowPack;
-        cells[i].N_Imperv = cellsAdaptive[i].N_Imperv;
-        cells[i].N_Perv = cellsAdaptive[i].N_Perv;
-        cells[i].PctZero = cellsAdaptive[i].PctZero;
-        cells[i].RouteTo = cellsAdaptive[i].RouteTo;
-        cells[i].PctRouted = cellsAdaptive[i].PctRouted;
-        cells[i].Suction = cellsAdaptive[i].Suction;
-        cells[i].HydCon = cellsAdaptive[i].HydCon;
-        cells[i].IMDmax = cellsAdaptive[i].IMDmax;
         cells[i].elevation = cellsAdaptive[i].elevation;
+        cells[i].cellSize = cellsAdaptive[i].cellSize;
         cells[i].slope = cellsAdaptive[i].slope;
-        cells[i].flowWidth = cellsAdaptive[i].flowWidth;
         cells[i].area = cellsAdaptive[i].area;
-        cells[i].outlet = cellsAdaptive[i].outlet;
-        cells[i].outletID = cellsAdaptive[i].outletID;
-        if (cellsAdaptive[i].hasInlet == 1) // Outlet is open junction
+        cells[i].flowWidth = 0.7 * std::sqrt(cellsAdaptive[i].area);    // Krebs et al. (2014)
+        cells[i].landuse = cellsAdaptive[i].landuse;
+        if (cellsAdaptive[i].hasInlet == 1) // Outlet is junction
         {
             cells[i].outletCoordX = cellsAdaptive[i].outletCoordX;
             cells[i].outletCoordY = cellsAdaptive[i].outletCoordY;
@@ -2036,13 +1505,28 @@ void Grid::simplify(Table &juncTable)
             cells[i].outletCoordX = cellsAdaptive[cellsAdaptive[i].outletID].centerCoordX;
             cells[i].outletCoordY = cellsAdaptive[cellsAdaptive[i].outletID].centerCoordY;
         }
+        cells[i].outletID = cellsAdaptive[i].outletID;
+        cells[i].outlet = cellsAdaptive[i].outlet;
+        cells[i].raingage = cellsAdaptive[i].raingage;
+        cells[i].imperv = cellsAdaptive[i].imperv;
+        cells[i].snowPack = cellsAdaptive[i].snowPack;
+        cells[i].N_Imperv = cellsAdaptive[i].N_Imperv;
+        cells[i].N_Perv = cellsAdaptive[i].N_Perv;
+        cells[i].S_Imperv = cellsAdaptive[i].S_Imperv;
+        cells[i].S_Perv = cellsAdaptive[i].S_Perv;
+        cells[i].PctZero = cellsAdaptive[i].PctZero;
+        cells[i].RouteTo = cellsAdaptive[i].RouteTo;
+        cells[i].PctRouted = cellsAdaptive[i].PctRouted;
+        cells[i].Suction = cellsAdaptive[i].Suction;
+        cells[i].HydCon = cellsAdaptive[i].HydCon;
+        cells[i].IMDmax = cellsAdaptive[i].IMDmax;
+        cells[i].isSink = cellsAdaptive[i].isSink;
     }
 }
 
-
 void Grid::saveRaster(std::string path)
 {
-    path += "_subcatchments.asc";       // TJN 23 Nov 2017
+    path += ".asc";
 
     Raster outputRaster;
     outputRaster.pathName = path;
@@ -2065,8 +1549,7 @@ void Grid::saveRaster(std::string path)
 
             if (cells[ i + j * nCols ].landuse != LANDUSE_NONE)
             {
-                sstream << cells[ i + j * nCols ].subcatchmentID;        // TJN 23 Nov 2017
-//                sstream << cells[ i + j * nCols ].slope * 100.0;
+                sstream << cells[ i + j * nCols ].subcatchmentID;
             }
             else
             {
@@ -2237,7 +1720,6 @@ void Grid::saveSubcatchmentRouting(std::string path)
 
     saveSubcatchmentRouting(path, ind);
 }
-
 
 // TJN 8 Dec 2017 START
 void Grid::saveNetworkRouting(std::string path, Table &condTable)

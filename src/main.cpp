@@ -176,7 +176,8 @@ int main (int argc, char* cArgv[])
                 std::cout << "\n-> Initial grid cell size: " << cArgv[25] << "x" << cArgv[25] << "m^2";
                 std::cout << "\n-> Number of subdivisions: " << cArgv[26];
                 gridType = 1;
-                resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]), landuseRaster, demRaster);
+                resDiscretization = grid.create(gridType, atof(cArgv[25]), atoi(cArgv[26]),
+                                                landuseRaster, demRaster);
             }
 
             if (resDiscretization != 0)
@@ -261,58 +262,44 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Routing natural (rock, vegetation and sand) pit cells to themselves";
             grid.routePitCells();
 
-            // TJN 12 Dec 2017: Note; this only works if the raster has equal sized cells,
-            //                  i.e., not for adaptive grids.
-//			if (argc == regGridParams || adapGridParams)
-//			{
-//				// Create and save a raster for inspection.
-//				std::cout << "\n-> Creating an output raster for inspection";
-//				grid.saveRaster(cArgv[24]);
-//			}
-
-            // Create and save a WKT vector file of subcatchment polygons
+            // Create and save a WKT vector file of all individual subcatchment cells in the study area
             std::cout << "\n-> Creating a subcatchment polygon file for inspection";
-            std::string outNameSubcatchments(cArgv[24]);
-            outNameSubcatchments += "_subcatchments";
+            std::ostringstream strs;
+            strs << cArgv[24] << "_subcatchments_" << (int) landuseRaster.cellSize << "x" << (int) landuseRaster.cellSize << "m";
+            std::string outNameSubcatchments = strs.str();
             grid.saveSubcatchmentPolygon(outNameSubcatchments);
-            // TJN 17 May 2017 END
 
-            // TJN 18 May 2017 START
-            // Create and save a WKT vector file of subcatchment routing
+            // Create and save a WKT vector file of subcatchment routing between individual subcatchment cells in study area
             std::cout << "\n-> Creating a subcatchment routing file for inspection";
-            std::string outNameSubcatchmentRouting(cArgv[24]);
-            outNameSubcatchmentRouting += "_subcatchment_routing";
+            std::string outNameSubcatchmentRouting = strs.str() + "_routing";
             grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
 
-            // TJN 8 Dec 2017 START
+            // Find routed subcatchments cells and save to wkt-file
+            std::cout << "\n-> Creating a file of routed subcatchments for inspection";
+            std::string outNameSubcatchmentRouted = strs.str() + "_routed";
+            grid.findRouted(juncTable, outNameSubcatchmentRouted);
+
             // Create and save a WKT vector file of network routing
             std::cout << "\n-> Creating a network routing file for inspection";
             grid.saveNetworkRouting(cArgv[24], condTable);
-            // TJN 8 Dec 2017 END
-
-            // TJN 12 Dec 2017
-            // Find routed subcatchments and save to wkt-file
-            std::cout << "\n-> Creating a file of routed subcatchments for inspection";
-            std::string outNameSubcatchmentRouted(cArgv[24]);
-            outNameSubcatchmentRouted += "_subcatchments_routed";
-            grid.findRouted(juncTable, outNameSubcatchmentRouted);
 
             // TJN 22 Nov 2017 START
             // Simplify subcatchments based on common landuse and routing
             if (argc == adapGridParams)
             {
-                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
-                grid.simplify(juncTable);
+                std::string outNameSimplifiedSubcatchments(cArgv[24]);
+                outNameSimplifiedSubcatchments += "_subcatchments";
 
-                // Create and save a WKT vector file of subcatchment routing
+                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
+                grid.simplify(juncTable, outNameSimplifiedSubcatchments);
+
+                // Create and save a WKT vector file of subcatchment routing in adaptive grid
                 std::cout << "\n-> Creating a subcatchment routing file for inspection";
                 std::string outNameSubcatchmentRouting(cArgv[24]);
-                outNameSubcatchmentRouting += "_subcatchment_routing_simple";
+                outNameSubcatchmentRouting += "_subcatchment_routing";
                 grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
 
                 std::cout << "\n-> Creating a file of routed adaptive subcatchments for inspection";
-                std::string outNameSimplifiedSubcatchments(cArgv[24]);
-                outNameSimplifiedSubcatchments += "_subcatchments_simple";
                 int resSaveSimple = grid.saveSubcatchmentPolygon(outNameSimplifiedSubcatchments);
                 if (resSaveSimple != 0)
                 {
@@ -320,26 +307,15 @@ int main (int argc, char* cArgv[])
 
                     return 1;
                 }
-
-
-                // TJN 12 Dec 2017: Below is an initial working version. Updated
-                //                  version should utilize logic from findRouted
-//                int resSimplifying = 1;
-//
-//                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
-//                resSimplifying = grid.simplifyOld(cArgv[24]);
-//
-//                if (resSimplifying != 0)
-//                {
-//                    std::cout << "\n-> Error in the simplifying stage of the grid creation.";
-//                    return 1;
-//                }
             }
 
             // Create the SWMM5 file.
             std::cout << "\n\nCreating the SWMM5 model input file:";
-            grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable, timeseriesTable,
-                               reportTable, snowpacksTable, raingagesTable, symbolsTable, juncTable, outfallsTable, condTable, pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable, xsectionTable, cArgv[24]);
+            grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable,
+                               timeseriesTable, reportTable, snowpacksTable, raingagesTable,
+                               symbolsTable, juncTable, outfallsTable, condTable, pumpsTable,
+                               pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable,
+                               xsectionTable, cArgv[24]);
 
             // Print report.
             std::cout << "\n\nReport:";
@@ -468,7 +444,7 @@ int main (int argc, char* cArgv[])
     }
     else
     {
-        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " <<  adapGridParamsOld;
+        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " << adapGridParams << " or " << adapGridParamsOld;
     }
 
     return 0;

@@ -36,7 +36,6 @@ class Cell
 		double outletCoordY;         // Y coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
 		int outletID;                // Index of the outlet cell from current cell  // TJN 23 Nov 2017
 		std::vector<int> inletIDs;   // Indexes of inlet cells to current cell      // TJN 7 Dec 2017
-//		std::list<int> inletIDs;   // Indexes of inlet cells to current cell      // TJN 7 Dec 2017
 		int subcatchmentID;          // Id of the subcatchment this cell belongs to // TJN 23 Nov 2017
 		std::string outlet;          // Name of node or another subcatchment that receives runoff
 		std::string raingage;        // Rain gage assigned to subcatchment (name)
