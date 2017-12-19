@@ -253,6 +253,7 @@ void Grid::setCellElevations(Raster &demRaster)
         {
             std::string elevation = demRaster.getPixelValue( cells[i].centerCoordX, cells[i].centerCoordY );
             cells[i].elevation = atof(elevation.c_str());
+            cells[i].elevNoData = std::stod(demRaster.noDataValue);
         }
     }
     // Adaptive grid.
@@ -602,7 +603,6 @@ void Grid::routeCells()
 }
 
 // Use flow direction raster to route cells instead of DEM raster when grid is regular
-// TJN 22 Nov 2017 This could be simplified by removing unnecessary distance computations between cells other than neighbour
 void Grid::routeCellsReg()
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -696,14 +696,15 @@ void Grid::computeCellSlopes()
 
                 double distance = cells[i].distanceToNeighbours[k];
 
-                if (distance > 0.0)
+                // TJN 19 Dec 2017: Add check for acceptable elevations
+                if (distance > 0.0 && cells[i].elevation > cells[i].elevNoData && cells[ cells[i].neighCellIndices[k] ].elevation > cells[i].elevNoData)
                 {
                     slope += fabs((cells[i].elevation - cells[ cells[i].neighCellIndices[k] ].elevation) / distance);
                     slopeCount++;
                 }
                 else
                 {
-                    std::cout << "\n-> Error, distance between cell " << i << " and " << cells[i].neighCellIndices[k] << " is zero or below zero.";
+                    std::cout << "\n-> Error, no data to calculate slope between cells " << i << " and " << cells[i].neighCellIndices[k] << ".";
                 }
             }
         }
@@ -1218,7 +1219,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
 
     /*** UNCONNECTED ROOFS ***/
     // Ensure the are no earlier inletIDs
-    for (int i = 0; (int) i < cellsAdaptive.size(); ++i)
+    for (int i = 0; i < (int)cellsAdaptive.size(); ++i)
         cellsAdaptive[i].inletIDs.clear();
 
     // Find outlets of unconnected roof cells
@@ -1236,7 +1237,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
         }
     }
     std::vector<int> roofOutlets;   // Temp vector of subcatchments where unconnnectd roofs are connected
-    for (int i = 0; (int) i < cellsAdaptive.size(); ++i)
+    for (int i = 0; i < (int)cellsAdaptive.size(); ++i)
     {
         if (!cellsAdaptive[i].inletIDs.empty())
             roofOutlets.push_back(i);
@@ -2164,6 +2165,7 @@ void Grid::printReport(Table &catchPropTable)
     }
 
     int numOfActiveCells = 0;
+    int numOfElevCells = 0;     // TJN 19 Dec 2017
     int numOfActiveCellsNoRoofs = 0;
 
     for (int i = 0; i < nCols * nRows; i++)
@@ -2171,9 +2173,16 @@ void Grid::printReport(Table &catchPropTable)
         if (cells[i].landuse != LANDUSE_NONE)
         {
             numOfActiveCells += 1;
-            elevationAverage += cells[i].elevation;
 
-            if (cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED)
+            // TJN 19 Dec 2017: Add check for acceptable elevation
+            if (cells[i].elevation > cells[i].elevNoData)
+            {
+                elevationAverage += cells[i].elevation;
+                numOfElevCells++;
+            }
+
+            // TJN 19 Dec 2017: Add check for acceptable elevation
+            if ((cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED) && cells[i].elevation > cells[i].elevNoData)
             {
                 slopeAverage += cells[i].slope;
                 numOfActiveCellsNoRoofs += 1;
@@ -2200,7 +2209,7 @@ void Grid::printReport(Table &catchPropTable)
 
     if (numOfActiveCells > 0)
     {
-        elevationAverage /= (double)(numOfActiveCells);
+        elevationAverage /= (double)(numOfElevCells);     // TJN 19 Dec 2017: numOfActiveCells-> numOfElevCells
     }
 
     if (numOfActiveCellsNoRoofs > 0)

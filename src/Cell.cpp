@@ -34,6 +34,7 @@ Cell::Cell()
 	isSink = 0; // TJN 25 Sep 2017  By default all cells are routed
 	numElements = 0;
 	hasInlet = 0;
+	elevNoData = 0;
 
 	//for (int i = 0; i < 8; i++)
 	//{
