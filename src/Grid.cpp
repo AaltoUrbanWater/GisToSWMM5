@@ -1113,7 +1113,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                     newCell.hasInlet = 1;
                     newCell.numElements++;
                     std::stringstream subcatchmentName("");
-                    subcatchmentName << "s" << subcatchmentID;
+                    subcatchmentName << "s" << subcatchmentID + 1;
                     newCell.name = subcatchmentName.str();
                     cellsAdaptive.push_back(newCell);
 
@@ -1199,7 +1199,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                                     newCell.isSink = cells[*it].isSink;
                                     newCell.numElements++;
                                     std::stringstream subcatchmentName("");
-                                    subcatchmentName << "s" << subcatchmentID;
+                                    subcatchmentName << "s" << subcatchmentID + 1;
                                     newCell.name = subcatchmentName.str();
                                     cellsAdaptive.push_back(newCell);
 
@@ -1283,7 +1283,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
             newCell.isSink = cells[roofCells.front()].isSink;
             newCell.numElements++;
             std::stringstream subcatchmentName("");
-            subcatchmentName << "s" << subcatchmentID;
+            subcatchmentName << "s" << subcatchmentID + 1;
             newCell.name = subcatchmentName.str();
 
             // Remove the current cell ID from the list of rooCell ID's
@@ -1400,7 +1400,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             newCell.hasInlet = 1;
                             newCell.numElements++;
                             std::stringstream subcatchmentName("");
-                            subcatchmentName << "s" << subcatchmentID;
+                            subcatchmentName << "s" << subcatchmentID + 1;
                             newCell.name = subcatchmentName.str();
                             cellsAdaptive.push_back(newCell);
 
@@ -1545,12 +1545,12 @@ void Grid::saveRaster(std::string path)
         for (int i = 0; i < outputRaster.nCols; i++)
         {
             std::stringstream sstream;
-            sstream << std::fixed;
-            sstream.precision(8);
+//            sstream << std::fixed;
+//            sstream.precision(8);
 
             if (cells[ i + j * nCols ].landuse != LANDUSE_NONE)
             {
-                sstream << cells[ i + j * nCols ].subcatchmentID;
+                sstream << cells[ i + j * nCols ].subcatchmentID + 1;
             }
             else
             {
@@ -1611,7 +1611,7 @@ int Grid::saveSubcatchmentPolygon(std::string path)
 
 
     // Write polygon vertex coordinates.
-    int polyId = 0;
+    int polyId = 1;
     for (int i = 0; i < nRows * nCols; i++)     // TJN 14 Dec 2017: i = 1 -> i = 0
     {
         if (cells[i].landuse != LANDUSE_NONE)
@@ -1686,7 +1686,7 @@ void Grid::saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs)
     sstream_csvt << "String,";
 
     // Write polygon vertex coordinates.
-    int lineId = 0;
+    int lineId = 1;
     for (auto i : cellIDs)
     {
         if (cells[i].landuse != LANDUSE_NONE)
