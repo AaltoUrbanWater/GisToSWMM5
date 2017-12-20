@@ -1,0 +1,13 @@
+Name,Surface,Parameters, , , , , , 
+sp_imp_plowable,PLOWABLE,0.01,0.064824,0.111,0.06,0,0,0.9
+sp_imp_plowable,IMPERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_imp_plowable,PERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_imp_plowable,REMOVAL,1,1,0,0,0,0, 
+sp_imp_nonplowable,PLOWABLE,0.01,0.064824,0.111,0.06,0,0,0
+sp_imp_nonplowable,IMPERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_imp_nonplowable,PERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_imp_nonplowable,REMOVAL,1,0,0,0,0,0, 
+sp_per,PLOWABLE,0.01,0.064824,0.111,0.06,0,0,0
+sp_per,IMPERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_per,PERVIOUS,0.01,0.064824,0.111,0.06,0,0,10
+sp_per,REMOVAL,1,0,0,0,0,0, 

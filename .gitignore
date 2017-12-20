@@ -36,3 +36,7 @@ obj/
 # Temporary files
 *~
 *.save
+
+# GisToSWMM state information files
+*.layout
+*.depend

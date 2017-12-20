@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# This is an example script to run GisToSWMM
+# This is an example script to run GisToSWMM in adaptive mode.
 
 ../GisToSWMM5/bin/GisToSWMM5 \
 ../data/raster_dem.asc \
+../data/raster_flowdir.asc \
 ../data/raster_landuse.asc \
 ../data/table_catchment_props.csv \
 ../data/table_junctions.csv \
 ../data/table_conduits.csv \
-../data/able_outfalls.csv \
+../data/table_outfalls.csv \
 ../data/table_header.csv \
 ../data/table_evaporation.csv \
 ../data/table_temperature.csv \
@@ -24,7 +25,5 @@
 ../data/table_xsections.csv \
 ../data/table_report.csv \
 ../data/table_symbols.csv \
-../out/SWMM5_input
-16
-3
-
+../out/SWMM5_input \
+1

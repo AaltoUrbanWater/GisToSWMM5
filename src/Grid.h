@@ -52,6 +52,21 @@
 #endif
 // TJN 18 May 2017 END
 
+// TJN 30 Nov 2017 START
+#ifndef _ALGORITHM_H_
+#define _ALGORITHM_H_
+#include <algorithm>
+#endif
+// TJN 30 Nov 2017 END
+
+// TJN 13 Dec 2017 START
+#ifndef _UNORDERED_MAP_H_
+#define _UNORDERED_MAP_H_
+#include <unordered_map>
+#endif
+// TJN 13 Dec 2017 END
+
+
 class Grid
 {
 	public:
@@ -70,18 +85,24 @@ class Grid
 		void computeCellDimensions(double cellSizeNew);
 		void computeCellCenterpoints(double xllCornerNew, double yllCornerNew);
 		void setCellElevations(Raster &demRaster);
+		void setCellFlowdirs(Raster &flowdirRaster);
 		void setCellLanduse(Raster &landuseRaster);
 		void computeGridExtents();
 		void setSubcatchmentProperties(Table &catchPropTable);
 		void findCellNeighbours();
 		void routeCells();
+		void routeCellsReg();   // TJN 29 Sep 2017
 		void computeCellSlopes();
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
+		void findRouted(Table &juncTable, std::string &path);  // TJN 5 Dec 2017
+		void simplify(Table &juncTable, std::string &path);    // TJN 12 Dec 2017
 		void saveRaster(std::string path);
-		void saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
+		int saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
 		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
+		void saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs);   // TJN 12 Dec 2017
+		void saveNetworkRouting(std::string path, Table &condTable);      // TJN 8 Dec 2017
 
 		void saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
 			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable,

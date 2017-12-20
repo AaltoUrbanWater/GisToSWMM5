@@ -1,0 +1,6 @@
+Temp/Wind/Snow,Source/Data, , , , , , , , , ,
+FILE,"../../GisToSWMM5/demo_catchment/data/climate.DAT", , , , , , , , , ,
+WINDSPEED,FILE, , , , , , , , , ,
+SNOWMELT,0.952966,0.45,0.66,15.1,60.243222,0, , , , ,
+ADC IMPERVIOUS,1,1,1,1,1,1,1,1,1,1
+ADC PERVIOUS,0.1,0.35,0.35,0.66,0.75,0.82,0.87,0.92,0.95,0.98

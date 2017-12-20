@@ -8,6 +8,11 @@
 #include <vector>
 #endif
 
+#ifndef _LIST_H_
+#define _LIST_H_
+#include <list>
+#endif
+
 class Cell
 {
 	public:
@@ -15,11 +20,13 @@ class Cell
 		Cell();
 		~Cell();
 
+
 		// Variables.
 		std::string name;
 		double centerCoordX;
 		double centerCoordY;
 		double elevation;
+		int flowdir;
 		double cellSize;
 		double slope;                // Average surface slope (%)
 		double area;                 // Area of subcatchment (ha)
@@ -27,6 +34,9 @@ class Cell
 		int landuse;
 		double outletCoordX;         // X coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
 		double outletCoordY;         // Y coordinate of node or another subcatchment that receives runoff      // TJN 18 May 2017
+		int outletID;                // Index of the outlet cell from current cell  // TJN 23 Nov 2017
+		std::vector<int> inletIDs;   // Indexes of inlet cells to current cell      // TJN 7 Dec 2017
+		int subcatchmentID;          // Id of the subcatchment this cell belongs to // TJN 23 Nov 2017
 		std::string outlet;          // Name of node or another subcatchment that receives runoff
 		std::string raingage;        // Rain gage assigned to subcatchment (name)
 		std::string imperv;          // Percent of impervious area (%)
@@ -35,7 +45,7 @@ class Cell
 		std::string N_Perv;          // Mannings N for pervious area (-)
 		std::string S_Imperv;        // Depth of depression storage on impervious area (mm)
 		std::string S_Perv;          // Depth of depression storage on pervious area (mm)
-		std::string PctZero;		 // percent of impervious area with no depression storage (%)
+		std::string PctZero;		 		 // percent of impervious area with no depression storage (%)
 		std::string RouteTo;         // choice of internal routing between pervious and impervious sub-areas (OUTLET)
 		std::string PctRouted;       // Percent of runoff routed between sub-areas (%)
 		std::string Suction;         // Soil capillary suction head (mm)
@@ -45,4 +55,11 @@ class Cell
 		std::vector<int> neighCellIndices;
 		//int flowDirection;           // To save diagonal direction.
 		std::vector<double> distanceToNeighbours;
+		int isSink;                  // Indcator for the cells GisToSWMM determines as local sinks in the catchment // TJN 25 Sep 2017
+                                     // By default all cells are routed (0),
+                                     // sinks with no routing are marked with 1, and
+                                     // sinks with forceful routing (i.e. connected roofs) are marked with 2
+        int numElements;             // Number of elements, i.e., individual cells in adaptive grid subcatchments
+        int hasInlet;                // the subcatchment/cell has an open inlet which coordinates are the outlet of the catchmetn
+        double elevNoData;           // nodata-value for elevations
 };
