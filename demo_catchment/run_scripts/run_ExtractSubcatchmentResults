@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This is an example script to run ExtractSubcatchmentResults.py
+
+# $ ./ExtractSubcatchmentResults.py [INFILE.wkt] [INFILE.rpt] [OUTFILE.wkt]
+../utils/ExtractSubcatchmentResults.py SWMM5_subcatchments.wkt SWMM5.rpt SWMM5_subcatchment_runoffs.wkt
