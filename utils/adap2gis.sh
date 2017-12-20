@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Creates a shapefile of adaptive subcatchments with subcatchment attributes
+# Creates a shapefile of adaptive subcatchments with subcatchment attributes.
 
 # Show usage information
 if [ "$#" -ne 2 ]; then
@@ -10,6 +10,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Create path and file names
+exePath=$(dirname "$0")
 path=$(dirname "$1")
 fileName=$(basename "$1")
 oldExtension="${fileName##*.}"
@@ -18,8 +19,9 @@ fileName="${fileName%.*}"
 shapeBaseName=${fileName}_geom
 shapeFile=$shapeBaseName.shp
 shapePath=$path/shp/$shapeFile
-wktFile=${fileName}.csv
-wktPath=$path/$wktFile
+csvBaseName=${fileName}_attr
+csvFile=${csvBaseName}.csv
+csvPath=$path/$csvFile
 
 # Create a folder for shapefiles if it does not exist
 if [[ -d "$path" ]]; then
@@ -27,7 +29,7 @@ if [[ -d "$path" ]]; then
 fi
 
 # Create a temporary shapefile of adaptive subcatchments usign asc2shp.py script
-python asc2shp.py $1 $shapePath $2
+python ${exePath}/asc2shp.py $1 $shapePath $2
 
 # Exit if something went wrong when creating the shapefile
 rc=$?
@@ -38,13 +40,13 @@ if [[ $rc != 0 ]]; then
 fi
 
 # Create a temporary .csv copy of the .wkt file
-cp $path/${fileName}.wkt $path/${fileName}.csv
+cp $path/${csvBaseName}.wkt $path/${csvFile}
 
 # Join attribute table from the .wkt file to the shapefile
-ogr2ogr -sql "select * from ${shapeBaseName} left join '${wktPath}'.${fileName} on ${shapeBaseName}.id = ${fileName}.id" $path/shp/${fileName}.shp $shapePath
+ogr2ogr -sql "select * from ${shapeBaseName} left join '${csvPath}'.${csvBaseName} on ${shapeBaseName}.id = ${csvBaseName}.id" $path/shp/${fileName}.shp $shapePath
 
 # Remove temp files
-echo "Removing: $path/shp/$shapeBaseName.*"
+echo "Removing temp file: $path/shp/$shapeBaseName.*"
 rm $path/shp/$shapeBaseName.*
-echo "Removing: $path/${fileName}.csv"
-rm $path/${fileName}.csv
+echo "Removing temp file: $csvPath"
+rm $csvPath

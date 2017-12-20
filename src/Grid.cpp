@@ -1588,7 +1588,7 @@ int Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "suct_mm;";      // Soil capillary suction head (mm)
     sstream << "Ksat_mmhr;";    // Soil saturated hydraulic conductivity (mm/hr)
     sstream << "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
-    sstream << "isSink;";       // Cell is a local sink
+    sstream << "isSink";       // Cell is a local sink
 
     // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
     sstream_csvt << "Integer,";

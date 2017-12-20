@@ -287,20 +287,21 @@ int main (int argc, char* cArgv[])
             // Simplify subcatchments based on common landuse and routing
             if (argc == adapGridParams)
             {
-                std::string outNameSimplifiedSubcatchments(cArgv[24]);
-                outNameSimplifiedSubcatchments += "_subcatchments";
-
-                std::cout << "\n-> Simplifying subcatchments based on landuse and routing";
-                grid.simplify(juncTable, outNameSimplifiedSubcatchments);
+                std::cout << "\n-> Creating adaptive subcatchments based on landuse and routing";
+                std::string outNameAdapSubcatchments(cArgv[24]);
+                outNameAdapSubcatchments += "_subcatchments";
+                grid.simplify(juncTable, outNameAdapSubcatchments);
 
                 // Create and save a WKT vector file of subcatchment routing in adaptive grid
-                std::cout << "\n-> Creating a subcatchment routing file for inspection";
+                std::cout << "\n-> Creating adaptive subcatchment routing file for inspection";
                 std::string outNameSubcatchmentRouting(cArgv[24]);
                 outNameSubcatchmentRouting += "_subcatchment_routing";
                 grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
 
                 std::cout << "\n-> Creating a file of routed adaptive subcatchments for inspection";
-                int resSaveSimple = grid.saveSubcatchmentPolygon(outNameSimplifiedSubcatchments);
+                std::string outNameAdapSubcatchmentAttr(cArgv[24]);
+                outNameAdapSubcatchmentAttr += "_subcatchments_attr";
+                int resSaveSimple = grid.saveSubcatchmentPolygon(outNameAdapSubcatchmentAttr);
                 if (resSaveSimple != 0)
                 {
                     std::cout << "\n-> Error in creating an adaptive subcatchment routing file for inspection.";
