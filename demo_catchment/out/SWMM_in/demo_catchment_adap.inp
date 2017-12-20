@@ -45,7 +45,7 @@ DRY_ONLY   YES
 
 [TEMPERATURE]
 ;;Temp/Wind/Snow   Source/Data
-FILE   "../../../data/demo_catchment/climate.DAT"                                    
+FILE   "../../GisToSWMM5/demo_catchment/data/climate.DAT"                                    
 WINDSPEED   FILE                                    
 SNOWMELT   0.952966   0.45   0.66   15.1   60.243222   0                
 ADC IMPERVIOUS   1   1   1   1   1   1   1   1   1   1
@@ -54,7 +54,7 @@ ADC PERVIOUS   0.1   0.35   0.35   0.66   0.75   0.82   0.87   0.92   0.95   0.9
 [RAINGAGES]
 ;;Gage           Format    Interval SCF      Source
 ;;-------------- --------- ------ ------ ----------
-STA01   VOLUME   00:01   1   FILE   "../../../data/demo_catchment/prec_mm.DAT"   STA01   MM
+STA01   VOLUME   00:01   1   FILE   "../../GisToSWMM5/demo_catchment/data/prec_mm.DAT"   STA01   MM
 
 [SUBCATCHMENTS]
 ;;Subcatchment   Rain Gage        Outlet           Area     %Imperv  Width    %Slope   CurbLen  Snow Pack       

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This is an example script to run GisToSWMM using adaptive grid
 
-../../../src/GisToSWMM5/bin/GisToSWMM5 \
+../../bin/GisToSWMM5 \
 ../data/raster_dem.asc \
 ../data/raster_flowdir.asc \
 ../data/raster_landuse.asc \

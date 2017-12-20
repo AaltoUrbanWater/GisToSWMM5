@@ -109,7 +109,7 @@ The "[PATH TO OUTPUT BASE FILENAME]\_network_routing.wkt" file has the following
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" file has an integer in each raster cell indicating the corresponding catchment for the cell. If the cell does not belong to cacthment -1 is used.   
 
-The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is equal to "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt". The attribute "id" corresponds to the integer value of subcatchment in "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc".
+The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is equal to "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt". The only difference is that "wkt" represents only the cell at the sub-catchment center-of-mass-point, and not the entire sub-catchment. The attribute "id" corresponds to the integer value of sub-catchment in "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc".
 
 ### Utility tools
 Folder 'utils' contains utility programs for various tasks:
@@ -119,7 +119,7 @@ Folder 'utils' contains utility programs for various tasks:
 - *inp2gis.py* extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between
 the subcatchment polygon centroids as a line shapefile.
 - *asc2shp.py* converts ARC/INFO ASCII GRID (.asc) raster file to polygon shapefile.
-- *adap2gis.sh* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the *asc2shp.py* tool and information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.
+- *adap2gis.sh* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the *asc2shp.py* tool and information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files. Note that for large catchments this may be very slow operation and the same result is probably achieved quicker by doing the corresponding operations manually in GIS-software. 
 
 The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard libraries:
 - osgeo (asc2shp.py)
@@ -130,3 +130,9 @@ The utility tools are written in python 3.\* and bash. They have been tested on 
 Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.
 
 ### Demo case
+Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
+- [data](demo_catchment/data) contains the necessary files required to run GisToSWMM5.
+- [GIS](demo_catchment/GIS) contains files corresponding to [data](demo_catchment/data) files in a (more) GIS-friendly format alongside a QGIS-project file with the files already imported.
+- [run_scripts](demo_catchment/run_scripts) contains example scripts to run GisToSWMM5 using the given data, and to collect the subcatchment runoff results and the result timeseries from the SWMM output files.
+- [out](demo_catchment/out) contains the output files of GisToSWMM5 in [SWMM_in](demo_catchment/out/SWMM_in), the output files of SWMM in [SWMM_out](demo_catchment/out/SWMM_out), and finally the SWMM result time series in [SWMM_results](demo_catchment/out/SWMM_results).
+- [QGIS_styles](demo_catchment/QGIS_styles) contains QGIS style definition files that may be helpful in visualizing the GisToSWMM5 input and output files in QGIS.
