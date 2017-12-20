@@ -1,5 +1,3 @@
-18 Oct 2017 Tero Niemi
-
 GisToSWMM is a tool for automatically constructing SWMM5 model
 descriptions.
 
