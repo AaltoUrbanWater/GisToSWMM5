@@ -1,35 +1,62 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
 <qgis version="2.18.11" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
-    <edittype widgetv2type="TextEdit" name="KOHDE_ID">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="KUNTA">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="PAALUOKKA">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="ALALUOKKA">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="RYHMA">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="KOODI">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="KUVAUS">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
-    <edittype widgetv2type="TextEdit" name="P_ALA_M2">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
     <edittype widgetv2type="TextEdit" name="id">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
+    <edittype widgetv2type="TextEdit" name="demo_catch">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="wkt">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="name">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="outlet">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="area_m2">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="slope_pct">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="elevation">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="landuse">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="imp_pct">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="n_imp">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="n_per">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="S_imp_mm">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="S_per_mm">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="suct_mm">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="Ksat_mmhr">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="IMDmax">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="isSink">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
   </edittypes>
-  <renderer-v2 attr="id" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
+  <renderer-v2 attr="landuse" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
     <categories>
       <category render="true" symbol="0" value="10" label="Rock outcrop"/>
       <category render="true" symbol="1" value="20" label="Rooftop, connected"/>
@@ -60,7 +87,7 @@
       <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="233,233,233,255"/>
+          <prop k="color" v="233,122,122,255"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -70,40 +97,6 @@
           <prop k="outline_width" v="0.26"/>
           <prop k="outline_width_unit" v="MM"/>
           <prop k="style" v="solid"/>
-        </layer>
-        <layer pass="0" class="LinePatternFill" locked="0">
-          <prop k="angle" v="45"/>
-          <prop k="color" v="0,0,0,255"/>
-          <prop k="distance" v="1.4"/>
-          <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="distance_unit" v="MM"/>
-          <prop k="line_width" v="0.5"/>
-          <prop k="line_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@1@1">
-            <layer pass="0" class="SimpleLine" locked="0">
-              <prop k="capstyle" v="square"/>
-              <prop k="customdash" v="5;2"/>
-              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="customdash_unit" v="MM"/>
-              <prop k="draw_inside_polygon" v="0"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="0,0,0,255"/>
-              <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.3"/>
-              <prop k="line_width_unit" v="MM"/>
-              <prop k="offset" v="0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="use_custom_dash" v="0"/>
-              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-            </layer>
-          </symbol>
         </layer>
       </symbol>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
@@ -404,7 +397,6 @@
   <SingleCategoryDiagramRenderer diagramType="Histogram" sizeLegend="0" attributeLegend="1">
     <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" sizeScale="0,0,0,0,0,0" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" lineSizeScale="0,0,0,0,0,0" sizeType="MM" lineSizeType="MM" minScaleDenominator="inf">
       <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute field="" color="#000000" label=""/>
     </DiagramCategory>
     <symbol alpha="1" clip_to_extent="1" type="marker" name="sizeSymbol">
       <layer pass="0" class="SimpleMarker" locked="0">
@@ -432,15 +424,24 @@
   <DiagramLayerSettings yPosColumn="-1" showColumn="-1" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
   <annotationform>.</annotationform>
   <aliases>
-    <alias field="KOHDE_ID" index="0" name=""/>
-    <alias field="KUNTA" index="1" name=""/>
-    <alias field="PAALUOKKA" index="2" name=""/>
-    <alias field="ALALUOKKA" index="3" name=""/>
-    <alias field="RYHMA" index="4" name=""/>
-    <alias field="KOODI" index="5" name=""/>
-    <alias field="KUVAUS" index="6" name=""/>
-    <alias field="P_ALA_M2" index="7" name=""/>
-    <alias field="id" index="8" name=""/>
+    <alias field="id" index="0" name=""/>
+    <alias field="demo_catch" index="1" name=""/>
+    <alias field="wkt" index="2" name=""/>
+    <alias field="name" index="3" name=""/>
+    <alias field="outlet" index="4" name=""/>
+    <alias field="area_m2" index="5" name=""/>
+    <alias field="slope_pct" index="6" name=""/>
+    <alias field="elevation" index="7" name=""/>
+    <alias field="landuse" index="8" name=""/>
+    <alias field="imp_pct" index="9" name=""/>
+    <alias field="n_imp" index="10" name=""/>
+    <alias field="n_per" index="11" name=""/>
+    <alias field="S_imp_mm" index="12" name=""/>
+    <alias field="S_per_mm" index="13" name=""/>
+    <alias field="suct_mm" index="14" name=""/>
+    <alias field="Ksat_mmhr" index="15" name=""/>
+    <alias field="IMDmax" index="16" name=""/>
+    <alias field="isSink" index="17" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -449,14 +450,23 @@
     <columns>
       <column width="-1" hidden="0" type="field" name="id"/>
       <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" hidden="0" type="field" name="KOHDE_ID"/>
-      <column width="-1" hidden="0" type="field" name="KUNTA"/>
-      <column width="-1" hidden="0" type="field" name="PAALUOKKA"/>
-      <column width="-1" hidden="0" type="field" name="ALALUOKKA"/>
-      <column width="-1" hidden="0" type="field" name="RYHMA"/>
-      <column width="-1" hidden="0" type="field" name="KOODI"/>
-      <column width="-1" hidden="0" type="field" name="KUVAUS"/>
-      <column width="-1" hidden="0" type="field" name="P_ALA_M2"/>
+      <column width="-1" hidden="0" type="field" name="demo_catch"/>
+      <column width="-1" hidden="0" type="field" name="wkt"/>
+      <column width="-1" hidden="0" type="field" name="name"/>
+      <column width="-1" hidden="0" type="field" name="outlet"/>
+      <column width="-1" hidden="0" type="field" name="area_m2"/>
+      <column width="-1" hidden="0" type="field" name="slope_pct"/>
+      <column width="-1" hidden="0" type="field" name="elevation"/>
+      <column width="-1" hidden="0" type="field" name="landuse"/>
+      <column width="-1" hidden="0" type="field" name="imp_pct"/>
+      <column width="-1" hidden="0" type="field" name="n_imp"/>
+      <column width="-1" hidden="0" type="field" name="n_per"/>
+      <column width="-1" hidden="0" type="field" name="S_imp_mm"/>
+      <column width="-1" hidden="0" type="field" name="S_per_mm"/>
+      <column width="-1" hidden="0" type="field" name="suct_mm"/>
+      <column width="-1" hidden="0" type="field" name="Ksat_mmhr"/>
+      <column width="-1" hidden="0" type="field" name="IMDmax"/>
+      <column width="-1" hidden="0" type="field" name="isSink"/>
     </columns>
   </attributetableconfig>
   <editform>.</editform>
@@ -488,15 +498,24 @@ def my_form_open(dialog, layer, feature):
     <fieldstyles/>
   </conditionalstyles>
   <defaults>
-    <default field="KOHDE_ID" expression=""/>
-    <default field="KUNTA" expression=""/>
-    <default field="PAALUOKKA" expression=""/>
-    <default field="ALALUOKKA" expression=""/>
-    <default field="RYHMA" expression=""/>
-    <default field="KOODI" expression=""/>
-    <default field="KUVAUS" expression=""/>
-    <default field="P_ALA_M2" expression=""/>
     <default field="id" expression=""/>
+    <default field="demo_catch" expression=""/>
+    <default field="wkt" expression=""/>
+    <default field="name" expression=""/>
+    <default field="outlet" expression=""/>
+    <default field="area_m2" expression=""/>
+    <default field="slope_pct" expression=""/>
+    <default field="elevation" expression=""/>
+    <default field="landuse" expression=""/>
+    <default field="imp_pct" expression=""/>
+    <default field="n_imp" expression=""/>
+    <default field="n_per" expression=""/>
+    <default field="S_imp_mm" expression=""/>
+    <default field="S_per_mm" expression=""/>
+    <default field="suct_mm" expression=""/>
+    <default field="Ksat_mmhr" expression=""/>
+    <default field="IMDmax" expression=""/>
+    <default field="isSink" expression=""/>
   </defaults>
   <previewExpression>COALESCE( "id", '&lt;NULL>' )</previewExpression>
   <layerGeometryType>2</layerGeometryType>
