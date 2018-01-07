@@ -77,7 +77,7 @@ subcatchment_gdf = gpd.GeoDataFrame(polygon_df, crs=crs, geometry=geometry)
 
 # Read subcatchment runoff summary results ...
 data = []
-with open(sys.argv[2], 'rt') as rpt_file:
+with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
     for line in rpt_file:
         if '  Subcatchment Runoff Summary' in line:
             for idx, row in enumerate(rpt_file):

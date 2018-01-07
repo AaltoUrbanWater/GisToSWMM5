@@ -36,6 +36,7 @@ else:
             crs = {'init': sys.argv[2].lower()}  # Custom CRS
 
 subcatchment_data = []
+landuse_data = []
 subarea_data = []
 infiltration_data = []
 coordinate_data = []
@@ -47,10 +48,12 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
     for line in inp_file:
         if '[subcatchments]' in line.lower():
             for idx, row in enumerate(inp_file):
-                if row.startswith(';'):  # Skip comment rows
+                if row.startswith(';;'):  # Skip comment rows
                     continue
                 elif row.isspace():  # Stop looking after empty line
                     break
+                elif row.startswith(';'):   # Save landuse
+                    landuse_data.append(int(row.split(";")[1]))
                 else:  # Save data
                     subcatchment_data.append(row.split())
 
@@ -114,6 +117,9 @@ subcatchment_df[['Area',
                                                 'Width',
                                                 'Slope',
                                                 'Clength']].astype(float)
+
+subcatchment_df = subcatchment_df.assign(
+                    landuse=pd.DataFrame(landuse_data).values)
 
 subarea_col_names = ['Name',
                      'Nimp',
@@ -221,7 +227,8 @@ subcatchment_df = subcatchment_df.drop('Imperv_pct', axis=1)
 subcatchment_df = subcatchment_df.drop('Width', axis=1)
 subcatchment_df = subcatchment_df.drop('Slope', axis=1)
 subcatchment_df = subcatchment_df.drop('Clength', axis=1)
-subcatchment_df = subcatchment_df.drop('SPack', axis=1)
+if 'SPack' in subcatchment_df.columns:
+    subcatchment_df = subcatchment_df.drop('SPack', axis=1)
 routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
 routing_gdf.rename(index=str, columns={"Name": "from", "OutID": "to"},
                    inplace=True)
