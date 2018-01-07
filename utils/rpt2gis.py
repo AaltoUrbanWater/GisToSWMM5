@@ -97,6 +97,21 @@ df2 = pd.DataFrame(data, columns=['Name',
                                   'runoff_ML',
                                   'Q_peak_LPS',
                                   'Cr'])
+df2[['precip_mm',
+     'runon_mm',
+     'evap_mm',
+     'infil_mm',
+     'runoff_mm',
+     'runoff_ML',
+     'Q_peak_LPS',
+     'Cr']] = df2[['precip_mm',
+                   'runon_mm',
+                   'evap_mm',
+                   'infil_mm',
+                   'runoff_mm',
+                   'runoff_ML',
+                   'Q_peak_LPS',
+                   'Cr']].astype(float)
 
 # Merge spatial dataframe with data dataframe
 subcatchment_gdf = subcatchment_gdf.merge(df2, on='Name')
