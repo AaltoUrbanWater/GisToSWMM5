@@ -1,5 +1,13 @@
 #!/usr/bin/env python
-"""Extract subcatchment runoff summary results from SWMM report file."""
+"""Extract subcatchment runoff summary results from SWMM report file.
+
+Reads subcatchment geometries from a GisToSWMM5 generated subcatchment geometry
+file (*_subcatchments.wkt) file and subcatchment runoff results from a SWMM
+report (by default .rpt) file. The script merges the information and saves it
+as a Well-Known-Text (.wkt) file.
+
+Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+"""
 
 import sys
 import pandas as pd
