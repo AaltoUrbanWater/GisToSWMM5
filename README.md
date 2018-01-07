@@ -113,19 +113,22 @@ The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is e
 
 ### Utility tools
 Folder 'utils' contains utility programs for various tasks:
+- *inp2gis.py* extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.
+ - This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.
+- *rpt2gis.py* extracts subcatchment polygons from a SWMM5 input file (\*.inp) and subcatchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the infromation and saves the subcatchment results as a polygon shapefile.
+ - This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.
 - *ExtractDataSets.py* collates time series data from (several) SWMM5 report file(s) into a single .csv file.
-- *ExtractSubcatchmentResults.py* extracts subcatchment runoff summary results from the SWMM report file (.rpt) and presents them as subcatchment attributes in a shapefile.
-- *wkt2shp.sh* converts the .wkt files into shapefiles (e.g. for ArcMap).
-- *inp2gis.py* extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between
-the subcatchment polygon centroids as a line shapefile.
+ - This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.
+- *ExtractSubcatchmentResults.py* extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file.
+- *wkt2shp.sh* converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
 - *asc2shp.py* converts ARC/INFO ASCII GRID (.asc) raster file to polygon shapefile.
-- *adap2gis.sh* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the *asc2shp.py* tool and information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files. Note that for large catchments this may be very slow operation and the same result is probably achieved quicker by doing the corresponding operations manually in GIS-software. 
+- *adap2gis.sh* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the *asc2shp.py* tool and information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files. Note that for large catchments this may be very slow operation and the same result is probably achieved quicker by doing the corresponding operations manually in GIS-software.
 
 The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard libraries:
 - osgeo (asc2shp.py)
-- pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py)
-- geopandas (inp2gis.py)
-- shapely (inp2gis.py)
+- pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py)
+- geopandas (inp2gis.py, rpt2gis.py)
+- shapely (inp2gis.py, rpt2gis.py)
 
 Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.
 
