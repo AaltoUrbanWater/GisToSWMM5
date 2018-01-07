@@ -56,12 +56,12 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                 else:  # Save data
                     polygon_data.append(row.split())
 
-coordinate_col_names = ['Name', 'X', 'Y']
+coordinate_col_names = ['name', 'X', 'Y']
 polygon_df = pd.DataFrame(polygon_data, columns=coordinate_col_names)
 
 # Create WKT geometries from subcatchment polygon corner point information
 polygon_df['XY'] = polygon_df['X'].map(str) + ' ' + polygon_df['Y'].map(str)
-polygon_df = polygon_df.groupby('Name').agg({'XY': lambda x: ','.join(x)})
+polygon_df = polygon_df.groupby('name').agg({'XY': lambda x: ','.join(x)})
 polygon_df['wktcolumn'] = 'POLYGON((' + polygon_df['XY'].map(str) + '))'
 # Check that polygons are closed and report if not
 for idx, row in polygon_df.iterrows():
@@ -88,7 +88,7 @@ with open(sys.argv[2], 'rt') as rpt_file:
                 else:           # Save data
                     data.append(row.split())
 # ... and create a dataframe from data
-df2 = pd.DataFrame(data, columns=['Name',
+df2 = pd.DataFrame(data, columns=['name',
                                   'precip_mm',
                                   'runon_mm',
                                   'evap_mm',
@@ -114,7 +114,7 @@ df2[['precip_mm',
                    'Cr']].astype(float)
 
 # Merge spatial dataframe with data dataframe
-subcatchment_gdf = subcatchment_gdf.merge(df2, on='Name')
+subcatchment_gdf = subcatchment_gdf.merge(df2, on='name')
 
 # Save subcatchment results as shapefile
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[2])[0] +
