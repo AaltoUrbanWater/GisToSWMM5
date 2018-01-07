@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-"""Extract subcatchment and routing information from SWMM input file to GIS."""
+"""Extract subcatchment and routing information from SWMM input file to GIS.
+
+Reads subcatchment geometries and routing from a SWMM input (.inp) file and
+saves them as shapefiles into the same folder as the SWMM input file.
+
+Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+"""
 
 import os
 import sys
@@ -179,8 +185,10 @@ polygon_df.reset_index(inplace=True)
 geometry = polygon_df['wktcolumn'].map(shapely.wkt.loads)
 polygon_df = polygon_df.drop('wktcolumn', axis=1)
 subcatchment_gdf = gpd.GeoDataFrame(polygon_df, crs=crs, geometry=geometry)
-subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid.map(lambda p: p.x).map(str) + ' ' + \
-                               subcatchment_gdf['geometry'].centroid.map(lambda p: p.y).map(str)
+subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid.map(
+                               lambda p: p.x).map(str) + ' ' + \
+                               subcatchment_gdf['geometry'].centroid.map(
+                               lambda p: p.y).map(str)
 
 # Merge subcatchment dataframes
 subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='Name')
@@ -200,14 +208,26 @@ coordinate_dict.update(subcatchment_dict)
 
 # Create a WKT polyline of routing between subcatchments
 subcatchment_df['wktcolumn'] = 'LINESTRING(' + \
-                               subcatchment_df['Name'].map(coordinate_dict).map(str) + ',' + \
-                               subcatchment_df['OutID'].map(coordinate_dict).map(str) + ')'
+                               subcatchment_df['Name'].map(
+                               coordinate_dict).map(str) + ',' + \
+                               subcatchment_df['OutID'].map(
+                               coordinate_dict).map(str) + ')'
 # Convert to geodatabase for routing
 geometry = subcatchment_df['wktcolumn'].map(shapely.wkt.loads)
 subcatchment_df = subcatchment_df.drop('wktcolumn', axis=1)
+subcatchment_df = subcatchment_df.drop('Rgage', axis=1)
+subcatchment_df = subcatchment_df.drop('Area', axis=1)
+subcatchment_df = subcatchment_df.drop('Imperv_pct', axis=1)
+subcatchment_df = subcatchment_df.drop('Width', axis=1)
+subcatchment_df = subcatchment_df.drop('Slope', axis=1)
+subcatchment_df = subcatchment_df.drop('Clength', axis=1)
+subcatchment_df = subcatchment_df.drop('SPack', axis=1)
 routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
+routing_gdf.rename(index=str, columns={"Name": "from", "OutID": "to"},
+                   inplace=True)
 
 # Save subcatchments as shapefile
+subcatchment_gdf = subcatchment_gdf.drop('centroid', axis=1)
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                          '_subcatchments.shp', driver='ESRI Shapefile')
 print('Saved subcatchments to ' + os.path.splitext(sys.argv[1])[0] +
