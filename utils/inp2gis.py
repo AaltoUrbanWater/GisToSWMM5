@@ -53,7 +53,10 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                 elif row.isspace():  # Stop looking after empty line
                     break
                 elif row.startswith(';'):   # Save landuse
-                    landuse_data.append(int(row.split(";")[1]))
+                    try:
+                        landuse_data.append(int(row.split(";")[1]))
+                    except ValueError:
+                        landuse_data.append(row.split(";")[1])
                 else:  # Save data
                     subcatchment_data.append(row.split())
 
