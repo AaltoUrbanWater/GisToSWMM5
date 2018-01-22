@@ -277,7 +277,7 @@ int main (int argc, char* cArgv[])
             // Find routed subcatchments cells and save to wkt-file
             std::cout << "\n-> Creating a file of routed subcatchments for inspection";
             std::string outNameSubcatchmentRouted = strs.str() + "_routed";
-            grid.findRouted(juncTable, outNameSubcatchmentRouted);
+            std::vector<int> routedIDs = grid.findRouted(juncTable, outNameSubcatchmentRouted);
 
             // Create and save a WKT vector file of network routing
             std::cout << "\n-> Creating a network routing file for inspection";
@@ -322,7 +322,14 @@ int main (int argc, char* cArgv[])
             std::cout << "\n\nReport:";
             std::cout << "\n-> Running time: ";
             std::cout << (double)(clock() - iStartClock)/(double)(CLOCKS_PER_SEC * 60) << " minutes";
-            grid.printReport(catchPropTable);
+            if (argc == adapGridParams)
+            {
+                grid.printReport(catchPropTable);
+            }
+            else
+            {
+                grid.printReport(catchPropTable, routedIDs);
+            }
             std::cout << "\n\n";
         }
         else

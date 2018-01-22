@@ -96,7 +96,7 @@ class Grid
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
-		void findRouted(Table &juncTable, std::string &path);  // TJN 5 Dec 2017
+		std::vector<int> findRouted(Table &juncTable, std::string &path);  // TJN 5 Dec 2017
 		void simplify(Table &juncTable, std::string &path);    // TJN 12 Dec 2017
 		void saveRaster(std::string path);
 		int saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
@@ -108,6 +108,7 @@ class Grid
 			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable,
 			Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path);
 		void printReport(Table &catchPropTable);
+		void printReport(Table &catchPropTable, std::vector<int> routedIDs);
 		void computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount,
 			double lowerLeftCornerX, double lowerLeftCornerY, double cellSizeLoc, Raster &landuseRaster);
 		bool isSingleLanduse(double lowerLeftCornerX, double lowerLeftCornerY, double cellSizeLoc, Raster &landuseRaster);

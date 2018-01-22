@@ -926,7 +926,7 @@ void Grid::routePitCells()
 
 // TJN 5 Dec 2017
 // Find cells routed to outlet and save routing and pipe information
-void Grid::findRouted(Table &juncTable, std::string &path)
+std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
 {
     // Set inletIDs contributing to each cell
     for (int i = 0; i < nCols*nRows; i++)
@@ -1014,6 +1014,8 @@ void Grid::findRouted(Table &juncTable, std::string &path)
 
     // Create and save a WKT vector file of routed subcatchments
     saveSubcatchmentRouting(path, final_IDs);
+
+    return final_IDs;
 }
 
 // TJN 12 Dec 2017
@@ -2141,7 +2143,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
     int res = fileio.saveAsciiFile( path, sstream.str() );
 }
 
-void Grid::printReport(Table &catchPropTable)
+void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
 {
     double elevationAverage = 0.0;
     double slopeAverage = 0.0;
@@ -2168,7 +2170,7 @@ void Grid::printReport(Table &catchPropTable)
     int numOfElevCells = 0;     // TJN 19 Dec 2017
     int numOfActiveCellsNoRoofs = 0;
 
-    for (int i = 0; i < nCols * nRows; i++)
+    for (auto i : routedIDs)
     {
         if (cells[i].landuse != LANDUSE_NONE)
         {
@@ -2232,5 +2234,13 @@ void Grid::printReport(Table &catchPropTable)
                   << "\t" << areasInlandUseClass[i] / 10000.0
                   << "\t" << areasInlandUseClass[i] / area * 100.0;
     }
+}
+
+void Grid::printReport(Table &catchPropTable)
+{
+    std::vector<int> ind(nCols*nRows);
+    std::iota (std::begin(ind), std::end(ind), 0); // Fill with 0, 1, ..., (nCols*nROws-1)
+
+    printReport(catchPropTable, ind);
 }
 
