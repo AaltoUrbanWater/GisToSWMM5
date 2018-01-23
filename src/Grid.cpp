@@ -1987,8 +1987,8 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
     // Write conduit cross section properties.
     std::cout << "\n-> Writing conduit cross section properties";
     sstream << "\n[XSECTIONS]";
-    sstream << "\n;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels   ";
-    sstream << "\n;;-------------- ------------ ---------------- ---------- ---------- ---------- ----------";
+    sstream << "\n;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   ";
+    sstream << "\n;;-------------- ------------ ---------------- ---------- ---------- ---------- ---------- ----------";
     xsectionTable.writeToStringStream(sstream);
     sstream << "\n";
 
