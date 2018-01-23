@@ -121,14 +121,13 @@ Folder 'utils' contains utility programs for various tasks:
  - This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.
 - *ExtractSubcatchmentResults.py* extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file.
 - *wkt2shp.sh* converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
-- *asc2shp.py* converts ARC/INFO ASCII GRID (.asc) raster file to polygon shapefile.
-- *adap2gis.sh* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the *asc2shp.py* tool and information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files. Note that for large catchments this may be very slow operation and the same result is probably achieved quicker by doing the corresponding operations manually. First, the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" is converted into shapefile either using the *asc2shp.py* tool or in GIS software. Then the attribute tables of the resulting shapefile and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" (or the corresponding shapefile created using *wkt2shp.sh* or GIS software) are joined in GIS software.
+- *adap2shp.py* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.
 
 The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard libraries:
-- osgeo (asc2shp.py)
-- pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py)
-- geopandas (inp2gis.py, rpt2gis.py)
+- pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
+- geopandas (inp2gis.py, rpt2gis.py, adap2shp.py)
 - shapely (inp2gis.py, rpt2gis.py)
+- rasterio (adap2shp.py)
 
 Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.  
 
