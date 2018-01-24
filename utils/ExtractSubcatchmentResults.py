@@ -33,8 +33,8 @@ elif (not sys.argv[3].lower().endswith('.wkt')):
     sys.exit()
 
 # Read subcatchment spatial information from the wkt file into a dataframe
-df1 = pd.read_csv(sys.argv[1], sep=';', index_col='id')
-df1.drop(df1.columns[2:15], axis=1, inplace=True)  # Remove extra columns
+df1 = pd.read_csv(sys.argv[1], sep=';')
+df1.drop(df1.columns[3:], axis=1, inplace=True)  # Remove extra columns
 
 # Read subcatchment runoff summary results ...
 data = []
@@ -61,6 +61,7 @@ df2 = pd.DataFrame(data, columns=['name',
 
 # Merge spatial dataframe with data dataframe
 df3 = pd.merge(df1, df2, on='name')
+df3 = df3.set_index('id')
 
 # Write final dataframe into a wkt file
 df3.to_csv(sys.argv[3], sep=';', index_label='id')

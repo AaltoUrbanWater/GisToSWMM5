@@ -96,32 +96,33 @@ following attributes:
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routing.wkt" and the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routed.wkt" files have the following attributes:  
 "id;";  
-"wkt;";&emsp;&emsp;&emsp;&ensp;// Line object defining the route between "from" and "to" subcatchments  
-"from;";&emsp;&emsp;&emsp;&ensp;// Name of the origin subcatchment  
-"to";&emsp;&emsp;&emsp;&ensp;// Name of the target subcatchment  
+"wkt;";&emsp;&emsp;&emsp;&ensp;// Line object defining the route between "from" and "to" sub-catchments  
+"from;";&emsp;&emsp;&emsp;&ensp;// Name of the origin sub-catchment  
+"to";&emsp;&emsp;&emsp;&ensp;// Name of the target sub-catchment  
 
 The "[PATH TO OUTPUT BASE FILENAME]\_network_routing.wkt" file has the following attributes:  
 "id;";  
-"wkt;";&emsp;&emsp;&emsp;&ensp;// Line object defining the route between "from" and "to" subcatchments  
+"wkt;";&emsp;&emsp;&emsp;&ensp;// Line object defining the route between "from" and "to" sub-catchments  
 "name";&emsp;&emsp;&emsp;&ensp;// Name of the conduit  
 "from;";&emsp;&emsp;&emsp;&ensp;// Name of the origin junction  
 "to";&emsp;&emsp;&emsp;&ensp;// Name of the target junction  
 
-The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" file has an integer in each raster cell indicating the corresponding catchment for the cell. If the cell does not belong to cacthment -1 is used.   
+The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" file has an integer in each raster cell indicating the corresponding catchment for the cell. If the cell does not belong to catchment -1 is used.   
 
 The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is equal to "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt". The only difference is that "wkt" represents only the cell at the sub-catchment center-of-mass-point, and not the entire sub-catchment. The attribute "id" corresponds to the integer value of sub-catchment in "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc".
 
 ### Utility tools
 Folder 'utils' contains utility programs for various tasks:
-- *inp2gis.py* extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.
+- *inp2gis.py* extracts sub-catchment polygons and routing between sub-catchments from a SWMM input file (\*.inp). The tool saves the sub-catchments as a polygon shapefile and the routing between the sub-catchment polygon centroids as a line shapefile.
  - This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.
-- *rpt2gis.py* extracts subcatchment polygons from a SWMM5 input file (\*.inp) and subcatchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the infromation and saves the subcatchment results as a polygon shapefile.
+- *rpt2gis.py* extracts sub-catchment polygons from a SWMM5 input file (\*.inp) and sub-catchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the information and saves the sub-catchment results as a polygon shapefile.
  - This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.
 - *ExtractDataSets.py* collates time series data from (several) SWMM5 report file(s) into a single .csv file.
  - This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.
-- *ExtractSubcatchmentResults.py* extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file.
+- *adap2shp.py* creates a shapefile of adaptive sub-catchments with given sub-catchment attributes using the information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.
+- *ExtractSubcatchmentResults.py* extracts sub-catchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as sub-catchment attributes in a Well-Known-Text file. Particularly useful for creating sub-catchment runoff results shpafile from adaptive model results, as this shapefile cannot be directly produced using the \*.inp and \*.rpt files. To produce the shapefile, first create a \*.wkt file of subcatchment runoff results using *ExtractSubcatchmentResults.py* and then use *adap2shp.py* with the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and the newly created \*.wkt file as inputs to produce the final shapefile.
 - *wkt2shp.sh* converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
-- *adap2shp.py* creates a shapefile of adaptive sub-catchments with subcatchment attributes using the information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.
+
 
 The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard libraries:
 - pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
@@ -142,6 +143,6 @@ Go to Control Panel -> search for 'path' -> Edit environment variables for your 
 Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
 - [data](demo_catchment/data) contains the necessary files required to run GisToSWMM5.
 - [GIS](demo_catchment/GIS) contains files corresponding to [data](demo_catchment/data) files in a (more) GIS-friendly format alongside a QGIS-project file with the files already imported.
-- [run_scripts](demo_catchment/run_scripts) contains example scripts to run GisToSWMM5 using the given data, and to collect the subcatchment runoff results and the result timeseries from the SWMM output files.
+- [run_scripts](demo_catchment/run_scripts) contains example scripts to run GisToSWMM5 using the given data, and to collect the sub-catchment runoff results and the result timeseries from the SWMM output files.
 - [out](demo_catchment/out) contains the output files of GisToSWMM5 in [SWMM_in](demo_catchment/out/SWMM_in), the output files of SWMM in [SWMM_out](demo_catchment/out/SWMM_out), and finally the SWMM result time series in [SWMM_results](demo_catchment/out/SWMM_results).
 - [QGIS_styles](demo_catchment/QGIS_styles) contains QGIS style definition files that may be helpful in visualizing the GisToSWMM5 input and output files in QGIS.
