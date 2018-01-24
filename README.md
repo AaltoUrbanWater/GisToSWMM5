@@ -124,20 +124,20 @@ Folder 'utils' contains utility programs for various tasks:
 - *wkt2shp.sh* converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
 
 
-The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard libraries:
+The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard packages:
 - pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
 - geopandas (inp2gis.py, rpt2gis.py, adap2shp.py)
 - shapely (inp2gis.py, rpt2gis.py)
 - rasterio (adap2shp.py)
+
+Using [Miniconda(/Anaconda)](https://www.anaconda.com/download/) Python distribution is highly recommended. It is an open source distribution of Python, intended especially for data science and machine learning. In practice, it makes life a lot easier when installing Python packages even when dealing with simple scripts such as here.
 
 Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.  
 
 While using inp2gis.py and rpt2gis.py is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running these two utility programs are therefore given in  [run_scripts](run_scripts) folder.  
 
 In case 'activate' command for Miniconda(/Anaconda) does not work from command line on Windows, or the batch scripts complain that 'activate' is not recognized as a valid command, the quick fix is to add 'C:\Users\\[USER]\Miniconda3\Scripts' or 'C:\Users\\[USER]\Anaconda3\Scripts' to the end of your PATH environmental variable.  
-
-On Windows 10:  
-Go to Control Panel -> search for 'path' -> Edit environment variables for your account -> Select 'Path' -> Edit -> New -> Add the path to the Scripts folder -> OK -> OK
+(On Windows 10: Go to Control Panel -> search for 'path' -> Edit environment variables for your account -> Select 'Path' -> Edit -> New -> Add the path to the Scripts folder -> OK -> OK)
 
 ### Demo case
 Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
