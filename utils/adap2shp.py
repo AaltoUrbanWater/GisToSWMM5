@@ -79,6 +79,7 @@ attr = attr.drop('wkt', axis=1)
 
 # Join attribute tables
 gdf = gdf.merge(attr, on='id')
+gdf = gdf.dissolve(by='id', aggfunc='first')
 
 # Save the shapefile
 gdf.to_file(sys.argv[3], driver='ESRI Shapefile')
