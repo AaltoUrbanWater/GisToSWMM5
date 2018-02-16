@@ -1023,7 +1023,7 @@ std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
 void Grid::simplify(Table &juncTable, std::string &path)
 {
     /*** NON-ROOF CELLS ***/
-    // Ensure the are no inletIDs
+    // Ensure there are no inletIDs
     for (int i = 0; i < nCols*nRows; i++)
         cells[i].inletIDs.clear();
 
@@ -1056,7 +1056,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
         double juncPosY = atof( juncTable.getData(i, 1).c_str() );
         int isOpen = atoi( juncTable.getData(i, 6).c_str() );
 
-        // Add open cells with junctions to final list of cells
+        // Add cells with open junctions to final list of cells
         if (juncPosX >= xllCorner
                 &&
                 juncPosX < xllCorner + nCols * cellSize
