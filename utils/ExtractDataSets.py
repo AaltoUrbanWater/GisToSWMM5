@@ -6,14 +6,32 @@ import pandas as pd
 
 # Check input parameters
 inFiles = []
-if (len(sys.argv) < 4):
+if (len(sys.argv) < 5):
     print("Usage:\n"
-          "./ExtractDataSets.py [KEY STRING] [PATH(S) TO *.rpt FILE(S)] "
-          "[PATH TO OUTPUT FILE AS *.csv]")
+          "./ExtractDataSets.py [KEY STRING] [PARAMETER] [PATH(S) TO *.rpt "
+          "FILE(S)] [PATH TO OUTPUT FILE AS *.csv]\n"
+          "Allowed parameters are:"
+          "'flow', 'velocity', 'depth', or 'capacity'")
     sys.exit()
 for i in range(len(sys.argv)):
     if i < 2:
         continue
+    elif (i == 2):
+        parameters = ['flow', 'velocity', 'depth', 'capacity']
+        if (not sys.argv[2].lower() in parameters):
+            print("Error:\n"
+                  "Third argument has to be a link results parameter.\n"
+                  "Allowed parameters are:\n"
+                  "'flow', 'velocity', 'depth', 'capacity'")
+            sys.exit()
+        elif (sys.argv[2].lower() == 'flow'):
+            var = 'flow_lps_'
+        elif (sys.argv[2].lower() == 'velocity'):
+            var = 'vel_ms_'
+        elif (sys.argv[2].lower() == 'depth'):
+            var = 'depth_m_'
+        elif (sys.argv[2].lower() == 'capacity'):
+            var = 'cap_m_'
     elif (i == len(sys.argv)-1):
         if (not sys.argv[i].lower().endswith('.csv')):
             print('Error:\n'
@@ -51,7 +69,7 @@ for fileIdx, inFile in enumerate(inFiles):
                                                 'cap_m_' + str(fileIdx)])
         df_single['datetime'] = pd.to_datetime(df_single['datetime'] + ' ' +
                                                df_single['time'])
-        cols.append('flow_lps_' + str(fileIdx))  # Add new columns to save
+        cols.append(var + str(fileIdx))  # Add new columns to save
         if first_file:  # Create dataframe for results from all files
             df_all = df_single.copy()
             print('\nFile indexes in ' + sys.argv[-1] + ':')
