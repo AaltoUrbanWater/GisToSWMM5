@@ -41,6 +41,7 @@ subarea_data = []
 infiltration_data = []
 coordinate_data = []
 polygon_data = []
+tags_data = []
 
 # Go through the SWMM inp file
 with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
@@ -97,6 +98,15 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                     break
                 else:  # Save data
                     polygon_data.append(row.split())
+        # Check for tag information
+        if '[tags]' in line.lower():
+            for idx, row in enumerate(inp_file):
+                if row.startswith(';;'):  # Skip comment rows
+                    continue
+                elif row.isspace():  # Stop looking after empty line
+                    break
+                else:  # Save data
+                    tags_data.append(row.split())
 
 # Create dataframes from data
 subcatchment_col_names = ['Name',
@@ -175,6 +185,13 @@ elif (len(infiltration_data[0]) == 4):  # Green-Ampt infiltration
                                                 'Ksat',
                                                 'IMD']].astype(float)
 
+if tags_data:
+    tags_col_names = ['Type',
+                      'Name',
+                      'Tag']
+    tags_df = pd.DataFrame(tags_data, columns=tags_col_names)
+    tags_df = tags_df.drop('Type', axis=1)
+
 coordinate_col_names = ['Name', 'X', 'Y']
 coordinate_df = pd.DataFrame(coordinate_data, columns=coordinate_col_names)
 polygon_df = pd.DataFrame(polygon_data, columns=coordinate_col_names)
@@ -203,6 +220,8 @@ subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid.map(
 subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='Name')
 subcatchment_gdf = subcatchment_gdf.merge(subarea_df, on='Name')
 subcatchment_gdf = subcatchment_gdf.merge(infiltration_df, on='Name')
+if tags_data:
+    subcatchment_gdf = subcatchment_gdf.merge(tags_df, on='Name')
 
 # Create WKT geometries from junction point information
 coordinate_df['centroid'] = coordinate_df['X'].map(str) + ' ' + \
