@@ -55,9 +55,11 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                     break
                 elif row.startswith(';'):   # Save landuse
                     try:
-                        landuse_data.append(int(row.split(";")[1]))
+                        # TJN 28 Feb 2018 Add .rstrip() here to remove trailing
+                        # newline - this has not been tested properly!
+                        landuse_data.append(int(row.rstrip().split(";")[1]))
                     except ValueError:
-                        landuse_data.append(row.split(";")[1])
+                        landuse_data.append(row.rstrip().split(";")[1])
                 else:  # Save data
                     subcatchment_data.append(row.split())
 
