@@ -69,18 +69,18 @@ cellsize&emsp;&emsp;&ensp;[eee]
 NODATA_value&emsp;```0```
 
 GisToSWMM5 currently uses the following codes for different land use classes. 
-The given codes mark the starting value for the class, i.e. values [10, 19] belong to connected roofs and [20, 29] to unconnected roofs, etc. 
 The different integers mark different landuse classes and (optionally) different landuse parameters specified in the Catchment properties table for each landuse class.
 The classes are loosely grouped into roofs, built areas, and natural areas, and especially for roofs these groups should be used. 
 Generally it is good practice to use same subclass values for connected and unconnected roofs to keep things clear. 
 E.g. 10 could have the same parameters as 20 but 10 are directly connected to junctions whereas 20 are connected to yards, 11 corresponds to 21, etc.
+For other classes there is no such connection between classes.
 
 | Code | Landuse       |
 | :-----:|:-------------|
-| ```10```   | Connected roof |
-| ```20```   | Unconnected roof |
-| ```30```   | Built area|
-| ```60```   | Natural area |
+| ```10-19```   | Connected roof |
+| ```20-29```   | Unconnected roof |
+| ```30-59```   | Built area|
+| ```60-```   | Natural area |
 
 Previously (before March 2018) the following codes were used
 
