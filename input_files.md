@@ -72,7 +72,7 @@ GisToSWMM5 currently uses the following codes for different land use classes.
 The different integers mark different landuse classes and (optionally) different landuse parameters specified in the Catchment properties table for each landuse class.
 The classes are loosely grouped into roofs, built areas, and natural areas, and especially for roofs these groups should be used. 
 Generally it is good practice to use same subclass values for connected and unconnected roofs to keep things clear. 
-E.g. 10 could have the same parameters as 20 but 10 are directly connected to junctions whereas 20 are connected to yards, 11 corresponds to 21, etc.
+E.g. 10 should have the same parameters as 20 but 10 are directly connected to junctions whereas 20 are connected to yards, in the same manner 11 should correspond to 21, etc.
 For other classes there is no such connection between classes.
 
 | Code | Landuse       |
