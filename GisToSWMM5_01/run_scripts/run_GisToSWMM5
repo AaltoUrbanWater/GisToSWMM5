@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-# This is an example script to run GisToSWMM
+# This is an example script to run GisToSWMM on unix/Mac
 
 ../bin/RasterToSWMM5 \
-../data/raster_dem.asc \
-../data/raster_landuse.asc \
-../data/table_catchment_props.csv \
-../data/table_junctions.csv \
-../data/table_conduits.csv \
-../data/able_outfalls.csv \
-../data/table_header.csv \
-../data/table_evaporation.csv \
-../data/table_temperature.csv \
-../data/table_snowpacks.csv \
-../data/table_raingages.csv \
-../data/table_xsections.csv \
-../data/table_report.csv \
-../data/table_symbols.csv \
-../out/raster_output.asc \
-../out/SWMM5_input.inp
+../demo_catchment/data/raster_dem.asc \
+../demo_catchment/data/raster_landuse.asc \
+../demo_catchment/data/table_catchment_props.csv \
+../demo_catchment/data/table_junctions.csv \
+../demo_catchment/data/table_conduits.csv \
+../demo_catchment/data/table_outfalls.csv \
+../demo_catchment/data/table_header.csv \
+../demo_catchment/data/table_evaporation.csv \
+../demo_catchment/data/table_temperature.csv \
+../demo_catchment/data/table_snowpacks.csv \
+../demo_catchment/data/table_raingages.csv \
+../demo_catchment/data/table_xsections.csv \
+../demo_catchment/data/table_report.csv \
+../demo_catchment/data/table_symbols.csv \
+../demo_catchment/out/SWMM_in/demo_catchment.asc \
+../demo_catchment/out/SWMM_in/demo_catchment.inp
