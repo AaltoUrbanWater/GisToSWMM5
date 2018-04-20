@@ -1,0 +1,9 @@
+id,imperv,dst_imp,n_imper,dst_per,n_perv,percz_i,rain_ga,conduct,initdef,suction,Snowpacks
+10,100,2.49,0.03,2.49,0.03,0,STA01,4.21,0.217,88.9,sp_imp_nonplowable
+20,100,0.87,0.012,0.87,0.012,0,STA01,4.21,0.217,88.9,sp_imp_nonplowable
+21,100,0.87,0.012,0.87,0.012,0,STA01,4.21,0.217,88.9,sp_imp_nonplowable
+30,33,2.49,0.03,2.49,0.03,0,STA01,4.21,0.217,88.9,sp_per
+40,100,0.42,0.011,0.42,0.011,0,STA01,4.21,0.217,88.9,sp_imp_plowable
+50,100,0.39,0.02,0.39,0.02,0,STA01,4.21,0.217,88.9,sp_imp_plowable
+60,0,4.22,0.238,4.22,0.238,0,STA01,4.21,0.217,88.9,sp_per
+70,100,4.22,0.238,4.22,0.238,0,STA01,4.21,0.217,88.9,sp_imp_nonplowable
