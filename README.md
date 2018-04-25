@@ -10,7 +10,7 @@ Warsta, L., Niemi, T.J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., Kokkone
 #### Other studies where GisToSWMM5 has been involved include:  
 Niemi, T.J., Warsta, L., Taka, M., Hickman, B., Pulkkinen, S., Krebs, G., Moisseev, D.N., Koivusalo, H., Kokkonen, T., 2017. Applicability of open rainfall data to event-scale urban rainfall-runoff modelling. J. Hydrol. 547, 143–155. https://doi.org/10.1016/j.jhydrol.2017.01.056
 
-Rautiainen, M., 2016. Hulevesimallinnus ja tulvariskin arviointi Turun sataman valuma-alueella (Storm water modelling and flood risk assessment in Turku harbor catchment). Master’s Thesis. Aalto University, Espoo, Finland. 51 p. (In Finnish)
+Rautiainen, M., 2016. Hulevesimallinnus ja tulvariskin arviointi Turun sataman valuma-alueella (Storm water modelling and flood risk assessment in Turku harbor catchment). Master’s Thesis. Aalto University, Espoo, Finland. 51 p. http://urn.fi/URN:NBN:fi:aalto-201611025308 (In Finnish)
 
 Taka, M., Kokkonen, T., Kuoppamäki, K., Niemi, T., Sillanpää, N., Valtanen, M., Warsta, L., Setälä, H., 2017. Spatio-temporal patterns of major ions in urban stormwater under cold climate. Hydrol. Process. 31, 1564–1577. https://doi.org/10.1002/hyp.11126
 
