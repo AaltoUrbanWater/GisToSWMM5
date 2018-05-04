@@ -1512,10 +1512,24 @@ void Grid::simplify(Table &juncTable, std::string &path)
     std::cout << "\n-> Creating an output raster of adaptive grid for inspection";
     saveRaster(path);
 
+    // TJN 4 May 2018 Save grid extent before destroying the cells
+    double urcornerOld[2];
+    double llcornerOld[2];
+    urcornerOld[0] = urcorner[0];
+    urcornerOld[1] = urcorner[1];
+    llcornerOld[0] = llcorner[0];
+    llcornerOld[1] = llcorner[1];
+
+
     clear();
     nCols = (int)cellsAdaptive.size();
     nRows = 1;
     cells = new Cell[nRows * nCols];
+    // TJN 4 May 2018 Copy grid extent after destroying the cells
+    urcorner[0] = urcornerOld[0];
+    urcorner[1] = urcornerOld[1];
+    llcorner[0] = llcornerOld[0];
+    llcorner[1] = llcornerOld[1];
 
     // Compute adaptive subcatchment averages
     for (int i = 0; i < nRows * nCols; i++ )

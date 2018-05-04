@@ -2451,272 +2451,410 @@ s1194   STA01   s1193   0.00020   0   0.99   1.5026   1.00   sp_per
 s1195   STA01   s1193   0.00680   0   5.77   5.3581   1.00   sp_per   
 ;60
 s1196   STA01   s1193   0.00020   0   0.99   7.8342   1.00   sp_per   
-;21
-s1197   STA01   s338   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1198   STA01   s536   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1199   STA01   s538   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1200   STA01   s541   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1201   STA01   s549   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1202   STA01   s550   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1203   STA01   s560   0.00080   100   1.98   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1204   STA01   s592   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1205   STA01   s609   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1206   STA01   s863   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1207   STA01   s866   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1208   STA01   s895   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1209   STA01   s896   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1210   STA01   s897   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1211   STA01   s899   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1212   STA01   s900   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1213   STA01   s901   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1214   STA01   s903   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1215   STA01   s914   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1216   STA01   s928   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1217   STA01   s930   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1218   STA01   s931   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1219   STA01   s932   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1220   STA01   s943   0.00220   100   3.28   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1221   STA01   s944   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1222   STA01   s945   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1223   STA01   s946   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1224   STA01   s959   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1225   STA01   s960   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1226   STA01   s970   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1227   STA01   s977   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1228   STA01   s978   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1229   STA01   s979   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1230   STA01   s985   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1231   STA01   s988   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1232   STA01   s995   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1233   STA01   s997   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1234   STA01   s998   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1235   STA01   s1003   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1236   STA01   s1012   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1237   STA01   s1013   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1238   STA01   s1026   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1239   STA01   s1029   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1240   STA01   s1035   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1241   STA01   s1036   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1242   STA01   s1037   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1243   STA01   s1040   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1244   STA01   s1042   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1245   STA01   s1043   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1246   STA01   s1044   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1247   STA01   s1046   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1248   STA01   s1047   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1249   STA01   s1049   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1250   STA01   s1059   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1251   STA01   s1060   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1252   STA01   s1061   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1253   STA01   s1064   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1254   STA01   s1065   0.00190   100   3.05   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1255   STA01   s1068   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1256   STA01   s1075   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1257   STA01   s1077   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1258   STA01   s1081   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1259   STA01   s1086   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1260   STA01   s1099   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1261   STA01   s1100   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1262   STA01   s1101   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1263   STA01   s1107   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1264   STA01   s1112   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1265   STA01   s1115   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1266   STA01   s1121   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1267   STA01   s1125   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1268   STA01   s1130   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1269   STA01   s1132   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1270   STA01   s1138   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1271   STA01   s1142   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1272   STA01   s1143   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1273   STA01   s1152   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1274   STA01   s1155   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1275   STA01   s1156   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1276   STA01   s1158   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1277   STA01   s1160   0.00180   100   2.97   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1278   STA01   s1164   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1279   STA01   s1165   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1280   STA01   s1167   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1281   STA01   s1168   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1282   STA01   s1171   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1283   STA01   s1172   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1284   STA01   s1173   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1285   STA01   s1175   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1286   STA01   s1179   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1287   STA01   s1180   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1288   STA01   s1181   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1289   STA01   s1184   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1290   STA01   s1189   0.00250   100   3.50   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1291   STA01   s1191   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
-;21
-s1292   STA01   s1193   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1293   STA01   j1   0.00450   100   4.70   5.0000   1.00   sp_imp_nonplowable   
+s1197   STA01   s3   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1294   STA01   j1   0.00430   100   4.59   5.0000   1.00   sp_imp_nonplowable   
+s1198   STA01   s11   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1295   STA01   j1   0.00430   100   4.59   5.0000   1.00   sp_imp_nonplowable   
+s1199   STA01   s18   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1296   STA01   j1   0.01360   100   8.16   5.0000   1.00   sp_imp_nonplowable   
+s1200   STA01   s23   0.00620   100   5.51   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1297   STA01   j1   0.01050   100   7.17   5.0000   1.00   sp_imp_nonplowable   
+s1201   STA01   s32   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1298   STA01   j1   0.01160   100   7.54   5.0000   1.00   sp_imp_nonplowable   
+s1202   STA01   s40   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1299   STA01   j2   0.00680   100   5.77   5.0000   1.00   sp_imp_nonplowable   
+s1203   STA01   s41   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1300   STA01   j3   0.03460   100   13.02   5.0000   1.00   sp_imp_nonplowable   
+s1204   STA01   s44   0.00080   100   1.98   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1301   STA01   j3   0.01280   100   7.92   5.0000   1.00   sp_imp_nonplowable   
+s1205   STA01   s49   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1302   STA01   j4   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1206   STA01   s50   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1303   STA01   j4   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1207   STA01   s53   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1304   STA01   j4   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1208   STA01   s59   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1305   STA01   j4   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+s1209   STA01   s75   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1306   STA01   j4   0.05090   100   15.79   5.0000   1.00   sp_imp_nonplowable   
+s1210   STA01   s76   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1307   STA01   j5   0.00500   100   4.95   5.0000   1.00   sp_imp_nonplowable   
+s1211   STA01   s81   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1308   STA01   j7   0.00920   100   6.71   5.0000   1.00   sp_imp_nonplowable   
+s1212   STA01   s89   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1309   STA01   j7   0.01620   100   8.91   5.0000   1.00   sp_imp_nonplowable   
+s1213   STA01   s94   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1310   STA01   j8   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+s1214   STA01   s116   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1311   STA01   j8   0.01830   100   9.47   5.0000   1.00   sp_imp_nonplowable   
+s1215   STA01   s117   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1312   STA01   j8   0.00590   100   5.38   5.0000   1.00   sp_imp_nonplowable   
+s1216   STA01   s136   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1313   STA01   j8   0.00590   100   5.38   5.0000   1.00   sp_imp_nonplowable   
+s1217   STA01   s146   0.00110   100   2.32   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1314   STA01   j8   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1218   STA01   s147   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1315   STA01   j8   0.00730   100   5.98   5.0000   1.00   sp_imp_nonplowable   
+s1219   STA01   s160   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1316   STA01   j8   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1220   STA01   s161   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1317   STA01   j8   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+s1221   STA01   s162   0.00110   100   2.32   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1318   STA01   j8   0.00410   100   4.48   5.0000   1.00   sp_imp_nonplowable   
+s1222   STA01   s184   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1319   STA01   j9   0.01080   100   7.27   5.0000   1.00   sp_imp_nonplowable   
+s1223   STA01   s186   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1320   STA01   j10   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+s1224   STA01   s188   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1321   STA01   j10   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+s1225   STA01   s191   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1322   STA01   j10   0.01290   100   7.95   5.0000   1.00   sp_imp_nonplowable   
+s1226   STA01   s201   0.00170   100   2.89   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1323   STA01   j10   0.00490   100   4.90   5.0000   1.00   sp_imp_nonplowable   
+s1227   STA01   s204   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1324   STA01   j10   0.00540   100   5.14   5.0000   1.00   sp_imp_nonplowable   
+s1228   STA01   s205   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1325   STA01   j11   0.00810   100   6.30   5.0000   1.00   sp_imp_nonplowable   
+s1229   STA01   s206   0.00310   100   3.90   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1326   STA01   j12   0.00730   100   5.98   5.0000   1.00   sp_imp_nonplowable   
+s1230   STA01   s207   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1327   STA01   j12   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
+s1231   STA01   s208   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1328   STA01   j13   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+s1232   STA01   s209   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 ;20
-s1329   STA01   j13   0.04740   100   15.24   5.0000   1.00   sp_imp_nonplowable   
+s1233   STA01   s210   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1234   STA01   s214   0.00320   100   3.96   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1235   STA01   s217   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1236   STA01   s218   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1237   STA01   s225   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1238   STA01   s226   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1239   STA01   s227   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1240   STA01   s228   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1241   STA01   s230   0.00190   100   3.05   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1242   STA01   s243   0.00080   100   1.98   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1243   STA01   s248   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1244   STA01   s250   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1245   STA01   s251   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1246   STA01   s257   0.00280   100   3.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1247   STA01   s263   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1248   STA01   s264   0.00260   100   3.57   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1249   STA01   s273   0.00450   100   4.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1250   STA01   s305   0.00110   100   2.32   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1251   STA01   s306   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1252   STA01   s307   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1253   STA01   s308   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1254   STA01   s310   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1255   STA01   s311   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1256   STA01   s314   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1257   STA01   s316   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1258   STA01   s324   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1259   STA01   s325   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1260   STA01   s334   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1261   STA01   s336   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1262   STA01   s338   0.00380   100   4.32   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1263   STA01   s341   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1264   STA01   s346   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1265   STA01   s349   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1266   STA01   s350   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1267   STA01   s363   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1268   STA01   s366   0.00230   100   3.36   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1269   STA01   s368   0.00460   100   4.75   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1270   STA01   s374   0.00340   100   4.08   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1271   STA01   s383   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1272   STA01   s384   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1273   STA01   s386   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1274   STA01   s387   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1275   STA01   s390   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1276   STA01   s391   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1277   STA01   s392   0.00230   100   3.36   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1278   STA01   s393   0.00310   100   3.90   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1279   STA01   s395   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1280   STA01   s397   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1281   STA01   s399   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1282   STA01   s427   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1283   STA01   s431   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1284   STA01   s458   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1285   STA01   s536   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1286   STA01   s538   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1287   STA01   s541   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1288   STA01   s549   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1289   STA01   s550   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1290   STA01   s557   0.00290   100   3.77   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1291   STA01   s560   0.00080   100   1.98   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1292   STA01   s592   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1293   STA01   s609   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1294   STA01   s614   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1295   STA01   s622   0.00460   100   4.75   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1296   STA01   s641   0.00200   100   3.13   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1297   STA01   s648   0.00850   100   6.45   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1298   STA01   s671   0.00300   100   3.83   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1299   STA01   s691   0.00300   100   3.83   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1300   STA01   s722   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1301   STA01   s736   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1302   STA01   s737   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1303   STA01   s741   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1304   STA01   s748   0.00700   100   5.86   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1305   STA01   s752   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1306   STA01   s756   0.00170   100   2.89   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1307   STA01   s770   0.00180   100   2.97   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1308   STA01   s775   0.00080   100   1.98   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1309   STA01   s779   0.00370   100   4.26   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1310   STA01   s788   0.02650   100   11.40   5.0000   1.00   sp_imp_nonplowable   
+;20
+s1311   STA01   s812   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1312   STA01   s863   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1313   STA01   s866   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1314   STA01   s895   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1315   STA01   s896   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1316   STA01   s897   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1317   STA01   s899   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1318   STA01   s900   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1319   STA01   s901   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1320   STA01   s903   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1321   STA01   s914   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1322   STA01   s928   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1323   STA01   s930   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1324   STA01   s931   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1325   STA01   s932   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1326   STA01   s943   0.00220   100   3.28   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1327   STA01   s944   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1328   STA01   s945   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1329   STA01   s946   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1330   STA01   s959   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1331   STA01   s960   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1332   STA01   s970   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1333   STA01   s977   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1334   STA01   s978   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1335   STA01   s979   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1336   STA01   s985   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1337   STA01   s988   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1338   STA01   s995   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1339   STA01   s997   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1340   STA01   s998   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1341   STA01   s1003   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1342   STA01   s1012   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1343   STA01   s1013   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1344   STA01   s1026   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1345   STA01   s1029   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1346   STA01   s1035   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1347   STA01   s1036   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1348   STA01   s1037   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1349   STA01   s1040   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1350   STA01   s1042   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1351   STA01   s1043   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1352   STA01   s1044   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1353   STA01   s1046   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1354   STA01   s1047   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1355   STA01   s1049   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1356   STA01   s1059   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1357   STA01   s1060   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1358   STA01   s1061   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1359   STA01   s1064   0.00240   100   3.43   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1360   STA01   s1065   0.00190   100   3.05   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1361   STA01   s1068   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1362   STA01   s1075   0.00150   100   2.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1363   STA01   s1077   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1364   STA01   s1081   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1365   STA01   s1086   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1366   STA01   s1099   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1367   STA01   s1100   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1368   STA01   s1101   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1369   STA01   s1107   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1370   STA01   s1112   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1371   STA01   s1115   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1372   STA01   s1121   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1373   STA01   s1125   0.00270   100   3.64   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1374   STA01   s1130   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1375   STA01   s1132   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1376   STA01   s1138   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1377   STA01   s1142   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1378   STA01   s1143   0.00050   100   1.57   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1379   STA01   s1152   0.00130   100   2.52   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1380   STA01   s1155   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1381   STA01   s1156   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1382   STA01   s1158   0.00160   100   2.80   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1383   STA01   s1160   0.00180   100   2.97   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1384   STA01   s1164   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1385   STA01   s1165   0.00120   100   2.42   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1386   STA01   s1167   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1387   STA01   s1168   0.00040   100   1.40   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1388   STA01   s1171   0.00210   100   3.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1389   STA01   s1172   0.00070   100   1.85   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1390   STA01   s1173   0.00030   100   1.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1391   STA01   s1175   0.00060   100   1.71   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1392   STA01   s1179   0.00010   100   0.70   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1393   STA01   s1180   0.00140   100   2.62   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1394   STA01   s1181   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1395   STA01   s1184   0.00100   100   2.21   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1396   STA01   s1189   0.00250   100   3.50   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1397   STA01   s1191   0.00090   100   2.10   5.0000   1.00   sp_imp_nonplowable   
+;21
+s1398   STA01   s1193   0.00020   100   0.99   5.0000   1.00   sp_imp_nonplowable   
 
 [SUBAREAS]
 ;;Subcatchment   N-Imperv   N-Perv     S-Imperv   S-Perv     PctZero    RouteTo    PctRouted 
@@ -4050,6 +4188,75 @@ s1326   0.012   0.012   0.87   0.87   0   OUTLET   100.0
 s1327   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
 s1328   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
 s1329   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1330   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1331   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1332   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1333   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1334   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1335   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1336   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1337   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1338   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1339   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1340   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1341   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1342   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1343   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1344   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1345   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1346   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1347   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1348   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1349   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1350   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1351   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1352   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1353   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1354   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1355   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1356   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1357   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1358   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1359   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1360   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1361   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1362   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1363   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1364   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1365   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1366   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1367   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1368   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1369   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1370   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1371   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1372   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1373   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1374   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1375   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1376   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1377   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1378   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1379   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1380   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1381   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1382   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1383   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1384   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1385   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1386   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1387   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1388   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1389   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1390   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1391   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1392   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1393   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1394   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1395   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1396   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1397   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
+s1398   0.012   0.012   0.87   0.87   0   OUTLET   100.0   
 
 [INFILTRATION]
 ;;Subcatchment   Suction    HydCon     IMDmax    
@@ -5383,6 +5590,75 @@ s1326   88.9   4.21   0.217
 s1327   88.9   4.21   0.217   
 s1328   88.9   4.21   0.217   
 s1329   88.9   4.21   0.217   
+s1330   88.9   4.21   0.217   
+s1331   88.9   4.21   0.217   
+s1332   88.9   4.21   0.217   
+s1333   88.9   4.21   0.217   
+s1334   88.9   4.21   0.217   
+s1335   88.9   4.21   0.217   
+s1336   88.9   4.21   0.217   
+s1337   88.9   4.21   0.217   
+s1338   88.9   4.21   0.217   
+s1339   88.9   4.21   0.217   
+s1340   88.9   4.21   0.217   
+s1341   88.9   4.21   0.217   
+s1342   88.9   4.21   0.217   
+s1343   88.9   4.21   0.217   
+s1344   88.9   4.21   0.217   
+s1345   88.9   4.21   0.217   
+s1346   88.9   4.21   0.217   
+s1347   88.9   4.21   0.217   
+s1348   88.9   4.21   0.217   
+s1349   88.9   4.21   0.217   
+s1350   88.9   4.21   0.217   
+s1351   88.9   4.21   0.217   
+s1352   88.9   4.21   0.217   
+s1353   88.9   4.21   0.217   
+s1354   88.9   4.21   0.217   
+s1355   88.9   4.21   0.217   
+s1356   88.9   4.21   0.217   
+s1357   88.9   4.21   0.217   
+s1358   88.9   4.21   0.217   
+s1359   88.9   4.21   0.217   
+s1360   88.9   4.21   0.217   
+s1361   88.9   4.21   0.217   
+s1362   88.9   4.21   0.217   
+s1363   88.9   4.21   0.217   
+s1364   88.9   4.21   0.217   
+s1365   88.9   4.21   0.217   
+s1366   88.9   4.21   0.217   
+s1367   88.9   4.21   0.217   
+s1368   88.9   4.21   0.217   
+s1369   88.9   4.21   0.217   
+s1370   88.9   4.21   0.217   
+s1371   88.9   4.21   0.217   
+s1372   88.9   4.21   0.217   
+s1373   88.9   4.21   0.217   
+s1374   88.9   4.21   0.217   
+s1375   88.9   4.21   0.217   
+s1376   88.9   4.21   0.217   
+s1377   88.9   4.21   0.217   
+s1378   88.9   4.21   0.217   
+s1379   88.9   4.21   0.217   
+s1380   88.9   4.21   0.217   
+s1381   88.9   4.21   0.217   
+s1382   88.9   4.21   0.217   
+s1383   88.9   4.21   0.217   
+s1384   88.9   4.21   0.217   
+s1385   88.9   4.21   0.217   
+s1386   88.9   4.21   0.217   
+s1387   88.9   4.21   0.217   
+s1388   88.9   4.21   0.217   
+s1389   88.9   4.21   0.217   
+s1390   88.9   4.21   0.217   
+s1391   88.9   4.21   0.217   
+s1392   88.9   4.21   0.217   
+s1393   88.9   4.21   0.217   
+s1394   88.9   4.21   0.217   
+s1395   88.9   4.21   0.217   
+s1396   88.9   4.21   0.217   
+s1397   88.9   4.21   0.217   
+s1398   88.9   4.21   0.217   
 
 [SNOWPACKS]
 ;;Name           Surface    Parameters
@@ -5448,8 +5724,8 @@ c13   j13   j2   3.718270045   0.015   0   0.07   0.00   0.00
 ;;------	------	------	------	------	------	------
 
 [XSECTIONS]
-;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels   
-;;-------------- ------------ ---------------- ---------- ---------- ---------- ----------
+;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
+;;-------------- ------------ ---------------- ---------- ---------- ---------- ---------- ----------
 c1   CIRCULAR   0.3   0   0   0   1   
 c2   CIRCULAR   0.4   0   0   0   1   
 c3   CIRCULAR   0.3   0   0   0   1   
@@ -5501,7 +5777,7 @@ LINKS   c5
 [TAGS]
 
 [MAP]
-DIMENSIONS 0.00 0.00 0.00 0.00
+DIMENSIONS 0.50 0.50 220.50 230.50
 Units      Meters
 
 [COORDINATES]
@@ -11509,671 +11785,1016 @@ s1196   145.00   189.50
 s1196   146.00   189.50
 s1196   146.00   190.50
 s1196   145.00   190.50
-s1197   56.00   120.00
-s1197   56.00   119.00
-s1197   57.00   119.00
-s1197   57.00   120.00
-s1197   56.00   120.00
-s1198   66.00   122.00
-s1198   66.00   121.00
-s1198   67.00   121.00
-s1198   67.00   122.00
-s1198   66.00   122.00
-s1199   64.60   122.80
-s1199   64.60   121.80
-s1199   65.60   121.80
-s1199   65.60   122.80
-s1199   64.60   122.80
-s1200   61.50   129.50
-s1200   61.50   128.50
-s1200   62.50   128.50
-s1200   62.50   129.50
-s1200   61.50   129.50
-s1201   62.50   124.20
-s1201   62.50   123.20
-s1201   63.50   123.20
-s1201   63.50   124.20
-s1201   62.50   124.20
-s1202   63.67   126.33
-s1202   63.67   125.33
-s1202   64.67   125.33
-s1202   64.67   126.33
-s1202   63.67   126.33
-s1203   62.12   127.25
-s1203   62.12   126.25
-s1203   63.12   126.25
-s1203   63.12   127.25
-s1203   62.12   127.25
-s1204   59.57   128.71
-s1204   59.57   127.71
-s1204   60.57   127.71
-s1204   60.57   128.71
-s1204   59.57   128.71
-s1205   58.31   126.62
-s1205   58.31   125.62
-s1205   59.31   125.62
-s1205   59.31   126.62
-s1205   58.31   126.62
-s1206   100.95   170.24
-s1206   100.95   169.24
-s1206   101.95   169.24
-s1206   101.95   170.24
-s1206   100.95   170.24
-s1207   97.93   173.41
-s1207   97.93   172.41
-s1207   98.93   172.41
-s1207   98.93   173.41
-s1207   97.93   173.41
-s1208   109.07   173.14
-s1208   109.07   172.14
-s1208   110.07   172.14
-s1208   110.07   173.14
-s1208   109.07   173.14
-s1209   111.00   173.00
-s1209   111.00   172.00
-s1209   112.00   172.00
-s1209   112.00   173.00
-s1209   111.00   173.00
-s1210   112.00   173.00
-s1210   112.00   172.00
-s1210   113.00   172.00
-s1210   113.00   173.00
-s1210   112.00   173.00
-s1211   105.08   172.08
-s1211   105.08   171.08
-s1211   106.08   171.08
-s1211   106.08   172.08
-s1211   105.08   172.08
-s1212   108.00   170.50
-s1212   108.00   169.50
-s1212   109.00   169.50
-s1212   109.00   170.50
-s1212   108.00   170.50
-s1213   109.00   170.00
-s1213   109.00   169.00
-s1213   110.00   169.00
-s1213   110.00   170.00
-s1213   109.00   170.00
-s1214   124.67   173.00
-s1214   124.67   172.00
-s1214   125.67   172.00
-s1214   125.67   173.00
-s1214   124.67   173.00
-s1215   100.10   176.67
-s1215   100.10   175.67
-s1215   101.10   175.67
-s1215   101.10   176.67
-s1215   100.10   176.67
-s1216   124.00   173.50
-s1216   124.00   172.50
-s1216   125.00   172.50
-s1216   125.00   173.50
-s1216   124.00   173.50
-s1217   121.50   175.00
-s1217   121.50   174.00
-s1217   122.50   174.00
-s1217   122.50   175.00
-s1217   121.50   175.00
-s1218   123.00   175.00
-s1218   123.00   174.00
-s1218   124.00   174.00
-s1218   124.00   175.00
-s1218   123.00   175.00
-s1219   126.08   176.08
-s1219   126.08   175.08
-s1219   127.08   175.08
-s1219   127.08   176.08
-s1219   126.08   176.08
-s1220   114.41   173.73
-s1220   114.41   172.73
-s1220   115.41   172.73
-s1220   115.41   173.73
-s1220   114.41   173.73
-s1221   117.00   174.00
-s1221   117.00   173.00
-s1221   118.00   173.00
-s1221   118.00   174.00
-s1221   117.00   174.00
-s1222   118.00   172.50
-s1222   118.00   171.50
-s1222   119.00   171.50
-s1222   119.00   172.50
-s1222   118.00   172.50
-s1223   129.00   174.50
-s1223   129.00   173.50
-s1223   130.00   173.50
-s1223   130.00   174.50
-s1223   129.00   174.50
-s1224   119.07   175.14
-s1224   119.07   174.14
-s1224   120.07   174.14
-s1224   120.07   175.14
-s1224   119.07   175.14
-s1225   103.57   194.00
-s1225   103.57   193.00
-s1225   104.57   193.00
-s1225   104.57   194.00
-s1225   103.57   194.00
-s1226   131.08   177.08
-s1226   131.08   176.08
-s1226   132.08   176.08
-s1226   132.08   177.08
-s1226   131.08   177.08
-s1227   102.00   178.50
-s1227   102.00   177.50
-s1227   103.00   177.50
-s1227   103.00   178.50
-s1227   102.00   178.50
-s1228   103.00   177.50
-s1228   103.00   176.50
-s1228   104.00   176.50
-s1228   104.00   177.50
-s1228   103.00   177.50
-s1229   104.00   177.00
-s1229   104.00   176.00
-s1229   105.00   176.00
-s1229   105.00   177.00
-s1229   104.00   177.00
-s1230   105.00   177.00
-s1230   105.00   176.00
-s1230   106.00   176.00
-s1230   106.00   177.00
-s1230   105.00   177.00
-s1231   80.00   188.25
-s1231   80.00   187.25
-s1231   81.00   187.25
-s1231   81.00   188.25
-s1231   80.00   188.25
-s1232   107.00   177.13
-s1232   107.00   176.13
-s1232   108.00   176.13
-s1232   108.00   177.13
-s1232   107.00   177.13
-s1233   134.00   175.50
-s1233   134.00   174.50
-s1233   135.00   174.50
-s1233   135.00   175.50
-s1233   134.00   175.50
-s1234   136.26   177.85
-s1234   136.26   176.85
-s1234   137.26   176.85
-s1234   137.26   177.85
-s1234   136.26   177.85
-s1235   77.00   191.00
-s1235   77.00   190.00
-s1235   78.00   190.00
-s1235   78.00   191.00
-s1235   77.00   191.00
-s1236   108.00   179.50
-s1236   108.00   178.50
-s1236   109.00   178.50
-s1236   109.00   179.50
-s1236   108.00   179.50
-s1237   109.56   178.22
-s1237   109.56   177.22
-s1237   110.56   177.22
-s1237   110.56   178.22
-s1237   109.56   178.22
-s1238   100.00   192.00
-s1238   100.00   191.00
-s1238   101.00   191.00
-s1238   101.00   192.00
-s1238   100.00   192.00
-s1239   140.07   179.14
-s1239   140.07   178.14
-s1239   141.07   178.14
-s1239   141.07   179.14
-s1239   140.07   179.14
-s1240   142.00   179.00
-s1240   142.00   178.00
-s1240   143.00   178.00
-s1240   143.00   179.00
-s1240   142.00   179.00
-s1241   143.00   178.50
-s1241   143.00   177.50
-s1241   144.00   177.50
-s1241   144.00   178.50
-s1241   143.00   178.50
-s1242   144.00   177.50
-s1242   144.00   176.50
-s1242   145.00   176.50
-s1242   145.00   177.50
-s1242   144.00   177.50
-s1243   112.00   178.13
-s1243   112.00   177.13
-s1243   113.00   177.13
-s1243   113.00   178.13
-s1243   112.00   178.13
-s1244   101.00   193.50
-s1244   101.00   192.50
-s1244   102.00   192.50
-s1244   102.00   193.50
-s1244   101.00   193.50
-s1245   102.00   194.00
-s1245   102.00   193.00
-s1245   103.00   193.00
-s1245   103.00   194.00
-s1245   102.00   194.00
-s1246   145.44   183.31
-s1246   145.44   182.31
-s1246   146.44   182.31
-s1246   146.44   183.31
-s1246   145.44   183.31
-s1247   140.00   176.00
-s1247   140.00   175.00
-s1247   141.00   175.00
-s1247   141.00   176.00
-s1247   140.00   176.00
-s1248   145.00   177.00
-s1248   145.00   176.00
-s1248   146.00   176.00
-s1248   146.00   177.00
-s1248   145.00   177.00
-s1249   113.00   180.50
-s1249   113.00   179.50
-s1249   114.00   179.50
-s1249   114.00   180.50
-s1249   113.00   180.50
-s1250   100.25   194.25
-s1250   100.25   193.25
-s1250   101.25   193.25
-s1250   101.25   194.25
-s1250   100.25   194.25
-s1251   145.00   178.83
-s1251   145.00   177.83
-s1251   146.00   177.83
-s1251   146.00   178.83
-s1251   145.00   178.83
-s1252   147.00   178.00
-s1252   147.00   177.00
-s1252   148.00   177.00
-s1252   148.00   178.00
-s1252   147.00   178.00
-s1253   116.08   179.17
-s1253   116.08   178.17
-s1253   117.08   178.17
-s1253   117.08   179.17
-s1253   116.08   179.17
-s1254   105.95   195.58
-s1254   105.95   194.58
-s1254   106.95   194.58
-s1254   106.95   195.58
-s1254   105.95   195.58
-s1255   78.33   190.17
-s1255   78.33   189.17
-s1255   79.33   189.17
-s1255   79.33   190.17
-s1255   78.33   190.17
-s1256   117.00   199.33
-s1256   117.00   198.33
-s1256   118.00   198.33
-s1256   118.00   199.33
-s1256   117.00   199.33
-s1257   101.00   196.00
-s1257   101.00   195.00
-s1257   102.00   195.00
-s1257   102.00   196.00
-s1257   101.00   196.00
-s1258   101.50   197.83
-s1258   101.50   196.83
-s1258   102.50   196.83
-s1258   102.50   197.83
-s1258   101.50   197.83
-s1259   118.00   181.50
-s1259   118.00   180.50
-s1259   119.00   180.50
-s1259   119.00   181.50
-s1259   118.00   181.50
-s1260   77.92   193.54
-s1260   77.92   192.54
-s1260   78.92   192.54
-s1260   78.92   193.54
-s1260   77.92   193.54
-s1261   119.00   180.50
-s1261   119.00   179.50
-s1261   120.00   179.50
-s1261   120.00   180.50
-s1261   119.00   180.50
-s1262   99.80   199.60
-s1262   99.80   198.60
-s1262   100.80   198.60
-s1262   100.80   199.60
-s1262   99.80   199.60
-s1263   121.57   180.00
-s1263   121.57   179.00
-s1263   122.57   179.00
-s1263   122.57   180.00
-s1263   121.57   180.00
-s1264   82.59   192.26
-s1264   82.59   191.26
-s1264   83.59   191.26
-s1264   83.59   192.26
-s1264   82.59   192.26
-s1265   125.93   181.19
-s1265   125.93   180.19
-s1265   126.93   180.19
-s1265   126.93   181.19
-s1265   125.93   181.19
-s1266   85.00   196.00
-s1266   85.00   195.00
-s1266   86.00   195.00
-s1266   86.00   196.00
-s1266   85.00   196.00
-s1267   109.74   197.93
-s1267   109.74   196.93
-s1267   110.74   196.93
-s1267   110.74   197.93
-s1267   109.74   197.93
-s1268   83.67   196.00
-s1268   83.67   195.00
-s1268   84.67   195.00
-s1268   84.67   196.00
-s1268   83.67   196.00
-s1269   128.00   183.50
-s1269   128.00   182.50
-s1269   129.00   182.50
-s1269   129.00   183.50
-s1269   128.00   183.50
-s1270   144.30   181.40
-s1270   144.30   180.40
-s1270   145.30   180.40
-s1270   145.30   181.40
-s1270   144.30   181.40
-s1271   113.50   199.00
-s1271   113.50   198.00
-s1271   114.50   198.00
-s1271   114.50   199.00
-s1271   113.50   199.00
-s1272   115.00   199.00
-s1272   115.00   198.00
-s1272   116.00   198.00
-s1272   116.00   199.00
-s1272   115.00   199.00
-s1273   119.92   199.62
-s1273   119.92   198.62
-s1273   120.92   198.62
-s1273   120.92   199.62
-s1273   119.92   199.62
-s1274   125.67   198.33
-s1274   125.67   197.33
-s1274   126.67   197.33
-s1274   126.67   198.33
-s1274   125.67   198.33
-s1275   129.56   182.22
-s1275   129.56   181.22
-s1275   130.56   181.22
-s1275   130.56   182.22
-s1275   129.56   182.22
-s1276   132.06   182.00
-s1276   132.06   181.00
-s1276   133.06   181.00
-s1276   133.06   182.00
-s1276   132.06   182.00
-s1277   128.11   199.67
-s1277   128.11   198.67
-s1277   129.11   198.67
-s1277   129.11   199.67
-s1277   128.11   199.67
-s1278   122.17   200.83
-s1278   122.17   199.83
-s1278   123.17   199.83
-s1278   123.17   200.83
-s1278   122.17   200.83
-s1279   124.83   200.83
-s1279   124.83   199.83
-s1279   125.83   199.83
-s1279   125.83   200.83
-s1279   124.83   200.83
-s1280   133.00   184.50
-s1280   133.00   183.50
-s1280   134.00   183.50
-s1280   134.00   184.50
-s1280   133.00   184.50
-s1281   134.00   183.50
-s1281   134.00   182.50
-s1281   135.00   182.50
-s1281   135.00   183.50
-s1281   134.00   183.50
-s1282   136.57   183.00
-s1282   136.57   182.00
-s1282   137.57   182.00
-s1282   137.57   183.00
-s1282   136.57   183.00
-s1283   133.43   200.29
-s1283   133.43   199.29
-s1283   134.43   199.29
-s1283   134.43   200.29
-s1283   133.43   200.29
-s1284   135.33   199.33
-s1284   135.33   198.33
-s1284   136.33   198.33
-s1284   136.33   199.33
-s1284   135.33   199.33
-s1285   138.67   184.83
-s1285   138.67   183.83
-s1285   139.67   183.83
-s1285   139.67   184.83
-s1285   138.67   184.83
-s1286   131.00   198.00
-s1286   131.00   197.00
-s1286   132.00   197.00
-s1286   132.00   198.00
-s1286   131.00   198.00
-s1287   131.07   201.14
-s1287   131.07   200.14
-s1287   132.07   200.14
-s1287   132.07   201.14
-s1287   131.07   201.14
-s1288   136.50   200.00
-s1288   136.50   199.00
-s1288   137.50   199.00
-s1288   137.50   200.00
-s1288   136.50   200.00
-s1289   140.50   184.00
-s1289   140.50   183.00
-s1289   141.50   183.00
-s1289   141.50   184.00
-s1289   140.50   184.00
-s1290   134.52   204.36
-s1290   134.52   203.36
-s1290   135.52   203.36
-s1290   135.52   204.36
-s1290   134.52   204.36
-s1291   142.67   185.00
-s1291   142.67   184.00
-s1291   143.67   184.00
-s1291   143.67   185.00
-s1291   142.67   185.00
-s1292   144.00   186.50
-s1292   144.00   185.50
-s1292   145.00   185.50
-s1292   145.00   186.50
-s1292   144.00   186.50
-s1293   80.73   82.13
-s1293   80.73   81.13
-s1293   81.73   81.13
-s1293   81.73   82.13
-s1293   80.73   82.13
-s1294   57.14   90.95
-s1294   57.14   89.95
-s1294   58.14   89.95
-s1294   58.14   90.95
-s1294   57.14   90.95
-s1295   72.93   100.72
-s1295   72.93   99.72
-s1295   73.93   99.72
-s1295   73.93   100.72
-s1295   72.93   100.72
-s1296   119.77   107.73
-s1296   119.77   106.73
-s1296   120.77   106.73
-s1296   120.77   107.73
-s1296   119.77   107.73
-s1297   151.28   116.48
-s1297   151.28   115.48
-s1297   152.28   115.48
-s1297   152.28   116.48
-s1297   151.28   116.48
-s1298   149.72   130.85
-s1298   149.72   129.85
-s1298   150.72   129.85
-s1298   150.72   130.85
-s1298   149.72   130.85
-s1299   114.60   153.29
-s1299   114.60   152.29
-s1299   115.60   152.29
-s1299   115.60   153.29
-s1299   114.60   153.29
-s1300   46.92   145.99
-s1300   46.92   144.99
-s1300   47.92   144.99
-s1300   47.92   145.99
-s1300   46.92   145.99
-s1301   29.90   164.30
-s1301   29.90   163.30
-s1301   30.90   163.30
-s1301   30.90   164.30
-s1301   29.90   164.30
-s1302   23.00   169.00
-s1302   23.00   168.00
-s1302   24.00   168.00
-s1302   24.00   169.00
-s1302   23.00   169.00
-s1303   26.00   170.00
-s1303   26.00   169.00
-s1303   27.00   169.00
-s1303   27.00   170.00
-s1303   26.00   170.00
-s1304   28.00   171.00
-s1304   28.00   170.00
-s1304   29.00   170.00
-s1304   29.00   171.00
-s1304   28.00   171.00
-s1305   30.50   172.00
-s1305   30.50   171.00
-s1305   31.50   171.00
-s1305   31.50   172.00
-s1305   30.50   172.00
-s1306   103.82   221.08
-s1306   103.82   220.08
-s1306   104.82   220.08
-s1306   104.82   221.08
-s1306   103.82   221.08
-s1307   98.72   72.80
-s1307   98.72   71.80
-s1307   99.72   71.80
-s1307   99.72   72.80
-s1307   98.72   72.80
-s1308   50.84   37.66
-s1308   50.84   36.66
-s1308   51.84   36.66
-s1308   51.84   37.66
-s1308   50.84   37.66
-s1309   36.02   46.25
-s1309   36.02   45.25
-s1309   37.02   45.25
-s1309   37.02   46.25
-s1309   36.02   46.25
-s1310   41.37   52.96
-s1310   41.37   51.96
-s1310   42.37   51.96
-s1310   42.37   52.96
-s1310   41.37   52.96
-s1311   52.87   60.43
-s1311   52.87   59.43
-s1311   53.87   59.43
-s1311   53.87   60.43
-s1311   52.87   60.43
-s1312   79.86   58.59
-s1312   79.86   57.59
-s1312   80.86   57.59
-s1312   80.86   58.59
-s1312   79.86   58.59
-s1313   89.34   65.85
-s1313   89.34   64.85
-s1313   90.34   64.85
-s1313   90.34   65.85
-s1313   89.34   65.85
-s1314   96.00   70.00
-s1314   96.00   69.00
-s1314   97.00   69.00
-s1314   97.00   70.00
-s1314   96.00   70.00
-s1315   63.45   75.56
-s1315   63.45   74.56
-s1315   64.45   74.56
-s1315   64.45   75.56
-s1315   63.45   75.56
-s1316   95.00   72.00
-s1316   95.00   71.00
-s1316   96.00   71.00
-s1316   96.00   72.00
-s1316   95.00   72.00
-s1317   94.00   75.00
-s1317   94.00   74.00
-s1317   95.00   74.00
-s1317   95.00   75.00
-s1317   94.00   75.00
-s1318   79.02   78.68
-s1318   79.02   77.68
-s1318   80.02   77.68
-s1318   80.02   78.68
-s1318   79.02   78.68
-s1319   105.42   32.80
-s1319   105.42   31.80
-s1319   106.42   31.80
-s1319   106.42   32.80
-s1319   105.42   32.80
-s1320   102.00   75.50
-s1320   102.00   74.50
-s1320   103.00   74.50
-s1320   103.00   75.50
-s1320   102.00   75.50
-s1321   98.50   77.00
-s1321   98.50   76.00
-s1321   99.50   76.00
-s1321   99.50   77.00
-s1321   98.50   77.00
-s1322   128.91   87.30
-s1322   128.91   86.30
-s1322   129.91   86.30
-s1322   129.91   87.30
-s1322   128.91   87.30
-s1323   154.86   97.88
-s1323   154.86   96.88
-s1323   155.86   96.88
-s1323   155.86   97.88
-s1323   154.86   97.88
-s1324   153.78   109.09
-s1324   153.78   108.09
-s1324   154.78   108.09
-s1324   154.78   109.09
-s1324   153.78   109.09
-s1325   157.77   91.93
-s1325   157.77   90.93
-s1325   158.77   90.93
-s1325   158.77   91.93
-s1325   157.77   91.93
-s1326   53.55   96.96
-s1326   53.55   95.96
-s1326   54.55   95.96
-s1326   54.55   96.96
-s1326   53.55   96.96
-s1327   70.04   103.88
-s1327   70.04   102.88
-s1327   71.04   102.88
-s1327   71.04   103.88
-s1327   70.04   103.88
-s1328   147.36   137.86
-s1328   147.36   136.86
-s1328   148.36   136.86
-s1328   148.36   137.86
-s1328   147.36   137.86
-s1329   135.83   153.92
-s1329   135.83   152.92
-s1329   136.83   152.92
-s1329   136.83   153.92
-s1329   135.83   153.92
+s1197   80.94   56.56
+s1197   80.94   55.56
+s1197   81.94   55.56
+s1197   81.94   56.56
+s1197   80.94   56.56
+s1198   85.00   57.00
+s1198   85.00   56.00
+s1198   86.00   56.00
+s1198   86.00   57.00
+s1198   85.00   57.00
+s1199   89.00   62.00
+s1199   89.00   61.00
+s1199   90.00   61.00
+s1199   90.00   62.00
+s1199   89.00   62.00
+s1200   87.89   66.10
+s1200   87.89   65.10
+s1200   88.89   65.10
+s1200   88.89   66.10
+s1200   87.89   66.10
+s1201   78.00   56.00
+s1201   78.00   55.00
+s1201   79.00   55.00
+s1201   79.00   56.00
+s1201   78.00   56.00
+s1202   87.00   62.00
+s1202   87.00   61.00
+s1202   88.00   61.00
+s1202   88.00   62.00
+s1202   87.00   62.00
+s1203   88.00   62.50
+s1203   88.00   61.50
+s1203   89.00   61.50
+s1203   89.00   62.50
+s1203   88.00   62.50
+s1204   77.75   58.00
+s1204   77.75   57.00
+s1204   78.75   57.00
+s1204   78.75   58.00
+s1204   77.75   58.00
+s1205   89.67   63.67
+s1205   89.67   62.67
+s1205   90.67   62.67
+s1205   90.67   63.67
+s1205   89.67   63.67
+s1206   76.00   59.50
+s1206   76.00   58.50
+s1206   77.00   58.50
+s1206   77.00   59.50
+s1206   76.00   59.50
+s1207   93.67   67.33
+s1207   93.67   66.33
+s1207   94.67   66.33
+s1207   94.67   67.33
+s1207   93.67   67.33
+s1208   76.00   61.00
+s1208   76.00   60.00
+s1208   77.00   60.00
+s1208   77.00   61.00
+s1208   76.00   61.00
+s1209   91.20   64.60
+s1209   91.20   63.60
+s1209   92.20   63.60
+s1209   92.20   64.60
+s1209   91.20   64.60
+s1210   93.00   64.00
+s1210   93.00   63.00
+s1210   94.00   63.00
+s1210   94.00   64.00
+s1210   93.00   64.00
+s1211   79.00   61.50
+s1211   79.00   60.50
+s1211   80.00   60.50
+s1211   80.00   61.50
+s1211   79.00   61.50
+s1212   77.83   60.67
+s1212   77.83   59.67
+s1212   78.83   59.67
+s1212   78.83   60.67
+s1212   77.83   60.67
+s1213   94.00   64.00
+s1213   94.00   63.00
+s1213   95.00   63.00
+s1213   95.00   64.00
+s1213   94.00   64.00
+s1214   60.50   55.33
+s1214   60.50   54.33
+s1214   61.50   54.33
+s1214   61.50   55.33
+s1214   60.50   55.33
+s1215   62.00   57.00
+s1215   62.00   56.00
+s1215   63.00   56.00
+s1215   63.00   57.00
+s1215   62.00   57.00
+s1216   98.00   69.00
+s1216   98.00   68.00
+s1216   99.00   68.00
+s1216   99.00   69.00
+s1216   98.00   69.00
+s1217   50.27   33.55
+s1217   50.27   32.55
+s1217   51.27   32.55
+s1217   51.27   33.55
+s1217   50.27   33.55
+s1218   52.57   35.64
+s1218   52.57   34.64
+s1218   53.57   34.64
+s1218   53.57   35.64
+s1218   52.57   35.64
+s1219   59.00   52.00
+s1219   59.00   51.00
+s1219   60.00   51.00
+s1219   60.00   52.00
+s1219   59.00   52.00
+s1220   59.33   53.33
+s1220   59.33   52.33
+s1220   60.33   52.33
+s1220   60.33   53.33
+s1220   59.33   53.33
+s1221   99.36   71.09
+s1221   99.36   70.09
+s1221   100.36   70.09
+s1221   100.36   71.09
+s1221   99.36   71.09
+s1222   77.00   76.00
+s1222   77.00   75.00
+s1222   78.00   75.00
+s1222   78.00   76.00
+s1222   77.00   76.00
+s1223   60.67   57.33
+s1223   60.67   56.33
+s1223   61.67   56.33
+s1223   61.67   57.33
+s1223   60.67   57.33
+s1224   57.75   52.00
+s1224   57.75   51.00
+s1224   58.75   51.00
+s1224   58.75   52.00
+s1224   57.75   52.00
+s1225   77.80   77.40
+s1225   77.80   76.40
+s1225   78.80   76.40
+s1225   78.80   77.40
+s1225   77.80   77.40
+s1226   80.65   78.88
+s1226   80.65   77.88
+s1226   81.65   77.88
+s1226   81.65   78.88
+s1226   80.65   78.88
+s1227   84.00   78.50
+s1227   84.00   77.50
+s1227   85.00   77.50
+s1227   85.00   78.50
+s1227   84.00   78.50
+s1228   59.20   57.80
+s1228   59.20   56.80
+s1228   60.20   56.80
+s1228   60.20   57.80
+s1228   59.20   57.80
+s1229   55.90   60.48
+s1229   55.90   59.48
+s1229   56.90   59.48
+s1229   56.90   60.48
+s1229   55.90   60.48
+s1230   63.00   71.00
+s1230   63.00   70.00
+s1230   64.00   70.00
+s1230   64.00   71.00
+s1230   63.00   71.00
+s1231   63.57   73.29
+s1231   63.57   72.29
+s1231   64.57   72.29
+s1231   64.57   73.29
+s1231   63.57   73.29
+s1232   65.00   72.50
+s1232   65.00   71.50
+s1232   66.00   71.50
+s1232   66.00   72.50
+s1232   65.00   72.50
+s1233   66.00   72.00
+s1233   66.00   71.00
+s1233   67.00   71.00
+s1233   67.00   72.00
+s1233   66.00   72.00
+s1234   54.72   55.91
+s1234   54.72   54.91
+s1234   55.72   54.91
+s1234   55.72   55.91
+s1234   54.72   55.91
+s1235   66.00   73.50
+s1235   66.00   72.50
+s1235   67.00   72.50
+s1235   67.00   73.50
+s1235   66.00   73.50
+s1236   68.00   73.00
+s1236   68.00   72.00
+s1236   69.00   72.00
+s1236   69.00   73.00
+s1236   68.00   73.00
+s1237   102.00   71.50
+s1237   102.00   70.50
+s1237   103.00   70.50
+s1237   103.00   71.50
+s1237   102.00   71.50
+s1238   103.00   71.00
+s1238   103.00   70.00
+s1238   104.00   70.00
+s1238   104.00   71.00
+s1238   103.00   71.00
+s1239   85.00   78.50
+s1239   85.00   77.50
+s1239   86.00   77.50
+s1239   86.00   78.50
+s1239   85.00   78.50
+s1240   86.00   78.00
+s1240   86.00   77.00
+s1240   87.00   77.00
+s1240   87.00   78.00
+s1240   86.00   78.00
+s1241   73.53   78.89
+s1241   73.53   77.89
+s1241   74.53   77.89
+s1241   74.53   78.89
+s1241   73.53   78.89
+s1242   66.38   75.12
+s1242   66.38   74.12
+s1242   67.38   74.12
+s1242   67.38   75.12
+s1242   66.38   75.12
+s1243   61.20   73.00
+s1243   61.20   72.00
+s1243   62.20   72.00
+s1243   62.20   73.00
+s1243   61.20   73.00
+s1244   61.00   71.00
+s1244   61.00   70.00
+s1244   62.00   70.00
+s1244   62.00   71.00
+s1244   61.00   71.00
+s1245   54.10   38.10
+s1245   54.10   37.10
+s1245   55.10   37.10
+s1245   55.10   38.10
+s1245   54.10   38.10
+s1246   47.89   36.89
+s1246   47.89   35.89
+s1246   48.89   35.89
+s1246   48.89   36.89
+s1246   47.89   36.89
+s1247   62.00   71.50
+s1247   62.00   70.50
+s1247   63.00   70.50
+s1247   63.00   71.50
+s1247   62.00   71.50
+s1248   52.42   40.73
+s1248   52.42   39.73
+s1248   53.42   39.73
+s1248   53.42   40.73
+s1248   52.42   40.73
+s1249   48.60   61.16
+s1249   48.60   60.16
+s1249   49.60   60.16
+s1249   49.60   61.16
+s1249   48.60   61.16
+s1250   60.45   78.27
+s1250   60.45   77.27
+s1250   61.45   77.27
+s1250   61.45   78.27
+s1250   60.45   78.27
+s1251   61.00   75.67
+s1251   61.00   74.67
+s1251   62.00   74.67
+s1251   62.00   75.67
+s1251   61.00   75.67
+s1252   60.50   74.00
+s1252   60.50   73.00
+s1252   61.50   73.00
+s1252   61.50   74.00
+s1252   60.50   74.00
+s1253   64.50   77.79
+s1253   64.50   76.79
+s1253   65.50   76.79
+s1253   65.50   77.79
+s1253   64.50   77.79
+s1254   76.30   82.40
+s1254   76.30   81.40
+s1254   77.30   81.40
+s1254   77.30   82.40
+s1254   76.30   82.40
+s1255   45.00   51.00
+s1255   45.00   50.00
+s1255   46.00   50.00
+s1255   46.00   51.00
+s1255   45.00   51.00
+s1256   44.67   49.67
+s1256   44.67   48.67
+s1256   45.67   48.67
+s1256   45.67   49.67
+s1256   44.67   49.67
+s1257   43.50   51.00
+s1257   43.50   50.00
+s1257   44.50   50.00
+s1257   44.50   51.00
+s1257   43.50   51.00
+s1258   46.00   48.50
+s1258   46.00   47.50
+s1258   47.00   47.50
+s1258   47.00   48.50
+s1258   46.00   48.50
+s1259   42.20   51.80
+s1259   42.20   50.80
+s1259   43.20   50.80
+s1259   43.20   51.80
+s1259   42.20   51.80
+s1260   69.15   101.62
+s1260   69.15   100.62
+s1260   70.15   100.62
+s1260   70.15   101.62
+s1260   69.15   101.62
+s1261   41.67   53.00
+s1261   41.67   52.00
+s1261   42.67   52.00
+s1261   42.67   53.00
+s1261   41.67   53.00
+s1262   52.11   96.13
+s1262   52.11   95.13
+s1262   53.11   95.13
+s1262   53.11   96.13
+s1262   52.11   96.13
+s1263   60.33   90.33
+s1263   60.33   89.33
+s1263   61.33   89.33
+s1263   61.33   90.33
+s1263   60.33   90.33
+s1264   48.00   41.50
+s1264   48.00   40.50
+s1264   49.00   40.50
+s1264   49.00   41.50
+s1264   48.00   41.50
+s1265   39.75   52.67
+s1265   39.75   51.67
+s1265   40.75   51.67
+s1265   40.75   52.67
+s1265   39.75   52.67
+s1266   39.00   55.50
+s1266   39.00   54.50
+s1266   40.00   54.50
+s1266   40.00   55.50
+s1266   39.00   55.50
+s1267   54.50   89.00
+s1267   54.50   88.00
+s1267   55.50   88.00
+s1267   55.50   89.00
+s1267   54.50   89.00
+s1268   41.43   48.22
+s1268   41.43   47.22
+s1268   42.43   47.22
+s1268   42.43   48.22
+s1268   41.43   48.22
+s1269   49.35   66.11
+s1269   49.35   65.11
+s1269   50.35   65.11
+s1269   50.35   66.11
+s1269   49.35   66.11
+s1270   36.09   51.62
+s1270   36.09   50.62
+s1270   37.09   50.62
+s1270   37.09   51.62
+s1270   36.09   51.62
+s1271   56.33   90.17
+s1271   56.33   89.17
+s1271   57.33   89.17
+s1271   57.33   90.17
+s1271   56.33   90.17
+s1272   58.00   89.00
+s1272   58.00   88.00
+s1272   59.00   88.00
+s1272   59.00   89.00
+s1272   58.00   89.00
+s1273   37.00   38.00
+s1273   37.00   37.00
+s1273   38.00   37.00
+s1273   38.00   38.00
+s1273   37.00   38.00
+s1274   37.50   39.00
+s1274   37.50   38.00
+s1274   38.50   38.00
+s1274   38.50   39.00
+s1274   37.50   39.00
+s1275   58.00   91.00
+s1275   58.00   90.00
+s1275   59.00   90.00
+s1275   59.00   91.00
+s1275   58.00   91.00
+s1276   61.00   92.00
+s1276   61.00   91.00
+s1276   62.00   91.00
+s1276   62.00   92.00
+s1276   61.00   92.00
+s1277   57.78   94.65
+s1277   57.78   93.65
+s1277   58.78   93.65
+s1277   58.78   94.65
+s1277   57.78   94.65
+s1278   37.61   44.90
+s1278   37.61   43.90
+s1278   38.61   43.90
+s1278   38.61   44.90
+s1278   37.61   44.90
+s1279   61.00   91.00
+s1279   61.00   90.00
+s1279   62.00   90.00
+s1279   62.00   91.00
+s1279   61.00   91.00
+s1280   36.67   40.83
+s1280   36.67   39.83
+s1280   37.67   39.83
+s1280   37.67   40.83
+s1280   36.67   40.83
+s1281   47.00   41.00
+s1281   47.00   40.00
+s1281   48.00   40.00
+s1281   48.00   41.00
+s1281   47.00   41.00
+s1282   70.00   99.00
+s1282   70.00   98.00
+s1282   71.00   98.00
+s1282   71.00   99.00
+s1282   70.00   99.00
+s1283   53.33   98.86
+s1283   53.33   97.86
+s1283   54.33   97.86
+s1283   54.33   98.86
+s1283   53.33   98.86
+s1284   102.00   36.80
+s1284   102.00   35.80
+s1284   103.00   35.80
+s1284   103.00   36.80
+s1284   102.00   36.80
+s1285   66.00   122.00
+s1285   66.00   121.00
+s1285   67.00   121.00
+s1285   67.00   122.00
+s1285   66.00   122.00
+s1286   64.60   122.80
+s1286   64.60   121.80
+s1286   65.60   121.80
+s1286   65.60   122.80
+s1286   64.60   122.80
+s1287   61.50   129.50
+s1287   61.50   128.50
+s1287   62.50   128.50
+s1287   62.50   129.50
+s1287   61.50   129.50
+s1288   62.50   124.20
+s1288   62.50   123.20
+s1288   63.50   123.20
+s1288   63.50   124.20
+s1288   62.50   124.20
+s1289   63.67   126.33
+s1289   63.67   125.33
+s1289   64.67   125.33
+s1289   64.67   126.33
+s1289   63.67   126.33
+s1290   58.69   146.66
+s1290   58.69   145.66
+s1290   59.69   145.66
+s1290   59.69   146.66
+s1290   58.69   146.66
+s1291   62.12   127.25
+s1291   62.12   126.25
+s1291   63.12   126.25
+s1291   63.12   127.25
+s1291   62.12   127.25
+s1292   59.57   128.71
+s1292   59.57   127.71
+s1292   60.57   127.71
+s1292   60.57   128.71
+s1292   59.57   128.71
+s1293   58.31   126.62
+s1293   58.31   125.62
+s1293   59.31   125.62
+s1293   59.31   126.62
+s1293   58.31   126.62
+s1294   54.67   145.67
+s1294   54.67   144.67
+s1294   55.67   144.67
+s1294   55.67   145.67
+s1294   54.67   145.67
+s1295   49.59   144.28
+s1295   49.59   143.28
+s1295   50.59   143.28
+s1295   50.59   144.28
+s1295   49.59   144.28
+s1296   60.20   149.95
+s1296   60.20   148.95
+s1296   61.20   148.95
+s1296   61.20   149.95
+s1296   60.20   149.95
+s1297   52.35   150.98
+s1297   52.35   149.98
+s1297   53.35   149.98
+s1297   53.35   150.98
+s1297   52.35   150.98
+s1298   43.23   141.63
+s1298   43.23   140.63
+s1298   44.23   140.63
+s1298   44.23   141.63
+s1298   43.23   141.63
+s1299   37.90   140.20
+s1299   37.90   139.20
+s1299   38.90   139.20
+s1299   38.90   140.20
+s1299   37.90   140.20
+s1300   44.00   149.50
+s1300   44.00   148.50
+s1300   45.00   148.50
+s1300   45.00   149.50
+s1300   44.00   149.50
+s1301   40.71   148.14
+s1301   40.71   147.14
+s1301   41.71   147.14
+s1301   41.71   148.14
+s1301   40.71   148.14
+s1302   43.06   147.00
+s1302   43.06   146.00
+s1302   44.06   146.00
+s1302   44.06   147.00
+s1302   43.06   147.00
+s1303   39.33   146.42
+s1303   39.33   145.42
+s1303   40.33   145.42
+s1303   40.33   146.42
+s1303   39.33   146.42
+s1304   31.19   166.49
+s1304   31.19   165.49
+s1304   32.19   165.49
+s1304   32.19   166.49
+s1304   31.19   166.49
+s1305   36.81   145.44
+s1305   36.81   144.44
+s1305   37.81   144.44
+s1305   37.81   145.44
+s1305   36.81   145.44
+s1306   33.88   144.29
+s1306   33.88   143.29
+s1306   34.88   143.29
+s1306   34.88   144.29
+s1306   33.88   144.29
+s1307   31.17   159.72
+s1307   31.17   158.72
+s1307   32.17   158.72
+s1307   32.17   159.72
+s1307   31.17   159.72
+s1308   28.00   158.75
+s1308   28.00   157.75
+s1308   29.00   157.75
+s1308   29.00   158.75
+s1308   28.00   158.75
+s1309   26.95   164.49
+s1309   26.95   163.49
+s1309   27.95   163.49
+s1309   27.95   164.49
+s1309   26.95   164.49
+s1310   130.08   156.02
+s1310   130.08   155.02
+s1310   131.08   155.02
+s1310   131.08   156.02
+s1310   130.08   156.02
+s1311   111.67   145.33
+s1311   111.67   144.33
+s1311   112.67   144.33
+s1311   112.67   145.33
+s1311   111.67   145.33
+s1312   100.95   170.24
+s1312   100.95   169.24
+s1312   101.95   169.24
+s1312   101.95   170.24
+s1312   100.95   170.24
+s1313   97.93   173.41
+s1313   97.93   172.41
+s1313   98.93   172.41
+s1313   98.93   173.41
+s1313   97.93   173.41
+s1314   109.07   173.14
+s1314   109.07   172.14
+s1314   110.07   172.14
+s1314   110.07   173.14
+s1314   109.07   173.14
+s1315   111.00   173.00
+s1315   111.00   172.00
+s1315   112.00   172.00
+s1315   112.00   173.00
+s1315   111.00   173.00
+s1316   112.00   173.00
+s1316   112.00   172.00
+s1316   113.00   172.00
+s1316   113.00   173.00
+s1316   112.00   173.00
+s1317   105.08   172.08
+s1317   105.08   171.08
+s1317   106.08   171.08
+s1317   106.08   172.08
+s1317   105.08   172.08
+s1318   108.00   170.50
+s1318   108.00   169.50
+s1318   109.00   169.50
+s1318   109.00   170.50
+s1318   108.00   170.50
+s1319   109.00   170.00
+s1319   109.00   169.00
+s1319   110.00   169.00
+s1319   110.00   170.00
+s1319   109.00   170.00
+s1320   124.67   173.00
+s1320   124.67   172.00
+s1320   125.67   172.00
+s1320   125.67   173.00
+s1320   124.67   173.00
+s1321   100.10   176.67
+s1321   100.10   175.67
+s1321   101.10   175.67
+s1321   101.10   176.67
+s1321   100.10   176.67
+s1322   124.00   173.50
+s1322   124.00   172.50
+s1322   125.00   172.50
+s1322   125.00   173.50
+s1322   124.00   173.50
+s1323   121.50   175.00
+s1323   121.50   174.00
+s1323   122.50   174.00
+s1323   122.50   175.00
+s1323   121.50   175.00
+s1324   123.00   175.00
+s1324   123.00   174.00
+s1324   124.00   174.00
+s1324   124.00   175.00
+s1324   123.00   175.00
+s1325   126.08   176.08
+s1325   126.08   175.08
+s1325   127.08   175.08
+s1325   127.08   176.08
+s1325   126.08   176.08
+s1326   114.41   173.73
+s1326   114.41   172.73
+s1326   115.41   172.73
+s1326   115.41   173.73
+s1326   114.41   173.73
+s1327   117.00   174.00
+s1327   117.00   173.00
+s1327   118.00   173.00
+s1327   118.00   174.00
+s1327   117.00   174.00
+s1328   118.00   172.50
+s1328   118.00   171.50
+s1328   119.00   171.50
+s1328   119.00   172.50
+s1328   118.00   172.50
+s1329   129.00   174.50
+s1329   129.00   173.50
+s1329   130.00   173.50
+s1329   130.00   174.50
+s1329   129.00   174.50
+s1330   119.07   175.14
+s1330   119.07   174.14
+s1330   120.07   174.14
+s1330   120.07   175.14
+s1330   119.07   175.14
+s1331   103.57   194.00
+s1331   103.57   193.00
+s1331   104.57   193.00
+s1331   104.57   194.00
+s1331   103.57   194.00
+s1332   131.08   177.08
+s1332   131.08   176.08
+s1332   132.08   176.08
+s1332   132.08   177.08
+s1332   131.08   177.08
+s1333   102.00   178.50
+s1333   102.00   177.50
+s1333   103.00   177.50
+s1333   103.00   178.50
+s1333   102.00   178.50
+s1334   103.00   177.50
+s1334   103.00   176.50
+s1334   104.00   176.50
+s1334   104.00   177.50
+s1334   103.00   177.50
+s1335   104.00   177.00
+s1335   104.00   176.00
+s1335   105.00   176.00
+s1335   105.00   177.00
+s1335   104.00   177.00
+s1336   105.00   177.00
+s1336   105.00   176.00
+s1336   106.00   176.00
+s1336   106.00   177.00
+s1336   105.00   177.00
+s1337   80.00   188.25
+s1337   80.00   187.25
+s1337   81.00   187.25
+s1337   81.00   188.25
+s1337   80.00   188.25
+s1338   107.00   177.13
+s1338   107.00   176.13
+s1338   108.00   176.13
+s1338   108.00   177.13
+s1338   107.00   177.13
+s1339   134.00   175.50
+s1339   134.00   174.50
+s1339   135.00   174.50
+s1339   135.00   175.50
+s1339   134.00   175.50
+s1340   136.26   177.85
+s1340   136.26   176.85
+s1340   137.26   176.85
+s1340   137.26   177.85
+s1340   136.26   177.85
+s1341   77.00   191.00
+s1341   77.00   190.00
+s1341   78.00   190.00
+s1341   78.00   191.00
+s1341   77.00   191.00
+s1342   108.00   179.50
+s1342   108.00   178.50
+s1342   109.00   178.50
+s1342   109.00   179.50
+s1342   108.00   179.50
+s1343   109.56   178.22
+s1343   109.56   177.22
+s1343   110.56   177.22
+s1343   110.56   178.22
+s1343   109.56   178.22
+s1344   100.00   192.00
+s1344   100.00   191.00
+s1344   101.00   191.00
+s1344   101.00   192.00
+s1344   100.00   192.00
+s1345   140.07   179.14
+s1345   140.07   178.14
+s1345   141.07   178.14
+s1345   141.07   179.14
+s1345   140.07   179.14
+s1346   142.00   179.00
+s1346   142.00   178.00
+s1346   143.00   178.00
+s1346   143.00   179.00
+s1346   142.00   179.00
+s1347   143.00   178.50
+s1347   143.00   177.50
+s1347   144.00   177.50
+s1347   144.00   178.50
+s1347   143.00   178.50
+s1348   144.00   177.50
+s1348   144.00   176.50
+s1348   145.00   176.50
+s1348   145.00   177.50
+s1348   144.00   177.50
+s1349   112.00   178.13
+s1349   112.00   177.13
+s1349   113.00   177.13
+s1349   113.00   178.13
+s1349   112.00   178.13
+s1350   101.00   193.50
+s1350   101.00   192.50
+s1350   102.00   192.50
+s1350   102.00   193.50
+s1350   101.00   193.50
+s1351   102.00   194.00
+s1351   102.00   193.00
+s1351   103.00   193.00
+s1351   103.00   194.00
+s1351   102.00   194.00
+s1352   145.44   183.31
+s1352   145.44   182.31
+s1352   146.44   182.31
+s1352   146.44   183.31
+s1352   145.44   183.31
+s1353   140.00   176.00
+s1353   140.00   175.00
+s1353   141.00   175.00
+s1353   141.00   176.00
+s1353   140.00   176.00
+s1354   145.00   177.00
+s1354   145.00   176.00
+s1354   146.00   176.00
+s1354   146.00   177.00
+s1354   145.00   177.00
+s1355   113.00   180.50
+s1355   113.00   179.50
+s1355   114.00   179.50
+s1355   114.00   180.50
+s1355   113.00   180.50
+s1356   100.25   194.25
+s1356   100.25   193.25
+s1356   101.25   193.25
+s1356   101.25   194.25
+s1356   100.25   194.25
+s1357   145.00   178.83
+s1357   145.00   177.83
+s1357   146.00   177.83
+s1357   146.00   178.83
+s1357   145.00   178.83
+s1358   147.00   178.00
+s1358   147.00   177.00
+s1358   148.00   177.00
+s1358   148.00   178.00
+s1358   147.00   178.00
+s1359   116.08   179.17
+s1359   116.08   178.17
+s1359   117.08   178.17
+s1359   117.08   179.17
+s1359   116.08   179.17
+s1360   105.95   195.58
+s1360   105.95   194.58
+s1360   106.95   194.58
+s1360   106.95   195.58
+s1360   105.95   195.58
+s1361   78.33   190.17
+s1361   78.33   189.17
+s1361   79.33   189.17
+s1361   79.33   190.17
+s1361   78.33   190.17
+s1362   117.00   199.33
+s1362   117.00   198.33
+s1362   118.00   198.33
+s1362   118.00   199.33
+s1362   117.00   199.33
+s1363   101.00   196.00
+s1363   101.00   195.00
+s1363   102.00   195.00
+s1363   102.00   196.00
+s1363   101.00   196.00
+s1364   101.50   197.83
+s1364   101.50   196.83
+s1364   102.50   196.83
+s1364   102.50   197.83
+s1364   101.50   197.83
+s1365   118.00   181.50
+s1365   118.00   180.50
+s1365   119.00   180.50
+s1365   119.00   181.50
+s1365   118.00   181.50
+s1366   77.92   193.54
+s1366   77.92   192.54
+s1366   78.92   192.54
+s1366   78.92   193.54
+s1366   77.92   193.54
+s1367   119.00   180.50
+s1367   119.00   179.50
+s1367   120.00   179.50
+s1367   120.00   180.50
+s1367   119.00   180.50
+s1368   99.80   199.60
+s1368   99.80   198.60
+s1368   100.80   198.60
+s1368   100.80   199.60
+s1368   99.80   199.60
+s1369   121.57   180.00
+s1369   121.57   179.00
+s1369   122.57   179.00
+s1369   122.57   180.00
+s1369   121.57   180.00
+s1370   82.59   192.26
+s1370   82.59   191.26
+s1370   83.59   191.26
+s1370   83.59   192.26
+s1370   82.59   192.26
+s1371   125.93   181.19
+s1371   125.93   180.19
+s1371   126.93   180.19
+s1371   126.93   181.19
+s1371   125.93   181.19
+s1372   85.00   196.00
+s1372   85.00   195.00
+s1372   86.00   195.00
+s1372   86.00   196.00
+s1372   85.00   196.00
+s1373   109.74   197.93
+s1373   109.74   196.93
+s1373   110.74   196.93
+s1373   110.74   197.93
+s1373   109.74   197.93
+s1374   83.67   196.00
+s1374   83.67   195.00
+s1374   84.67   195.00
+s1374   84.67   196.00
+s1374   83.67   196.00
+s1375   128.00   183.50
+s1375   128.00   182.50
+s1375   129.00   182.50
+s1375   129.00   183.50
+s1375   128.00   183.50
+s1376   144.30   181.40
+s1376   144.30   180.40
+s1376   145.30   180.40
+s1376   145.30   181.40
+s1376   144.30   181.40
+s1377   113.50   199.00
+s1377   113.50   198.00
+s1377   114.50   198.00
+s1377   114.50   199.00
+s1377   113.50   199.00
+s1378   115.00   199.00
+s1378   115.00   198.00
+s1378   116.00   198.00
+s1378   116.00   199.00
+s1378   115.00   199.00
+s1379   119.92   199.62
+s1379   119.92   198.62
+s1379   120.92   198.62
+s1379   120.92   199.62
+s1379   119.92   199.62
+s1380   125.67   198.33
+s1380   125.67   197.33
+s1380   126.67   197.33
+s1380   126.67   198.33
+s1380   125.67   198.33
+s1381   129.56   182.22
+s1381   129.56   181.22
+s1381   130.56   181.22
+s1381   130.56   182.22
+s1381   129.56   182.22
+s1382   132.06   182.00
+s1382   132.06   181.00
+s1382   133.06   181.00
+s1382   133.06   182.00
+s1382   132.06   182.00
+s1383   128.11   199.67
+s1383   128.11   198.67
+s1383   129.11   198.67
+s1383   129.11   199.67
+s1383   128.11   199.67
+s1384   122.17   200.83
+s1384   122.17   199.83
+s1384   123.17   199.83
+s1384   123.17   200.83
+s1384   122.17   200.83
+s1385   124.83   200.83
+s1385   124.83   199.83
+s1385   125.83   199.83
+s1385   125.83   200.83
+s1385   124.83   200.83
+s1386   133.00   184.50
+s1386   133.00   183.50
+s1386   134.00   183.50
+s1386   134.00   184.50
+s1386   133.00   184.50
+s1387   134.00   183.50
+s1387   134.00   182.50
+s1387   135.00   182.50
+s1387   135.00   183.50
+s1387   134.00   183.50
+s1388   136.57   183.00
+s1388   136.57   182.00
+s1388   137.57   182.00
+s1388   137.57   183.00
+s1388   136.57   183.00
+s1389   133.43   200.29
+s1389   133.43   199.29
+s1389   134.43   199.29
+s1389   134.43   200.29
+s1389   133.43   200.29
+s1390   135.33   199.33
+s1390   135.33   198.33
+s1390   136.33   198.33
+s1390   136.33   199.33
+s1390   135.33   199.33
+s1391   138.67   184.83
+s1391   138.67   183.83
+s1391   139.67   183.83
+s1391   139.67   184.83
+s1391   138.67   184.83
+s1392   131.00   198.00
+s1392   131.00   197.00
+s1392   132.00   197.00
+s1392   132.00   198.00
+s1392   131.00   198.00
+s1393   131.07   201.14
+s1393   131.07   200.14
+s1393   132.07   200.14
+s1393   132.07   201.14
+s1393   131.07   201.14
+s1394   136.50   200.00
+s1394   136.50   199.00
+s1394   137.50   199.00
+s1394   137.50   200.00
+s1394   136.50   200.00
+s1395   140.50   184.00
+s1395   140.50   183.00
+s1395   141.50   183.00
+s1395   141.50   184.00
+s1395   140.50   184.00
+s1396   134.52   204.36
+s1396   134.52   203.36
+s1396   135.52   203.36
+s1396   135.52   204.36
+s1396   134.52   204.36
+s1397   142.67   185.00
+s1397   142.67   184.00
+s1397   143.67   184.00
+s1397   143.67   185.00
+s1397   142.67   185.00
+s1398   144.00   186.50
+s1398   144.00   185.50
+s1398   145.00   185.50
+s1398   145.00   186.50
+s1398   144.00   186.50
 
 [SYMBOLS]
 ;;Gage           X-Coord            Y-Coord
