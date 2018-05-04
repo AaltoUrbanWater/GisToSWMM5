@@ -40,10 +40,10 @@ GisToSWMM5 is easiest to use with a script where the input files are described. 
 GisToSWMM5 can be used to build a SWMM5 description in three modes:
 1. each raster cell is an individual sub-catchment
 2. cells with the same land-use and same eventual outlet are merged into one sub-catchment
-3. (*legacy mode:* neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into one sub-catchment if the cells have the same landuse)
+3. (*legacy mode:* neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into one sub-catchment and the most abundant landuse among cells is set as the subcatchment landuse)
 
 In case option 1 used, the run script is as above.  
-In case  option 2 is used, an additional line an integer number is required as the last line of the script:  
+In case  option 2 is used, an additional line with any integer number is required as the last line of the script:  
 [*OPTIONAL* INTEGER VALUE]   
 In case option 3 is used, the maximum grid cell size and the allowed number of subdivisions (*N*) are required as the two last lines of the script:  
 [*OPTIONAL* MAXIMUM GRID CELL SIDE LENGTH] \  
