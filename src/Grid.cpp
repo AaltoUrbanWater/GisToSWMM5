@@ -1070,6 +1070,40 @@ void Grid::simplify(Table &juncTable, std::string &path)
         }
     }
 
+    // TJN 7 May 2018 START
+    // Set the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
+    // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
+    // to collect water
+    for (int i = 1; i < juncTable.nRows; i++) // pass the header line
+    {
+        double juncPosX = atof( juncTable.data[i * juncTable.nCols].c_str() );
+        double juncPosY = atof( juncTable.data[i * juncTable.nCols + 1].c_str() );
+        int isOpen = atoi( juncTable.data[i * juncTable.nCols + 6].c_str() );
+
+        if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize
+                && juncPosY >= yllCorner && juncPosY < yllCorner + nRows * cellSize && isOpen == 1) // pass closed junctions
+        {
+            if (nCols > 0 && nRows > 0 && cellSize > 0.0)
+            {
+                int col = (int)((juncPosX - xllCorner) / cellSize);
+                int row = (int)((juncPosY - yllCorner) / cellSize);
+
+                if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
+                {
+                    for (int j = 0; j < (int)cells[ col + row * nCols ].neighCellIndices.size(); j++)
+                    {
+                        if (cells[ col + row * nCols ].neighCellIndices[j] != -1
+                                && cells[ cells[ col + row * nCols ].neighCellIndices[j] ].landuse >= BUILT_AREA)
+                        {
+                            cells[cells[ cells[ col + row * nCols ].neighCellIndices[j] ].outletID].inletIDs.push_back(cells[ col + row * nCols ].neighCellIndices[j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // TJN 7 May 2018 END
+
     // Empty vector for final list of routed cell ID's
     std::vector<int> final_IDs;
 
@@ -1124,8 +1158,8 @@ void Grid::simplify(Table &juncTable, std::string &path)
                     newCell.imperv = cells[col + row * nCols].imperv;
                     newCell.outlet = juncTable.getData(i, 2).c_str();
                     newCell.outletID = subcatchmentID;
-                    newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
-                    newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
+                    newCell.outletCoordX = juncPosX;
+                    newCell.outletCoordY = juncPosY;
                     newCell.subcatchmentID = subcatchmentID;
                     newCell.raingage = cells[col + row * nCols].raingage;
                     newCell.snowPack = cells[col + row * nCols].snowPack;
@@ -1150,7 +1184,65 @@ void Grid::simplify(Table &juncTable, std::string &path)
                     // ... and update the lookup table of subcatchments and their indexes.
                     adapID[subcatchmentID] = cellsAdaptive.size()-1;
 
-                    // Iterate through cells with open jucntions and add cells as they flow towards the opening
+                    // TJN 7 May 2018 START
+                    // Use the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
+                    // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
+                    // to collect water
+                    for (int j = 0; j < (int)cells[ col + row * nCols ].neighCellIndices.size(); j++)
+                    {
+                        if (cells[ col + row * nCols ].neighCellIndices[j] != -1
+                        && cells[ cells[ col + row * nCols ].neighCellIndices[j] ].landuse >= BUILT_AREA
+                        && cells[ cells[ col + row * nCols ].neighCellIndices[j] ].landuse != cells[ col + row * nCols ].landuse)   // Don't create new subcatchments if the landuse is the same as in inlet cell
+                        {
+                            final_IDs.push_back(cells[ col + row * nCols ].neighCellIndices[j]);
+                            selection_IDs.push_back(cells[ col + row * nCols ].neighCellIndices[j]);
+
+                            // Update the subcatchmentID of current cell...
+                            subcatchmentID++;
+                            cells[ cells[ col + row * nCols ].neighCellIndices[j]].subcatchmentID = subcatchmentID;
+
+                            // ... create a new adaptive subcatchment...
+                            Cell newCell;
+                            newCell.cellSize = cellSize;
+                            newCell.area += cells[ cells[ col + row * nCols ].neighCellIndices[j] ].area;
+                            newCell.centerCoordX += cells[ cells[ col + row * nCols ].neighCellIndices[j] ].centerCoordX;
+                            newCell.centerCoordY += cells[ cells[ col + row * nCols ].neighCellIndices[j] ].centerCoordY;
+                            newCell.elevation += cells[ cells[ col + row * nCols ].neighCellIndices[j] ].elevation;
+                            newCell.slope += cells[ cells[ col + row * nCols ].neighCellIndices[j] ].slope;
+                            newCell.landuse = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].landuse;
+                            newCell.imperv = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].imperv;
+                            newCell.outlet = juncTable.getData(i, 2).c_str();
+                            newCell.outletID = subcatchmentID;
+                            newCell.outletCoordX = juncPosX;
+                            newCell.outletCoordY = juncPosY;
+                            newCell.subcatchmentID = subcatchmentID;
+                            newCell.raingage = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].raingage;
+                            newCell.snowPack = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].snowPack;
+                            newCell.N_Imperv = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].N_Imperv;
+                            newCell.N_Perv = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].N_Perv;
+                            newCell.S_Imperv = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].S_Imperv;
+                            newCell.S_Perv = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].S_Perv;
+                            newCell.PctZero = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].PctZero;
+                            newCell.RouteTo = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].RouteTo;
+                            newCell.PctRouted = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].PctRouted;
+                            newCell.Suction = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].Suction;
+                            newCell.HydCon = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].HydCon;
+                            newCell.IMDmax = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].IMDmax;
+                            newCell.isSink = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].isSink;
+                            newCell.hasInlet = 0;
+                            newCell.numElements++;
+                            std::stringstream subcatchmentName("");
+                            subcatchmentName << "s" << subcatchmentID + 1;
+                            newCell.name = subcatchmentName.str();
+                            cellsAdaptive.push_back(newCell);
+
+                            // ... and update the lookup table of subcatchments and their indexes.
+                            adapID[subcatchmentID] = cellsAdaptive.size()-1;
+                        }
+                    }
+                    // TJN 7 May 2018 END
+
+                    // Iterate through cells and add cells as they flow towards the inlet
                     int counter = 0;    // Failsafe to prevent infinite while loop
                     while (!selection_IDs.empty() && counter < nCols*nRows)
                     {
@@ -1262,10 +1354,10 @@ void Grid::simplify(Table &juncTable, std::string &path)
 //                &&
 //                (i != cells[i].outletID) )
         if ( (cells[i].landuse >= ROOF_UNCONNECTED && cells[i].landuse < BUILT_AREA)
-        &&
-        (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
-        &&
-        (i != cells[i].outletID) )
+                &&
+                (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
+                &&
+                (i != cells[i].outletID) )
         {
             // Get index of downstream subcatchment
             int j = adapID[cells[cells[i].outletID].subcatchmentID];
@@ -1360,8 +1452,8 @@ void Grid::simplify(Table &juncTable, std::string &path)
 //        &&
 //        (i != cells[i].outletID) )
         if ( (cells[i].landuse >= ROOF_CONNECTED && cells[i].landuse < ROOF_UNCONNECTED)
-        &&
-        (i != cells[i].outletID) )
+                &&
+                (i != cells[i].outletID) )
         {
             cells[cells[i].outletID].inletIDs.push_back(i);
         }
@@ -1421,8 +1513,8 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             newCell.imperv = cells[*it].imperv;
                             newCell.outlet = juncTable.getData(i, 2).c_str();
                             newCell.outletID = j;
-                            newCell.outletCoordX = atof( juncTable.getData(i, 0).c_str() );
-                            newCell.outletCoordY = atof( juncTable.getData(i, 1).c_str() );
+                            newCell.outletCoordX = juncPosX;
+                            newCell.outletCoordY = juncPosY;
                             newCell.subcatchmentID = subcatchmentID;
                             newCell.raingage = cells[*it].raingage;
                             newCell.snowPack = cells[*it].snowPack;
@@ -1463,10 +1555,10 @@ void Grid::simplify(Table &juncTable, std::string &path)
 //                                    cells[neighCells[k]].outletID == cells[selection_IDs.front()].outletID    // Neighbouring cell is connected to same junction
 //                                       )
                                     if (neighCells[k] != -1
-                                    &&
-                                    cells[neighCells[k]].landuse >= ROOF_CONNECTED && cells[neighCells[k]].landuse < ROOF_UNCONNECTED // Neighbouring cell is connected roof
-                                    &&
-                                    cells[neighCells[k]].outletID == cells[selection_IDs.front()].outletID    // Neighbouring cell is connected to same junction
+                                            &&
+                                            cells[neighCells[k]].landuse >= ROOF_CONNECTED && cells[neighCells[k]].landuse < ROOF_UNCONNECTED // Neighbouring cell is connected roof
+                                            &&
+                                            cells[neighCells[k]].outletID == cells[selection_IDs.front()].outletID    // Neighbouring cell is connected to same junction
                                        )
                                     {
                                         // Add cell to selected cells if it is not there or in final cells yet
