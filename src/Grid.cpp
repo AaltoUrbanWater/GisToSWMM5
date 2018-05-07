@@ -1229,7 +1229,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             newCell.HydCon = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].HydCon;
                             newCell.IMDmax = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].IMDmax;
                             newCell.isSink = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].isSink;
-                            newCell.hasInlet = 0;
+                            newCell.hasInlet = 1;
                             newCell.numElements++;
                             std::stringstream subcatchmentName("");
                             subcatchmentName << "s" << subcatchmentID + 1;
