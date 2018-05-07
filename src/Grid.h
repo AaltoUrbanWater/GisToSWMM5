@@ -104,9 +104,11 @@ class Grid
 		void saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs);   // TJN 12 Dec 2017
 		void saveNetworkRouting(std::string path, Table &condTable);      // TJN 8 Dec 2017
 
-		void saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
-			Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable,
-			Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path);
+		void saveSWMM5File(Table &headerTable, Table &catchPropTableTable, Table &evaporationTable, Table &temperatureTable,
+                     Table &inflowsTable, Table &timeseriesTable, Table &reportTable, Table &snowpacksTable, Table &raingagesTable,
+                     Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable,
+                     Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable,
+                     Table &xsectionTable, std::string path);
 		void printReport(Table &catchPropTable);
 		void printReport(Table &catchPropTable, std::vector<int> routedIDs);
 		void computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount,

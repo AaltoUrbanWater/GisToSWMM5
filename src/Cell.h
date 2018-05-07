@@ -62,4 +62,5 @@ class Cell
         int numElements;             // Number of elements, i.e., individual cells in adaptive grid subcatchments
         int hasInlet;                // the subcatchment/cell has an open inlet which coordinates are the outlet of the catchmetn
         double elevNoData;           // nodata-value for elevations
+        std::string tag;             // Optional tag for the landuse, e.g. string describing the landuse type
 };

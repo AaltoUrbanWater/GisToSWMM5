@@ -68,10 +68,10 @@ yllcorner&emsp;&ensp;&ensp;[ddd]
 cellsize&emsp;&emsp;&ensp;[eee]  
 NODATA_value&emsp;```0```
 
-GisToSWMM5 currently uses the following codes for different land use classes. 
+GisToSWMM5 currently uses the following codes for different land use classes.
 The different integers mark different landuse classes and (optionally) different landuse parameters specified in the Catchment properties table for each landuse class.
-The classes are loosely grouped into roofs, built areas, and natural areas, and especially for roofs these groups should be used. 
-Generally it is good practice to use same subclass values for connected and unconnected roofs to keep things clear. 
+The classes are loosely grouped into roofs, built areas, and natural areas, and especially for roofs these groups should be used.
+Generally it is good practice to use same subclass values for connected and unconnected roofs to keep things clear.
 E.g. 10 should have the same parameters as 20 but 10 are directly connected to junctions whereas 20 are connected to yards, in the same manner 11 should correspond to 21, etc.
 For other classes there is no such connection between classes.
 
@@ -104,18 +104,19 @@ The file must have a header row with the following attributes that are defined o
 
 | Attribute |              |
 | :--------:|:-------------|
-| id        | landuse code (see theLanduse table) ) |
-| imperv    | share of impervious areas (%)|
-| dst_imp   |depression storage of impervious areas (mm)  |
+| id        | Landuse code (see the Landuse table) ) |
+| imperv    | Share of impervious areas (%)|
+| dst_imp   | Depression storage of impervious areas (mm)  |
 | n_imper   | Roughness coefficient (Manning's n) of impervious areas |
-| dst_per   | depression storage of pervious areas (mm) |
+| dst_per   | Depression storage of pervious areas (mm) |
 | n_perv    | Roughness coefficient (Manning's n) of pervious areas |
-| percz_i   | share of impervious areas without depression storage (%) |
-| rain_ga   | name of the rain gauge for this land-use class|
+| percz_i   | Share of impervious areas without depression storage (%) |
+| rain_ga   | Name of the rain gauge for this land-use class|
 | conduct   | Green-Ampt infiltration model soil saturated hydraulic conductivity (mm/h) |
 | initdef   | Green-Ampt infiltration model fraction of soil volume that is initially dry (-) |
 | suction   | Green-Ampt infiltration model average soil capillary suction (mm) |
 | Snowpacks | Name for the snow model used for the land use class |
+| [Tag]     | [Optional tag for the landuse type] |
 
 ## Junctions table
 Junctions table defines the junction nodes of the drainage system, i.e., the points where channels and pipes connect together. For sewer systems they can be e.g. manholes/wells or connection fittings.  

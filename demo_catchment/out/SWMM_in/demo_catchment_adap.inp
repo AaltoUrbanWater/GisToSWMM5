@@ -5499,6 +5499,1335 @@ NODES   NONE
 LINKS   c5
 
 [TAGS]
+Subcatch   s1   Asphalt
+Subcatch   s2   Vegetation
+Subcatch   s3   Vegetation
+Subcatch   s4   Vegetation
+Subcatch   s5   Vegetation
+Subcatch   s6   Asphalt
+Subcatch   s7   Vegetation
+Subcatch   s8   Vegetation
+Subcatch   s9   Vegetation
+Subcatch   s10   Vegetation
+Subcatch   s11   Vegetation
+Subcatch   s12   Vegetation
+Subcatch   s13   Vegetation
+Subcatch   s14   Asphalt
+Subcatch   s15   Asphalt
+Subcatch   s16   Asphalt
+Subcatch   s17   Asphalt
+Subcatch   s18   Vegetation
+Subcatch   s19   Asphalt
+Subcatch   s20   Asphalt
+Subcatch   s21   Asphalt
+Subcatch   s22   Vegetation
+Subcatch   s23   Asphalt
+Subcatch   s24   Asphalt
+Subcatch   s25   Vegetation
+Subcatch   s26   Vegetation
+Subcatch   s27   Asphalt
+Subcatch   s28   Vegetation
+Subcatch   s29   Vegetation
+Subcatch   s30   Vegetation
+Subcatch   s31   Vegetation
+Subcatch   s32   Asphalt
+Subcatch   s33   Asphalt
+Subcatch   s34   Asphalt
+Subcatch   s35   Asphalt
+Subcatch   s36   Vegetation
+Subcatch   s37   Vegetation
+Subcatch   s38   Vegetation
+Subcatch   s39   Vegetation
+Subcatch   s40   Asphalt
+Subcatch   s41   Asphalt
+Subcatch   s42   Sand and gravel
+Subcatch   s43   Sand and gravel
+Subcatch   s44   Asphalt
+Subcatch   s45   Vegetation
+Subcatch   s46   Vegetation
+Subcatch   s47   Vegetation
+Subcatch   s48   Vegetation
+Subcatch   s49   Asphalt
+Subcatch   s50   Asphalt
+Subcatch   s51   Asphalt
+Subcatch   s52   Vegetation
+Subcatch   s53   Asphalt
+Subcatch   s54   Vegetation
+Subcatch   s55   Vegetation
+Subcatch   s56   Sand and gravel
+Subcatch   s57   Sand and gravel
+Subcatch   s58   Sand and gravel
+Subcatch   s59   Asphalt
+Subcatch   s60   Asphalt
+Subcatch   s61   Asphalt
+Subcatch   s62   Vegetation
+Subcatch   s63   Vegetation
+Subcatch   s64   Vegetation
+Subcatch   s65   Sand and gravel
+Subcatch   s66   Sand and gravel
+Subcatch   s67   Asphalt
+Subcatch   s68   Asphalt
+Subcatch   s69   Vegetation
+Subcatch   s70   Vegetation
+Subcatch   s71   Vegetation
+Subcatch   s72   Vegetation
+Subcatch   s73   Vegetation
+Subcatch   s74   Sand and gravel
+Subcatch   s75   Asphalt
+Subcatch   s76   Asphalt
+Subcatch   s77   Vegetation
+Subcatch   s78   Vegetation
+Subcatch   s79   Vegetation
+Subcatch   s80   Vegetation
+Subcatch   s81   Vegetation
+Subcatch   s82   Vegetation
+Subcatch   s83   Vegetation
+Subcatch   s84   Vegetation
+Subcatch   s85   Asphalt
+Subcatch   s86   Asphalt
+Subcatch   s87   Asphalt
+Subcatch   s88   Asphalt
+Subcatch   s89   Asphalt
+Subcatch   s90   Vegetation
+Subcatch   s91   Sand and gravel
+Subcatch   s92   Sand and gravel
+Subcatch   s93   Sand and gravel
+Subcatch   s94   Vegetation
+Subcatch   s95   Vegetation
+Subcatch   s96   Vegetation
+Subcatch   s97   Vegetation
+Subcatch   s98   Vegetation
+Subcatch   s99   Vegetation
+Subcatch   s100   Vegetation
+Subcatch   s101   Vegetation
+Subcatch   s102   Vegetation
+Subcatch   s103   Vegetation
+Subcatch   s104   Sand and gravel
+Subcatch   s105   Sand and gravel
+Subcatch   s106   Sand and gravel
+Subcatch   s107   Vegetation
+Subcatch   s108   Vegetation
+Subcatch   s109   Vegetation
+Subcatch   s110   Vegetation
+Subcatch   s111   Vegetation
+Subcatch   s112   Asphalt
+Subcatch   s113   Asphalt
+Subcatch   s114   Asphalt
+Subcatch   s115   Sand and gravel
+Subcatch   s116   Sand and gravel
+Subcatch   s117   Sand and gravel
+Subcatch   s118   Asphalt
+Subcatch   s119   Asphalt
+Subcatch   s120   Vegetation
+Subcatch   s121   Vegetation
+Subcatch   s122   Vegetation
+Subcatch   s123   Vegetation
+Subcatch   s124   Vegetation
+Subcatch   s125   Vegetation
+Subcatch   s126   Sand and gravel
+Subcatch   s127   Asphalt
+Subcatch   s128   Asphalt
+Subcatch   s129   Vegetation
+Subcatch   s130   Asphalt
+Subcatch   s131   Asphalt
+Subcatch   s132   Asphalt
+Subcatch   s133   Vegetation
+Subcatch   s134   Vegetation
+Subcatch   s135   Asphalt
+Subcatch   s136   Asphalt
+Subcatch   s137   Vegetation
+Subcatch   s138   Vegetation
+Subcatch   s139   Vegetation
+Subcatch   s140   Sand and gravel
+Subcatch   s141   Sand and gravel
+Subcatch   s142   Sand and gravel
+Subcatch   s143   Sand and gravel
+Subcatch   s144   Vegetation
+Subcatch   s145   Vegetation
+Subcatch   s146   Vegetation
+Subcatch   s147   Vegetation
+Subcatch   s148   Vegetation
+Subcatch   s149   Vegetation
+Subcatch   s150   Sand and gravel
+Subcatch   s151   Sand and gravel
+Subcatch   s152   Sand and gravel
+Subcatch   s153   Sand and gravel
+Subcatch   s154   Vegetation
+Subcatch   s155   Sand and gravel
+Subcatch   s156   Asphalt
+Subcatch   s157   Vegetation
+Subcatch   s158   Vegetation
+Subcatch   s159   Vegetation
+Subcatch   s160   Sand and gravel
+Subcatch   s161   Sand and gravel
+Subcatch   s162   Asphalt
+Subcatch   s163   Asphalt
+Subcatch   s164   Asphalt
+Subcatch   s165   Asphalt
+Subcatch   s166   Asphalt
+Subcatch   s167   Vegetation
+Subcatch   s168   Vegetation
+Subcatch   s169   Vegetation
+Subcatch   s170   Vegetation
+Subcatch   s171   Vegetation
+Subcatch   s172   Vegetation
+Subcatch   s173   Vegetation
+Subcatch   s174   Vegetation
+Subcatch   s175   Vegetation
+Subcatch   s176   Sand and gravel
+Subcatch   s177   Asphalt
+Subcatch   s178   Asphalt
+Subcatch   s179   Sand and gravel
+Subcatch   s180   Sand and gravel
+Subcatch   s181   Vegetation
+Subcatch   s182   Asphalt
+Subcatch   s183   Asphalt
+Subcatch   s184   Asphalt
+Subcatch   s185   Vegetation
+Subcatch   s186   Sand and gravel
+Subcatch   s187   Vegetation
+Subcatch   s188   Sand and gravel
+Subcatch   s189   Sand and gravel
+Subcatch   s190   Asphalt
+Subcatch   s191   Asphalt
+Subcatch   s192   Asphalt
+Subcatch   s193   Asphalt
+Subcatch   s194   Vegetation
+Subcatch   s195   Sand and gravel
+Subcatch   s196   Sand and gravel
+Subcatch   s197   Vegetation
+Subcatch   s198   Vegetation
+Subcatch   s199   Vegetation
+Subcatch   s200   Asphalt
+Subcatch   s201   Asphalt
+Subcatch   s202   Vegetation
+Subcatch   s203   Asphalt
+Subcatch   s204   Asphalt
+Subcatch   s205   Sand and gravel
+Subcatch   s206   Sand and gravel
+Subcatch   s207   Asphalt
+Subcatch   s208   Asphalt
+Subcatch   s209   Asphalt
+Subcatch   s210   Asphalt
+Subcatch   s211   Asphalt
+Subcatch   s212   Vegetation
+Subcatch   s213   Asphalt
+Subcatch   s214   Asphalt
+Subcatch   s215   Vegetation
+Subcatch   s216   Vegetation
+Subcatch   s217   Asphalt
+Subcatch   s218   Asphalt
+Subcatch   s219   Asphalt
+Subcatch   s220   Vegetation
+Subcatch   s221   Vegetation
+Subcatch   s222   Vegetation
+Subcatch   s223   Vegetation
+Subcatch   s224   Vegetation
+Subcatch   s225   Asphalt
+Subcatch   s226   Asphalt
+Subcatch   s227   Asphalt
+Subcatch   s228   Asphalt
+Subcatch   s229   Asphalt
+Subcatch   s230   Asphalt
+Subcatch   s231   Asphalt
+Subcatch   s232   Asphalt
+Subcatch   s233   Vegetation
+Subcatch   s234   Sand and gravel
+Subcatch   s235   Vegetation
+Subcatch   s236   Asphalt
+Subcatch   s237   Asphalt
+Subcatch   s238   Asphalt
+Subcatch   s239   Asphalt
+Subcatch   s240   Asphalt
+Subcatch   s241   Asphalt
+Subcatch   s242   Asphalt
+Subcatch   s243   Asphalt
+Subcatch   s244   Sand and gravel
+Subcatch   s245   Sand and gravel
+Subcatch   s246   Asphalt
+Subcatch   s247   Vegetation
+Subcatch   s248   Vegetation
+Subcatch   s249   Vegetation
+Subcatch   s250   Asphalt
+Subcatch   s251   Asphalt
+Subcatch   s252   Asphalt
+Subcatch   s253   Asphalt
+Subcatch   s254   Vegetation
+Subcatch   s255   Vegetation
+Subcatch   s256   Vegetation
+Subcatch   s257   Vegetation
+Subcatch   s258   Vegetation
+Subcatch   s259   Vegetation
+Subcatch   s260   Sand and gravel
+Subcatch   s261   Asphalt
+Subcatch   s262   Asphalt
+Subcatch   s263   Asphalt
+Subcatch   s264   Asphalt
+Subcatch   s265   Asphalt
+Subcatch   s266   Asphalt
+Subcatch   s267   Sand and gravel
+Subcatch   s268   Vegetation
+Subcatch   s269   Asphalt
+Subcatch   s270   Vegetation
+Subcatch   s271   Vegetation
+Subcatch   s272   Asphalt
+Subcatch   s273   Asphalt
+Subcatch   s274   Asphalt
+Subcatch   s275   Asphalt
+Subcatch   s276   Asphalt
+Subcatch   s277   Asphalt
+Subcatch   s278   Vegetation
+Subcatch   s279   Vegetation
+Subcatch   s280   Vegetation
+Subcatch   s281   Sand and gravel
+Subcatch   s282   Vegetation
+Subcatch   s283   Vegetation
+Subcatch   s284   Vegetation
+Subcatch   s285   Asphalt
+Subcatch   s286   Asphalt
+Subcatch   s287   Vegetation
+Subcatch   s288   Vegetation
+Subcatch   s289   Vegetation
+Subcatch   s290   Vegetation
+Subcatch   s291   Vegetation
+Subcatch   s292   Vegetation
+Subcatch   s293   Vegetation
+Subcatch   s294   Vegetation
+Subcatch   s295   Asphalt
+Subcatch   s296   Vegetation
+Subcatch   s297   Asphalt
+Subcatch   s298   Vegetation
+Subcatch   s299   Vegetation
+Subcatch   s300   Vegetation
+Subcatch   s301   Vegetation
+Subcatch   s302   Vegetation
+Subcatch   s303   Asphalt
+Subcatch   s304   Asphalt
+Subcatch   s305   Asphalt
+Subcatch   s306   Asphalt
+Subcatch   s307   Asphalt
+Subcatch   s308   Asphalt
+Subcatch   s309   Asphalt
+Subcatch   s310   Asphalt
+Subcatch   s311   Asphalt
+Subcatch   s312   Vegetation
+Subcatch   s313   Vegetation
+Subcatch   s314   Asphalt
+Subcatch   s315   Asphalt
+Subcatch   s316   Asphalt
+Subcatch   s317   Asphalt
+Subcatch   s318   Asphalt
+Subcatch   s319   Vegetation
+Subcatch   s320   Asphalt
+Subcatch   s321   Asphalt
+Subcatch   s322   Asphalt
+Subcatch   s323   Vegetation
+Subcatch   s324   Asphalt
+Subcatch   s325   Asphalt
+Subcatch   s326   Asphalt
+Subcatch   s327   Vegetation
+Subcatch   s328   Asphalt
+Subcatch   s329   Vegetation
+Subcatch   s330   Asphalt
+Subcatch   s331   Asphalt
+Subcatch   s332   Asphalt
+Subcatch   s333   Vegetation
+Subcatch   s334   Vegetation
+Subcatch   s335   Vegetation
+Subcatch   s336   Asphalt
+Subcatch   s337   Asphalt
+Subcatch   s338   Vegetation
+Subcatch   s339   Vegetation
+Subcatch   s340   Vegetation
+Subcatch   s341   Vegetation
+Subcatch   s342   Vegetation
+Subcatch   s343   Vegetation
+Subcatch   s344   Vegetation
+Subcatch   s345   Vegetation
+Subcatch   s346   Vegetation
+Subcatch   s347   Vegetation
+Subcatch   s348   Asphalt
+Subcatch   s349   Asphalt
+Subcatch   s350   Asphalt
+Subcatch   s351   Vegetation
+Subcatch   s352   Asphalt
+Subcatch   s353   Vegetation
+Subcatch   s354   Vegetation
+Subcatch   s355   Vegetation
+Subcatch   s356   Asphalt
+Subcatch   s357   Asphalt
+Subcatch   s358   Asphalt
+Subcatch   s359   Vegetation
+Subcatch   s360   Vegetation
+Subcatch   s361   Vegetation
+Subcatch   s362   Vegetation
+Subcatch   s363   Vegetation
+Subcatch   s364   Asphalt
+Subcatch   s365   Asphalt
+Subcatch   s366   Asphalt
+Subcatch   s367   Asphalt
+Subcatch   s368   Asphalt
+Subcatch   s369   Asphalt
+Subcatch   s370   Vegetation
+Subcatch   s371   Vegetation
+Subcatch   s372   Vegetation
+Subcatch   s373   Asphalt
+Subcatch   s374   Asphalt
+Subcatch   s375   Vegetation
+Subcatch   s376   Vegetation
+Subcatch   s377   Vegetation
+Subcatch   s378   Vegetation
+Subcatch   s379   Vegetation
+Subcatch   s380   Asphalt
+Subcatch   s381   Asphalt
+Subcatch   s382   Vegetation
+Subcatch   s383   Asphalt
+Subcatch   s384   Asphalt
+Subcatch   s385   Asphalt
+Subcatch   s386   Asphalt
+Subcatch   s387   Asphalt
+Subcatch   s388   Vegetation
+Subcatch   s389   Vegetation
+Subcatch   s390   Asphalt
+Subcatch   s391   Asphalt
+Subcatch   s392   Asphalt
+Subcatch   s393   Asphalt
+Subcatch   s394   Vegetation
+Subcatch   s395   Asphalt
+Subcatch   s396   Asphalt
+Subcatch   s397   Asphalt
+Subcatch   s398   Asphalt
+Subcatch   s399   Vegetation
+Subcatch   s400   Vegetation
+Subcatch   s401   Vegetation
+Subcatch   s402   Vegetation
+Subcatch   s403   Asphalt
+Subcatch   s404   Vegetation
+Subcatch   s405   Asphalt
+Subcatch   s406   Asphalt
+Subcatch   s407   Vegetation
+Subcatch   s408   Vegetation
+Subcatch   s409   Vegetation
+Subcatch   s410   Vegetation
+Subcatch   s411   Vegetation
+Subcatch   s412   Vegetation
+Subcatch   s413   Vegetation
+Subcatch   s414   Vegetation
+Subcatch   s415   Asphalt
+Subcatch   s416   Asphalt
+Subcatch   s417   Vegetation
+Subcatch   s418   Vegetation
+Subcatch   s419   Vegetation
+Subcatch   s420   Asphalt
+Subcatch   s421   Vegetation
+Subcatch   s422   Vegetation
+Subcatch   s423   Vegetation
+Subcatch   s424   Vegetation
+Subcatch   s425   Vegetation
+Subcatch   s426   Vegetation
+Subcatch   s427   Asphalt
+Subcatch   s428   Asphalt
+Subcatch   s429   Sand and gravel
+Subcatch   s430   Asphalt
+Subcatch   s431   Asphalt
+Subcatch   s432   Asphalt
+Subcatch   s433   Asphalt
+Subcatch   s434   Asphalt
+Subcatch   s435   Asphalt
+Subcatch   s436   Asphalt
+Subcatch   s437   Vegetation
+Subcatch   s438   Asphalt
+Subcatch   s439   Vegetation
+Subcatch   s440   Vegetation
+Subcatch   s441   Vegetation
+Subcatch   s442   Vegetation
+Subcatch   s443   Vegetation
+Subcatch   s444   Vegetation
+Subcatch   s445   Vegetation
+Subcatch   s446   Vegetation
+Subcatch   s447   Vegetation
+Subcatch   s448   Vegetation
+Subcatch   s449   Vegetation
+Subcatch   s450   Vegetation
+Subcatch   s451   Vegetation
+Subcatch   s452   Vegetation
+Subcatch   s453   Vegetation
+Subcatch   s454   Vegetation
+Subcatch   s455   Vegetation
+Subcatch   s456   Asphalt
+Subcatch   s457   Asphalt
+Subcatch   s458   Asphalt
+Subcatch   s459   Asphalt
+Subcatch   s460   Vegetation
+Subcatch   s461   Vegetation
+Subcatch   s462   Vegetation
+Subcatch   s463   Vegetation
+Subcatch   s464   Vegetation
+Subcatch   s465   Vegetation
+Subcatch   s466   Sand and gravel
+Subcatch   s467   Sand and gravel
+Subcatch   s468   Vegetation
+Subcatch   s469   Vegetation
+Subcatch   s470   Vegetation
+Subcatch   s471   Vegetation
+Subcatch   s472   Vegetation
+Subcatch   s473   Vegetation
+Subcatch   s474   Vegetation
+Subcatch   s475   Vegetation
+Subcatch   s476   Vegetation
+Subcatch   s477   Vegetation
+Subcatch   s478   Asphalt
+Subcatch   s479   Asphalt
+Subcatch   s480   Vegetation
+Subcatch   s481   Vegetation
+Subcatch   s482   Vegetation
+Subcatch   s483   Vegetation
+Subcatch   s484   Vegetation
+Subcatch   s485   Vegetation
+Subcatch   s486   Vegetation
+Subcatch   s487   Vegetation
+Subcatch   s488   Vegetation
+Subcatch   s489   Vegetation
+Subcatch   s490   Vegetation
+Subcatch   s491   Vegetation
+Subcatch   s492   Vegetation
+Subcatch   s493   Vegetation
+Subcatch   s494   Vegetation
+Subcatch   s495   Vegetation
+Subcatch   s496   Vegetation
+Subcatch   s497   Vegetation
+Subcatch   s498   Vegetation
+Subcatch   s499   Vegetation
+Subcatch   s500   Vegetation
+Subcatch   s501   Vegetation
+Subcatch   s502   Vegetation
+Subcatch   s503   Vegetation
+Subcatch   s504   Vegetation
+Subcatch   s505   Vegetation
+Subcatch   s506   Vegetation
+Subcatch   s507   Vegetation
+Subcatch   s508   Vegetation
+Subcatch   s509   Vegetation
+Subcatch   s510   Asphalt
+Subcatch   s511   Vegetation
+Subcatch   s512   Vegetation
+Subcatch   s513   Vegetation
+Subcatch   s514   Vegetation
+Subcatch   s515   Vegetation
+Subcatch   s516   Vegetation
+Subcatch   s517   Vegetation
+Subcatch   s518   Vegetation
+Subcatch   s519   Vegetation
+Subcatch   s520   Vegetation
+Subcatch   s521   Vegetation
+Subcatch   s522   Vegetation
+Subcatch   s523   Vegetation
+Subcatch   s524   Vegetation
+Subcatch   s525   Vegetation
+Subcatch   s526   Vegetation
+Subcatch   s527   Vegetation
+Subcatch   s528   Vegetation
+Subcatch   s529   Vegetation
+Subcatch   s530   Vegetation
+Subcatch   s531   Vegetation
+Subcatch   s532   Vegetation
+Subcatch   s533   Asphalt
+Subcatch   s534   Asphalt
+Subcatch   s535   Asphalt
+Subcatch   s536   Asphalt
+Subcatch   s537   Asphalt
+Subcatch   s538   Asphalt
+Subcatch   s539   Vegetation
+Subcatch   s540   Vegetation
+Subcatch   s541   Asphalt
+Subcatch   s542   Asphalt
+Subcatch   s543   Asphalt
+Subcatch   s544   Asphalt
+Subcatch   s545   Asphalt
+Subcatch   s546   Asphalt
+Subcatch   s547   Vegetation
+Subcatch   s548   Vegetation
+Subcatch   s549   Asphalt
+Subcatch   s550   Asphalt
+Subcatch   s551   Asphalt
+Subcatch   s552   Asphalt
+Subcatch   s553   Asphalt
+Subcatch   s554   Asphalt
+Subcatch   s555   Asphalt
+Subcatch   s556   Asphalt
+Subcatch   s557   Asphalt
+Subcatch   s558   Asphalt
+Subcatch   s559   Asphalt
+Subcatch   s560   Asphalt
+Subcatch   s561   Vegetation
+Subcatch   s562   Asphalt
+Subcatch   s563   Vegetation
+Subcatch   s564   Vegetation
+Subcatch   s565   Asphalt
+Subcatch   s566   Asphalt
+Subcatch   s567   Vegetation
+Subcatch   s568   Vegetation
+Subcatch   s569   Vegetation
+Subcatch   s570   Vegetation
+Subcatch   s571   Vegetation
+Subcatch   s572   Vegetation
+Subcatch   s573   Vegetation
+Subcatch   s574   Asphalt
+Subcatch   s575   Vegetation
+Subcatch   s576   Vegetation
+Subcatch   s577   Vegetation
+Subcatch   s578   Asphalt
+Subcatch   s579   Sand and gravel
+Subcatch   s580   Asphalt
+Subcatch   s581   Asphalt
+Subcatch   s582   Asphalt
+Subcatch   s583   Asphalt
+Subcatch   s584   Vegetation
+Subcatch   s585   Vegetation
+Subcatch   s586   Sand and gravel
+Subcatch   s587   Vegetation
+Subcatch   s588   Vegetation
+Subcatch   s589   Sand and gravel
+Subcatch   s590   Sand and gravel
+Subcatch   s591   Sand and gravel
+Subcatch   s592   Asphalt
+Subcatch   s593   Sand and gravel
+Subcatch   s594   Vegetation
+Subcatch   s595   Sand and gravel
+Subcatch   s596   Sand and gravel
+Subcatch   s597   Asphalt
+Subcatch   s598   Asphalt
+Subcatch   s599   Vegetation
+Subcatch   s600   Vegetation
+Subcatch   s601   Vegetation
+Subcatch   s602   Vegetation
+Subcatch   s603   Vegetation
+Subcatch   s604   Sand and gravel
+Subcatch   s605   Vegetation
+Subcatch   s606   Vegetation
+Subcatch   s607   Vegetation
+Subcatch   s608   Vegetation
+Subcatch   s609   Asphalt
+Subcatch   s610   Vegetation
+Subcatch   s611   Asphalt
+Subcatch   s612   Asphalt
+Subcatch   s613   Vegetation
+Subcatch   s614   Asphalt
+Subcatch   s615   Asphalt
+Subcatch   s616   Sand and gravel
+Subcatch   s617   Asphalt
+Subcatch   s618   Asphalt
+Subcatch   s619   Vegetation
+Subcatch   s620   Vegetation
+Subcatch   s621   Vegetation
+Subcatch   s622   Asphalt
+Subcatch   s623   Asphalt
+Subcatch   s624   Vegetation
+Subcatch   s625   Sand and gravel
+Subcatch   s626   Sand and gravel
+Subcatch   s627   Asphalt
+Subcatch   s628   Vegetation
+Subcatch   s629   Vegetation
+Subcatch   s630   Sand and gravel
+Subcatch   s631   Sand and gravel
+Subcatch   s632   Vegetation
+Subcatch   s633   Vegetation
+Subcatch   s634   Asphalt
+Subcatch   s635   Asphalt
+Subcatch   s636   Sand and gravel
+Subcatch   s637   Asphalt
+Subcatch   s638   Asphalt
+Subcatch   s639   Asphalt
+Subcatch   s640   Asphalt
+Subcatch   s641   Asphalt
+Subcatch   s642   Asphalt
+Subcatch   s643   Asphalt
+Subcatch   s644   Vegetation
+Subcatch   s645   Asphalt
+Subcatch   s646   Asphalt
+Subcatch   s647   Asphalt
+Subcatch   s648   Asphalt
+Subcatch   s649   Vegetation
+Subcatch   s650   Vegetation
+Subcatch   s651   Asphalt
+Subcatch   s652   Asphalt
+Subcatch   s653   Vegetation
+Subcatch   s654   Asphalt
+Subcatch   s655   Vegetation
+Subcatch   s656   Asphalt
+Subcatch   s657   Asphalt
+Subcatch   s658   Asphalt
+Subcatch   s659   Sand and gravel
+Subcatch   s660   Sand and gravel
+Subcatch   s661   Asphalt
+Subcatch   s662   Vegetation
+Subcatch   s663   Sand and gravel
+Subcatch   s664   Sand and gravel
+Subcatch   s665   Asphalt
+Subcatch   s666   Sand and gravel
+Subcatch   s667   Sand and gravel
+Subcatch   s668   Asphalt
+Subcatch   s669   Asphalt
+Subcatch   s670   Asphalt
+Subcatch   s671   Asphalt
+Subcatch   s672   Vegetation
+Subcatch   s673   Vegetation
+Subcatch   s674   Asphalt
+Subcatch   s675   Vegetation
+Subcatch   s676   Vegetation
+Subcatch   s677   Vegetation
+Subcatch   s678   Asphalt
+Subcatch   s679   Asphalt
+Subcatch   s680   Vegetation
+Subcatch   s681   Vegetation
+Subcatch   s682   Vegetation
+Subcatch   s683   Vegetation
+Subcatch   s684   Vegetation
+Subcatch   s685   Vegetation
+Subcatch   s686   Sand and gravel
+Subcatch   s687   Asphalt
+Subcatch   s688   Vegetation
+Subcatch   s689   Vegetation
+Subcatch   s690   Vegetation
+Subcatch   s691   Asphalt
+Subcatch   s692   Asphalt
+Subcatch   s693   Vegetation
+Subcatch   s694   Vegetation
+Subcatch   s695   Vegetation
+Subcatch   s696   Vegetation
+Subcatch   s697   Vegetation
+Subcatch   s698   Vegetation
+Subcatch   s699   Vegetation
+Subcatch   s700   Vegetation
+Subcatch   s701   Vegetation
+Subcatch   s702   Asphalt
+Subcatch   s703   Asphalt
+Subcatch   s704   Asphalt
+Subcatch   s705   Vegetation
+Subcatch   s706   Asphalt
+Subcatch   s707   Asphalt
+Subcatch   s708   Asphalt
+Subcatch   s709   Asphalt
+Subcatch   s710   Asphalt
+Subcatch   s711   Vegetation
+Subcatch   s712   Asphalt
+Subcatch   s713   Asphalt
+Subcatch   s714   Asphalt
+Subcatch   s715   Vegetation
+Subcatch   s716   Vegetation
+Subcatch   s717   Asphalt
+Subcatch   s718   Asphalt
+Subcatch   s719   Asphalt
+Subcatch   s720   Vegetation
+Subcatch   s721   Vegetation
+Subcatch   s722   Asphalt
+Subcatch   s723   Asphalt
+Subcatch   s724   Asphalt
+Subcatch   s725   Vegetation
+Subcatch   s726   Vegetation
+Subcatch   s727   Asphalt
+Subcatch   s728   Asphalt
+Subcatch   s729   Asphalt
+Subcatch   s730   Vegetation
+Subcatch   s731   Vegetation
+Subcatch   s732   Asphalt
+Subcatch   s733   Asphalt
+Subcatch   s734   Asphalt
+Subcatch   s735   Asphalt
+Subcatch   s736   Asphalt
+Subcatch   s737   Asphalt
+Subcatch   s738   Asphalt
+Subcatch   s739   Asphalt
+Subcatch   s740   Sand and gravel
+Subcatch   s741   Asphalt
+Subcatch   s742   Sand and gravel
+Subcatch   s743   Sand and gravel
+Subcatch   s744   Sand and gravel
+Subcatch   s745   Sand and gravel
+Subcatch   s746   Asphalt
+Subcatch   s747   Asphalt
+Subcatch   s748   Asphalt
+Subcatch   s749   Sand and gravel
+Subcatch   s750   Sand and gravel
+Subcatch   s751   Asphalt
+Subcatch   s752   Asphalt
+Subcatch   s753   Vegetation
+Subcatch   s754   Asphalt
+Subcatch   s755   Vegetation
+Subcatch   s756   Asphalt
+Subcatch   s757   Vegetation
+Subcatch   s758   Vegetation
+Subcatch   s759   Vegetation
+Subcatch   s760   Vegetation
+Subcatch   s761   Vegetation
+Subcatch   s762   Sand and gravel
+Subcatch   s763   Sand and gravel
+Subcatch   s764   Vegetation
+Subcatch   s765   Vegetation
+Subcatch   s766   Sand and gravel
+Subcatch   s767   Vegetation
+Subcatch   s768   Vegetation
+Subcatch   s769   Vegetation
+Subcatch   s770   Asphalt
+Subcatch   s771   Vegetation
+Subcatch   s772   Vegetation
+Subcatch   s773   Vegetation
+Subcatch   s774   Vegetation
+Subcatch   s775   Vegetation
+Subcatch   s776   Vegetation
+Subcatch   s777   Vegetation
+Subcatch   s778   Vegetation
+Subcatch   s779   Asphalt
+Subcatch   s780   Vegetation
+Subcatch   s781   Vegetation
+Subcatch   s782   Vegetation
+Subcatch   s783   Vegetation
+Subcatch   s784   Sand and gravel
+Subcatch   s785   Vegetation
+Subcatch   s786   Vegetation
+Subcatch   s787   Vegetation
+Subcatch   s788   Asphalt
+Subcatch   s789   Vegetation
+Subcatch   s790   Vegetation
+Subcatch   s791   Vegetation
+Subcatch   s792   Vegetation
+Subcatch   s793   Vegetation
+Subcatch   s794   Asphalt
+Subcatch   s795   Vegetation
+Subcatch   s796   Vegetation
+Subcatch   s797   Vegetation
+Subcatch   s798   Vegetation
+Subcatch   s799   Vegetation
+Subcatch   s800   Vegetation
+Subcatch   s801   Vegetation
+Subcatch   s802   Vegetation
+Subcatch   s803   Vegetation
+Subcatch   s804   Vegetation
+Subcatch   s805   Vegetation
+Subcatch   s806   Asphalt
+Subcatch   s807   Vegetation
+Subcatch   s808   Vegetation
+Subcatch   s809   Vegetation
+Subcatch   s810   Vegetation
+Subcatch   s811   Asphalt
+Subcatch   s812   Asphalt
+Subcatch   s813   Vegetation
+Subcatch   s814   Vegetation
+Subcatch   s815   Asphalt
+Subcatch   s816   Asphalt
+Subcatch   s817   Asphalt
+Subcatch   s818   Asphalt
+Subcatch   s819   Vegetation
+Subcatch   s820   Vegetation
+Subcatch   s821   Vegetation
+Subcatch   s822   Vegetation
+Subcatch   s823   Vegetation
+Subcatch   s824   Vegetation
+Subcatch   s825   Vegetation
+Subcatch   s826   Vegetation
+Subcatch   s827   Vegetation
+Subcatch   s828   Vegetation
+Subcatch   s829   Vegetation
+Subcatch   s830   Vegetation
+Subcatch   s831   Vegetation
+Subcatch   s832   Vegetation
+Subcatch   s833   Vegetation
+Subcatch   s834   Vegetation
+Subcatch   s835   Vegetation
+Subcatch   s836   Vegetation
+Subcatch   s837   Vegetation
+Subcatch   s838   Vegetation
+Subcatch   s839   Vegetation
+Subcatch   s840   Vegetation
+Subcatch   s841   Vegetation
+Subcatch   s842   Vegetation
+Subcatch   s843   Vegetation
+Subcatch   s844   Vegetation
+Subcatch   s845   Vegetation
+Subcatch   s846   Vegetation
+Subcatch   s847   Vegetation
+Subcatch   s848   Vegetation
+Subcatch   s849   Asphalt
+Subcatch   s850   Asphalt
+Subcatch   s851   Asphalt
+Subcatch   s852   Asphalt
+Subcatch   s853   Asphalt
+Subcatch   s854   Asphalt
+Subcatch   s855   Asphalt
+Subcatch   s856   Asphalt
+Subcatch   s857   Asphalt
+Subcatch   s858   Asphalt
+Subcatch   s859   Asphalt
+Subcatch   s860   Vegetation
+Subcatch   s861   Vegetation
+Subcatch   s862   Vegetation
+Subcatch   s863   Asphalt
+Subcatch   s864   Asphalt
+Subcatch   s865   Asphalt
+Subcatch   s866   Asphalt
+Subcatch   s867   Vegetation
+Subcatch   s868   Sand and gravel
+Subcatch   s869   Vegetation
+Subcatch   s870   Vegetation
+Subcatch   s871   Vegetation
+Subcatch   s872   Vegetation
+Subcatch   s873   Sand and gravel
+Subcatch   s874   Sand and gravel
+Subcatch   s875   Sand and gravel
+Subcatch   s876   Sand and gravel
+Subcatch   s877   Vegetation
+Subcatch   s878   Vegetation
+Subcatch   s879   Vegetation
+Subcatch   s880   Asphalt
+Subcatch   s881   Asphalt
+Subcatch   s882   Sand and gravel
+Subcatch   s883   Sand and gravel
+Subcatch   s884   Sand and gravel
+Subcatch   s885   Vegetation
+Subcatch   s886   Vegetation
+Subcatch   s887   Sand and gravel
+Subcatch   s888   Vegetation
+Subcatch   s889   Asphalt
+Subcatch   s890   Asphalt
+Subcatch   s891   Sand and gravel
+Subcatch   s892   Vegetation
+Subcatch   s893   Vegetation
+Subcatch   s894   Vegetation
+Subcatch   s895   Asphalt
+Subcatch   s896   Asphalt
+Subcatch   s897   Asphalt
+Subcatch   s898   Asphalt
+Subcatch   s899   Asphalt
+Subcatch   s900   Asphalt
+Subcatch   s901   Asphalt
+Subcatch   s902   Sand and gravel
+Subcatch   s903   Vegetation
+Subcatch   s904   Vegetation
+Subcatch   s905   Asphalt
+Subcatch   s906   Vegetation
+Subcatch   s907   Vegetation
+Subcatch   s908   Sand and gravel
+Subcatch   s909   Sand and gravel
+Subcatch   s910   Vegetation
+Subcatch   s911   Vegetation
+Subcatch   s912   Vegetation
+Subcatch   s913   Asphalt
+Subcatch   s914   Asphalt
+Subcatch   s915   Vegetation
+Subcatch   s916   Vegetation
+Subcatch   s917   Vegetation
+Subcatch   s918   Vegetation
+Subcatch   s919   Vegetation
+Subcatch   s920   Vegetation
+Subcatch   s921   Vegetation
+Subcatch   s922   Vegetation
+Subcatch   s923   Vegetation
+Subcatch   s924   Vegetation
+Subcatch   s925   Vegetation
+Subcatch   s926   Vegetation
+Subcatch   s927   Vegetation
+Subcatch   s928   Asphalt
+Subcatch   s929   Vegetation
+Subcatch   s930   Asphalt
+Subcatch   s931   Asphalt
+Subcatch   s932   Asphalt
+Subcatch   s933   Sand and gravel
+Subcatch   s934   Vegetation
+Subcatch   s935   Vegetation
+Subcatch   s936   Asphalt
+Subcatch   s937   Asphalt
+Subcatch   s938   Vegetation
+Subcatch   s939   Asphalt
+Subcatch   s940   Asphalt
+Subcatch   s941   Vegetation
+Subcatch   s942   Asphalt
+Subcatch   s943   Asphalt
+Subcatch   s944   Asphalt
+Subcatch   s945   Asphalt
+Subcatch   s946   Asphalt
+Subcatch   s947   Asphalt
+Subcatch   s948   Vegetation
+Subcatch   s949   Vegetation
+Subcatch   s950   Vegetation
+Subcatch   s951   Vegetation
+Subcatch   s952   Vegetation
+Subcatch   s953   Vegetation
+Subcatch   s954   Vegetation
+Subcatch   s955   Vegetation
+Subcatch   s956   Vegetation
+Subcatch   s957   Vegetation
+Subcatch   s958   Vegetation
+Subcatch   s959   Asphalt
+Subcatch   s960   Vegetation
+Subcatch   s961   Vegetation
+Subcatch   s962   Vegetation
+Subcatch   s963   Vegetation
+Subcatch   s964   Asphalt
+Subcatch   s965   Asphalt
+Subcatch   s966   Asphalt
+Subcatch   s967   Vegetation
+Subcatch   s968   Vegetation
+Subcatch   s969   Vegetation
+Subcatch   s970   Asphalt
+Subcatch   s971   Vegetation
+Subcatch   s972   Vegetation
+Subcatch   s973   Vegetation
+Subcatch   s974   Vegetation
+Subcatch   s975   Asphalt
+Subcatch   s976   Asphalt
+Subcatch   s977   Asphalt
+Subcatch   s978   Asphalt
+Subcatch   s979   Asphalt
+Subcatch   s980   Vegetation
+Subcatch   s981   Vegetation
+Subcatch   s982   Asphalt
+Subcatch   s983   Asphalt
+Subcatch   s984   Vegetation
+Subcatch   s985   Asphalt
+Subcatch   s986   Vegetation
+Subcatch   s987   Vegetation
+Subcatch   s988   Vegetation
+Subcatch   s989   Asphalt
+Subcatch   s990   Sand and gravel
+Subcatch   s991   Sand and gravel
+Subcatch   s992   Vegetation
+Subcatch   s993   Asphalt
+Subcatch   s994   Asphalt
+Subcatch   s995   Asphalt
+Subcatch   s996   Sand and gravel
+Subcatch   s997   Asphalt
+Subcatch   s998   Asphalt
+Subcatch   s999   Asphalt
+Subcatch   s1000   Asphalt
+Subcatch   s1001   Vegetation
+Subcatch   s1002   Vegetation
+Subcatch   s1003   Vegetation
+Subcatch   s1004   Asphalt
+Subcatch   s1005   Vegetation
+Subcatch   s1006   Vegetation
+Subcatch   s1007   Asphalt
+Subcatch   s1008   Asphalt
+Subcatch   s1009   Vegetation
+Subcatch   s1010   Asphalt
+Subcatch   s1011   Asphalt
+Subcatch   s1012   Asphalt
+Subcatch   s1013   Asphalt
+Subcatch   s1014   Vegetation
+Subcatch   s1015   Vegetation
+Subcatch   s1016   Vegetation
+Subcatch   s1017   Vegetation
+Subcatch   s1018   Vegetation
+Subcatch   s1019   Asphalt
+Subcatch   s1020   Vegetation
+Subcatch   s1021   Vegetation
+Subcatch   s1022   Vegetation
+Subcatch   s1023   Vegetation
+Subcatch   s1024   Vegetation
+Subcatch   s1025   Vegetation
+Subcatch   s1026   Vegetation
+Subcatch   s1027   Vegetation
+Subcatch   s1028   Vegetation
+Subcatch   s1029   Asphalt
+Subcatch   s1030   Asphalt
+Subcatch   s1031   Asphalt
+Subcatch   s1032   Asphalt
+Subcatch   s1033   Vegetation
+Subcatch   s1034   Vegetation
+Subcatch   s1035   Asphalt
+Subcatch   s1036   Asphalt
+Subcatch   s1037   Asphalt
+Subcatch   s1038   Vegetation
+Subcatch   s1039   Vegetation
+Subcatch   s1040   Asphalt
+Subcatch   s1041   Asphalt
+Subcatch   s1042   Asphalt
+Subcatch   s1043   Asphalt
+Subcatch   s1044   Vegetation
+Subcatch   s1045   Vegetation
+Subcatch   s1046   Vegetation
+Subcatch   s1047   Asphalt
+Subcatch   s1048   Asphalt
+Subcatch   s1049   Asphalt
+Subcatch   s1050   Asphalt
+Subcatch   s1051   Asphalt
+Subcatch   s1052   Asphalt
+Subcatch   s1053   Asphalt
+Subcatch   s1054   Asphalt
+Subcatch   s1055   Asphalt
+Subcatch   s1056   Vegetation
+Subcatch   s1057   Vegetation
+Subcatch   s1058   Asphalt
+Subcatch   s1059   Asphalt
+Subcatch   s1060   Asphalt
+Subcatch   s1061   Asphalt
+Subcatch   s1062   Asphalt
+Subcatch   s1063   Asphalt
+Subcatch   s1064   Asphalt
+Subcatch   s1065   Asphalt
+Subcatch   s1066   Asphalt
+Subcatch   s1067   Asphalt
+Subcatch   s1068   Asphalt
+Subcatch   s1069   Vegetation
+Subcatch   s1070   Asphalt
+Subcatch   s1071   Asphalt
+Subcatch   s1072   Asphalt
+Subcatch   s1073   Vegetation
+Subcatch   s1074   Vegetation
+Subcatch   s1075   Vegetation
+Subcatch   s1076   Vegetation
+Subcatch   s1077   Asphalt
+Subcatch   s1078   Vegetation
+Subcatch   s1079   Asphalt
+Subcatch   s1080   Asphalt
+Subcatch   s1081   Asphalt
+Subcatch   s1082   Vegetation
+Subcatch   s1083   Vegetation
+Subcatch   s1084   Asphalt
+Subcatch   s1085   Asphalt
+Subcatch   s1086   Asphalt
+Subcatch   s1087   Asphalt
+Subcatch   s1088   Sand and gravel
+Subcatch   s1089   Sand and gravel
+Subcatch   s1090   Sand and gravel
+Subcatch   s1091   Sand and gravel
+Subcatch   s1092   Vegetation
+Subcatch   s1093   Vegetation
+Subcatch   s1094   Vegetation
+Subcatch   s1095   Vegetation
+Subcatch   s1096   Vegetation
+Subcatch   s1097   Asphalt
+Subcatch   s1098   Asphalt
+Subcatch   s1099   Asphalt
+Subcatch   s1100   Asphalt
+Subcatch   s1101   Asphalt
+Subcatch   s1102   Asphalt
+Subcatch   s1103   Asphalt
+Subcatch   s1104   Asphalt
+Subcatch   s1105   Vegetation
+Subcatch   s1106   Asphalt
+Subcatch   s1107   Asphalt
+Subcatch   s1108   Asphalt
+Subcatch   s1109   Asphalt
+Subcatch   s1110   Asphalt
+Subcatch   s1111   Vegetation
+Subcatch   s1112   Asphalt
+Subcatch   s1113   Sand and gravel
+Subcatch   s1114   Asphalt
+Subcatch   s1115   Asphalt
+Subcatch   s1116   Vegetation
+Subcatch   s1117   Vegetation
+Subcatch   s1118   Vegetation
+Subcatch   s1119   Asphalt
+Subcatch   s1120   Asphalt
+Subcatch   s1121   Asphalt
+Subcatch   s1122   Asphalt
+Subcatch   s1123   Asphalt
+Subcatch   s1124   Asphalt
+Subcatch   s1125   Asphalt
+Subcatch   s1126   Vegetation
+Subcatch   s1127   Vegetation
+Subcatch   s1128   Vegetation
+Subcatch   s1129   Vegetation
+Subcatch   s1130   Asphalt
+Subcatch   s1131   Asphalt
+Subcatch   s1132   Asphalt
+Subcatch   s1133   Asphalt
+Subcatch   s1134   Asphalt
+Subcatch   s1135   Vegetation
+Subcatch   s1136   Vegetation
+Subcatch   s1137   Asphalt
+Subcatch   s1138   Asphalt
+Subcatch   s1139   Asphalt
+Subcatch   s1140   Asphalt
+Subcatch   s1141   Asphalt
+Subcatch   s1142   Asphalt
+Subcatch   s1143   Asphalt
+Subcatch   s1144   Vegetation
+Subcatch   s1145   Asphalt
+Subcatch   s1146   Asphalt
+Subcatch   s1147   Asphalt
+Subcatch   s1148   Asphalt
+Subcatch   s1149   Asphalt
+Subcatch   s1150   Vegetation
+Subcatch   s1151   Vegetation
+Subcatch   s1152   Vegetation
+Subcatch   s1153   Vegetation
+Subcatch   s1154   Asphalt
+Subcatch   s1155   Asphalt
+Subcatch   s1156   Asphalt
+Subcatch   s1157   Asphalt
+Subcatch   s1158   Asphalt
+Subcatch   s1159   Asphalt
+Subcatch   s1160   Asphalt
+Subcatch   s1161   Asphalt
+Subcatch   s1162   Asphalt
+Subcatch   s1163   Asphalt
+Subcatch   s1164   Asphalt
+Subcatch   s1165   Asphalt
+Subcatch   s1166   Asphalt
+Subcatch   s1167   Asphalt
+Subcatch   s1168   Asphalt
+Subcatch   s1169   Asphalt
+Subcatch   s1170   Vegetation
+Subcatch   s1171   Asphalt
+Subcatch   s1172   Sand and gravel
+Subcatch   s1173   Sand and gravel
+Subcatch   s1174   Asphalt
+Subcatch   s1175   Asphalt
+Subcatch   s1176   Asphalt
+Subcatch   s1177   Asphalt
+Subcatch   s1178   Asphalt
+Subcatch   s1179   Asphalt
+Subcatch   s1180   Asphalt
+Subcatch   s1181   Asphalt
+Subcatch   s1182   Vegetation
+Subcatch   s1183   Vegetation
+Subcatch   s1184   Asphalt
+Subcatch   s1185   Vegetation
+Subcatch   s1186   Vegetation
+Subcatch   s1187   Vegetation
+Subcatch   s1188   Asphalt
+Subcatch   s1189   Vegetation
+Subcatch   s1190   Asphalt
+Subcatch   s1191   Asphalt
+Subcatch   s1192   Vegetation
+Subcatch   s1193   Asphalt
+Subcatch   s1194   Vegetation
+Subcatch   s1195   Vegetation
+Subcatch   s1196   Vegetation
+Subcatch   s1197   Unconnected roof
+Subcatch   s1198   Unconnected roof
+Subcatch   s1199   Unconnected roof
+Subcatch   s1200   Unconnected roof
+Subcatch   s1201   Unconnected roof
+Subcatch   s1202   Unconnected roof
+Subcatch   s1203   Unconnected roof
+Subcatch   s1204   Unconnected roof
+Subcatch   s1205   Unconnected roof
+Subcatch   s1206   Unconnected roof
+Subcatch   s1207   Unconnected roof
+Subcatch   s1208   Unconnected roof
+Subcatch   s1209   Unconnected roof
+Subcatch   s1210   Unconnected roof
+Subcatch   s1211   Unconnected roof
+Subcatch   s1212   Unconnected roof
+Subcatch   s1213   Unconnected roof
+Subcatch   s1214   Unconnected roof
+Subcatch   s1215   Unconnected roof
+Subcatch   s1216   Unconnected roof
+Subcatch   s1217   Unconnected roof
+Subcatch   s1218   Unconnected roof
+Subcatch   s1219   Unconnected roof
+Subcatch   s1220   Unconnected roof
+Subcatch   s1221   Unconnected roof
+Subcatch   s1222   Unconnected roof
+Subcatch   s1223   Unconnected roof
+Subcatch   s1224   Unconnected roof
+Subcatch   s1225   Unconnected roof
+Subcatch   s1226   Unconnected roof
+Subcatch   s1227   Unconnected roof
+Subcatch   s1228   Unconnected roof
+Subcatch   s1229   Unconnected roof
+Subcatch   s1230   Unconnected roof
+Subcatch   s1231   Unconnected roof
+Subcatch   s1232   Unconnected roof
+Subcatch   s1233   Unconnected roof
+Subcatch   s1234   Unconnected roof
+Subcatch   s1235   Unconnected roof
+Subcatch   s1236   Unconnected roof
+Subcatch   s1237   Unconnected roof
+Subcatch   s1238   Unconnected roof
+Subcatch   s1239   Unconnected roof
+Subcatch   s1240   Unconnected roof
+Subcatch   s1241   Unconnected roof
+Subcatch   s1242   Unconnected roof
+Subcatch   s1243   Unconnected roof
+Subcatch   s1244   Unconnected roof
+Subcatch   s1245   Unconnected roof
+Subcatch   s1246   Unconnected roof
+Subcatch   s1247   Unconnected roof
+Subcatch   s1248   Unconnected roof
+Subcatch   s1249   Unconnected roof
+Subcatch   s1250   Unconnected roof
+Subcatch   s1251   Unconnected roof
+Subcatch   s1252   Unconnected roof
+Subcatch   s1253   Unconnected roof
+Subcatch   s1254   Unconnected roof
+Subcatch   s1255   Unconnected roof
+Subcatch   s1256   Unconnected roof
+Subcatch   s1257   Unconnected roof
+Subcatch   s1258   Unconnected roof
+Subcatch   s1259   Unconnected roof
+Subcatch   s1260   Unconnected roof
+Subcatch   s1261   Unconnected roof
+Subcatch   s1262   Unconnected roof
+Subcatch   s1263   Unconnected roof
+Subcatch   s1264   Unconnected roof
+Subcatch   s1265   Unconnected roof
+Subcatch   s1266   Unconnected roof
+Subcatch   s1267   Unconnected roof
+Subcatch   s1268   Unconnected roof
+Subcatch   s1269   Unconnected roof
+Subcatch   s1270   Unconnected roof
+Subcatch   s1271   Unconnected roof
+Subcatch   s1272   Unconnected roof
+Subcatch   s1273   Unconnected roof
+Subcatch   s1274   Unconnected roof
+Subcatch   s1275   Unconnected roof
+Subcatch   s1276   Unconnected roof
+Subcatch   s1277   Unconnected roof
+Subcatch   s1278   Unconnected roof
+Subcatch   s1279   Unconnected roof
+Subcatch   s1280   Unconnected roof
+Subcatch   s1281   Unconnected roof
+Subcatch   s1282   Unconnected roof
+Subcatch   s1283   Unconnected roof
+Subcatch   s1284   Unconnected roof
+Subcatch   s1285   Unconnected roof
+Subcatch   s1286   Unconnected roof
+Subcatch   s1287   Unconnected roof
+Subcatch   s1288   Unconnected roof
+Subcatch   s1289   Unconnected roof
+Subcatch   s1290   Unconnected roof
+Subcatch   s1291   Unconnected roof
+Subcatch   s1292   Unconnected roof
+Subcatch   s1293   Connected roof
+Subcatch   s1294   Connected roof
+Subcatch   s1295   Connected roof
+Subcatch   s1296   Connected roof
+Subcatch   s1297   Connected roof
+Subcatch   s1298   Connected roof
+Subcatch   s1299   Connected roof
+Subcatch   s1300   Connected roof
+Subcatch   s1301   Connected roof
+Subcatch   s1302   Connected roof
+Subcatch   s1303   Connected roof
+Subcatch   s1304   Connected roof
+Subcatch   s1305   Connected roof
+Subcatch   s1306   Connected roof
+Subcatch   s1307   Connected roof
+Subcatch   s1308   Connected roof
+Subcatch   s1309   Connected roof
+Subcatch   s1310   Connected roof
+Subcatch   s1311   Connected roof
+Subcatch   s1312   Connected roof
+Subcatch   s1313   Connected roof
+Subcatch   s1314   Connected roof
+Subcatch   s1315   Connected roof
+Subcatch   s1316   Connected roof
+Subcatch   s1317   Connected roof
+Subcatch   s1318   Connected roof
+Subcatch   s1319   Connected roof
+Subcatch   s1320   Connected roof
+Subcatch   s1321   Connected roof
+Subcatch   s1322   Connected roof
+Subcatch   s1323   Connected roof
+Subcatch   s1324   Connected roof
+Subcatch   s1325   Connected roof
+Subcatch   s1326   Connected roof
+Subcatch   s1327   Connected roof
+Subcatch   s1328   Connected roof
+Subcatch   s1329   Connected roof
 
 [MAP]
 DIMENSIONS 0.50 0.50 220.50 230.50

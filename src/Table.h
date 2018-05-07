@@ -5,7 +5,7 @@
 
 class Table : public FileIO
 {
-	public: 
+	public:
 		// Methods.
 		Table();
 		~Table();
@@ -14,7 +14,7 @@ class Table : public FileIO
 		void print();
 		std::string getData(int row, int col);
 		void writeToStringStream(std::stringstream &sstream);
-	
+
 		// Variables.
-		
+
 };

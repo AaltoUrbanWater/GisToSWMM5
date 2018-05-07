@@ -35,6 +35,7 @@ Cell::Cell()
 	numElements = 0;
 	hasInlet = 0;
 	elevNoData = 0;
+	tag = "None";
 
 	//for (int i = 0; i < 8; i++)
 	//{

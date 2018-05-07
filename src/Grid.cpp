@@ -365,6 +365,8 @@ void Grid::setSubcatchmentProperties(Table &catchPropTable)
                 cells[i].HydCon = catchPropTable.data[j * catchPropTable.nCols + 8].c_str();
                 cells[i].IMDmax = catchPropTable.data[j * catchPropTable.nCols + 9].c_str();
                 cells[i].snowPack = catchPropTable.data[j * catchPropTable.nCols + 11];
+                if (catchPropTable.nCols > 11)
+                    cells[i].tag = catchPropTable.data[j * catchPropTable.nCols + 12].c_str();
 
                 break;
             }
@@ -1174,6 +1176,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                     newCell.HydCon = cells[col + row * nCols].HydCon;
                     newCell.IMDmax = cells[col + row * nCols].IMDmax;
                     newCell.isSink = cells[col + row * nCols].isSink;
+                    newCell.tag = cells[col + row * nCols].tag;
                     newCell.hasInlet = 1;
                     newCell.numElements++;
                     std::stringstream subcatchmentName("");
@@ -1229,6 +1232,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             newCell.HydCon = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].HydCon;
                             newCell.IMDmax = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].IMDmax;
                             newCell.isSink = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].isSink;
+                            newCell.tag = cells[ cells[ col + row * nCols ].neighCellIndices[j] ].tag;
                             newCell.hasInlet = 1;
                             newCell.numElements++;
                             std::stringstream subcatchmentName("");
@@ -1319,6 +1323,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                                     newCell.HydCon = cells[*it].HydCon;
                                     newCell.IMDmax = cells[*it].IMDmax;
                                     newCell.isSink = cells[*it].isSink;
+                                    newCell.tag = cells[*it].tag;
                                     newCell.numElements++;
                                     std::stringstream subcatchmentName("");
                                     subcatchmentName << "s" << subcatchmentID + 1;
@@ -1409,6 +1414,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
             newCell.HydCon = cells[roofCells.front()].HydCon;
             newCell.IMDmax = cells[roofCells.front()].IMDmax;
             newCell.isSink = cells[roofCells.front()].isSink;
+            newCell.tag = cells[roofCells.front()].tag;
             newCell.numElements++;
             std::stringstream subcatchmentName("");
             subcatchmentName << "s" << subcatchmentID + 1;
@@ -1529,6 +1535,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             newCell.HydCon = cells[*it].HydCon;
                             newCell.IMDmax = cells[*it].IMDmax;
                             newCell.isSink = cells[*it].isSink;
+                            newCell.tag = cells[*it].tag;
                             newCell.hasInlet = 1;
                             newCell.numElements++;
                             std::stringstream subcatchmentName("");
@@ -1675,6 +1682,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
         cells[i].HydCon = cellsAdaptive[i].HydCon;
         cells[i].IMDmax = cellsAdaptive[i].IMDmax;
         cells[i].isSink = cellsAdaptive[i].isSink;
+        cells[i].tag = cellsAdaptive[i].tag;
     }
 }
 
@@ -1741,7 +1749,8 @@ int Grid::saveSubcatchmentPolygon(std::string path)
     sstream << "suct_mm;";      // Soil capillary suction head (mm)
     sstream << "Ksat_mmhr;";    // Soil saturated hydraulic conductivity (mm/hr)
     sstream << "IMDmax;";       // Difference between soil porosity and initial moisture content (a fraction)
-    sstream << "isSink";       // Cell is a local sink
+    sstream << "isSink;";       // Cell is a local sink
+    sstream << "Tag";           // Optional tag sepcifying e.g. cell landuse in string format
 
     // Create a .csvt file defining the field types of the .wkt file for ogr2ogr conversion to shapefile
     sstream_csvt << "Integer,";
@@ -1760,7 +1769,8 @@ int Grid::saveSubcatchmentPolygon(std::string path)
     sstream_csvt << "Real,";
     sstream_csvt << "Real,";
     sstream_csvt << "Real,";
-    sstream_csvt << "Integer";
+    sstream_csvt << "Integer,";
+    sstream_csvt << "String";
 
 
     // Write polygon vertex coordinates.
@@ -1803,6 +1813,7 @@ int Grid::saveSubcatchmentPolygon(std::string path)
             sstream <<  ";" << cells[i].HydCon;
             sstream <<  ";" << cells[i].IMDmax;
             sstream <<  ";" << cells[i].isSink;
+            sstream <<  ";" << cells[i].tag;
 
             polyId++;
         }
@@ -1921,8 +1932,11 @@ void Grid::saveNetworkRouting(std::string path, Table &condTable)
 }
 // TJN 8 Dec 2017 END
 
-void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &temperatureTable, Table &inflowsTable, Table &timeseriesTable, Table &reportTable,
-                         Table &snowpacksTable, Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path)
+void Grid::saveSWMM5File(Table &headerTable, Table &catchPropTable, Table &evaporationTable, Table &temperatureTable,
+                         Table &inflowsTable, Table &timeseriesTable, Table &reportTable, Table &snowpacksTable,
+                         Table &raingagesTable, Table &symbolsTable, Table &juncTable, Table &outfallsTable,
+                         Table &condTable, Table &pumpsTable, Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable,
+                         Table &lossesTable, Table &storageTable, Table &xsectionTable, std::string path)
 {
     std::stringstream sstream;
     sstream << std::fixed;
@@ -2200,6 +2214,17 @@ void Grid::saveSWMM5File(Table &headerTable, Table &evaporationTable, Table &tem
 
     // Write tags.
     sstream << "\n[TAGS]";
+    if (catchPropTable.nCols > 12)
+    {
+        for (int i = 0; i < nRows * nCols; i++)
+        {
+            if (cells[i].landuse != LANDUSE_NONE)
+            {
+                sstream << "\nSubcatch   " << cells[i].name ;
+                sstream << "   " << cells[i].tag;
+            }
+        }
+    }
     sstream << "\n";
 
     // Write map settings.

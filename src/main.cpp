@@ -312,11 +312,11 @@ int main (int argc, char* cArgv[])
 
             // Create the SWMM5 file.
             std::cout << "\n\nCreating the SWMM5 model input file:";
-            grid.saveSWMM5File(headerTable, evaporationTable, temperatureTable, inflowsTable,
-                               timeseriesTable, reportTable, snowpacksTable, raingagesTable,
-                               symbolsTable, juncTable, outfallsTable, condTable, pumpsTable,
-                               pumpCurvesTable, dwfTable, patternsTable, lossesTable, storageTable,
-                               xsectionTable, cArgv[24]);
+            grid.saveSWMM5File(headerTable, catchPropTable, evaporationTable, temperatureTable,
+                               inflowsTable, timeseriesTable, reportTable, snowpacksTable,
+                               raingagesTable, symbolsTable, juncTable, outfallsTable, condTable,
+                               pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable,
+                               storageTable, xsectionTable, cArgv[24]);
 
             // Print report.
             std::cout << "\n\nReport:";
