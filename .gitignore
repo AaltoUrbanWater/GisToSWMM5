@@ -36,6 +36,8 @@ obj/
 # Temporary files
 *~
 *.save
+*.bak
+*.aux.xml
 
 # GisToSWMM state information files
 *.layout
