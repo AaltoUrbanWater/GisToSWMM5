@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# This is an example script to run ExtractDataSets.py 
-
-# $ ./ExtractDataSets.py [KEY STRING] [PARAMETER] [PATH(S) TO *.rpt FILE(S)] [PATH TO OUTPUT FILE AS *.csv]
-# Allowed parameters are: 'flow', 'velocity', 'depth', or 'capacity'"
-
-
-
-../utils/ExtractLinkData.py "<<< Link c96 >>>" "flow" SWMM5.rpt /out/SWMM_timeseries.csv
