@@ -126,7 +126,7 @@ Folder 'utils' contains utility programs for various tasks:
 
 
 The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard packages:
-- pandas (ExtractDataSets.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
+- pandas (ExtractLinkData.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
 - geopandas (inp2gis.py, rpt2gis.py, adap2shp.py)
 - shapely (inp2gis.py, rpt2gis.py)
 - rasterio (adap2shp.py)
