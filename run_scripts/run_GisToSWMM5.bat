@@ -1,31 +1,31 @@
 @echo off
-REM This is an example script to run GisToSWMM on Windows
+REM This is an example script to run GisToSWMM5 in adaptive mode on Windows
 
-..\GisToSWMM5\bin\GisToSWMM5.exe ^
-..\data\raster_dem.asc ^
-..\data\raster_flowdir.asc ^
-..\data\raster_landuse.asc ^
-..\data\table_catchment_props.csv ^
-..\data\table_junctions.csv ^
-..\data\table_conduits.csv ^
-..\data\table_outfalls.csv ^
-..\data\table_header.csv ^
-..\data\table_evaporation.csv ^
-..\data\table_temperature.csv ^
-..\data\table_snowpacks.csv ^
-..\data\table_raingages.csv ^
-..\data\table_inflows.csv ^
-..\data\table_timeseries.csv ^
-..\data\table_pumps.csv ^
-..\data\table_pumpcurves.csv ^
-..\data\table_storage.csv ^
-..\data\table_dwf.csv ^
-..\data\table_patterns.csv ^
-..\data\table_losses.csv ^
-..\data\table_xsections.csv ^
-..\data\table_report.csv ^
-..\data\table_symbols.csv ^
-..\out\demo_catchment ^
+..\bin\GisToSWMM5.exe ^
+..\demo_catchment\data\raster_dem.asc ^
+..\demo_catchment\data\raster_flowdir.asc ^
+..\demo_catchment\data\raster_landuse.asc ^
+..\demo_catchment\data\table_catchment_props.csv ^
+..\demo_catchment\data\table_junctions.csv ^
+..\demo_catchment\data\table_conduits.csv ^
+..\demo_catchment\data\table_outfalls.csv ^
+..\demo_catchment\data\table_header.csv ^
+..\demo_catchment\data\table_evaporation.csv ^
+..\demo_catchment\data\table_temperature.csv ^
+..\demo_catchment\data\table_snowpacks.csv ^
+..\demo_catchment\data\table_raingages.csv ^
+..\demo_catchment\data\table_inflows.csv ^
+..\demo_catchment\data\table_timeseries.csv ^
+..\demo_catchment\data\table_pumps.csv ^
+..\demo_catchment\data\table_pumpcurves.csv ^
+..\demo_catchment\data\table_storage.csv ^
+..\demo_catchment\data\table_dwf.csv ^
+..\demo_catchment\data\table_patterns.csv ^
+..\demo_catchment\data\table_losses.csv ^
+..\demo_catchment\data\table_xsections.csv ^
+..\demo_catchment\data\table_report.csv ^
+..\demo_catchment\data\table_symbols.csv ^
+..\demo_catchment\out\SWMM_in\demo_catchment_adap ^
 1
 
 REM Wait for user input before closing terminal
