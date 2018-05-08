@@ -2,9 +2,22 @@
 # This is an example script to run ExtractSubcatchmentResults.py and
 # adap2shp.py in order to produce a shapefile of SWMM subcatchment 
 # simulation results. 
+# Syntax:
+# 	$ ./ExtractSubcatchmentResults.py [INFILE.wkt] [INFILE.rpt] [OUTFILE.wkt]
+# 	$ ./adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'epsg:XXXX'
 
-# $ ./ExtractSubcatchmentResults.py [INFILE.wkt] [INFILE.rpt] [OUTFILE.wkt]
-../utils/ExtractSubcatchmentResults.py ../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt ../demo_catchment/out/SWMM_out/demo_catchment_adap.rpt ../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt
 
-# $ ./adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'epsg:XXXX'
-../utils/ExtractSubcatchmentResults.py ../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc ../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt ../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.shp 'epsg:3879'
+# Example of running ExtractSubcatchmentResults.py
+# '\' is used only to split long lines here
+../utils/ExtractSubcatchmentResults.py \
+../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt \
+../demo_catchment/out/SWMM_out/demo_catchment_adap.rpt \
+../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt
+
+# Example of running adap2shp.py
+# '\' is used only to split long lines here
+../utils/adap2shp.py \
+../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc \
+../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt \
+../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.shp \
+'epsg:3879'
