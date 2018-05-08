@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This is an example script to run ExtractLinkData.py 
+# Syntax:
+# 	$ ./ExtractLinkData.py [KEY STRING] [PARAMETER] [PATH(S) TO *.rpt FILE(S)] [PATH TO OUTPUT FILE AS *.csv]
+# Allowed parameters are: 'flow', 'velocity', 'depth', or 'capacity'"
+
+# Example of running ExtractLinkData.py
+# '\' is used only to split long lines here
+../utils/ExtractLinkData.py "<<< Link c96 >>>" "flow" \
+../demo_catchment/out/SWMM_out/demo_catchment_adap.rpt \
+../demo_catchment/out/SWMM_out/demo_catchment_rect.rpt \
+../demo_catchment/out/SWMM_results/flow_timeseries.csv
