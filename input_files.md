@@ -102,21 +102,21 @@ Catchment properties table defines the properties of each GisToSWMM5 landuse cla
 File format is _.csv_ where each row defines the properties of one landuse type.  
 The file must have a header row with the following attributes that are defined on following rows for each landuse type.
 
-| Attribute |              |
-| :--------:|:-------------|
-| id        | Landuse code (see the Landuse table) ) |
-| imperv    | Share of impervious areas (%)|
-| dst_imp   | Depression storage of impervious areas (mm)  |
-| n_imper   | Roughness coefficient (Manning's n) of impervious areas |
-| dst_per   | Depression storage of pervious areas (mm) |
-| n_perv    | Roughness coefficient (Manning's n) of pervious areas |
-| percz_i   | Share of impervious areas without depression storage (%) |
-| rain_ga   | Name of the rain gauge for this land-use class|
-| conduct   | Green-Ampt infiltration model soil saturated hydraulic conductivity (mm/h) |
-| initdef   | Green-Ampt infiltration model fraction of soil volume that is initially dry (-) |
-| suction   | Green-Ampt infiltration model average soil capillary suction (mm) |
-| Snowpacks | Name for the snow model used for the land use class |
-| [Tag]     | [Optional tag for the landuse type] |
+| Attribute |              | Notes |
+| :--------:|:-------------|-------|
+| id        | Landuse code (see the Landuse table) ) ||
+| imperv    | Share of impervious areas (%)||
+| dst_imp   | Depression storage of impervious areas (mm)  ||
+| n_imper   | Roughness coefficient (Manning's n) of impervious areas ||
+| dst_per   | Depression storage of pervious areas (mm) ||
+| n_perv    | Roughness coefficient (Manning's n) of pervious areas ||
+| percz_i   | Share of impervious areas without depression storage (%) ||
+| rain_ga   | Name of the rain gauge for this land-use class||
+| conduct   | Green-Ampt infiltration model soil saturated hydraulic conductivity (mm/h) ||
+| initdef   | Green-Ampt infiltration model fraction of soil volume that is initially dry (-) ||
+| suction   | Green-Ampt infiltration model average soil capillary suction (mm) ||
+| Snowpacks | Name for the snow model used for the land use class ||
+| [Tag]     | [Optional tag for the landuse type] | Leave blank if not used ||
 
 ## Junctions table
 Junctions table defines the junction nodes of the drainage system, i.e., the points where channels and pipes connect together. For sewer systems they can be e.g. manholes/wells or connection fittings.  
