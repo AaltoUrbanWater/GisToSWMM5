@@ -93,6 +93,7 @@ following attributes:
 "Ksat_mmhr;";&emsp;&emsp;&emsp;&ensp;// Soil saturated hydraulic conductivity (mm/hr)  
 "IMDmax;";&emsp;&emsp;&emsp;&ensp;// Difference between soil porosity and initial moisture content (a fraction)  
 "isSink";&emsp;&emsp;&emsp;&ensp;// An indicator showing if the cell is a local sink/pit in the catchment  
+"Tag";&emsp;&emsp;&emsp;&ensp;// An optional string description for the landuse class 
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routing.wkt" and the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routed.wkt" files have the following attributes:  
 "id;";  
