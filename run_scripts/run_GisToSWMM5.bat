@@ -17,7 +17,7 @@ REM This is an example script to run GisToSWMM5 in adaptive mode on Windows
 ..\demo_catchment\data\table_inflows.csv ^
 ..\demo_catchment\data\table_timeseries.csv ^
 ..\demo_catchment\data\table_pumps.csv ^
-..\demo_catchment\data\table_pumpcurves.csv ^
+..\demo_catchment\data\table_curves.csv ^
 ..\demo_catchment\data\table_storage.csv ^
 ..\demo_catchment\data\table_dwf.csv ^
 ..\demo_catchment\data\table_patterns.csv ^
