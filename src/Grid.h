@@ -66,6 +66,13 @@
 #endif
 // TJN 13 Dec 2017 END
 
+// TJN 9 May 2018 START
+#ifndef _NUMERIC_H_
+#define _NUMERIC_H_
+#include <numeric>
+#endif
+// TJN 9 May 2018 END
+
 
 class Grid
 {
