@@ -108,7 +108,7 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                 elif row.isspace():  # Stop looking after empty line
                     break
                 else:  # Save data
-                    tags_data.append(row.split(None, 2))
+                    tags_data.append(row.rstrip().split(None, 2))
 
 # Create dataframes from data
 subcatchment_col_names = ['Name',
