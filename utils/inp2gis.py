@@ -9,6 +9,7 @@ Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
 
 import os
 import sys
+import numpy as np
 import pandas as pd
 import geopandas as gpd
 import shapely.wkt
@@ -133,8 +134,14 @@ subcatchment_df[['Area',
                                                 'Slope',
                                                 'Clength']].astype(float)
 
-subcatchment_df = subcatchment_df.assign(
-                    landuse=pd.DataFrame(landuse_data).values)
+# Check if landuse was given
+if landuse_data:
+    # Use given landuse data
+    subcatchment_df = subcatchment_df.assign(
+                        landuse=pd.DataFrame(landuse_data).values)
+else:
+    # Landuse was not given, save NaN values instead
+    subcatchment_df = subcatchment_df.assign(landuse=np.nan)
 
 subarea_col_names = ['Name',
                      'Nimp',
