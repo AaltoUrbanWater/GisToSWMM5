@@ -236,8 +236,6 @@ if tags_data:
     subcatchment_gdf = subcatchment_gdf.merge(tags_df,
                                               on='Name', how='left')
 
-print(subcatchment_gdf)
-
 # Create WKT geometries from junction point information
 coordinate_df['centroid'] = coordinate_df['X'].map(str) + ' ' + \
                       coordinate_df['Y'].map(str)
