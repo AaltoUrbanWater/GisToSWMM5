@@ -226,11 +226,17 @@ subcatchment_gdf['centroid'] = subcatchment_gdf['geometry'].centroid.map(
                                lambda p: p.y).map(str)
 
 # Merge subcatchment dataframes
-subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='Name')
-subcatchment_gdf = subcatchment_gdf.merge(subarea_df, on='Name')
-subcatchment_gdf = subcatchment_gdf.merge(infiltration_df, on='Name')
+subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df,
+                                          on='Name', how='right')
+subcatchment_gdf = subcatchment_gdf.merge(subarea_df,
+                                          on='Name', how='left')
+subcatchment_gdf = subcatchment_gdf.merge(infiltration_df,
+                                          on='Name', how='left')
 if tags_data:
-    subcatchment_gdf = subcatchment_gdf.merge(tags_df, on='Name')
+    subcatchment_gdf = subcatchment_gdf.merge(tags_df,
+                                              on='Name', how='left')
+
+print(subcatchment_gdf)
 
 # Create WKT geometries from junction point information
 coordinate_df['centroid'] = coordinate_df['X'].map(str) + ' ' + \
