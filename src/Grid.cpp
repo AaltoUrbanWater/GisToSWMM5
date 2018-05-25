@@ -2353,17 +2353,12 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
             numOfActiveCells += 1;
 
             // TJN 19 Dec 2017: Add check for acceptable elevation
-            if (cells[i].elevation > cells[i].elevNoData)
-            {
-                elevationAverage += cells[i].elevation;
-                numOfElevCells++;
-            }
-
-            // TJN 19 Dec 2017: Add check for acceptable elevation
             // TJN 8 March 2018  Replace with new landuse classification
+            // TJN 25 May 2018: Add check for non-roof landuse for average elevation calculation
 //            if ((cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED) && cells[i].elevation > cells[i].elevNoData)
             if ((cells[i].landuse >= BUILT_AREA) && cells[i].elevation > cells[i].elevNoData)
             {
+                elevationAverage += cells[i].elevation;
                 slopeAverage += cells[i].slope;
                 numOfActiveCellsNoRoofs += 1;
             }
@@ -2387,13 +2382,9 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
         area += areasInlandUseClass[i];
     }
 
-    if (numOfActiveCells > 0)
-    {
-        elevationAverage /= (double)(numOfElevCells);     // TJN 19 Dec 2017: numOfActiveCells-> numOfElevCells
-    }
-
     if (numOfActiveCellsNoRoofs > 0)
     {
+        elevationAverage /= (double)(numOfActiveCellsNoRoofs);     // TJN 19 Dec 2017: numOfActiveCells-> numOfElevCells; TJN 25 May 2018: numOfElevCells -> numOfActiveCellsNoRoofs
         slopeAverage /= (double)(numOfActiveCellsNoRoofs);
     }
 
