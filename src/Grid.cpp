@@ -2344,7 +2344,7 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
 
     int numOfActiveCells = 0;
     int numOfElevCells = 0;     // TJN 19 Dec 2017
-    int numOfActiveCellsNoRoofs = 0;
+    double areaOfActiveCellsNoRoofs = 0.0;  // TJN 28 May 2018
 
     for (auto i : routedIDs)
     {
@@ -2355,12 +2355,13 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
             // TJN 19 Dec 2017: Add check for acceptable elevation
             // TJN 8 March 2018  Replace with new landuse classification
             // TJN 25 May 2018: Add check for non-roof landuse for average elevation calculation
+            // TJN 28 May 2018: Use area weighed average for mean slope and elevation calculation
 //            if ((cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED) && cells[i].elevation > cells[i].elevNoData)
             if ((cells[i].landuse >= BUILT_AREA) && cells[i].elevation > cells[i].elevNoData)
             {
-                elevationAverage += cells[i].elevation;
-                slopeAverage += cells[i].slope;
-                numOfActiveCellsNoRoofs += 1;
+                elevationAverage += cells[i].elevation * cells[i].area;
+                slopeAverage += cells[i].slope * cells[i].area;
+                areaOfActiveCellsNoRoofs += cells[i].area;
             }
 
             for (int j = 0; j < (int)landUseClassIds.size(); j++)
@@ -2382,10 +2383,11 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
         area += areasInlandUseClass[i];
     }
 
-    if (numOfActiveCellsNoRoofs > 0)
+    if (areaOfActiveCellsNoRoofs > 0.0)
     {
-        elevationAverage /= (double)(numOfActiveCellsNoRoofs);     // TJN 19 Dec 2017: numOfActiveCells-> numOfElevCells; TJN 25 May 2018: numOfElevCells -> numOfActiveCellsNoRoofs
-        slopeAverage /= (double)(numOfActiveCellsNoRoofs);
+        // TJN 28 May 2018: Use area weighed average for mean slope and elevation calculation
+        elevationAverage /= areaOfActiveCellsNoRoofs;
+        slopeAverage /= areaOfActiveCellsNoRoofs;
     }
 
     std::cout << "\n-> Total number of cells: " << nCols * nRows;
