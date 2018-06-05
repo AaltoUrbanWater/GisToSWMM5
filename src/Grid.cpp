@@ -642,8 +642,9 @@ void Grid::routeCellsReg()
 //        if (cells[i].neighCellIndices[flowDirection] != -1 && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_CONNECTED
 //                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_UNCONNECTED
 //                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_NONE)
-        if (cells[i].neighCellIndices[flowDirection] != -1 && cells[ cells[i].neighCellIndices[flowDirection] ].landuse >= BUILT_AREA)
-
+        if (flowDirection != -1 &&
+            cells[i].neighCellIndices[flowDirection] != -1 &&
+            cells[ cells[i].neighCellIndices[flowDirection] ].landuse >= BUILT_AREA)
         {
             neighCellIndex = cells[i].neighCellIndices[flowDirection];
         }

@@ -18,6 +18,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\Cell.cpp" />
+    <ClCompile Include="..\..\..\src\FileIO.cpp" />
+    <ClCompile Include="..\..\..\src\Grid.cpp" />
+    <ClCompile Include="..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\src\Raster.cpp" />
+    <ClCompile Include="..\..\..\src\Table.cpp" />
+    <ClCompile Include="..\..\..\src\Vertex.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\Cell.h" />
+    <ClInclude Include="..\..\..\src\Definitions.h" />
+    <ClInclude Include="..\..\..\src\FileIO.h" />
+    <ClInclude Include="..\..\..\src\Grid.h" />
+    <ClInclude Include="..\..\..\src\main.h" />
+    <ClInclude Include="..\..\..\src\Raster.h" />
+    <ClInclude Include="..\..\..\src\Table.h" />
+    <ClInclude Include="..\..\..\src\Vertex.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B4DCDBE2-6D6A-4D14-AACA-74CEA976F47C}</ProjectGuid>
@@ -114,25 +133,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Cell.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Definitions.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\FileIO.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Grid.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\main.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Raster.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Table.h" />
-    <ClInclude Include="..\..\..\GisToSWMM5\src\Vertex.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\GisToSWMM5\src\Cell.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\FileIO.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\Grid.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\main.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\Raster.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\Table.cpp" />
-    <ClCompile Include="..\..\..\GisToSWMM5\src\Vertex.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
