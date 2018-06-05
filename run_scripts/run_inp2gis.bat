@@ -10,9 +10,9 @@ call activate
 
 REM Example of running inp2gis.py
 REM '^' is used only to split long lines here
-python "../utils/inp2gis.py" ^
-"../demo_catchment/out/SWMM_in/demo_catchment_rect.inp" ^
-"EPSG:3879"
+python "../utils/inp2gis.py"^
+ "../demo_catchment/out/SWMM_in/demo_catchment_rect.inp"^
+ "EPSG:3879"
 
 REM Deactivate conda environment
 call deactivate
