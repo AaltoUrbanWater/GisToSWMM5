@@ -9,10 +9,10 @@ call activate
 
 REM Example of running ExtractLinkData.py
 REM '^' is used only to split long lines here
-python "..\utils\run_ExtractLinkData.py" "<<< Link c96 >>>" "flow" ^
-"..\demo_catchment\out\SWMM_out\demo_catchment_adap.rpt" ^
-"..\demo_catchment\out\SWMM_out\demo_catchment_rect.rpt" ^
-"..\demo_catchment\out\SWMM_results\flow_timeseries.csv"
+python "..\utils\ExtractLinkData.py" "<<< Link c96 >>>" "flow"^
+ "..\demo_catchment\out\SWMM_out\demo_catchment_adap.rpt"^
+ "..\demo_catchment\out\SWMM_out\demo_catchment_rect.rpt"^
+ "..\demo_catchment\out\SWMM_results\flow_timeseries.csv"
 
 REM Deactivate conda environment
 call deactivate
