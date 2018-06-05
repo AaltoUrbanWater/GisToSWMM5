@@ -154,6 +154,7 @@ In case 'activate' command for Miniconda(/Anaconda) does not work from command l
 Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
 - [data](demo_catchment/data) contains the necessary files required to run GisToSWMM5.
 - [GIS](demo_catchment/GIS) contains files corresponding to [data](demo_catchment/data) files in a (more) GIS-friendly format alongside a QGIS-project file with the files already imported.
-- [run_scripts](demo_catchment/run_scripts) contains example scripts to run GisToSWMM5 using the given data, and to collect the subcatchment runoff results and the result timeseries from the SWMM output files.
-- [out](demo_catchment/out) contains the output files of GisToSWMM5 in [SWMM_in](demo_catchment/out/SWMM_in), the output files of SWMM in [SWMM_out](demo_catchment/out/SWMM_out), and finally the SWMM result time series in [SWMM_results](demo_catchment/out/SWMM_results).
+- [out](demo_catchment/out) contains the output files of GisToSWMM5 in [SWMM_in](demo_catchment/out/SWMM_in), the output files of SWMM in [SWMM_out](demo_catchment/out/SWMM_out), and finally the SWMM result time series and spatial data in [SWMM_results](demo_catchment/out/SWMM_results).
 - [QGIS_styles](demo_catchment/QGIS_styles) contains QGIS style definition files that may be helpful in visualizing the GisToSWMM5 input and output files in QGIS.
+
+The example scripts in folder [run_scripts](run_scripts) can be used to run GisToSWMM5 using the given example data, and to collect the subcatchment runoff results and the result timeseries from the SWMM output files.
