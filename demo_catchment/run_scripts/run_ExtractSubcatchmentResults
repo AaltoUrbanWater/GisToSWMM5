@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# This is an example script to run ExtractSubcatchmentResults.py
-
-# $ ./ExtractSubcatchmentResults.py [INFILE.wkt] [INFILE.rpt] [OUTFILE.wkt]
-../../utils/ExtractSubcatchmentResults.py ../out/SWMM_in/demo_catchment_rect_subcatchments_1x1m.wkt ../out/SWMM_out/demo_catchment_rect.rpt ../out/SWMM_results/demo_catchment_rect_subcatchment_runoffs.wkt
-../../utils/ExtractSubcatchmentResults.py ../out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt ../out/SWMM_out/demo_catchment_adap.rpt ../out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt

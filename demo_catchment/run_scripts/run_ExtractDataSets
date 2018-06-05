@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# This is an example script to run ExtractDataSets.py
-
-# $ ./ExtractDataSets.py [KEY STRING] [PATH(S) TO *.rpt FILE(S)] [PATH TO OUTPUT FILE AS *.csv]
-
-../../utils/ExtractDataSets.py "<<< Link c5 >>>" ../out/SWMM_out/demo_catchment_rect.rpt ../out/SWMM_out/demo_catchment_adap.rpt ../out/SWMM_results/SWMM_timeseries.csv

@@ -12,12 +12,12 @@
 ../utils/ExtractSubcatchmentResults.py \
 ../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt \
 ../demo_catchment/out/SWMM_out/demo_catchment_adap.rpt \
-../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt
+../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_results.wkt
 
 # Example of running adap2shp.py
 # '\' is used only to split long lines here
 ../utils/adap2shp.py \
 ../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc \
-../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.wkt \
-../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_runoffs.shp \
+../demo_catchment/out/SWMM_results/demo_catchment_adap_subcatchment_results.wkt \
+../demo_catchment/out/SWMM_results/shp/demo_catchment_adap_subcatchment_results.shp \
 'epsg:3879'

@@ -4,9 +4,6 @@
     <edittype widgetv2type="TextEdit" name="id">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
-    <edittype widgetv2type="TextEdit" name="demo_catch">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
     <edittype widgetv2type="TextEdit" name="wkt">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
@@ -55,36 +52,23 @@
     <edittype widgetv2type="TextEdit" name="isSink">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
+    <edittype widgetv2type="TextEdit" name="Tag">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
   </edittypes>
   <renderer-v2 attr="landuse" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
     <categories>
-      <category render="true" symbol="0" value="10" label="Rock outcrop"/>
-      <category render="true" symbol="1" value="20" label="Rooftop, connected"/>
-      <category render="true" symbol="2" value="21" label="Rooftop, unconnected"/>
-      <category render="true" symbol="3" value="30" label="Sand and gravel"/>
-      <category render="true" symbol="4" value="40" label="Asphalt"/>
-      <category render="true" symbol="5" value="41" label="Asphalt"/>
-      <category render="true" symbol="6" value="50" label="Stone paver"/>
-      <category render="true" symbol="7" value="60" label="Vegetation"/>
-      <category render="true" symbol="8" value="70" label="Water"/>
+      <category render="true" symbol="0" value="10" label="Rooftop, connected"/>
+      <category render="true" symbol="1" value="20" label="Rooftop, unconnected"/>
+      <category render="true" symbol="2" value="30" label="Sand and gravel"/>
+      <category render="true" symbol="3" value="31" label="Asphalt"/>
+      <category render="true" symbol="4" value="32" label="Stone paver"/>
+      <category render="true" symbol="5" value="60" label="Rock outcrop"/>
+      <category render="true" symbol="6" value="61" label="Vegetation"/>
+      <category render="true" symbol="7" value="62" label="Water"/>
     </categories>
     <symbols>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="144,146,176,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="233,122,122,255"/>
@@ -99,7 +83,7 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="233,233,233,255"/>
@@ -114,7 +98,7 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="238,216,166,255"/>
@@ -129,37 +113,22 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="58,58,58,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="solid"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="4">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="58,58,58,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="5">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="58,58,58,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="170,170,170,255"/>
@@ -174,7 +143,22 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="5">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="144,146,176,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="solid"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="198,228,113,255"/>
@@ -189,7 +173,7 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="8">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="164,235,255,255"/>
@@ -397,6 +381,7 @@
   <SingleCategoryDiagramRenderer diagramType="Histogram" sizeLegend="0" attributeLegend="1">
     <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" sizeScale="0,0,0,0,0,0" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" lineSizeScale="0,0,0,0,0,0" sizeType="MM" lineSizeType="MM" minScaleDenominator="inf">
       <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
+      <attribute field="" color="#000000" label=""/>
     </DiagramCategory>
     <symbol alpha="1" clip_to_extent="1" type="marker" name="sizeSymbol">
       <layer pass="0" class="SimpleMarker" locked="0">
@@ -425,32 +410,31 @@
   <annotationform>.</annotationform>
   <aliases>
     <alias field="id" index="0" name=""/>
-    <alias field="demo_catch" index="1" name=""/>
-    <alias field="wkt" index="2" name=""/>
-    <alias field="name" index="3" name=""/>
-    <alias field="outlet" index="4" name=""/>
-    <alias field="area_m2" index="5" name=""/>
-    <alias field="slope_pct" index="6" name=""/>
-    <alias field="elevation" index="7" name=""/>
-    <alias field="landuse" index="8" name=""/>
-    <alias field="imp_pct" index="9" name=""/>
-    <alias field="n_imp" index="10" name=""/>
-    <alias field="n_per" index="11" name=""/>
-    <alias field="S_imp_mm" index="12" name=""/>
-    <alias field="S_per_mm" index="13" name=""/>
-    <alias field="suct_mm" index="14" name=""/>
-    <alias field="Ksat_mmhr" index="15" name=""/>
-    <alias field="IMDmax" index="16" name=""/>
-    <alias field="isSink" index="17" name=""/>
+    <alias field="wkt" index="1" name=""/>
+    <alias field="name" index="2" name=""/>
+    <alias field="outlet" index="3" name=""/>
+    <alias field="area_m2" index="4" name=""/>
+    <alias field="slope_pct" index="5" name=""/>
+    <alias field="elevation" index="6" name=""/>
+    <alias field="landuse" index="7" name=""/>
+    <alias field="imp_pct" index="8" name=""/>
+    <alias field="n_imp" index="9" name=""/>
+    <alias field="n_per" index="10" name=""/>
+    <alias field="S_imp_mm" index="11" name=""/>
+    <alias field="S_per_mm" index="12" name=""/>
+    <alias field="suct_mm" index="13" name=""/>
+    <alias field="Ksat_mmhr" index="14" name=""/>
+    <alias field="IMDmax" index="15" name=""/>
+    <alias field="isSink" index="16" name=""/>
+    <alias field="Tag" index="17" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <attributeactions default="-1"/>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id&quot;" sortOrder="0">
     <columns>
       <column width="-1" hidden="0" type="field" name="id"/>
       <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" hidden="0" type="field" name="demo_catch"/>
       <column width="-1" hidden="0" type="field" name="wkt"/>
       <column width="-1" hidden="0" type="field" name="name"/>
       <column width="-1" hidden="0" type="field" name="outlet"/>
@@ -467,6 +451,7 @@
       <column width="-1" hidden="0" type="field" name="Ksat_mmhr"/>
       <column width="-1" hidden="0" type="field" name="IMDmax"/>
       <column width="-1" hidden="0" type="field" name="isSink"/>
+      <column width="-1" hidden="0" type="field" name="Tag"/>
     </columns>
   </attributetableconfig>
   <editform>.</editform>
@@ -499,7 +484,6 @@ def my_form_open(dialog, layer, feature):
   </conditionalstyles>
   <defaults>
     <default field="id" expression=""/>
-    <default field="demo_catch" expression=""/>
     <default field="wkt" expression=""/>
     <default field="name" expression=""/>
     <default field="outlet" expression=""/>
@@ -516,6 +500,7 @@ def my_form_open(dialog, layer, feature):
     <default field="Ksat_mmhr" expression=""/>
     <default field="IMDmax" expression=""/>
     <default field="isSink" expression=""/>
+    <default field="Tag" expression=""/>
   </defaults>
   <previewExpression>COALESCE( "id", '&lt;NULL>' )</previewExpression>
   <layerGeometryType>2</layerGeometryType>
