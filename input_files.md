@@ -42,23 +42,23 @@ NODATA_value   [fff]
 
 
 ## Flow direction raster
-Flow direction raster defines the flow directions across the catchment in the same grid as in the landuse raster. Flow directions are defined according to D8-method such that each cell can flow into one of the 8 neighbouring cells. Directions are represented by integers and are defined as such for cell _X_:  
+Flow direction raster defines the flow directions across the catchment in the same grid as in the landuse raster. Flow directions are defined according to D8-method such that each cell can flow into one of the 8 neighbouring cells. Directions are represented by integers and are defined as such for cell X:  
 
 <table align="center">
     <tr>
-        <td align="center"> ```3``` </td>
-        <td align="center"> ```2``` </td>
-        <td align="center"> ```1``` </td>
+        <td align="center"> 3 </td>
+        <td align="center"> 2 </td>
+        <td align="center"> 1 </td>
     </tr>
     <tr>
-        <td align="center"> ```4``` </td>
-        <td align="center"> _X_ </td>
-        <td align="center"> ```8``` </td>
+        <td align="center"> 4 </td>
+        <td align="center"> X </td>
+        <td align="center"> 8 </td>
     </tr>
     <tr>
-        <td align="center"> ```5``` </td>
-        <td align="center"> ```6``` </td>
-        <td align="center"> ```7``` </td>
+        <td align="center"> 5 </td>
+        <td align="center"> 6 </td>
+        <td align="center"> 7 </td>
     </tr>
 </table>
 
