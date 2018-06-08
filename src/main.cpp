@@ -4,9 +4,9 @@
 #endif
 
 // Number of command line parameters.
-const int regGridParams = 25;       // TJN 18 May 2017 25 -> 24; TJN 29 Sep 2017 24 -> 25
-const int adapGridParams = 26;      // TJN 21 Nov 2017: Enable new adaptive grid
-const int adapGridParamsOld = 27;      // TJN 18 May 2017 27 -> 26; TJN 29 Sep 2017 26 -> 27
+const int regGridParams = 25;
+const int adapGridParams = 26;
+const int adapGridParamsOld = 27;
 
 int main (int argc, char* cArgv[])
 {
@@ -38,7 +38,6 @@ int main (int argc, char* cArgv[])
         Raster demRaster;
         int resDem = demRaster.load( cArgv[1] );
 
-        // TJN 29 Sep 2017 START
         // Load the flow direction raster file.
         std::cout << "\n-> Loading flow direction raster";
         Raster flowdirRaster;
@@ -191,7 +190,7 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Setting cell names";
             grid.setCellNames();
 
-            if (gridType == 0)
+            if (gridType == 0)  // NxN or adap grid
             {
                 // Set cell dimensions.
                 std::cout << "\n-> Setting cell dimensions";
@@ -206,13 +205,11 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Setting cell elevations";
             grid.setCellElevations(demRaster);
 
-            if (gridType == 0)
+            if (gridType == 0)  // NxN or adap grid
             {
-                // TJN 29 Sep 2017 START
                 // Set cell flow directions
                 std::cout << "\n-> Setting cell flow directions";
                 grid.setCellFlowdirs(flowdirRaster);
-                // TJN 29 Sep 2017 END
 
                 // Set cell landuse.
                 std::cout << "\n-> Setting cell landuses";
@@ -232,19 +229,16 @@ int main (int argc, char* cArgv[])
             grid.findCellNeighbours();
 
             // Route cells to a neighbour cells. Also update flow width parameter of cells.
-            // TJN 29 Sep 2017 START
-            // Use different routing for regular and adaptive grids
-            if (gridType == 0)
+            if (gridType == 0)  // NxN or adap grid
             {
                 std::cout << "\n-> Routing cells to neighbour cells using flow direction raster and updating flow width parameter";
                 grid.routeCellsReg();
             }
-            else if (gridType == 1)
+            else if (gridType == 1)     // N*(2^a) x N*(2^a) grid where a is the number of subdivisions
             {
                 std::cout << "\n-> Routing cells to neighbour cells and updating flow width parameter";
                 grid.routeCells();
             }
-            // TJN 29 Sep 2017 END
 
             // Compute cell slopes.
             std::cout << "\n-> Computing cell slopes";
@@ -283,7 +277,6 @@ int main (int argc, char* cArgv[])
             std::cout << "\n-> Creating a network routing file for inspection";
             grid.saveNetworkRouting(cArgv[24], condTable);
 
-            // TJN 22 Nov 2017 START
             // Simplify subcatchments based on common landuse and routing
             if (argc == adapGridParams)
             {

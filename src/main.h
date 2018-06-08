@@ -18,9 +18,6 @@
 #include <time.h>
 #endif
 
-// Standard C++ library
-//using namespace std;
-
 #ifndef _DEFINITIONS_H_
 #define _DEFINITIONS_H_
 #include "Definitions.h"

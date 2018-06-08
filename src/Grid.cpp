@@ -44,6 +44,7 @@ int Grid::create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster)
     }
 }
 
+// (Legacy mode of creating N*(2^a) x N*(2^a) grid where a is the number of subdivisions)
 // Create adaptive grid by subdividing cells with the same landuse
 int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster)
 {
@@ -88,7 +89,7 @@ int Grid::create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raste
     }
     else
     {
-        std::cout << "\n-> Error, when using the adaptive discretiztion algorithm ";
+        std::cout << "\n-> Error, when using the adaptive discretization algorithm ";
         std::cout << "check that the maximum cell width is above zero and maximum number of subdivisions ";
         std::cout << "is equal to or above zero.";
 
@@ -256,6 +257,7 @@ void Grid::setCellElevations(Raster &demRaster)
             cells[i].elevNoData = std::stod(demRaster.noDataValue);
         }
     }
+    // (Legacy mode of creating N*(2^a) x N*(2^a) grid where a is the number of subdivisions)
     // Adaptive grid.
     else if (gridType == 1)
     {
@@ -288,7 +290,6 @@ void Grid::setCellElevations(Raster &demRaster)
 }
 
 
-// TJN 29 Sep 2017 START
 void Grid::setCellFlowdirs(Raster &flowdirRaster)
 {
     for (int i = 0; i < nCols * nRows; i++)
@@ -297,7 +298,6 @@ void Grid::setCellFlowdirs(Raster &flowdirRaster)
         cells[i].flowdir = atoi(flowdir.c_str());
     }
 }
-// TJN 29 Sep 2017 END
 
 void Grid::setCellLanduse(Raster &landuseRaster)
 {
@@ -379,8 +379,6 @@ void Grid::findCellNeighbours()
     // Regular grid.
     if (gridType == 0)
     {
-        //std::cout << "\n-> Grid type " << gridType;
-
         for (int j = 0; j < nRows; j++)
         {
             for (int i = 0; i < nCols; i++)
@@ -389,9 +387,8 @@ void Grid::findCellNeighbours()
                 cells[currentCell].neighCellIndices.assign(8, -1);
                 cells[currentCell].distanceToNeighbours.assign(8, 0.0 );
 
-                // TJN 2 Oct 2017 START
-                // Change routing of cells so that flow directions go from (1-8
-                // [here 0-8]) with 0 pointing Northeast and numbers increasing
+                // Change routing of cells so that flow directions go from 0-7
+                // with 0 pointing Northeast and numbers increasing
                 // in counterclockwise direction
                 if (j < nRows - 1)
                 {
@@ -432,10 +429,10 @@ void Grid::findCellNeighbours()
                 {
                     cells[currentCell].neighCellIndices[0] = currentCell + nCols + 1;
                 }
-                // TJN 2 Oct 2017 END
             }
         }
     }
+    // (Legacy mode of creating N*(2^a) x N*(2^a) grid where a is the number of subdivisions)
     // Adaptive grid. This section could be optimized.
     else if (gridType == 1)
     {
@@ -511,17 +508,17 @@ void Grid::findCellNeighbours()
     }
 }
 
-// TJN 29 Sep 2017 START
+// (Legacy mode of creating N*(2^a) x N*(2^a) grid where a is the number of subdivisions)
 // Route cells in old adaptive grid
 void Grid::routeCells()
 {
     for (int i = 0; i < nCols * nRows; i++)
     {
-        double slope = 0.0;             // TJN 20170908 Use slope instead of elevation to route flow
-        double maxSlope = -1.0;         // TJN 20170908 Use slope instead of elevation to route flow
+        double slope = 0.0;
+        double maxSlope = -1.0;
         double elevation = cells[i].elevation;
         int neighCellIndex = -1;
-        cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
+        cells[i].flowWidth = cells[i].cellSize;
         int flowDirection = -1;
 
         // Compute distances between neighbour cells.
@@ -548,33 +545,18 @@ void Grid::routeCells()
         // Find outlet.
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
-            // TJN 8 March 2018 Replace with new landuse classification
-//            if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
-//                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_UNCONNECTED
-//                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_NONE)
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse >= BUILT_AREA)
             {
-                // TJN 20170908 START
-                // Bug fix: Use slope instead of elevation to route flow
                 double distance = cells[i].distanceToNeighbours[k];
                 if (distance > 0.0)
                     slope = fabs((cells[i].elevation - cells[ cells[i].neighCellIndices[k] ].elevation) / distance);
 
                 if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation && slope > maxSlope)
                 {
-//                    elevation = cells[ cells[i].neighCellIndices[k] ].elevation;  // TJN 29 Sep 2017 Bug fix
                     neighCellIndex = cells[i].neighCellIndices[k];
                     flowDirection = k;
                     maxSlope = slope;
                 }
-
-//                if (cells[ cells[i].neighCellIndices[k] ].elevation < elevation)
-//                {
-//                    elevation = cells[ cells[i].neighCellIndices[k] ].elevation;
-//                    neighCellIndex = cells[i].neighCellIndices[k];
-//                    flowDirection = k;
-//                }
-                // TJN 20170908 END
             }
         }
 
@@ -582,37 +564,24 @@ void Grid::routeCells()
         if (neighCellIndex != -1)
         {
             cells[i].outlet = cells[neighCellIndex].name;
-            // TJN 18 May 2017 START
             cells[i].outletCoordX = cells[neighCellIndex].centerCoordX;
             cells[i].outletCoordY = cells[neighCellIndex].centerCoordY;
-            // TJN 18 May 2017 END
 
             if (cells[i].distanceToNeighbours[flowDirection] > 0.0)
             {
                 cells[i].flowWidth = cells[i].area / cells[i].distanceToNeighbours[flowDirection];
             }
-            //else  //Modified 20160909
-            //{
-            //	cells[i].flowWidth = 0.0;
-            //}
-
-            // Update flow width if the flow direction is in a diagonal direction.
-            //if (gridType == 0 && flowDirection != -1 && flowDirection % 2 != 0)
-            //{
-            //	cells[i].flowWidth = cells[i].cellSize / 1.4142135624;
-            //}
-
         }
     }
 }
 
-// Use flow direction raster to route cells instead of DEM raster when grid is regular
+// Use flow direction raster to route cells when using NxN or adap grid
 void Grid::routeCellsReg()
 {
     for (int i = 0; i < nCols * nRows; i++)
     {
         int neighCellIndex = -1;
-        cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
+        cells[i].flowWidth = cells[i].cellSize;
         int flowDirection = -1;
 
         // Compute distances between neighbour cells.
@@ -638,10 +607,6 @@ void Grid::routeCellsReg()
 
         // Find outlet.
         flowDirection = cells[i].flowdir - 1;
-        // TJN 8 March 2018 Replace with new landuse classification
-//        if (cells[i].neighCellIndices[flowDirection] != -1 && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_CONNECTED
-//                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_ROOF_UNCONNECTED
-//                && cells[ cells[i].neighCellIndices[flowDirection] ].landuse != LANDUSE_NONE)
         if (flowDirection != -1 &&
             cells[i].neighCellIndices[flowDirection] != -1 &&
             cells[ cells[i].neighCellIndices[flowDirection] ].landuse >= BUILT_AREA)
@@ -664,7 +629,6 @@ void Grid::routeCellsReg()
         }
     }
 }
-// TJN 29 Sep 2017 END
 
 void Grid::computeCellSlopes()
 {
@@ -673,40 +637,12 @@ void Grid::computeCellSlopes()
         double slope = 0.0;
         int slopeCount = 0;
 
-        //if (cells[i].landuse != LANDUSE_NONE && (int)cells[i].neighCellIndices.size() > 0)
-        //{
-        //	std::cout << "\n-> Cell " << i << " neighbour count: " <<  (int)cells[i].neighCellIndices.size();
-        //}
-
         for (int k = 0; k < (int)cells[i].neighCellIndices.size(); k++)
         {
-            // TJN 8 March 2018 Replace with new landuse classification
-//            if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_CONNECTED
-//                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_ROOF_UNCONNECTED
-//                    && cells[ cells[i].neighCellIndices[k] ].landuse != LANDUSE_NONE)
             if (cells[i].neighCellIndices[k] != -1 && cells[ cells[i].neighCellIndices[k] ].landuse >= BUILT_AREA)
             {
-                // Compute slope between cells.
-                //double distance = 0.0;
-
-                //if (gridType == 0)
-                //{
-                //	distance = cells[i].cellSize;
-                //
-                //	if (k % 2 != 0)
-                //	{
-                //		distance *= 1.4142135624; // approximate of square root of two
-                //	}
-                //}
-                // Compute distance between cells in an adaptive grid.
-                //else if (gridType == 1)
-                //{
-                //	distance = 0.5 * (cells[i].cellSize + cells[ cells[i].neighCellIndices[k] ].cellSize);
-                //}
-
                 double distance = cells[i].distanceToNeighbours[k];
 
-                // TJN 19 Dec 2017: Add check for acceptable elevations
                 if (distance > 0.0 && cells[i].elevation > cells[i].elevNoData && cells[ cells[i].neighCellIndices[k] ].elevation > cells[i].elevNoData)
                 {
                     slope += fabs((cells[i].elevation - cells[ cells[i].neighCellIndices[k] ].elevation) / distance);
@@ -719,7 +655,6 @@ void Grid::computeCellSlopes()
             }
         }
 
-
         // Save the average slope.
         if (slopeCount > 0)
         {
@@ -727,8 +662,6 @@ void Grid::computeCellSlopes()
         }
 
         // Fix slope for the rooftops.
-        // 8 March 2018 Replace with new landuse classification
-//        if (cells[i].landuse == LANDUSE_ROOF_CONNECTED || cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)
         if (cells[i].landuse >=ROOF_CONNECTED && cells[i].landuse < BUILT_AREA)
         {
             cells[i].slope = 0.05;
@@ -743,10 +676,10 @@ void Grid::computeCellSlopes()
 }
 
 
-// TJN 20170908 This relies (implicitly) that the cell connected to junction is a local
+// This relies (implicitly) on the cell connected to junction being a local
 // pit in the DEM, if it is not (and e.g. the next cell is) most of the water flows past
 // the junction...
-// TJN 23 Oct 2017 UPDATE: Using 3x3 area surrounding junctions as the collecting area for water
+// 23 Oct 2017 UPDATE: Using 3x3 area surrounding junctions as the collecting area for water
 void Grid::connectCellsToJunctions(Table &juncTable)
 {
     for (int k = 1; k < juncTable.nRows; k++) // pass the header line
@@ -755,7 +688,7 @@ void Grid::connectCellsToJunctions(Table &juncTable)
         double juncPosY = atof( juncTable.data[k * juncTable.nCols + 1].c_str() );
         int isOpen = atoi( juncTable.data[k * juncTable.nCols + 6].c_str() );
 
-        // Regular grid.
+        // NxN or adap grid
         if (gridType == 0)
         {
             if (juncPosX >= xllCorner && juncPosX < xllCorner + nCols * cellSize
@@ -768,58 +701,48 @@ void Grid::connectCellsToJunctions(Table &juncTable)
 
                     if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
                     {
-                        cells[ col + row * nCols ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
+                        cells[ col + row * nCols ].outletID =  col + row * nCols;   // Set outletID to the outletID of junction cell
                         cells[ col + row * nCols ].outlet = juncTable.data[k * juncTable.nCols + 2];
-                        cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize; //Modified 20160909
-                        // TJN 18 May 2017 START
+                        cells[ col + row * nCols ].flowWidth = cells[ col + row * nCols ].cellSize;
                         cells[ col + row * nCols ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                         cells[ col + row * nCols ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
-                        // TJN 18 May 2017 END
 
-                        // TJN 23 Oct 2017 START
                         // Use the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
                         // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
                         // to collect water
                         for (int i = 0; i < (int)cells[ col + row * nCols ].neighCellIndices.size(); i++)
                         {
-                            // 8 March 2018 Replace with new landuse classification
-//                            if (cells[ col + row * nCols ].neighCellIndices[i] != -1
-//                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_CONNECTED
-//                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_ROOF_UNCONNECTED
-//                                    && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse != LANDUSE_NONE)
                             if (cells[ col + row * nCols ].neighCellIndices[i] != -1
                                     && cells[ cells[ col + row * nCols ].neighCellIndices[i] ].landuse >= BUILT_AREA)
                             {
-                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // TJN 23 Nov 2017: outletID is the outletID of junction cell
+                                cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletID =  col + row * nCols;   // Set outletID to the outletID of junction cell
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outlet = juncTable.data[k * juncTable.nCols + 2];
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].flowWidth =  cells[ cells[ col + row * nCols ].neighCellIndices[i] ].cellSize; // This is unnecessary?
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                                 cells[ cells[ col + row * nCols ].neighCellIndices[i] ].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
                             }
                         }
-                        // TJN 23 Oct 2017 END
                     }
                 }
             }
         }
-        // Irregular grid.
+        // (Legacy mode)
+        // N*(2^a) x N*(2^a) grid where a is the number of subdivisions
         else if (gridType == 1)
         {
             for (int i = 0; i < nCols * nRows; i++)
             {
-                if (cells[i].centerCoordX - 0.5 * cells[i].cellSize <= juncPosX // modified
+                if (cells[i].centerCoordX - 0.5 * cells[i].cellSize <= juncPosX
                         && cells[i].centerCoordX + 0.5 * cells[i].cellSize > juncPosX
-                        && cells[i].centerCoordY - 0.5 * cells[i].cellSize <= juncPosY // modified
+                        && cells[i].centerCoordY - 0.5 * cells[i].cellSize <= juncPosY
                         && cells[i].centerCoordY + 0.5 * cells[i].cellSize > juncPosY
-                        && isOpen == 1      // TJN 20170908 pass closed junctions
+                        && isOpen == 1      // pass closed junctions
                    )
                 {
                     cells[i].outlet = juncTable.data[k * juncTable.nCols + 2];
-                    cells[i].flowWidth = cells[i].cellSize; //Modified 20160909
-                    // TJN 18 May 2017 START
+                    cells[i].flowWidth = cells[i].cellSize;
                     cells[i].outletCoordX = stod(juncTable.data[k * juncTable.nCols + 0]);
                     cells[i].outletCoordY = stod(juncTable.data[k * juncTable.nCols + 1]);
-                    // TJN 18 May 2017 END
                 }
             }
         }
@@ -834,10 +757,7 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
 
     for (int i = 0; i < nCols * nRows; i++)
     {
-        // TJN 22 Nov 2017
-        // Only route connected roofs to nearest junction, route other pits to themselves
-        // TJN 8 March 2018 Replace with new landuse classification
-//        if (cells[i].landuse == LANDUSE_ROOF_CONNECTED) // should this be here?
+        // Route connected roofs to nearest junction
         if (cells[i].landuse >= ROOF_CONNECTED && cells[i].landuse < ROOF_UNCONNECTED) // should this be here?
         {
             double distanceSquared = distanceMaxSquared;
@@ -848,41 +768,32 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                 double juncPosY = atof( juncTable.data[j * juncTable.nCols + 1].c_str() );
                 double dx = juncPosX - cells[i].centerCoordX;
                 double dy = juncPosY - cells[i].centerCoordY;
-                int isroutable = atoi( juncTable.data[j * juncTable.nCols + 10].c_str() ); // modified 20160812.
+                int isroutable = atoi( juncTable.data[j * juncTable.nCols + 10].c_str() );
 
-                int col = (int)((juncPosX - xllCorner) / cellSize);     // TJN 24 Nov 2017
-                int row = (int)((juncPosY - yllCorner) / cellSize);     // TJN 24 Nov 2017
+                int col = (int)((juncPosX - xllCorner) / cellSize);
+                int row = (int)((juncPosY - yllCorner) / cellSize);
 
-                if (dx * dx + dy * dy < distanceSquared && isroutable == 1)  // modified 20160812.
+                if (dx * dx + dy * dy < distanceSquared && isroutable == 1)
                 {
                     distanceSquared = dx * dx + dy * dy;
-                    cells[i].outletID = col + row * nCols;   // TJN 24 Nov 2017: outletID is the outletID of junction cell
+                    cells[i].outletID = col + row * nCols;   // Set outletID to the outletID of junction cell
                     cells[i].outlet = juncTable.data[j * juncTable.nCols + 2];
                     cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
-                    // TJN 18 May 2017 START
                     cells[i].outletCoordX = stod(juncTable.data[j * juncTable.nCols + 0]);
                     cells[i].outletCoordY = stod(juncTable.data[j * juncTable.nCols + 1]);
-                    // TJN 18 May 2017 END
                 }
             }
 
-            //cells[i].outlet = cells[i].name;
-
-            // TJN 25 Sep 2017
             // Mark local pits where water is routed forcefully
             cells[i].isSink = 2;
         }
-        // TJN 8 March 2018  Replace with new landuse classification
-//        else if (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)     // Route unconnected rooftop cells to the nearest non-roof cells.
-        else if (cells[i].landuse >= ROOF_UNCONNECTED && cells[i].landuse < BUILT_AREA)     // Route unconnected rooftop cells to the nearest non-roof cells.
+        // Route unconnected rooftop cells to the nearest non-roof cell
+        else if (cells[i].landuse >= ROOF_UNCONNECTED && cells[i].landuse < BUILT_AREA)
         {
             double distanceSquared = distanceMaxSquared;
 
             for (int j = 0; j < nCols * nRows; j++)
             {
-                // TJN 8 March 2018  Replace with new landuse classification
-//                if (cells[j].landuse != LANDUSE_ROOF_CONNECTED && cells[j].landuse != LANDUSE_ROOF_UNCONNECTED
-//                        && cells[j].landuse != LANDUSE_NONE)
                 if (cells[j].landuse >= BUILT_AREA)
                 {
                     double dx = cells[i].centerCoordX - cells[j].centerCoordX;
@@ -891,24 +802,20 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
                     if (dx * dx + dy * dy < distanceSquared)
                     {
                         distanceSquared = dx * dx + dy * dy;
-                        cells[i].outletID = j;  // TJN 23 Nov 2017
+                        cells[i].outletID = j;
                         cells[i].outlet = cells[j].name;
                         cells[i].flowWidth = cells[i].cellSize; //Modified 20160909, compute by area / sqrt (distanceSquared) ?
-                        // TJN 18 May 2017 START
                         cells[i].outletCoordX = cells[j].centerCoordX;
                         cells[i].outletCoordY = cells[j].centerCoordY;
-                        // TJN 18 May 2017 END
                     }
                 }
             }
         }
-        // TJN 8 March 2018  Replace with new landuse classification
-//        else if ((cells[i].landuse == LANDUSE_ASPHALT_STREET && cells[i].outlet ==  "*") // the last condition is repeated...
-//                 || (cells[i].landuse > 40 && cells[i].landuse < 45 && cells[i].outlet ==  "*") // this line was added 25.06.2016
-//                 || (cells[i].landuse == LANDUSE_TILES && cells[i].outlet ==  "*"))
+
+        // Route pits in built areas to themselves, i.e. water is not routed downstream
         else if (cells[i].landuse >= BUILT_AREA && cells[i].landuse < NATURAL_AREA &&  cells[i].outlet ==  "*")
         {
-            cells[i].outletID = i;   // TJN 24 Nov 2017
+            cells[i].outletID = i;
             cells[i].outlet = cells[i].name;
             cells[i].outletCoordX = cells[i].centerCoordX;
             cells[i].outletCoordY = cells[i].centerCoordY;
@@ -919,17 +826,14 @@ void Grid::routePavedPitAndRooftopCells(Table &juncTable)
     }
 }
 
+// Route pits in natural areas to themselves, i.e. water is not routed downstream
 void Grid::routePitCells()
 {
     for (int i = 0; i < nCols * nRows; i++)
     {
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if (cells[i].outlet ==  "*" &&
-//                (cells[i].landuse == LANDUSE_SAND || cells[i].landuse == LANDUSE_VEGETATION
-//                 || cells[i].landuse == LANDUSE_WATER || cells[i].landuse == LANDUSE_BEDROCK))
         if (cells[i].outlet ==  "*" && cells[i].landuse >= NATURAL_AREA)
         {
-            cells[i].outletID = i;  // TJN 24 Nov 2017
+            cells[i].outletID = i;
             cells[i].outlet = cells[i].name;
 
             // Set depression storage of pit cells in permeable areas to a very high value ...
@@ -937,31 +841,21 @@ void Grid::routePitCells()
             cells[i].S_Imperv = "50000";
             cells[i].S_Perv = "50000";
 
-            // TJN 18 May 2017 START
             cells[i].outletCoordX = cells[i].centerCoordX;
             cells[i].outletCoordY = cells[i].centerCoordY;
-            // TJN 18 May 2017 END
 
-            // TJN 25 Sep 2017
             // Mark local pits where water is not routed
             cells[i].isSink = 1;
         }
     }
 }
 
-// TJN 5 Dec 2017
 // Find cells routed to outlet and save routing and pipe information
 std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
 {
     // Set inletIDs contributing to each cell
     for (int i = 0; i < nCols*nRows; i++)
     {
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if ( (cells[i].landuse != LANDUSE_NONE)
-//                &&
-//                (cells[i].landuse != LANDUSE_ROOF_CONNECTED)    // Connected roofs are treated separately
-//                &&
-//                (i != cells[i].outletID) )
         if ( cells[i].landuse >= ROOF_UNCONNECTED && i != cells[i].outletID )   // Connected roofs are treated separately
         {
             cells[cells[i].outletID].inletIDs.push_back(i);
@@ -997,7 +891,7 @@ std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
                 if (col + row * nCols >= 0 && col + row * nCols < nCols * nRows)
                 {
                     std::vector<int> selection_IDs;
-                    selection_IDs.reserve(nCols*nRows); // ONKO TARPEEN???
+                    selection_IDs.reserve(nCols*nRows); // Is this necessary?
 
                     final_IDs.push_back(col + row * nCols);
                     selection_IDs.push_back(col + row * nCols);
@@ -1033,8 +927,6 @@ std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
     for (int i = 0; i < nCols*nRows; i++)
     {
         // Add connected roofs to final subcatchments
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if ( (cells[i].landuse == LANDUSE_ROOF_CONNECTED) && (i != cells[i].outletID) )
         if ( (cells[i].landuse >= ROOF_CONNECTED && cells[i].landuse < ROOF_UNCONNECTED) && (i != cells[i].outletID) )
         {
             final_IDs.push_back(i);
@@ -1047,7 +939,6 @@ std::vector<int> Grid::findRouted(Table &juncTable, std::string &path)
     return final_IDs;
 }
 
-// TJN 12 Dec 2017
 // Simplify computation grid based on common flow direction and landuse
 void Grid::simplify(Table &juncTable, std::string &path)
 {
@@ -1059,21 +950,12 @@ void Grid::simplify(Table &juncTable, std::string &path)
     // Set inletIDs contributing to each cell
     for (int i = 0; i < nCols*nRows; i++)
     {
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if ( cells[i].landuse != LANDUSE_NONE
-//                &&
-//                cells[i].landuse != LANDUSE_ROOF_CONNECTED    // Connected roofs are treated separately
-//                &&
-//                cells[i].landuse != LANDUSE_ROOF_UNCONNECTED    // Unconnected roofs are treated separately
-//                &&
-//                i != cells[i].outletID )
         if ( cells[i].landuse >= BUILT_AREA && i != cells[i].outletID )
         {
             cells[cells[i].outletID].inletIDs.push_back(i);
         }
     }
 
-    // TJN 7 May 2018 START
     // Set the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
     // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
     // to collect water
@@ -1105,7 +987,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
             }
         }
     }
-    // TJN 7 May 2018 END
 
     // Empty vector for final list of routed cell ID's
     std::vector<int> final_IDs;
@@ -1188,7 +1069,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
                     // ... and update the lookup table of subcatchments and their indexes.
                     adapID[subcatchmentID] = cellsAdaptive.size()-1;
 
-                    // TJN 7 May 2018 START
                     // Use the 3x3 cell area surrounding each stormwater inlet as the collecting area for the inlet.
                     // This should help with misplacement of stormwater inlets when not just the cell with the inlet is used
                     // to collect water
@@ -1245,7 +1125,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
                             adapID[subcatchmentID] = cellsAdaptive.size()-1;
                         }
                     }
-                    // TJN 7 May 2018 END
 
                     // Iterate through cells and add cells as they flow towards the inlet
                     int counter = 0;    // Failsafe to prevent infinite while loop
@@ -1353,12 +1232,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
     // Find outlets of unconnected roof cells
     for (int i = 0; i < nCols*nRows; i++)
     {
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if ( (cells[i].landuse == LANDUSE_ROOF_UNCONNECTED)
-//                &&
-//                (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
-//                &&
-//                (i != cells[i].outletID) )
         if ( (cells[i].landuse >= ROOF_UNCONNECTED && cells[i].landuse < BUILT_AREA)
                 &&
                 (cells[cells[i].outletID].subcatchmentID > -1)  // Check that the roof is connected to routed cell
@@ -1454,10 +1327,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
     // Find outlet cells of connected roof cells
     for (int i = 0; i < nCols*nRows; i++)
     {
-        // TJN 8 March 2018  Replace with new landuse classification
-//        if ( (cells[i].landuse == LANDUSE_ROOF_CONNECTED)
-//        &&
-//        (i != cells[i].outletID) )
         if ( (cells[i].landuse >= ROOF_CONNECTED && cells[i].landuse < ROOF_UNCONNECTED)
                 &&
                 (i != cells[i].outletID) )
@@ -1555,13 +1424,6 @@ void Grid::simplify(Table &juncTable, std::string &path)
                                 // Go through the neighbour cells routed into the same junction
                                 for (int k = 0; k < (int) neighCells.size(); k++)
                                 {
-                                    // TJN 8 March 2018  Replace with new landuse classification
-//                                    if (neighCells[k] != -1
-//                                    &&
-//                                    cells[neighCells[k]].landuse == LANDUSE_ROOF_CONNECTED  // Neighbouring cell is connected roof
-//                                    &&
-//                                    cells[neighCells[k]].outletID == cells[selection_IDs.front()].outletID    // Neighbouring cell is connected to same junction
-//                                       )
                                     if (neighCells[k] != -1
                                             &&
                                             cells[neighCells[k]].landuse >= ROOF_CONNECTED && cells[neighCells[k]].landuse < ROOF_UNCONNECTED // Neighbouring cell is connected roof
@@ -1612,7 +1474,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
     std::cout << "\n-> Creating an output raster of adaptive grid for inspection";
     saveRaster(path);
 
-    // TJN 4 May 2018 Save grid extent before destroying the cells
+    // Save grid extent before destroying the cells
     double urcornerOld[2];
     double llcornerOld[2];
     urcornerOld[0] = urcorner[0];
@@ -1625,7 +1487,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
     nCols = (int)cellsAdaptive.size();
     nRows = 1;
     cells = new Cell[nRows * nCols];
-    // TJN 4 May 2018 Copy grid extent after destroying the cells
+    // Copy grid extent after destroying the cells
     urcorner[0] = urcornerOld[0];
     urcorner[1] = urcornerOld[1];
     llcorner[0] = llcornerOld[0];
@@ -1655,7 +1517,7 @@ void Grid::simplify(Table &juncTable, std::string &path)
         cells[i].cellSize = cellsAdaptive[i].cellSize;
         cells[i].slope = cellsAdaptive[i].slope;
         cells[i].area = cellsAdaptive[i].area;
-        cells[i].flowWidth = 0.7 * std::sqrt(cellsAdaptive[i].area);    // Krebs et al. (2014)
+        cells[i].flowWidth = 0.7 * std::sqrt(cellsAdaptive[i].area);    // Krebs et al. (2014). Journal of Hydrology.
         cells[i].landuse = cellsAdaptive[i].landuse;
         if (cellsAdaptive[i].hasInlet == 1) // Outlet is junction
         {
@@ -1727,7 +1589,6 @@ void Grid::saveRaster(std::string path)
     outputRaster.save( outputRaster.pathName );
 }
 
-// TJN 17 May 2017 START
 int Grid::saveSubcatchmentPolygon(std::string path)
 {
     std::stringstream sstream;
@@ -1776,7 +1637,7 @@ int Grid::saveSubcatchmentPolygon(std::string path)
 
     // Write polygon vertex coordinates.
     int polyId = 1;
-    for (int i = 0; i < nRows * nCols; i++)     // TJN 14 Dec 2017: i = 1 -> i = 0
+    for (int i = 0; i < nRows * nCols; i++)
     {
         if (cells[i].landuse != LANDUSE_NONE)
         {
@@ -1829,10 +1690,7 @@ int Grid::saveSubcatchmentPolygon(std::string path)
 
     return res;
 }
-// TJN 17 May 2017 END
 
-// TJN 18 May 2017 START
-// TJN 12 Dec 2017: Update to use std::vector<int> ellIDs
 void Grid::saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs)
 {
     std::stringstream sstream;
@@ -1876,9 +1734,7 @@ void Grid::saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs)
     int res = fileio.saveAsciiFile( path, sstream.str() );
     res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
-// TJN 18 May 2017 END
 
-// TJN 12 Dec 2017: Use version with cellIDs
 void Grid::saveSubcatchmentRouting(std::string path)
 {
     std::vector<int> ind(nCols*nRows);
@@ -1887,7 +1743,6 @@ void Grid::saveSubcatchmentRouting(std::string path)
     saveSubcatchmentRouting(path, ind);
 }
 
-// TJN 8 Dec 2017 START
 void Grid::saveNetworkRouting(std::string path, Table &condTable)
 {
     std::stringstream sstream;
@@ -1931,7 +1786,6 @@ void Grid::saveNetworkRouting(std::string path, Table &condTable)
     int res = fileio.saveAsciiFile( path, sstream.str() );
     res = fileio.saveAsciiFile( path_csvt, sstream_csvt.str() );
 }
-// TJN 8 Dec 2017 END
 
 void Grid::saveSWMM5File(Table &headerTable, Table &catchPropTable, Table &evaporationTable, Table &temperatureTable,
                          Table &inflowsTable, Table &timeseriesTable, Table &reportTable, Table &snowpacksTable,
@@ -2279,7 +2133,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &catchPropTable, Table &evapo
     sstream << "\n;;Subcatchment   X-Coord            Y-Coord           ";
     sstream << "\n;;-------------- ------------------ ------------------";
 
-    for (int i = 0; i < nRows * nCols; i++)     // TJN 13 Dec 2017: i = 1 -> i = 0
+    for (int i = 0; i < nRows * nCols; i++)
     {
         if (cells[i].landuse != LANDUSE_NONE)
         {
@@ -2296,9 +2150,9 @@ void Grid::saveSWMM5File(Table &headerTable, Table &catchPropTable, Table &evapo
             sstream << "\n" << cells[i].name << "   ";
             sstream << std::fixed << cells[i].centerCoordX + 0.5 * cells[i].cellSize << "   ";
             sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
-            sstream << "\n" << cells[i].name << "   ";      // TJN 1 Jun 2017
-            sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << "   ";  // TJN 1 Jun 2017
-            sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;  // TJN 1 Jun 2017
+            sstream << "\n" << cells[i].name << "   ";
+            sstream << std::fixed << cells[i].centerCoordX - 0.5 * cells[i].cellSize << "   ";
+            sstream << std::fixed << cells[i].centerCoordY + 0.5 * cells[i].cellSize;
         }
     }
 
@@ -2344,8 +2198,7 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
     }
 
     int numOfActiveCells = 0;
-    int numOfElevCells = 0;     // TJN 19 Dec 2017
-    double areaOfActiveCellsNoRoofs = 0.0;  // TJN 28 May 2018
+    double areaOfActiveCellsNoRoofs = 0.0;
 
     for (auto i : routedIDs)
     {
@@ -2353,11 +2206,7 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
         {
             numOfActiveCells += 1;
 
-            // TJN 19 Dec 2017: Add check for acceptable elevation
-            // TJN 8 March 2018  Replace with new landuse classification
-            // TJN 25 May 2018: Add check for non-roof landuse for average elevation calculation
-            // TJN 28 May 2018: Use area weighed average for mean slope and elevation calculation
-//            if ((cells[i].landuse != LANDUSE_ROOF_CONNECTED || cells[i].landuse != LANDUSE_ROOF_UNCONNECTED) && cells[i].elevation > cells[i].elevNoData)
+            // Don't use roofs and noData areas for catchment mean slope and elevation calculations
             if ((cells[i].landuse >= BUILT_AREA) && cells[i].elevation > cells[i].elevNoData)
             {
                 elevationAverage += cells[i].elevation * cells[i].area;
@@ -2386,7 +2235,6 @@ void Grid::printReport(Table &catchPropTable, std::vector<int> routedIDs)
 
     if (areaOfActiveCellsNoRoofs > 0.0)
     {
-        // TJN 28 May 2018: Use area weighed average for mean slope and elevation calculation
         elevationAverage /= areaOfActiveCellsNoRoofs;
         slopeAverage /= areaOfActiveCellsNoRoofs;
     }

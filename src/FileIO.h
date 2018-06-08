@@ -29,20 +29,16 @@
 #include <string.h>
 #endif
 
-//#ifndef _STRING_H_
-//#define _STRING_H_
-//#include <string>
-//#endif
 
 class FileIO
 {
-	public: 
+	public:
 		// Methods.
 		FileIO();
 		~FileIO();
 		int getFileContent(std::string path, std::string & content);
 		int saveAsciiFile(std::string sPath, std::string sFile);
-	
+
 		// Variables.
 		std::string pathName;
 		std::string * data;

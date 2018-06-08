@@ -45,33 +45,25 @@
 #include "Cell.h"
 #endif
 
-// TJN 18 May 2017 START
 #ifndef _STRING_H_
 #define _STRING_H_
 #include <string>
 #endif
-// TJN 18 May 2017 END
 
-// TJN 30 Nov 2017 START
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
 #include <algorithm>
 #endif
-// TJN 30 Nov 2017 END
 
-// TJN 13 Dec 2017 START
 #ifndef _UNORDERED_MAP_H_
 #define _UNORDERED_MAP_H_
 #include <unordered_map>
 #endif
-// TJN 13 Dec 2017 END
 
-// TJN 9 May 2018 START
 #ifndef _NUMERIC_H_
 #define _NUMERIC_H_
 #include <numeric>
 #endif
-// TJN 9 May 2018 END
 
 
 class Grid
@@ -79,8 +71,6 @@ class Grid
 	public:
 		// Methods.
 		Grid();
-		//Grid(int nColsNew, int nRowsNew);
-		//Grid(Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, Raster &landuseRaster, Raster &demRaster);
 		int create(int gridTypeNew, double cellSizeMax, int maxSubdivisions, Raster &landuseRaster, Raster &demRaster);
 		~Grid();
@@ -98,18 +88,18 @@ class Grid
 		void setSubcatchmentProperties(Table &catchPropTable);
 		void findCellNeighbours();
 		void routeCells();
-		void routeCellsReg();   // TJN 29 Sep 2017
+		void routeCellsReg();
 		void computeCellSlopes();
 		void connectCellsToJunctions(Table &juncTable);
 		void routePavedPitAndRooftopCells(Table &juncTable);
 		void routePitCells();
-		std::vector<int> findRouted(Table &juncTable, std::string &path);  // TJN 5 Dec 2017
-		void simplify(Table &juncTable, std::string &path);    // TJN 12 Dec 2017
+		std::vector<int> findRouted(Table &juncTable, std::string &path);
+		void simplify(Table &juncTable, std::string &path);
 		void saveRaster(std::string path);
-		int saveSubcatchmentPolygon(std::string path); // TJN 17 May 2017
-		void saveSubcatchmentRouting(std::string path); // TJN 18 May 2017
-		void saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs);   // TJN 12 Dec 2017
-		void saveNetworkRouting(std::string path, Table &condTable);      // TJN 8 Dec 2017
+		int saveSubcatchmentPolygon(std::string path);
+		void saveSubcatchmentRouting(std::string path);
+		void saveSubcatchmentRouting(std::string path, std::vector<int> cellIDs);
+		void saveNetworkRouting(std::string path, Table &condTable);
 
 		void saveSWMM5File(Table &headerTable, Table &catchPropTableTable, Table &evaporationTable, Table &temperatureTable,
                      Table &inflowsTable, Table &timeseriesTable, Table &reportTable, Table &snowpacksTable, Table &raingagesTable,
@@ -131,5 +121,5 @@ class Grid
 		double yllCorner;
 		double urcorner[2];
 		double llcorner[2];
-		int gridType;             // -1 = undefined, 0 = regular grid and 1 = adaptive grid.
+		int gridType;             // -1 = undefined, 0 = regular grid and 1 = (Legacy mode of creating N*(2^a) x N*(2^a) grid where a is the number of subdivisions) adaptive grid.
 };

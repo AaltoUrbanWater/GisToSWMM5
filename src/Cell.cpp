@@ -13,10 +13,10 @@ Cell::Cell()
 	area = 0.0;
 	flowWidth = 0.0;
 	landuse = 0;
-	outletCoordX = 0.0;      // TJN 18 May 2017
-	outletCoordY = 0.0;      // TJN 18 May 2017
-	outletID = -1;           // TJN 23 Nov 2017
-	subcatchmentID = -1;      // TJN 23 Nov 2017
+	outletCoordX = 0.0;
+	outletCoordY = 0.0;
+	outletID = -1;
+	subcatchmentID = -1;
 	outlet = "*";
 	raingage = "r1";
 	imperv = "25.0";
@@ -31,7 +31,7 @@ Cell::Cell()
 	Suction = "3.5";
 	HydCon = "0.5";
 	IMDmax = "0.25";
-	isSink = 0; // TJN 25 Sep 2017  By default all cells are routed
+	isSink = 0;         // By default all cells are routed
 	numElements = 0;
 	hasInlet = 0;
 	elevNoData = 0;
