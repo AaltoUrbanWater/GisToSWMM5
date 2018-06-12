@@ -275,8 +275,9 @@ subcatchment_gdf = subcatchment_gdf.merge(subarea_df,
                                           on='Name', how='left')
 subcatchment_gdf = subcatchment_gdf.merge(infiltration_df,
                                           on='Name', how='left')
-subcatchment_gdf = subcatchment_gdf.merge(lid_df,
-                                          on='Name', how='left')
+if lid_data:
+    subcatchment_gdf = subcatchment_gdf.merge(lid_df,
+                                              on='Name', how='left')
 if tags_data:
     subcatchment_gdf = subcatchment_gdf.merge(tags_df,
                                               on='Name', how='left')
