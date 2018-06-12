@@ -141,6 +141,7 @@ if landuse_data:
                         landuse=pd.DataFrame(landuse_data).values)
 else:
     # Landuse was not given, save NaN values instead
+    # TODO: Add message to user of NaN values?
     subcatchment_df = subcatchment_df.assign(landuse=np.nan)
 
 subarea_col_names = ['Name',
