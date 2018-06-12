@@ -5,6 +5,11 @@ Reads subcatchment geometries and routing from a SWMM input (.inp) file and
 saves them as shapefiles into the same folder as the SWMM input file.
 
 Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+
+TODO: Add message to user of NaN values in landuse_data?
+TODO: Add LID routing output
+TODO: Add junction output shapefile
+TODO: Add conduit output shapefile
 """
 
 import os
@@ -40,6 +45,7 @@ subcatchment_data = []
 landuse_data = []
 subarea_data = []
 infiltration_data = []
+lid_data = []
 coordinate_data = []
 polygon_data = []
 tags_data = []
@@ -83,6 +89,16 @@ with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
                     break
                 else:  # Save data
                     infiltration_data.append(row.split())
+
+    # Check for LID usage information
+        if '[lid_usage]' in line.lower():
+            for idx, row in enumerate(inp_file):
+                if row.startswith(';'):  # Skip comment rows
+                    continue
+                elif row.isspace():  # Stop looking after empty line
+                    break
+                else:  # Save data
+                    lid_data.append(row.split())
 
     # Check for coordinate information
         if '[coordinates]' in line.lower():
@@ -141,7 +157,6 @@ if landuse_data:
                         landuse=pd.DataFrame(landuse_data).values)
 else:
     # Landuse was not given, save NaN values instead
-    # TODO: Add message to user of NaN values?
     subcatchment_df = subcatchment_df.assign(landuse=np.nan)
 
 subarea_col_names = ['Name',
@@ -195,6 +210,33 @@ elif (len(infiltration_data[0]) == 4):  # Green-Ampt infiltration
                                                 'Ksat',
                                                 'IMD']].astype(float)
 
+if lid_data:
+    lid_col_names = ['Name',
+                     'LID',
+                     'LIDNumber',
+                     'LIDArea',
+                     'LIDWidth',
+                     'LIDInitSat',
+                     'LIDFromImp',
+                     'LIDToPerv']
+    if (len(max(lid_data, key=len)) >= 9):
+        lid_col_names.append('LIDRptFile')
+    if (len(max(lid_data, key=len)) == 10):
+        lid_col_names.append('LIDDrainTo')
+
+    lid_df = pd.DataFrame(lid_data, columns=lid_col_names)
+    lid_df[['LIDNumber',
+            'LIDArea',
+            'LIDWidth',
+            'LIDInitSat',
+            'LIDFromImp',
+            'LIDToPerv']] = lid_df[['LIDNumber',
+                                    'LIDArea',
+                                    'LIDWidth',
+                                    'LIDInitSat',
+                                    'LIDFromImp',
+                                    'LIDToPerv']].astype(float)
+
 if tags_data:
     tags_col_names = ['Type',
                       'Name',
@@ -232,6 +274,8 @@ subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df,
 subcatchment_gdf = subcatchment_gdf.merge(subarea_df,
                                           on='Name', how='left')
 subcatchment_gdf = subcatchment_gdf.merge(infiltration_df,
+                                          on='Name', how='left')
+subcatchment_gdf = subcatchment_gdf.merge(lid_df,
                                           on='Name', how='left')
 if tags_data:
     subcatchment_gdf = subcatchment_gdf.merge(tags_df,
@@ -275,6 +319,7 @@ subcatchment_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                          '_subcatchments.shp', driver='ESRI Shapefile')
 print('Saved subcatchments to ' + os.path.splitext(sys.argv[1])[0] +
       '_subcatchments.shp')
+
 # Save subcatchment routing as shapefile
 routing_gdf.to_file(os.path.splitext(sys.argv[1])[0] +
                     '_subcatchment_routing.shp', driver='ESRI Shapefile')
