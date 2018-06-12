@@ -41,9 +41,8 @@ else:
             crs = {'init': sys.argv[3].lower()}  # Custom CRS
 
 
-polygon_data = []
-
 # Go through the SWMM inp file
+polygon_data = []
 with open(sys.argv[1], 'rt', encoding='ISO-8859-1') as inp_file:
     # Check for polygon coordinate information
     for line in inp_file:
@@ -75,10 +74,13 @@ geometry = polygon_df['wktcolumn'].map(shapely.wkt.loads)
 polygon_df = polygon_df.drop('wktcolumn', axis=1)
 subcatchment_gdf = gpd.GeoDataFrame(polygon_df, crs=crs, geometry=geometry)
 
-# Read subcatchment runoff summary results ...
-data = []
+
+# Go through the SWMM rpt file
+subcatchment_data = []
+lid_data = []
 with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
     for line in rpt_file:
+        # Read subcatchment runoff summary results
         if '  Subcatchment Runoff Summary' in line:
             for idx, row in enumerate(rpt_file):
                 if idx < 7:     # Skip extra lines after header
@@ -86,35 +88,74 @@ with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
                 if row.isspace():    # Stop looking after empty line
                     break
                 else:           # Save data
-                    data.append(row.split())
-# ... and create a dataframe from data
-df2 = pd.DataFrame(data, columns=['name',
-                                  'precip_mm',
-                                  'runon_mm',
-                                  'evap_mm',
-                                  'infil_mm',
-                                  'runoff_mm',
-                                  'runoff_ML',
-                                  'Q_peak_LPS',
-                                  'Cr'])
-df2[['precip_mm',
-     'runon_mm',
-     'evap_mm',
-     'infil_mm',
-     'runoff_mm',
-     'runoff_ML',
-     'Q_peak_LPS',
-     'Cr']] = df2[['precip_mm',
-                   'runon_mm',
-                   'evap_mm',
-                   'infil_mm',
-                   'runoff_mm',
-                   'runoff_ML',
-                   'Q_peak_LPS',
-                   'Cr']].astype(float)
+                    subcatchment_data.append(row.split())
+        # Read LID summary results
+        if '  LID Performance Summary' in line:
+            for idx, row in enumerate(rpt_file):
+                if idx < 7:     # Skip extra lines after header
+                    continue
+                if row.isspace():    # Stop looking after empty line
+                    break
+                else:           # Save data
+                    lid_data.append(row.split())
 
-# Merge spatial dataframe with data dataframe
-subcatchment_gdf = subcatchment_gdf.merge(df2, on='name')
+# Create dataframes from data
+subcatchment_df = pd.DataFrame(subcatchment_data, columns=['name',
+                                                           'precip_mm',
+                                                           'runon_mm',
+                                                           'evap_mm',
+                                                           'infil_mm',
+                                                           'runoff_mm',
+                                                           'runoff_ML',
+                                                           'Q_peak_LPS',
+                                                           'Cr'])
+subcatchment_df[['precip_mm',
+                 'runon_mm',
+                 'evap_mm',
+                 'infil_mm',
+                 'runoff_mm',
+                 'runoff_ML',
+                 'Q_peak_LPS',
+                 'Cr']] = subcatchment_df[['precip_mm',
+                                           'runon_mm',
+                                           'evap_mm',
+                                           'infil_mm',
+                                           'runoff_mm',
+                                           'runoff_ML',
+                                           'Q_peak_LPS',
+                                           'Cr']].astype(float)
+
+if lid_data:
+    lid_df = pd.DataFrame(lid_data, columns=['name',
+                                             'LID',
+                                             'LQin_mm',
+                                             'Levap_mm',
+                                             'Linfil_mm',
+                                             'LQout_S_mm',
+                                             'LQout_D_mm',
+                                             'LIniSto_mm',
+                                             'LFinSto_mm',
+                                             'LError_pct'])
+    lid_df[['LQin_mm',
+            'Levap_mm',
+            'Linfil_mm',
+            'LQout_S_mm',
+            'LQout_D_mm',
+            'LIniSto_mm',
+            'LFinSto_mm',
+            'LError_pct']] = lid_df[['LQin_mm',
+                                     'Levap_mm',
+                                     'Linfil_mm',
+                                     'LQout_S_mm',
+                                     'LQout_D_mm',
+                                     'LIniSto_mm',
+                                     'LFinSto_mm',
+                                     'LError_pct']].astype(float)
+
+# Merge geodataframe with data dataframes
+subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='name')
+if lid_data:
+    subcatchment_gdf = subcatchment_gdf.merge(lid_df, on='name', how='left')
 
 # Save subcatchment results as shapefile
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[2])[0] +
