@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-"""Collate timeseries data from (many) SWMM5 report file(s) to a .csv file."""
+"""Collate timeseries data from (many) SWMM5 report file(s) to a .csv file.
+
+Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+
+TODO: Read number of columns for each link and create time series accordingly.
+"""
 
 import sys
 import pandas as pd

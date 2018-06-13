@@ -7,6 +7,11 @@ script merges the information and saves it as a shapefile into the same folder
 as the SWMM report file.
 
 Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+
+TODO: Add poluutant washoff subcatchment results
+TODO: Add link results
+TODO: Add conduit results
+TODO: Add link pollutant load results
 """
 
 import os
