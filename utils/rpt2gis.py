@@ -8,7 +8,6 @@ as the SWMM report file.
 
 Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
 
-TODO: Add poluutant washoff subcatchment results
 TODO: Add link results
 TODO: Add conduit results
 TODO: Add link pollutant load results
@@ -83,6 +82,7 @@ subcatchment_gdf = gpd.GeoDataFrame(polygon_df, crs=crs, geometry=geometry)
 # Go through the SWMM rpt file
 subcatchment_data = []
 lid_data = []
+subcatchmentWash_data = []
 with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
     for line in rpt_file:
         # Read subcatchment runoff summary results
@@ -103,6 +103,29 @@ with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
                     break
                 else:           # Save data
                     lid_data.append(row.split())
+        # Read subcatchment washoff summary results
+        if '  Subcatchment Washoff Summary' in line:
+            for idx, row in enumerate(rpt_file):
+                if idx < 3:    # Skip extra lines after header
+                    continue
+                if idx == 3:   # Read column headers
+                    subcatchmentWash_headers = row.split()
+                if idx == 4:   # Read column units
+                    subcatchmentWash_units = row.split()
+                if idx < 6:    # Skip extra lines after header
+                    continue
+                if row.isspace():    # Stop looking after empty line
+                    break
+                if row.startswith('  ---'):  # Skip separator lines
+                    break
+                else:           # Save data
+                    subcatchmentWash_data.append(row.split())
+
+            # Create attribute names from header info
+            subcatchmentWash_units.pop(0)
+            subcatchmentWash_headers = [a + '_' + b for a, b in zip(
+                subcatchmentWash_headers, subcatchmentWash_units)]
+            subcatchmentWash_headers.insert(0, 'name')
 
 # Create dataframes from data
 subcatchment_df = pd.DataFrame(subcatchment_data, columns=['name',
@@ -157,10 +180,19 @@ if lid_data:
                                      'LFinSto_mm',
                                      'LError_pct']].astype(float)
 
+if subcatchmentWash_data:
+    subcatchmentWash_df = pd.DataFrame(subcatchmentWash_data,
+                                       columns=subcatchmentWash_headers)
+    subcatchmentWash_df[subcatchmentWash_headers[1:]] = subcatchmentWash_df[
+        subcatchmentWash_headers[1:]].astype(float)
+
 # Merge geodataframe with data dataframes
 subcatchment_gdf = subcatchment_gdf.merge(subcatchment_df, on='name')
 if lid_data:
     subcatchment_gdf = subcatchment_gdf.merge(lid_df, on='name', how='left')
+if subcatchmentWash_data:
+    subcatchment_gdf = subcatchment_gdf.merge(subcatchmentWash_df, on='name',
+                                              how='left')
 
 # Save subcatchment results as shapefile
 subcatchment_gdf.to_file(os.path.splitext(sys.argv[2])[0] +
