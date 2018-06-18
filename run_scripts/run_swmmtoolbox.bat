@@ -18,6 +18,9 @@ echo **********
 REM Extract system runoff and save to new file
 echo Extracting system runoff and saving to new file.
 swmmtoolbox extract "C:\LocalUserData\User-data\tjniemi\GisToSWMM5\demo_catchment\out\SWMM_out\demo_catchment_adap.out" system,Runoff,4 > system_runoff.txt
+REM Extract conduit time series and save to new file, e.g. here flow rate
+echo Extracting flow rate timeseries for link c5 and saving to new file.
+swmmtoolbox extract "C:\LocalUserData\User-data\tjniemi\GisToSWMM5\demo_catchment\out\SWMM_out\demo_catchment_adap.out" link,c5,0 > c5_flowrate.txt
 
 REM Deactivate conda environment
 call deactivate
