@@ -308,6 +308,7 @@ subcatchment_df = subcatchment_df.drop('Imperv_pct', axis=1)
 subcatchment_df = subcatchment_df.drop('Width', axis=1)
 subcatchment_df = subcatchment_df.drop('Slope', axis=1)
 subcatchment_df = subcatchment_df.drop('Clength', axis=1)
+subcatchment_df = subcatchment_df.drop('landuse', axis=1)
 if 'SPack' in subcatchment_df.columns:
     subcatchment_df = subcatchment_df.drop('SPack', axis=1)
 routing_gdf = gpd.GeoDataFrame(subcatchment_df, crs=crs, geometry=geometry)
