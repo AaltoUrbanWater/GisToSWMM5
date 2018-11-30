@@ -1,4 +1,4 @@
-disconnect# GisToSWMM5 input file instructions
+# GisToSWMM5 input file instructions
 
 The following input files are required to build SWMM5 models using GisToSWMM5:
 - DEM raster in _.asc_ format
@@ -29,16 +29,18 @@ The following input files are required to build SWMM5 models using GisToSWMM5:
 
 ## DEM raster
 DEM raster defines the elevations across the catchment in the same grid as in the landuse raster.  
+
 File format is _Arc/Info ASCII Grid_. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The header section needs to have the following information with appropriate values followed by the DEM raster values in a ncols*nrows space-separated list:  
-<pre>
+<pre><code>
 ncols          [aaa]  
 nrows          [bbb]  
 xllcorner      [ccc]  
 yllcorner      [ddd]  
 cellsize       [eee]  
 NODATA_value   [fff]
-</pre>
+</code></pre>
 
 
 ## Flow direction raster
@@ -64,34 +66,37 @@ Flow direction raster defines the flow directions across the catchment in the sa
 
 
 File format is _Arc/Info ASCII Grid_. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The header section needs to have the following information with appropriate values followed by the flow direction raster values in a ncols*nrows space-separated list:  
-<pre>
+<pre><code>
 ncols          [aaa]  
 nrows          [bbb]  
 xllcorner      [ccc]  
 yllcorner      [ddd]  
 cellsize       [eee]  
 NODATA_value   [fff]
-</pre>
+</code></pre>
 
 ## Land use raster
 Land use raster defines the land use across the catchment in in each grid cell.  
+
 File format is _Arc/Info ASCII Grid_. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The header section needs to have the following information with appropriate values followed by the landuse raster values in a ncols*nrows space-separated list:  
-<pre>
+<pre><code>
 ncols          [aaa]  
 nrows          [bbb]  
 xllcorner      [ccc]  
 yllcorner      [ddd]  
 cellsize       [eee]  
 NODATA_value   0
-</pre>
+</code></pre>
 
 GisToSWMM5 currently uses the following codes for different land use classes.
 The different integers mark different landuse classes and (optionally) different landuse parameters specified in the Catchment properties table for each landuse class.
 The classes are loosely grouped into roofs, built areas, and natural areas, and especially for roofs these groups should be used.
 Generally it is good practice to use same subclass values for connected and disconnected roofs to keep things clear.
-E.g. 10 should have the same parameters as 20 but 10 are directly connected to junctions whereas 20 are connected to yards, in the same manner 11 should correspond to 21, etc.
+E.g. 10 should have the same parameters as 20, but 10 are directly connected to junctions whereas 20 are connected to yards. In the same manner 11 should correspond to 21, etc.
 For other classes there is no such connection between classes.
 
 | Code        | Landuse           |
@@ -105,12 +110,14 @@ NODATA_value of ```0``` is used to delineate areas not belonging to the catchmen
 
 ## Catchment properties table
 Catchment properties table defines the properties of each GisToSWMM5 landuse class.  
-File format is _.csv_ where each row defines the properties of one landuse type.  
+
+File format is comma-separated _.csv_ where each row defines the properties of one landuse type.  
+
 The file must have a header row with the following attributes that are defined on following rows for each landuse type.
 
 | Attribute |                                                                                 | Notes                   |
 | :--------:|:--------------------------------------------------------------------------------|-------------------------|
-| id        | Landuse code (see the Landuse table) )                                          |                         |
+| id        | Landuse code (see the Landuse table)                                          |                         |
 | imperv    | Share of impervious areas (%)                                                   |                         |
 | dst_imp   | Depression storage of impervious areas (mm)                                     |                         |
 | n_imper   | Roughness coefficient (Manning's n) of impervious areas                         |                         |
@@ -126,7 +133,9 @@ The file must have a header row with the following attributes that are defined o
 
 ## Junctions table
 Junctions table defines the junction nodes of the drainage system, i.e., the points where channels and pipes connect together. For sewer systems they can be e.g. manholes/wells or connection fittings.  
-File format is _.csv_ where each row defines the properties of one junction in the system. The file can be directly produced using e.g. ArcMap or QGIS.    
+
+File format is comma-separated _.csv_ where each row defines the properties of one junction in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The file must have a header row with the following attributes that are defined on following rows for each junction.
 
 | Attribute |              | Notes |
@@ -145,7 +154,9 @@ The file must have a header row with the following attributes that are defined o
 
 ## Conduits table
 Conduits table defines the conduits (pipes, links) of the drainage system, i.e., the pipes and channels that convey the water from one node to another.  
-File format is _.csv_ where each row defines the properties of one conduit in the system. The file can be directly produced using e.g. ArcMap or QGIS.    
+
+File format is comma-separated _.csv_ where each row defines the properties of one conduit in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The file must have a header row with the following attributes that are defined on following rows for each conduit.
 
 | Attribute |              | Notes |
@@ -165,8 +176,10 @@ The file must have a header row with the following attributes that are defined o
 | elev_ou_of | offset of downstream end of conduit invert (bottom) above the invert (bottom) elevation of the downstream node (junction), i.e., conduit bottom elevation - junction bottom elevation (m) |||
 
 ## Outfalls table
-Outfalls table defines the outfall nodes of the drainage system, i.e., the final downstream boundaries, and the corresponding water stage elevation.
-File format is _.csv_ where each row defines the properties of one outfall in the system. The file can be directly produced using e.g. ArcMap or QGIS.    
+Outfalls table defines the outfall nodes of the drainage system, i.e., the final downstream boundaries, and the corresponding water stage elevation.  
+
+File format is comma-separated _.csv_ where each row defines the properties of one outfall in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+
 The file must have a header row with the following attributes that are defined on following rows for each outfall.
 
 | Attribute |              |
@@ -181,9 +194,11 @@ The file must have a header row with the following attributes that are defined o
 
 ## Header table
 Header table provides the values for various analysis options used by SWMM.  
-File format is _.csv_ where each row defines a value for a single SWMM analysis option.
-Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
-The file must have a header row and the necessary parameters from the following table defining model analysis options.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.  
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```OPTIONS```"
 
 | Option | Value             | Notes |
@@ -230,45 +245,65 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Evaporation table
 Evaporation table specifies how daily evaporation rates vary with time.  
-File format is .csv where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.
-The file must have a header row and one of the below formats (```CONSTANT```, ```MONTHLY```, ```TIMESERIES```, ```TEMPERATURE```, or ```FILE```) from the following table defining model analysis options with two more optional parameters.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by a row with one of the ```CONSTANT```, ```MONTHLY```, ```TIMESERIES```, ```TEMPERATURE```, or ```FILE``` with appropriate parameters. In addition, the two last rows from the table below are optional.  
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[EVAPORATION]```"
 
 | Option | Value | Notes |
 | :--------|:-------------|-------|
-| ```CONSTANT``` | value ||
-| ```MONTHLY``` | values ||
-| ```TIMESERIES``` | name of timeserie ||
+| ```CONSTANT``` | value | Constant evaporation rate (mm/day or in/day) |
+| ```MONTHLY``` | values | Evaporation rates from Jan to Dec (mm/day or in/day) |
+| ```TIMESERIES``` | name of timeserie | name of time series in ```[TIMESERIES]``` section with evaporation data. |
 | ```TEMPERATURE``` |  | Evaporation rates are computed from the daily air temperatures contained in an external climate file name provided in the 'Temperature table' section. |
-| ```FILE``` | values | Evaporation data is read directly from the external climate file name provided in the 'Temperature table' section. |
+| ```FILE``` | values | Evaporation data is read directly from the external climate file name provided in the 'Temperature table' section. Values define the pan coefficients from Jan to Dec. |
 | ```RECOVERY``` | value | Optional monthly time pattern of multipliers for modifying infiltration recovery rates during dry periods. |
 | ```DRY_ONLY``` | ```NO``` / ```YES``` | Determines if evaporation only occurs during periods with no precipitation. Default: ```NO``` ||
 
 ## Temperature table
-The temperature table specifies daily air temperatures, monthly wind speed, and various snowmelt parameters for the study area. The file is required only when snowmelt is being modeled or when evaporation rates are computed from daily temperatures or are read from an external climate file.  
+The temperature table specifies daily air temperatures, monthly wind speed, and various snowmelt parameters for the study area. The file is required when snowmelt is being modeled or when evaporation rates are computed from daily temperatures or are read from an external climate file.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[TEMPERATURE]```"
 
-
 | Option | Value | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| :--------|:-------------|-------|
+| ```TIMESERIES``` | name of timeserie | Name of time series in ```[TIMESERIES]``` section with temperature data |
+| ```FILE``` | file name | Name of external Climate file with temperature data |
+| ```WINDSPEED MONTHLY``` | values  | Average wind speed values from Jan to Dec |
+| ```WINDSPEED FILE``` |  | Windspeed is specified by the same Climate file used for air temperature |
+| ```SNOWMELT``` | values | Parameters defining snowmwelt |
+| ```ADC IMPERVIOUS``` | values | Fractions of area covered by snow on impervious subareas |
+| ```ADC PERVIOUS``` | values | Fractions of area covered by snow on pervious subareas ||
 
 ## Snowpack table
 The snowpacks table specifies how snowfall accumulates and melts on the plowable, impervious and pervious surfaces of subcatchments.  
+
+File format is comma-separated _.csv_ where rows define values for SWMM analysis options.
+
+Snow pack parameter sets are associated with specific subcatchments in the ```[SUBCATCHMENTS]``` section. The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options. Each snow pack parameter set requires one set of ```PLOWABLE```, ```IMPERVIOUS```, and ```PERVIOUS``` lines. Multiple subcatchments can share the same set of snow pack parameters.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[SNOWPACKS]```"
 
-| Option | Value | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| Name | Parameter | Value | Notes |
+| :--------:|:-------------|-------|-------|
+| Set name | ```PLOWABLE``` | values | Parameters defining snowmwelt on plowable surfaces |
+| Set name | ```IMPERVIOUS``` | values | Parameters defining snowmwelt on impervious surfaces |
+| Set name | ```PERVIOUS``` | values | Parameters defining snowmwelt on pervious surfaces |
+| Set name | ```REMOVAL``` | values | Parameters defining snow removal on plowable surfaces ||
 
 ## Raingages table
 Raingages table identifies each rain gage that provides rainfall data for the study area.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[RAINGAGES]```"
 
 | Option | Value | Notes |
@@ -280,6 +315,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Inflows table
 Inflows table specifies external hydrographs and pollutographs that enter the drainage system at specific nodes.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[INFLOWS]```"
 
 | Option | Value | Notes |
@@ -291,6 +331,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Timeseries table
 Timeseries table describes how various quantities vary over time.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[TIMESERIES]```"
 
 | Option | Value | Notes |
@@ -302,6 +347,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Pump table
 Pump table identifies each pump link of the drainage system.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[PUMPS]```"
 
 | Attribute |              | Notes |
@@ -313,6 +363,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Curve table
 Curve table describes a relationship between two variables (e.g. pump curve, rating curve, etc.) in tabular format.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[CURVES]```"
 
 | Option | Value | Notes |
@@ -324,12 +379,15 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Storage table
 Storage table identifies each storage node of the drainage system.
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
 More details of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[STORAGE]```"
 
 | Attribute |              | Notes |
 | :--------:|:-------------|-------|
-| x0 |  ||
-| y0 |  ||
+| x0 | x-coordinate of the storage node ||
+| y0 | y-coordinate of the storage node ||
 | Name |  ||
 | Elev |  ||
 | Ymax |  ||
@@ -341,6 +399,11 @@ More details of these options are explained in SWMM user manual Appendix D, sect
 
 ## Dry weather flow (DWF) table
 Dry weather flow (DWF) table specifies dry weather flow and its quality entering the drainage system at specific nodes.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[DWF]```"
 
 | Option | Value | Notes |
@@ -352,6 +415,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Patterns table
 Patterns table specifies time pattern of dry weather flow or quality in the form of adjustment factors applied as multipliers to baseline values.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[PATTERNS]```"
 
 | Option | Value | Notes |
@@ -362,9 +430,13 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 |  |  |||
 
 ## Losses table
-Losses table specifies minor head loss coefficients, flap gates, and seepage rates for conduits.  
-Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[LOSSES]```"
+Losses table specifies minor head loss coefficients, flap gates, and seepage rates for conduits.
 
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[LOSSES]```"
 
 | Option | Value | Notes |
 | :--------:|:-------------|-------|
@@ -374,8 +446,13 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 |  |  |||
 
 ## Cross sections table
-Cross sections table defines the geometries for all the conduits (pipes, channels, junctions) and regulator links (orifices, weirs) in the drainage system. File format is _.csv_ where each row defines the properties of one conduit in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+Cross sections table defines the geometries for all the conduits (pipes, channels, junctions) and regulator links (orifices, weirs) in the drainage system.  
+
+File format is comma-separated _.csv_ where each row defines the properties of one conduit in the system. The file can be directly produced using e.g. ArcMap or QGIS.  
+
+
 The file must have a header row with the following attributes that are defined on the following rows for each conduit.  
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[XSECTIONS]```"
 
 | Attribute |              | Notes |
@@ -391,9 +468,11 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Report table
 Report table describes the contents of the report file that is produced.  
-File format is _.csv_ where each row defines a value for a single SWMM analysis option.
-Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
+File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+
 The file must have a header row and the necessary parameters from the following table defining model analysis options.  
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[REPORT]```"
 
 | Option | Value | Notes |
@@ -409,7 +488,9 @@ Format of these options are explained in SWMM user manual Appendix D, section D.
 
 ## Symbols table
 Symbols table assigns X,Y coordinates to rain gage symbols.  
-File format is _.csv_ where each row defines the properties of one conduit in the system. The file must have a header. The following attributes are then defined on the subsequent rows for each rain gage.  
+
+File format is comma-separated _.csv_ where each row defines the properties of one conduit in the system. The file must have a header. The following attributes are then defined on the subsequent rows for each rain gage.  
+
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[SYMBOLS]```"
 
 | Attribute |  |
