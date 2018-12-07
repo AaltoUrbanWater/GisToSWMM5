@@ -1957,6 +1957,7 @@ void Grid::saveSWMM5File(Table &headerTable, Table &catchPropTable, Table &evapo
     sstream << "\n";
 
     // Write storage properties.
+    // TODO: This is outdated formatting and needs to be updated
     std::cout << "\n-> Writing storage properties";
     sstream << "\n[STORAGE]";
     sstream << "\n;;Name           Elev.    MaxDepth   InitDepth  Shape      Curve Name/Params                     Fevap    Psi      Ksat     IMD    ";

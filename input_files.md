@@ -25,7 +25,7 @@ The following input files are required to build SWMM5 models using GisToSWMM5:
 - <sup>1</sup>Report table in _.csv_ format
 - <sup>1</sup>Symbols table in _.csv_ format
 
-<sup>1</sup>Corresponds to section from the standard SWMM input file (_.inp_)
+Except for the raster files and the Catchment properties table, i.e., first four files, each file defines one section of the SWMM input file. Files with <sup>1</sup> correspond exactly to a section from the standard SWMM input file (_.inp_) except for being comma (not space) separated.
 
 ## DEM raster
 DEM raster defines the elevations across the catchment in the same grid as in the landuse raster.  
@@ -308,7 +308,7 @@ OR
 
 | Attribute |  |
 | :--------|--|
-| *Tseries* | Name of time series in ```[TIMESERIES]``` section with temperature data |
+| *Tseries* | Name of time series in `[TIMESERIES]` section with temperature data |
 | *Fname* | Name of external Climate file with temperature data |
 | (*Start*) | Date to begin reading from the file (mm/dd/yyyy); Default: beginning of file |
 | *s1*, ..., *s12* | Average wind speed values from Jan to Dec |
@@ -323,136 +323,168 @@ OR
 If `WINDSPEED FILE` is used, the wind speed is specified by the same Climate file used for air temperature.  
 
 ## Snowpack table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 The snowpacks table specifies how snowfall accumulates and melts on the plowable, impervious and pervious surfaces of subcatchments.  
 
-File format is comma-separated _.csv_ where rows define values for SWMM analysis options.
-
-Snow pack parameter sets are associated with specific subcatchments in the ```[SUBCATCHMENTS]``` section. The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options. Each snow pack parameter set requires one set of ```PLOWABLE```, ```IMPERVIOUS```, and ```PERVIOUS``` lines. Multiple subcatchments can share the same set of snow pack parameters.
+File format is comma-separated _.csv_. The file must have a header row followed by appropriate rows from below defining model analysis options.
 
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[SNOWPACKS]```"
 
-| Name | Parameter | Value | Notes |
-| :--------:|:-------------|-------|-------|
-| Set name | ```PLOWABLE``` | values | Parameters defining snowmwelt on plowable surfaces |
-| Set name | ```IMPERVIOUS``` | values | Parameters defining snowmwelt on impervious surfaces |
-| Set name | ```PERVIOUS``` | values | Parameters defining snowmwelt on pervious surfaces |
-| Set name | ```REMOVAL``` | values | Parameters defining snow removal on plowable surfaces ||
+**Formats:**  
+*Name*, `PLOWABLE`, *Cmin*, *Cmax*, *Tbase*, *FWF*, *SD0*, *FW0*, *SNN0*  
+*Name*, `IMPERVIOUS`, *Cmin*, *Cmax*, *Tbase*, *FWF*, *SD0*, *FW0*, *SD100*  
+*Name*, `PERVIOUS`, *Cmin*, *Cmax*, *Tbase*, *FWF*, *SD0*, *FW0*, *SD100*  
+*Name*, `REMOVAL`, *Dplow*, *Fout*, *Fimp*, *Fperv*, *Fimelt*, (*Fsub*, *Scatch*)  
+
+| Attribute | |
+| :---| :--- |
+| *Name* | Name of the snowpacks parameter set |
+| *Cmin* | min melt coefficient (mm/h-deg C or in/h-deg C) |
+| *Cmax* | max melt coefficient (mm/h-deg C or in/h-deg C) |
+| *Tbase* | snow melt base temperature (deg C or deg F) |
+| *FWF* | free-water-holding-capacity to snow-depth fraction |
+| *SD0* | initial snow depth (mm or in water equivalent) |
+| *FW0* | initial free water in snowpack (mm or in) |
+| *SNN0* | fraction of plowable impervious area |
+| *SD100* | snow depth above which there is 100% cover (mm or in water equivalent) |
+| *Dplow* | depth of snow on plowable areas at which snow removal begins (mm or in) |
+| *Fout* | fraction of snow on plowable area transferred out of watershed |
+| *Fimp* | fraction of snow on plowable area transferred to impervious area by plowing |
+| *Fperv* | fraction of snow on plowable area transferred to pervious area by plowing |
+| *Fimelt* | fraction of snow on plowable area converted into immediate melt |
+| (*Fsub*) | (fraction of snow on plowable area transferred to pervious area in another subcatchment) |
+| (*Scatch*) | (name of subcatchment receiving the Fsub fraction of transferred snow) ||  
+
+Snow pack parameter sets are associated with specific subcatchments in the `[SUBCATCHMENTS]` section. Each snow pack parameter set requires one set of `PLOWABLE`, `IMPERVIOUS`, and `PERVIOUS` lines. Multiple subcatchments can share the same set of snow pack parameters.
 
 ## Raingages table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 Raingages table identifies each rain gage that provides rainfall data for the study area.  
 
-File format is comma-separated _.csv_ where each row defines the properties of one rain gage in the system. The file must have a header row followed by the necessary parameters from the table below on following rows defining parameters for each rain gage.
+File format is comma-separated _.csv_ where each row defines the properties of one rain gage in the system. The file must have a header row followed by appropriate rows from below defining model analysis options.
 
 Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[RAINGAGES]```"
 
-| Option | Value | Notes |
-| :--------:|:-------------|-------|
-| Name | name of the rain gage ||
-| Form | form of recorded rainfall (```INTENSITY```, ```VOLUME``` or ```CUMULATIVE```) ||
-| Intvl | interval between gage readings (hh:mm) ||
-| SCF | snow catch deficiency correction factor (default: 1.0, i.e., no correction) ||
-| ```FILE``` |  ||
-| Fname | name of external file with rainfall data ||
-| Sta | name of recording station used in the rain file ||
-| Units | rain depth units used in the rain file (```IN``` [inches] or ```MM``` [millimeters]) |||
+**Formats:**  
+*Name*, *Form*, *Intvl*, *SCF*, `TIMESERIES`, *Tseries*  
+*Name*, *Form*, *Intvl*, *SCF*, `FILE`, *Fname*, *Sta*, *Units*   
+
+| Attribute | |
+| :--|:-------------|
+| *Name* | name of the rain gage |
+| *Form* | form of recorded rainfall (`INTENSITY`, `VOLUME` or `CUMULATIVE`) |
+| *Intvl* | interval between gage readings (hh:mm) |
+| *SCF* | snow catch deficiency correction factor (default: 1.0, i.e., no correction) |
+| *Tseries* | name of the timeseries in `[TIMESERIES]` section with rainfall data |
+| *Fname* | name of external file with rainfall data |
+| *Sta* | name of recording station used in the rain file |
+| *Units* | rain depth units used in the rain file (```IN``` [inches] or ```MM``` [millimeters]) ||
 
 ## Inflows table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 Inflows table specifies external hydrographs and pollutographs that enter the drainage system at specific nodes.  
 
-File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+File format is comma-separated _.csv_ where each row defines options for a single node in the system. The file must have a header row followed by appropriate rows from below defining model analysis options.
 
-The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: `[INFLOWS]`"
 
-Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[INFLOWS]```"
+**Formats:**  
+*Node*, `FLOW`, *Tseries*, (`FLOW`, (*1.0*, *Sfactor*, *Base*, *Pat*))  
+*Node*, *Pollut*, *Tseries*, (*Type*, (*Mfactor*, *Sfactor*, *Base*, *Pat*))  
 
-| Option | Value | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| Attribute | |
+| :---|:---|
+| *Node* | name of node where external inflow enters |
+| *Pollut* | name of pollutant |
+| *Tseries* | name of time series in `[TIMESERIES]` section describing external flow or pollutant loading varying with time |
+| (*Type*) | (`CONCEN` if pollutant inflow is concentration, `MASS` if mass flow rate; Default: `CONCEN`)) |
+| (*Mfactor*) | (factor converting inflow’s mass flow rate units into project’s mass units per second; Default: 1.0) |
+| (*Sfactor*) | (scaling factor multiplying recorded time series values; Default: 1.0) |
+| (*Base*) | (constant baseline value added to the time series value; Default: 0.0) |
+| (*Pat*) | (name of optional time pattern in `[PATTERNS]` section to adjust the baseline value on a periodic basis) ||
 
 ## Timeseries table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 Timeseries table describes how various quantities vary over time.  
 
-File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+File format is comma-separated _.csv_ where each row defines one time series. The file must have a header row followed by appropriate rows from below .
 
-The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
 
-Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[TIMESERIES]```"
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: `[TIMESERIES]`"
 
-| Option | Value | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+**Formats:**  
+*Name*, (*Date*), *Hour*, *Value*, ...  
+*Name*, *Time*, *Value*, ...  
+*Name*, `FILE`, *Fname*  
+
+| Attribute |  |
+| :---|:---|
+| *Name* | name of the time series |
+| (*Date*) | (date (MM/DD/YYYY)) |
+| *Hour* | hour relative to the last date specified (24h time, HH:MM) |
+| *Time* | hours since start of simulation (HH:MM) |
+| *Value* | value corresponding to given date and time |
+| *Fname* | name of the file containing the time series data ||
 
 ## Pump table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 Pump table identifies each pump link of the drainage system.  
 
-File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+File format is comma-separated _.csv_ where each row defines options for a single pump in the system. The file must have a header row followed by rows formatted as below.
 
-The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: `[PUMPS]`"
 
-Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[PUMPS]```"
+**Format:**  
+*Name*, *Node1*, *Node2*, *Pcurve*, (*Status*, *Startup*, *Shutoff*)
 
-| Attribute |              | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| Attribute |  |
+| :---|:--- |
+| *Name* | name of the pump link |
+| *Node1* | name of the node on inlet side of pump |
+| *Node2* | name of the node on outlet side of pump |
+| *Pcurve* | name of pump curve listed in the `[CURVES]` section |
+| (*Status*) | (status at start of simulation (`ON` or `OFF`); Default: `ON`) |
+| (*Startup*) | (depth at the inlet node when pump turns on (m or ft); Default: 0) |
+| (*Shutoff*) | (depth at the inlet node when pump shuts off (m or ft); Default: 0)  ||
 
 ## Curve table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
-
 Curve table describes a relationship between two variables (e.g. pump curve, rating curve, etc.) in tabular format.  
 
-File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+File format is comma-separated _.csv_ where each row defines a single curve. The file must have a header row followed by rows formatted as below.
 
-The file must have a header row followed by the necessary parameters from the table below on following rows defining model analysis options.
+Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: `[CURVES]`"
 
-Format of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[CURVES]```"
+**Format:**  
+*Name*, *Type*, *X-value*, *Y-value*  
 
-| Option | Value | Notes |
-| :--------:|:-------------|-------|
-|  |  ||
-|  |  ||
-|  |  ||
-|  |  |||
+| Attribute |  |
+| :---|:--- |
+| *Name* | name of the curve |
+| *Type* | `STORAGE` / `SHAPE` / `DIVERSION` / `TIDAL` / `PUMP1` / `PUMP2` / `PUMP3` / `PUMP4` / `RATING` / `CONTROL` |
+| *X-value* | an x (independent variable) value |
+| *Y-value* | the y (dependent variable) value corresponding to x |  
+
+Multiple pairs of x-y values can appear on a line. The x-values must be entered in increasing order.
 
 ## Storage table
-MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
+NOTE: THIS IS OUTDATED AND NEEDS TO BE UPDATED IN GisToSWMM5!
 
 Storage table identifies each storage node of the drainage system.
 
-File format is comma-separated _.csv_ where each row defines a value for a single SWMM analysis option. Each row contains the analysis option name and the option value as in the table below separated by comma ','.  
+File format is comma-separated _.csv_ where each row defines options for a single storage node in the system. The file must have a header row followed by rows formatted as below.
 
 More details of these options are explained in SWMM user manual Appendix D, section D.2 Input File Format, "Section: ```[STORAGE]```"
 
-| Attribute |              | Notes |
-| :--------:|:-------------|-------|
-| x0 | x-coordinate of the storage node ||
-| y0 | y-coordinate of the storage node ||
-| Name |  ||
-| Elev |  ||
-| Ymax |  ||
-| Yinit |  ||
-| Curve |  ||
-| Params |  ||
-| Evap.Factor |  ||
-| Seepage loss |  |||
+**Format:**  
+*x0*, *y0*, *Name*, *Elev*, *Ymax*, *Y0*, *Curve*, *Params*, *Evap.Factor*, *Seepage loss*  
+
+| Attribute |  |
+| :---|:---|
+| x0 | x-coordinate of the storage node |
+| y0 | y-coordinate of the storage node |
+| Name | name of the storage node |
+| Elev | invert elevation (m or ft) |
+| Ymax | max possible water depth (m or ft) |
+| Y0 | water depth at the start of the simulation (m or ft) |
+| Curve |  |
+| Params |  |
+| Evap.Factor |  |
+| Seepage loss |  ||
 
 ## Dry weather flow (DWF) table
 MAKE THIS LOOK LIKE FILE, I.E., AS IN SWMM MANUAL (NO TABLE, BUT ROW WITH PARAMETERS)
