@@ -5,8 +5,8 @@ GisToSWMM5 is a tool for automatically constructing SWMM5 model descriptions. Th
 The tool was originally developed by Lassi Warsta (lassi[a]warsta.net) at Aalto University School of Engineering and is distributed under MIT-license.
 
 When using the GisToSWMM5 tool, please refer to the following publications which provide more information regarding the tool:  
-1. Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., & Kokkonen, T. 2017. Development and application of an automated subcatchment generator for SWMM using open data. *Urban Water Journal*. 14 (9): 954-963. DOI:[10.1080/1573062X.2017.1325496](https://dx.doi.org/10.1080/1573062X.2017.1325496).
-2. Niemi, T. J., Kokkonen, T., Sillanpää, N., Setälä, H., & Koivusalo, H. 2018. Automated urban rainfall-runoff model generation with detailed land cover and flow routing. *Journal of Hydrologic Engineering*.  
+1. Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., & Kokkonen, T. 2017. Development and application of an automated subcatchment generator for SWMM using open data. *Urban Water Journal*. 14 (9): 954-963. <https://doi.org/10.1080/1573062X.2017.1325496>.
+2. Niemi, T. J., Kokkonen, T., Sillanpää, N., Setälä, H., & Koivusalo, H. 2018. Automated urban rainfall-runoff model generation with detailed land cover and flow routing. *Journal of Hydrologic Engineering*. <https://doi.org/10.1061/(ASCE)HE.1943-5584.0001784>.  
 
 ### Using GisToSWMM5
 
