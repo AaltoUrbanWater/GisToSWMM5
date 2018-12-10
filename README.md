@@ -4,7 +4,7 @@ ExtractDataSets is a utility tool to extract and collate time series data from (
 
 A demo case and scripts for running the tool on linux(/Mac) and Windows are provided. 
 
-An updated version of the tool is under development with the most recent version of the tool described in a manuscript under review as well as in the UDM conference proceedings paper Niemi et al. (2019) (see below).
+An updated version of the tool will be published once an accepted manuscript describing it is published in the Journal of Hydrologic Engineering in early 2019. The updated version was also used for the UDM conference proceedings paper Niemi et al. (2019) (see below).
 
 #### Please refer to the following publication when using the tool:  
 Warsta, L., Niemi, T.J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., Kokkonen, T., 2017. Development and application of an automated subcatchment generator for SWMM using open data. Urban Water J. 14, 954–963. https://doi.org/10.1080/1573062X.2017.1325496
