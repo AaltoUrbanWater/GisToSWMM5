@@ -9,11 +9,11 @@ call activate
 
 REM Example of running adap2shp.py
 REM '^' is used only to split long lines here
-"../utils/adap2shp.py"^
-"../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc"^
-"../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt"^
-"../demo_catchment/out/SWMM_in/shp/demo_catchment_adap_subcatchments.shp"^
-"epsg:3879"
+python "../utils/adap2shp.py"^
+ "../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc"^
+ "../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt"^
+ "../demo_catchment/out/SWMM_in/shp/demo_catchment_adap_subcatchments.shp"^
+ "epsg:3879"
 
 REM Deactivate conda environment
 call deactivate
