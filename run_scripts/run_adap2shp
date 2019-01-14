@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# This is an example script to run adap2shp.py in order to produce a shapefile
+# of SWMM subcatchments.
+# Syntax:
+# 	$ ./adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'epsg:XXXX'
+
+# Example of running adap2shp.py
+# '\' is used only to split long lines here
+../utils/adap2shp.py \
+../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments.asc \
+../demo_catchment/out/SWMM_in/demo_catchment_adap_subcatchments_attr.wkt \
+../demo_catchment/out/SWMM_in/shp/demo_catchment_adap_subcatchments.shp \
+'epsg:3879'
