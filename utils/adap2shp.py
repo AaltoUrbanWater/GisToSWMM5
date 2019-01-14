@@ -57,13 +57,12 @@ else:
 
 # Read in the raster data and polygonize using rasterio
 mask = None
-with rasterio.drivers():
-    with rasterio.open(sys.argv[1]) as src:
-        image = src.read(1)  # first band
-        results = (
-            {'properties': {'id': v}, 'geometry': s}
-            for i, (s, v)
-            in enumerate(shapes(image, mask=mask, transform=src.affine)))
+with rasterio.open(sys.argv[1]) as src:
+    image = src.read(1)  # first band
+    results = (
+        {'properties': {'id': v}, 'geometry': s}
+        for i, (s, v)
+        in enumerate(shapes(image, mask=mask, transform=src.transform)))
 
 geoms = list(results)
 

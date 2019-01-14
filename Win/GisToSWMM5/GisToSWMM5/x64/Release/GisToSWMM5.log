@@ -1,0 +1,15 @@
+﻿  Cell.cpp
+  FileIO.cpp
+  Grid.cpp
+e:\gistoswmm5\src\grid.cpp(1163): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+e:\gistoswmm5\src\grid.cpp(1178): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+e:\gistoswmm5\src\grid.cpp(1242): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+e:\gistoswmm5\src\grid.cpp(1451): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+  Raster.cpp
+  Table.cpp
+  Vertex.cpp
+  Generating code
+  All 859 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  GisToSWMM5.vcxproj -> E:\GisToSWMM5\Win\GisToSWMM5\x64\Release\GisToSWMM5.exe

@@ -1,7 +1,7 @@
 @echo off
 REM This is an example script to run ExtractSubcatchmentResults.py and
-REM adap2shp.py in order to produce a shapefile of SWMM subcatchment 
-REM simulation results. 
+REM adap2shp.py in order to produce a shapefile of SWMM subcatchment
+REM simulation results.
 REM Syntax:
 REM 	python ExtractSubcatchmentResults.py [INFILE.wkt] [INFILE.rpt] [OUTFILE.wkt]
 REM 	python adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'epsg:XXXX'
