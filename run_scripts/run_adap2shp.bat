@@ -5,7 +5,8 @@ REM Syntax:
 REM 	python adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'epsg:XXXX'
 
 REM Activate conda environment (with necessary packages installed)
-call activate
+REM (here called 'geopython')
+call activate geopython
 
 REM Example of running adap2shp.py
 REM '^' is used only to split long lines here

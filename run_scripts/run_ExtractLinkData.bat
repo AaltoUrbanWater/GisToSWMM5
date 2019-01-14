@@ -1,11 +1,12 @@
 @echo off
-REM This is an example script to run ExtractLinkData.py 
+REM This is an example script to run ExtractLinkData.py
 REM Syntax:
 REM 		python ExtractLinkData.py [KEY STRING] [PARAMETER] [PATH(S) TO *.rpt FILE(S)] [PATH TO OUTPUT FILE AS *.csv]
 REM Allowed parameters are: 'flow', 'velocity', 'depth', or 'capacity'"
 
 REM Activate conda environment (with necessary packages installed)
-call activate
+REM (here called 'geopython')
+call activate geopython
 
 REM Example of running ExtractLinkData.py
 REM '^' is used only to split long lines here

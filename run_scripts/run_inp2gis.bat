@@ -1,12 +1,13 @@
 @echo off
-REM Extract subcatchment geometries and attributes from SWMM input (*.inp) file 
+REM Extract subcatchment geometries and attributes from SWMM input (*.inp) file
 REM and save into shapefile.
 REM Syntax:
 REM 	python inp2gis.py [PATH TO *.inp FILE] 'EPSG:[XXXX]'
 
 
 REM Activate conda environment (with necessary packages installed)
-call activate
+REM (here called 'geopython')
+call activate geopython
 
 REM Example of running inp2gis.py
 REM '^' is used only to split long lines here

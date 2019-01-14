@@ -1,12 +1,13 @@
 @echo off
-REM Extract subcatchment simulation results from SWMM report (by default *.rpt) file 
+REM Extract subcatchment simulation results from SWMM report (by default *.rpt) file
 REM and save into shapefile with subcatchment geometries from SWMM input (*.inp) file.
 REM Syntax:
 REM 	python rpt2gis.py [PATH TO *.inp FILE] [PATH TO *.rpt FILE] 'EPSG:[XXXX]'
 
 
 REM Activate conda environment (with necessary packages installed)
-call activate
+REM (here called 'geopython')
+call activate geopython
 
 REM Example of running rpt2gis.py
 REM '^' is used only to split long lines here
