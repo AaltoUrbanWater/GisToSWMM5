@@ -19,5 +19,9 @@ $(ODIR)/%.o: src/%.cpp
 .PHONY : clean
 clean:
 	rm -f $(ODIR)/*.o
-	rm -f *~ 
+	rm -f *~
 	rm -f $(EXEC)
+
+zip:
+	rm -f GisToSWMM5-public.zip
+	zip -9r GisToSWMM5-public.zip bin/GisToSWMM5 bin/GisToSWMM5.exe demo_catchment input_files.md license.txt makefile README.md run_scripts src utils 
