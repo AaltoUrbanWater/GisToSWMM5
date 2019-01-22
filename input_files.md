@@ -25,7 +25,8 @@ The following input files are required to build SWMM5 models using GisToSWMM5:
 - <sup>1</sup>Report table in _.csv_ format
 - <sup>1</sup>Symbols table in _.csv_ format
 
-Except for the raster files and the Catchment properties table, i.e., the first four files, each file defines one section of the SWMM input file. Files with <sup>1</sup> match a section from the standard SWMM input file (_.inp_) except for being comma (not space) separated.
+Except for the raster files and the Catchment properties table, i.e., the first four files, each file defines one section of the SWMM input file.  
+Files with <sup>1</sup> match a section from the standard SWMM input file (_.inp_) except for being comma (not space) separated.
 
 ## DEM raster
 DEM raster defines the elevations across the catchment in the same grid as in the landuse raster.  
@@ -201,7 +202,7 @@ Where the attributes are as follows:
 | *name* | unique name of the outfall (e.g. o1, o2, ..., on) |
 | *invert* | invert (bottom) elevation of the outfall |
 | *type* | type of the outfall (`FREE`, `NORMAL`, `FIXED`, `TIDAL`, or `TIMESERIES`; default `FREE`) |
-| *stage_data* | depending on the _Type_ of outfall, either empty, OR elevation of fixed stage outfall (m) OR name of curve containing tidal height OR name of time series describing how outfall stage varies in time; default [empty] |
+| *stage_data* | depending on the _type_ of the outfall, either empty, OR elevation of fixed stage outfall (m) OR name of curve containing tidal height OR name of time series describing how outfall stage varies in time; default [empty] |
 | *gated* | `YES` or `NO` depending on whether a flap gate is present that prevents reverse flow; default `NO` |
 
 ## Header table
