@@ -6,7 +6,7 @@ runoff results from a corresponding SWMM report (by default .rpt) file. The
 script merges the information and saves it as a shapefile into the same folder
 as the SWMM report file.
 
-Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
+Copyright (C) 2018-2019 Tero Niemi, Aalto University School of Engineering
 
 TODO: Add link/conduit results
 TODO: Add link/conduit pollutant load results
@@ -14,6 +14,7 @@ TODO: Add link/conduit pollutant load results
 
 import os
 import sys
+import re
 import pandas as pd
 import geopandas as gpd
 import shapely.wkt
@@ -113,12 +114,32 @@ with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
         # Read subcatchment runoff summary results
         if '  Subcatchment Runoff Summary' in line:
             for idx, row in enumerate(rpt_file):
+                if idx < 3:     # Skip extra lines after header
+                    continue
+                if idx == 3:    # Read first line of column headers
+                    subcatchment_headers_1 = row.split()
+                if idx == 4:    # Read second line of column headers
+                    subcatchment_headers_2 = row.split()
+                if idx == 5:    # Read column units
+                    subcatchment_units = re.split('\s{2,}', row.strip())
                 if idx < 7:     # Skip extra lines after header
                     continue
                 if row.isspace():    # Stop looking after empty line
                     break
+                if row.startswith('  ---'):  # Skip separator lines
+                    break
                 else:           # Save data
                     subcatchment_data.append(row.split())
+
+            # Create attribute names from header info
+            subcatchment_units.pop(0)
+            subcatchment_headers = [a + '' + b for a, b in zip(
+                subcatchment_headers_1, subcatchment_headers_2)]
+            subcatchment_units.append('-')
+            subcatchment_headers = [a + '_' + b for a, b in zip(
+                subcatchment_headers, subcatchment_units)]
+            subcatchment_headers.insert(0, 'name')
+
         # Read LID summary results
         if '  LID Performance Summary' in line:
             for idx, row in enumerate(rpt_file):
@@ -191,30 +212,10 @@ with open(sys.argv[2], 'rt', encoding='ISO-8859-1') as rpt_file:
                     nodeFlooding_data.append(row.split())
 
 # Create dataframes from data
-subcatchment_df = pd.DataFrame(subcatchment_data, columns=['name',
-                                                           'precip_mm',
-                                                           'runon_mm',
-                                                           'evap_mm',
-                                                           'infil_mm',
-                                                           'runoff_mm',
-                                                           'runoff_ML',
-                                                           'Q_peak_LPS',
-                                                           'Cr'])
-subcatchment_df[['precip_mm',
-                 'runon_mm',
-                 'evap_mm',
-                 'infil_mm',
-                 'runoff_mm',
-                 'runoff_ML',
-                 'Q_peak_LPS',
-                 'Cr']] = subcatchment_df[['precip_mm',
-                                           'runon_mm',
-                                           'evap_mm',
-                                           'infil_mm',
-                                           'runoff_mm',
-                                           'runoff_ML',
-                                           'Q_peak_LPS',
-                                           'Cr']].astype(float)
+subcatchment_df = pd.DataFrame(subcatchment_data,
+                               columns=subcatchment_headers)
+subcatchment_df[subcatchment_headers[1:]] = \
+    subcatchment_df[subcatchment_headers[1:]].astype(float, errors='ignore')
 
 if lid_data:
     lid_df = pd.DataFrame(lid_data, columns=['name',
@@ -385,3 +386,16 @@ node_gdf.to_file(os.path.splitext(sys.argv[2])[0] + '_node_results.shp',
                  driver='ESRI Shapefile')
 print('Saved node results to ' + os.path.splitext(sys.argv[2])[0] +
       '_node_results.shp')
+
+# # Save subcatchment and node results as OGR GeoPackages - this is better format
+# # than shapefile, but not supported by older software. E.g. QGIS3 supports this
+# # format however.
+# subcatchment_gdf.to_file(os.path.splitext(sys.argv[2])[0] +
+#                          '_subcatchment_results.gpkg', driver='GPKG')
+# print('Saved subcatchment results to ' + os.path.splitext(sys.argv[2])[0] +
+#       '_subcatchment_results.gpkg')
+#
+# node_gdf.to_file(os.path.splitext(sys.argv[2])[0] + '_node_results.gpkg',
+#                  driver='GPKG')
+# print('Saved node results to ' + os.path.splitext(sys.argv[2])[0] +
+#       '_node_results.gpkg')
