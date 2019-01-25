@@ -9,9 +9,10 @@ as a Well-Known-Text (.wkt) file.
 Copyright (C) 2018 Tero Niemi, Aalto University School of Engineering
 """
 
-import sys
-import pandas as pd
 import os
+import sys
+import re
+import pandas as pd
 
 # Check input parameters
 if (len(sys.argv) != 4):
@@ -42,22 +43,36 @@ with open(sys.argv[2], 'rt') as rpt_file:
     for line in rpt_file:
         if '  Subcatchment Runoff Summary' in line:
             for idx, row in enumerate(rpt_file):
+                if idx < 3:     # Skip extra lines after header
+                    continue
+                if idx == 3:    # Read first line of column headers
+                    subcatchment_headers_1 = row.split()
+                if idx == 4:    # Read second line of column headers
+                    subcatchment_headers_2 = row.split()
+                if idx == 5:    # Read column units
+                    subcatchment_units = re.split('\s{2,}', row.strip())
                 if idx < 7:     # Skip extra lines after header
                     continue
                 if row.isspace():    # Stop looking after empty line
                     break
+                if row.startswith('  ---'):  # Skip separator lines
+                    break
                 else:           # Save data
                     data.append(row.split())
-# ... and create a dataframe from data
-df2 = pd.DataFrame(data, columns=['name',
-                                  'precip_mm',
-                                  'runon_mm',
-                                  'evap_mm',
-                                  'infil_mm',
-                                  'runoff_mm',
-                                  'runoff_ML',
-                                  'Q_peak_LPS',
-                                  'Cr'])
+
+            # Create attribute names from header info
+            subcatchment_units.pop(0)
+            subcatchment_headers = [a + '' + b for a, b in zip(
+                subcatchment_headers_1, subcatchment_headers_2)]
+            subcatchment_units.append('-')
+            subcatchment_headers = [a + '_' + b for a, b in zip(
+                subcatchment_headers, subcatchment_units)]
+            subcatchment_headers.insert(0, 'name')
+
+# Create dataframe from data
+df2 = pd.DataFrame(data, columns=subcatchment_headers)
+df2[subcatchment_headers[1:]] = \
+    df2[subcatchment_headers[1:]].astype(float, errors='ignore')
 
 # Merge spatial dataframe with data dataframe
 df3 = pd.merge(df1, df2, on='name')
