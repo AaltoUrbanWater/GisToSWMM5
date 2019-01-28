@@ -365,7 +365,7 @@ void Grid::setSubcatchmentProperties(Table &catchPropTable)
                 cells[i].HydCon = catchPropTable.data[j * catchPropTable.nCols + 8].c_str();
                 cells[i].IMDmax = catchPropTable.data[j * catchPropTable.nCols + 9].c_str();
                 cells[i].snowPack = catchPropTable.data[j * catchPropTable.nCols + 11];
-                if (catchPropTable.nCols > 11)
+                if (catchPropTable.nCols > 12)
                     cells[i].tag = catchPropTable.data[j * catchPropTable.nCols + 12].c_str();
 
                 break;
