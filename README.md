@@ -1,16 +1,32 @@
 # GisToSWMM5
 
-GisToSWMM5 is a tool for automatically constructing SWMM5 model descriptions. The input files for the tool can be prepared using GIS software and the resulting SWMM model can be studied in GIS. The tool takes elevation, land-use, and flow direction information from the user-prepared input files, creates subcatchments for the studied area, and routes the water between subcatchments and into the stormwater network.
+GisToSWMM5 is a tool for automatically constructing SWMM5 model descriptions.  
 
-The tool was originally developed by Lassi Warsta (lassi[a]warsta.net) at Aalto University School of Engineering and is distributed under MIT-license.
+The input files for the tool can be prepared using GIS software and the resulting SWMM model can be studied in GIS. The tool takes elevation, land-use, and flow direction information from the user-prepared input files, creates subcatchments for the studied area, and routes the water between subcatchments and into the stormwater network.
 
-When using the GisToSWMM5 tool, please refer to the following publications which provide more information regarding the tool:  
-1. Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., & Kokkonen, T. 2017. Development and application of an automated subcatchment generator for SWMM using open data. *Urban Water Journal*. 14 (9): 954-963. <https://doi.org/10.1080/1573062X.2017.1325496>.
-2. Niemi, T. J., Kokkonen, T., Sillanpää, N., Setälä, H., & Koivusalo, H. 2018. Automated urban rainfall-runoff model generation with detailed land cover and flow routing. *Journal of Hydrologic Engineering*. <https://doi.org/10.1061/(ASCE)HE.1943-5584.0001784>.  
+The tool was originally developed by Lassi Warsta (lassi[a]warsta.net) at the Aalto University School of Engineering. The tool is distributed under MIT-license.
+
+When using the GisToSWMM5 tool, please refer to the following publications which also provide more information regarding the tool:  
+- Warsta, L., Niemi, T. J., Taka, M., Krebs, G., Haahti, K., Koivusalo, H., & Kokkonen, T. 2017. Development and application of an automated subcatchment generator for SWMM using open data. *Urban Water Journal*. 14 (9): 954-963. <https://doi.org/10.1080/1573062X.2017.1325496>.
+- Niemi, T. J., Kokkonen, T., Sillanpää, N., Setälä, H., & Koivusalo, H. 2018. Automated urban rainfall-runoff model generation with detailed land cover and flow routing. *Journal of Hydrologic Engineering*. <https://doi.org/10.1061/(ASCE)HE.1943-5584.0001784>. (Accepted manuscript)  
+
+Other studies involving GisToSWMM5 include:  
+- Aarnio, K., 2016. Pintamittauksen hyödyntämismahdollisuudet viemäriverkosto-mallin kalibroinnissa (Utilizing possibilities of level measurement in the calibration of a sewerage model). Master’s Thesis. Aalto University, Espoo, Finland. 94 p. <http://urn.fi/URN:NBN:fi:aalto-201612085848> (In Finnish)  
+- Bangura, E.K., Yang, X., Zaman, M.N., 2018. Application and assessment of an automated subcatchment generator for SWMM (Study project Report). Technische Universität Dresden: Institute of Urban Water Management, Dresden, Germany. 43 p.  
+- Niemi, T.J., Krebs, G. & Kokkonen, T., 2019, Automated Approach for Rainfall-Runoff Model Generation. in G Mannina (ed.), New Trends in Urban Drainage Modelling: UDM 2018. Green Energy and Technology, International Conference on Urban Drainage Modelling, Palermo, Italy, 23-26.9.2018. <https://doi.org/10.1007/978-3-319-99867-1_103>  
+- Niemi, T.J., Warsta, L., Taka, M., Hickman, B., Pulkkinen, S., Krebs, G., Moisseev, D.N., Koivusalo, H., Kokkonen, T., 2017. Applicability of open rainfall data to event-scale urban rainfall-runoff modelling. J. Hydrol. 547, 143–155. <https://doi.org/10.1016/j.jhydrol.2017.01.056>  
+- Rautiainen, M., 2016. Hulevesimallinnus ja tulvariskin arviointi Turun sataman valuma-alueella (Storm water modelling and flood risk assessment in Turku harbor catchment). Master’s Thesis. Aalto University, Espoo, Finland. 51 p. <http://urn.fi/URN:NBN:fi:aalto-201611025308> (In Finnish)  
+- Taka, M., Kokkonen, T., Kuoppamäki, K., Niemi, T., Sillanpää, N., Valtanen, M., Warsta, L., Setälä, H., 2017. Spatio-temporal patterns of major ions in urban stormwater under cold climate. Hydrol. Process. 31, 1564–1577. <https://doi.org/10.1002/hyp.11126>
 
 ### Using GisToSWMM5
 
-GisToSWMM5 is easiest to use with a script where the input files are described. An example script is given in [run_scripts](run_scripts) folder. The script file should consist of the following lines, which are the inputs to the GisToSWMM5:
+GisToSWMM5 is used via the command prompt or using a batch file.  
+
+The main inputs to the tool are elevation, land-use, and flow direction rasters, which have to be defined with the same grid. The cell size of these raster grids defines the minimum size of the final subcatchments.  
+
+More information regarding the input files is given in [input_files.md](input_files.md).  
+
+Using the tool is easiest with a script (batch) file where the necessary input files are presented. The script file should consist of the following lines, which are the inputs to the GisToSWMM5:
 
 [PATH TO GisToSWMM5 EXECUTABLE] \  
 [PATH TO DEM RASTER IN .asc FORMAT] \  
@@ -39,9 +55,9 @@ GisToSWMM5 is easiest to use with a script where the input files are described. 
 [PATH TO OUTPUT BASE FILENAME]  
 
 GisToSWMM5 can be used to build a SWMM5 description in three modes:
-1. each raster cell is an individual subcatchment
-2. cells with the same land-use and same eventual outlet are merged into one subcatchment
-3. (*legacy mode:* neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into one subcatchment and the most abundant landuse among cells is set as the subcatchment landuse)
+1. each raster cell forms an individual subcatchment
+2. cells with the same land-use and same eventual outlet are merged to form subcatchment (*preferred mode*)
+3. (*legacy mode:* neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into subcatchments and the most abundant landuse among cells is set as the subcatchment landuse)
 
 In case option 1 used, the run script is as above.  
 In case  option 2 is used, an additional line with any integer number is required as the last line of the script:  
@@ -50,8 +66,7 @@ In case option 3 is used, the maximum grid cell size and the allowed number of s
 [*OPTIONAL* MAXIMUM GRID CELL SIDE LENGTH] \  
 [*OPTIONAL* NUMBER OF SUBDIVISIONS FOR GRID CELLS]  
 
-Elevation, land-use, and flow direction rasters have to be defined with the same grid. The cell size of these grids defines the minimum size of the final subcatchment grid size. Flow direction raster uses a notation where flow directions are marked with numbers from 1-8 so that 1 corresponds to flow to Northeast and numbers increase in counterclockwise direction. More information regarding the required input files is given in [input_files.md](input_files.md) and some (partly outdated) details are also available from:  
-Rautiainen, M. 2016. Hulevesimallinnus ja tulvariskin arviointi Turun sataman valuma-alueella. *Master’s Thesis*. Aalto University, Espoo, Finland. (In Finnish). <http://urn.fi/URN:NBN:fi:aalto-201611025308>.
+An example script for running the tool is given in [run_scripts](run_scripts) folder. The easiest way to build models for new areas is to modify the example run script and input files as necessary. 
 
 ### Output files
 
@@ -78,45 +93,45 @@ The vector files are created using the Well Known Text (wkt) vector format. E.g.
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt" file has the
 following attributes:  
 
-| Name      | Description                                                                |  
-| ----------|----------------------------------------------------------------------------|
-| id        |                                                                            |
-| wkt       | Polygon defining the shape of the  subcatchment                            |
-| name      | Name of the  subcatchment                                                  |
-| outlet    | Name of node or another subcatchment that receives runoff                  |
-| area_m2   | Subcatchment area (m2)                                                     |
-| slope_pct | Subcatchment slope (%)                                                     |
-| elevation | Subcatchment elevation                                                     |
-| landuse   | Code for land-use type                                                     |
-| imp_pct   | Percent of impervious area (%)                                             |
-| n_imp     | Manning's N for impervious area (-)                                        |
-| n_per     | Manning's N for pervious area (-)                                          |
-| S_imp_mm  | Depth of depression storage on impervious area (mm)                        |
-| S_per_mm  | Depth of depression storage on pervious area (mm)                          |
-| suct_mm   | Soil capillary suction head (mm)                                           |
-| Ksat_mmhr | Soil saturated hydraulic conductivity (mm/hr)                              |
+| Name | Description |  
+| --- |---|
+| id | |
+| wkt | Polygon defining the shape of the  subcatchment    |
+| name | Name of the  subcatchment |
+| outlet    | Name of node or another subcatchment that receives runoff |
+| area_m2   | Subcatchment area (m2) |
+| slope_pct | Subcatchment slope (%) |
+| elevation | Subcatchment elevation |
+| landuse   | Code for land-use type |
+| imp_pct   | Percent of impervious area (%) |
+| n_imp     | Manning's N for impervious area (-) |
+| n_per     | Manning's N for pervious area (-) |
+| S_imp_mm  | Depth of depression storage on impervious area (mm) |
+| S_per_mm  | Depth of depression storage on pervious area (mm) |
+| suct_mm   | Soil capillary suction head (mm) |
+| Ksat_mmhr | Soil saturated hydraulic conductivity (mm/hr) |
 | IMDmax    | Difference between soil porosity and initial moisture content (a fraction) |
-| isSink    | An indicator showing if the cell is a local sink/pit in the catchment      |
-| Tag       | An optional string description for the landuse class                       |
+| isSink | An indicator showing if the cell is a local sink/pit in the catchment |
+| Tag | An optional string description for the landuse class |
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routing.wkt" and the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routed.wkt" files have the following attributes:  
 
-| Name | Description                                                          |  
-| -----|----------------------------------------------------------------------|
-| id   |                                                                      |
-| wkt  | Line object defining the route between "from" and "to" subcatchments |
-| from | Name of the origin subcatchment                                      |
-| to   | Name of the target subcatchment                                      |  
+| Name | Description  |  
+| ---|---|
+| id |   |
+| wkt | Line object defining the route between "from" and "to" subcatchments |
+| from | Name of the origin subcatchment |
+| to | Name of the target subcatchment |  
 
 The "[PATH TO OUTPUT BASE FILENAME]\_network_routing.wkt" file has the following attributes:  
 
-| Name | Description                                                           |
-| -----|-----------------------------------------------------------------------|
-| id   |                                                                       |
-| wkt  | Line object defining the route between "from" and "to" subcatchments  |
-| name | Name of the conduit                                                   |
-| from | Name of the origin junction                                           |
-| to   | Name of the target junction                                           |
+| Name | Description |
+| -----|---|
+| id   |  |
+| wkt  | Line object defining the route between "from" and "to" subcatchments |
+| name | Name of the conduit |
+| from | Name of the origin junction |
+| to   | Name of the target junction |
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" file has an integer in each raster cell indicating the corresponding subcatchment for the cell. If the cell does not belong to a subcatchment -1 is used.   
 

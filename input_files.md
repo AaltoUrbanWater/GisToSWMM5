@@ -45,7 +45,7 @@ NODATA_value   [fff]
 
 
 ## Flow direction raster
-Flow direction raster defines the flow directions across the catchment in the same grid as in the landuse raster. Flow directions are defined according to D8-method such that each cell can flow into one of the 8 neighbouring cells. Directions are represented by integers and are defined as such for cell X:  
+Flow direction raster defines the flow directions across the catchment in the same grid as in the landuse raster. Flow directions are defined according to D8-method such that each cell can flow into one of the 8 neighbouring cells. Flow direction raster uses a notation where flow directions are marked with integer numbers from 1-8 so that 1 corresponds to flow to Northeast and numbers increase in counterclockwise direction. For cell X, the directions are defined as shown below:  
 
 <table align="center">
     <tr>
