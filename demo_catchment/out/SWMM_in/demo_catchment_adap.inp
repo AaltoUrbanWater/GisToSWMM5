@@ -5450,19 +5450,19 @@ c13   j13   j2   3.718270045   0.015   0   0.07   0.00   0.00
 [XSECTIONS]
 ;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
 ;;-------------- ------------ ---------------- ---------- ---------- ---------- ---------- ----------
-c1   CIRCULAR   0.3   0   0   0   1   
-c2   CIRCULAR   0.4   0   0   0   1   
-c3   CIRCULAR   0.3   0   0   0   1   
-c4   CIRCULAR   0.4   0   0   0   1   
-c5   CIRCULAR   0.4   0   0   0   1   
-c6   CIRCULAR   0.4   0   0   0   1   
-c7   CIRCULAR   0.4   0   0   0   1   
-c8   CIRCULAR   0.3   0   0   0   1   
-c9   CIRCULAR   0.3   0   0   0   1   
-c10   CIRCULAR   0.3   0   0   0   1   
-c11   CIRCULAR   0.3   0   0   0   1   
-c12   CIRCULAR   0.3   0   0   0   1   
-c13   CIRCULAR   0.3   0   0   0   1   
+c1   CIRCULAR   0.3   0   0   0   1    
+c2   CIRCULAR   0.4   0   0   0   1    
+c3   CIRCULAR   0.3   0   0   0   1    
+c4   CIRCULAR   0.4   0   0   0   1    
+c5   CIRCULAR   0.4   0   0   0   1    
+c6   CIRCULAR   0.4   0   0   0   1    
+c7   CIRCULAR   0.4   0   0   0   1    
+c8   CIRCULAR   0.3   0   0   0   1    
+c9   CIRCULAR   0.3   0   0   0   1    
+c10   CIRCULAR   0.3   0   0   0   1    
+c11   CIRCULAR   0.3   0   0   0   1    
+c12   CIRCULAR   0.3   0   0   0   1    
+c13   CIRCULAR   0.3   0   0   0   1    
 
 [LOSSES]
 ;;Link           Kentry     Kexit      Kavg       Flap Gate  Seepage   

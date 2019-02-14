@@ -2,7 +2,7 @@
 
 GisToSWMM5 is a tool for automatically constructing SWMM5 model descriptions.  
 
-The input files for the tool can be prepared using GIS software and the resulting SWMM model can be studied in GIS. The tool takes elevation, land-use, and flow direction information from the user-prepared input files, creates subcatchments for the studied area, and routes the water between subcatchments and into the stormwater network.
+The input files for the tool can be prepared using GIS software and the resulting SWMM model can be studied in GIS. The tool takes elevation, land-use, and flow direction information from the user-prepared input files, creates subcatchments for the studied area, and routes water between subcatchments and into the stormwater network.
 
 The tool was originally developed by Lassi Warsta (lassi[a]warsta.net) at the Aalto University School of Engineering. The tool is distributed under MIT-license.
 
@@ -54,32 +54,33 @@ Using the tool is easiest with a script (batch) file where the necessary input f
 [PATH TO SYMBOLS TABLE IN .csv FORMAT] \  
 [PATH TO OUTPUT BASE FILENAME]  
 
-GisToSWMM5 can be used to build a SWMM5 description in three modes:
-1. each raster cell forms an individual subcatchment
-2. cells with the same land-use and same eventual outlet are merged to form subcatchment (*preferred mode*)
-3. (*legacy mode:* neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into subcatchments and the most abundant landuse among cells is set as the subcatchment landuse)
+GisToSWMM5 can be used to build a SWMM5 model in three modes:
+1. Each raster cell forms an individual subcatchment.  
+In this case, the run script is as above.  
 
-In case option 1 used, the run script is as above.  
-In case  option 2 is used, an additional line with any integer number is required as the last line of the script:  
-[*OPTIONAL* INTEGER VALUE]   
-In case option 3 is used, the maximum grid cell size and the allowed number of subdivisions (*N*) are required as the two last lines of the script:  
+2. (*Recommended*) Cells with the same land-use and same eventual outlet are merged to form subcatchments.  
+In this case, an additional line with any integer number is required as the last line of the script:  
+[*OPTIONAL* INTEGER VALUE]  
+
+3. (*Legacy mode, not recommended*) Neighboring *2<sup>N</sup>* x *2<sup>N</sup>* cells, where *N* = 1, 2, 3, ..., are merged together into subcatchments and the most abundant landuse among cells is set as the subcatchment landuse.  
+In this case, the maximum grid cell size and the allowed number of subdivisions (*N*) are required as the two last lines of the script:  
 [*OPTIONAL* MAXIMUM GRID CELL SIDE LENGTH] \  
 [*OPTIONAL* NUMBER OF SUBDIVISIONS FOR GRID CELLS]  
 
-An example script for running the tool is given in [run_scripts](run_scripts) folder. The easiest way to build models for new areas is to modify the example run script and input files as necessary. 
+An example script for running the tool is given in [run_scripts](run_scripts) folder. The easiest way to build models for new areas is to modify the example run script and input files as necessary.
 
 ### Output files
 
 GisToSWMM5 produces the following output files:
-- a SWMM input file that can be used to run  SWMM simulations  
+- A SWMM input file that can be used to run  SWMM simulations  
 ([PATH TO OUTPUT BASE FILENAME].inp)
-- a vector file defining the subcatchments according to mode 1  
+- A vector file defining the subcatchments according to mode 1  
 ([PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt, where *L* is the side length of the cells in DEM, land-use, and flow direction rasters)
-- a vector file defining the routing between the raster cells  
+- A vector file defining the routing between the raster cells  
 ([PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routing.wkt)
-- a vector file defining the routing between the raster cells that are routed into the catchment outfall  
+- A vector file defining the routing between the raster cells that are routed into the catchment outfall  
 ([PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routed.wkt)
-- a vector file defining the routing of the storm-water network  
+- A vector file defining the routing of the storm-water network  
 ([PATH TO OUTPUT BASE FILENAME]\_network_routing.wkt)
 
 When GisToSWMM5 is used to create merged subcatchments in mode 2, two additional files are created:
