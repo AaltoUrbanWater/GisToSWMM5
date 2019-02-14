@@ -97,7 +97,7 @@ following attributes:
 | Name | Description |  
 | --- |---|
 | id | |
-| wkt | Polygon defining the shape of the  subcatchment    |
+| wkt | Polygon defining the shape of the  subcatchment |
 | name | Name of the  subcatchment |
 | outlet    | Name of node or another subcatchment that receives runoff |
 | area_m2   | Subcatchment area (m2) |
@@ -140,31 +140,44 @@ The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is e
 
 ### Utility tools
 Folder 'utils' contains utility programs for various tasks:
-- *inp2gis.py* extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.
- - This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.
-- *rpt2gis.py* extracts subcatchment polygons from a SWMM5 input file (\*.inp) and subcatchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the information and saves the subcatchment results as a polygon shapefile.
- - This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.
-- *ExtractLinkData.py* collates time series data from a given link (in several) SWMM5 report file(s) into a single .csv file.
- - This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.
-- *adap2shp.py* creates a shapefile of adaptive subcatchments with given subcatchment attributes using the information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.
-- *ExtractSubcatchmentResults.py* extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file. Particularly useful for creating subcatchment runoff results shpafile from adaptive model results, as this shapefile cannot be directly produced using the \*.inp and \*.rpt files. To produce the shapefile, first create a \*.wkt file of subcatchment runoff results using *ExtractSubcatchmentResults.py* and then use *adap2shp.py* with the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and the newly created \*.wkt file as inputs to produce the final shapefile.
-- *wkt2shp.sh* converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
+
+#### inp2gis.py ####
+Extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.  
+This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.  
+
+#### rpt2gis.py ####  
+Extracts subcatchment polygons from a SWMM5 input file (\*.inp) and subcatchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the information and saves the subcatchment results as a polygon shapefile.  
+This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.  
+
+#### ExtractLinkData.py ####  
+Collates time series data from a given link (in several) SWMM5 report file(s) into a single .csv file.  
+This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.  
+
+#### adap2shp.py ####  
+Creates a shapefile of adaptive subcatchments with given subcatchment attributes using the information from "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" files.  
+
+#### ExtractSubcatchmentResults.py ####   
+Extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file. Particularly useful for creating subcatchment runoff results shapefile from adaptive model results, as this shapefile cannot be directly produced using the \*.inp and \*.rpt files. To produce the shapefile, first create a \*.wkt file of subcatchment runoff results using *ExtractSubcatchmentResults.py* and then use *adap2shp.py* with the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and the newly created \*.wkt file as inputs to produce the final shapefile.  
+
+#### wkt2shp.sh ####  
+Converts all .wkt files in a given folder into shapefiles (e.g. for ArcMap).
 
 
-The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS. The python scripts use the following non-standard packages:
+#### Practicalities ####  
+The utility tools are written in python 3.\* and bash. They have been tested on Ubuntu Linux 16.04 LTS and to some degree on Ubuntu Linux 18.04 LTS and on Windows 10. The python scripts use the following non-standard packages:
 - pandas (ExtractLinkData.py, ExtractSubcatchmentResults.py, inp2gis.py, rpt2gis.py, adap2shp.py)
 - geopandas (inp2gis.py, rpt2gis.py, adap2shp.py)
 - shapely (inp2gis.py, rpt2gis.py)
 - rasterio (adap2shp.py)
 
-Using [Miniconda(/Anaconda)](https://www.anaconda.com/download/) Python distribution is highly recommended. It is an open source distribution of Python, intended especially for data science and machine learning. In practice, it makes life a lot easier when installing Python packages even when dealing with simple scripts such as here.
+Using [Anaconda(/Miniconda)](https://www.anaconda.com/download/) Python distribution is highly recommended. It is an open source distribution of Python, intended especially for data science and machine learning. In practice, it makes life a lot easier when installing Python packages even when dealing with simple scripts such as here.
+
+In case 'activate' command for Anaconda(/Miniconda) does not work from command line on Windows, or the batch scripts complain that 'activate' is not recognized as a valid command, the quick fix is to add path to Anaconda(/Miniconda) Scripts folder to the end of your PATH environmental variable (usually 'C:\Users\\[USER]\Miniconda3\Scripts' or 'C:\Users\\[USER]\Anaconda3\Scripts')   
+(On Windows 10: Go to Control Panel &rarr; search for 'path' &rarr; Edit environment variables for your account &rarr; Select 'Path' &rarr; Edit &rarr; New &rarr; Add the path to the Scripts folder &rarr; OK &rarr; OK)
 
 Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.  
 
 While using inp2gis.py and rpt2gis.py is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running these two utility programs are therefore given in  [run_scripts](run_scripts) folder.  
-
-In case 'activate' command for Miniconda(/Anaconda) does not work from command line on Windows, or the batch scripts complain that 'activate' is not recognized as a valid command, the quick fix is to add path to Miniconda(/Anaconda) Scripts folder to the end of your PATH environmental variable (usually 'C:\Users\\[USER]\Miniconda3\Scripts' or 'C:\Users\\[USER]\Anaconda3\Scripts')   
-(On Windows 10: Go to Control Panel &rarr; search for 'path' &rarr; Edit environment variables for your account &rarr; Select 'Path' &rarr; Edit &rarr; New &rarr; Add the path to the Scripts folder &rarr; OK &rarr; OK)
 
 ### Demo case
 Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
