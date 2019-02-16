@@ -1,6 +1,6 @@
 # GisToSWMM5
 
-GisToSWMM5 is a tool for automatically constructing SWMM5 model descriptions.  
+GisToSWMM5 is a tool for automatically constructing [SWMM5](https://www.epa.gov/water-research/storm-water-management-model-swmm) model descriptions.  
 
 The input files for the tool can be prepared using GIS software and the resulting SWMM model can be studied in GIS. The tool takes elevation, land-use, and flow direction information from the user-prepared input files, creates subcatchments for the studied area, and routes water between subcatchments and into the stormwater network.
 
@@ -112,7 +112,7 @@ following attributes:
 | suct_mm   | Soil capillary suction head (mm) |
 | Ksat_mmhr | Soil saturated hydraulic conductivity (mm/hr) |
 | IMDmax    | Difference between soil porosity and initial moisture content (a fraction) |
-| isSink | An indicator showing if the cell is a local sink/pit in the catchment |
+| isSink | An indicator showing if the cell is a local sink/pit in the catchment (0: no; 1: yes; 2: cell is connected directly to a node) |
 | Tag | An optional string description for the landuse class |
 
 The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routing.wkt" and the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m_routed.wkt" files have the following attributes:  
@@ -139,18 +139,21 @@ The "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" file has an integer in e
 The format of "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_attr.wkt" file is equal to "[PATH TO OUTPUT BASE FILENAME]\_subcatchments_*L*x*L*m.wkt". The only difference is that "wkt" represents only the cell at the subcatchment center-of-mass-point, and not the entire subcatchment. The attribute "id" corresponds to the integer value of subcatchment in "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc".
 
 ### Utility tools
-Folder 'utils' contains utility programs for various tasks:
+Folder [utils](utils) contains utility programs for various tasks:
 
 #### inp2gis.py ####
 Extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.  
+
 This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.  
 
 #### rpt2gis.py ####  
 Extracts subcatchment polygons from a SWMM5 input file (\*.inp) and subcatchment simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the information and saves the subcatchment results as a polygon shapefile.  
+
 This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.  
 
 #### ExtractLinkData.py ####  
 Collates time series data from a given link (in several) SWMM5 report file(s) into a single .csv file.  
+
 This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.  
 
 #### adap2shp.py ####  
@@ -172,12 +175,22 @@ The utility tools are written in python 3.\* and bash. They have been tested on 
 
 Using [Anaconda(/Miniconda)](https://www.anaconda.com/download/) Python distribution is highly recommended. It is an open source distribution of Python, intended especially for data science and machine learning. In practice, it makes life a lot easier when installing Python packages even when dealing with simple scripts such as here.
 
+It is recommended to create a conda environment using the available [utils/environment.yml](utils/environment.yml) to install the required dependencies:
+
+1. Download and install [Anaconda(/Miniconda)](https://www.anaconda.com/download/)  
+2. Open terminal (Linux) or Anaconda prompt (Windows)
+3. Navigate to [utils/environment.yml](utils/environment.yml)
+3. Run the following command to create the Anaconda/Miniconda environment (not that this may take some time to finish)   
+`conda env create -f environment.yml`  
+5. (Linux) Activate the environment using the following command   
+`conda activate gistoswmm5`
+6. Use the utility tools.
+
+While using inp2gis.py, rpt2gis.py, etc. is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running the utility programs are therefore given in  [run_scripts](run_scripts) folder. These batch scripts automatically activate the Anaconda/Miniconda environment before executing the tool.
+
 In case 'activate' command for Anaconda(/Miniconda) does not work from command line on Windows, or the batch scripts complain that 'activate' is not recognized as a valid command, the quick fix is to add path to Anaconda(/Miniconda) Scripts folder to the end of your PATH environmental variable (usually 'C:\Users\\[USER]\Miniconda3\Scripts' or 'C:\Users\\[USER]\Anaconda3\Scripts')   
 (On Windows 10: Go to Control Panel &rarr; search for 'path' &rarr; Edit environment variables for your account &rarr; Select 'Path' &rarr; Edit &rarr; New &rarr; Add the path to the Scripts folder &rarr; OK &rarr; OK)
 
-Example run scripts for GisToSWMM5 and for *ExtractDataSets.py* and *ExtractSubcatchmentResults.py* are given in [run_scripts](run_scripts) folder.  
-
-While using inp2gis.py and rpt2gis.py is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running these two utility programs are therefore given in  [run_scripts](run_scripts) folder.  
 
 ### Demo case
 Folder [demo_catchment](demo_catchment) contains an example dataset and run scripts for GisToSWMM5 using a small imaginary catchment. Following subfolders are included:
@@ -187,3 +200,9 @@ Folder [demo_catchment](demo_catchment) contains an example dataset and run scri
 - [QGIS_styles](demo_catchment/QGIS_styles) contains QGIS style definition files that may be helpful in visualizing the GisToSWMM5 input and output files in QGIS.
 
 The example scripts in folder [run_scripts](run_scripts) can be used to run GisToSWMM5 using the given example data, and to collect the subcatchment runoff results and the result timeseries from the SWMM output files.
+
+### Using SWMM5
+The GisToSWMM5-produced SWMM5 input file (.inp) should be immediately usable with SWMM software. The following points are worth noticing, however:
+- The SWMM5 models produced using GisToSWMM5 are inteded to be run from the command line. They typically have at least an order-of-magnitude difference in the number subcatchments to a manually constructed model, and therefore the SWMM GUI may not be able to even open the resulting model.
+- The demo uses relative (to SWMM executable location) paths to climate and rainfall input  files. It is often necessary to open the SWMM input file in a text editor and to correct the paths in the file manually.  
+- The tool is extremely sensitive to the amount of whitespace characters in input files. The most common problems related to use of the tool seem to be related to locating and removing the extra whitespace from these files. Even if the tool succeeds to run, the resulting SWMM input file may not work if there has been extra whitespace in the input files to the tool.
