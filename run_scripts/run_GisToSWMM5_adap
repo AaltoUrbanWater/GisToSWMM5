@@ -1,32 +1,37 @@
 #!/usr/bin/env bash
 # This is an example script to run GisToSWMM5 in adaptive mode on Linux.
 
-../bin/GisToSWMM5 \
-../demo_catchment/data/raster_dem.asc \
-../demo_catchment/data/raster_flowdir.asc \
-../demo_catchment/data/raster_landuse.asc \
-../demo_catchment/data/table_catchment_props.csv \
-../demo_catchment/data/table_junctions.csv \
-../demo_catchment/data/table_conduits.csv \
-../demo_catchment/data/table_outfalls.csv \
-../demo_catchment/data/table_header.csv \
-../demo_catchment/data/table_evaporation.csv \
-../demo_catchment/data/table_temperature.csv \
-../demo_catchment/data/table_snowpacks.csv \
-../demo_catchment/data/table_raingages.csv \
-../demo_catchment/data/table_inflows.csv \
-../demo_catchment/data/table_timeseries.csv \
-../demo_catchment/data/table_pumps.csv \
-../demo_catchment/data/table_curves.csv \
-../demo_catchment/data/table_storage.csv \
-../demo_catchment/data/table_dwf.csv \
-../demo_catchment/data/table_patterns.csv \
-../demo_catchment/data/table_losses.csv \
-../demo_catchment/data/table_xsections.csv \
-../demo_catchment/data/table_report.csv \
-../demo_catchment/data/table_symbols.csv \
-../demo_catchment/out/SWMM_in/demo_catchment_adap \
-1
+# The curly brackets '{}' and '&&' are used here to ensure that the next block
+# of commands is only run if running GisToSWMM5 succeeds. They can be safely
+# removed if the second block of commands is removed.
+{
+    ../bin/GisToSWMM5 \
+    ../demo_catchment/data/raster_dem.asc \
+    ../demo_catchment/data/raster_flowdir.asc \
+    ../demo_catchment/data/raster_landuse.asc \
+    ../demo_catchment/data/table_catchment_props.csv \
+    ../demo_catchment/data/table_junctions.csv \
+    ../demo_catchment/data/table_conduits.csv \
+    ../demo_catchment/data/table_outfalls.csv \
+    ../demo_catchment/data/table_header.csv \
+    ../demo_catchment/data/table_evaporation.csv \
+    ../demo_catchment/data/table_temperature.csv \
+    ../demo_catchment/data/table_snowpacks.csv \
+    ../demo_catchment/data/table_raingages.csv \
+    ../demo_catchment/data/table_inflows.csv \
+    ../demo_catchment/data/table_timeseries.csv \
+    ../demo_catchment/data/table_pumps.csv \
+    ../demo_catchment/data/table_curves.csv \
+    ../demo_catchment/data/table_storage.csv \
+    ../demo_catchment/data/table_dwf.csv \
+    ../demo_catchment/data/table_patterns.csv \
+    ../demo_catchment/data/table_losses.csv \
+    ../demo_catchment/data/table_xsections.csv \
+    ../demo_catchment/data/table_report.csv \
+    ../demo_catchment/data/table_symbols.csv \
+    ../demo_catchment/out/SWMM_in/demo_catchment_adap \
+    1
+} &&
 
 
 # The SWMM5 input file and the accompanying GIS files describing the model have
@@ -37,26 +42,27 @@
 # convenience, the tools could as well be used directly from 'utils' folder or
 # using the run scripts.
 # In other words, the following lines can be safely removed.
+{
+    FPATH=../demo_catchment/out/SWMM_in/
+    FBASE=demo_catchment_adap
+    # Use adap2shp.py to create shapefiles describing the new SWMM5 model
+    # '\' is used only to split long lines here
+    ../utils/adap2shp.py \
+    $FPATH${FBASE}_subcatchments.asc \
+    $FPATH${FBASE}_subcatchments_attr.wkt \
+    $FPATH${FBASE}_subcatchments.shp \
+    'epsg:3879'
 
-FPATH=../demo_catchment/out/SWMM_in/
-FBASE=demo_catchment_adap
-# Use adap2shp.py to create shapefiles describing the new SWMM5 model
-# '\' is used only to split long lines here
-../utils/adap2shp.py \
-$FPATH${FBASE}_subcatchments.asc \
-$FPATH${FBASE}_subcatchments_attr.wkt \
-$FPATH${FBASE}_subcatchments.shp \
-'epsg:3879'
+    # Use inp2shp.py to create a shapefile describing the subcatchment routing in
+    # the new SWMM5 model
+    ../utils/inp2gis.py $FPATH${FBASE}.inp 'epsg:3879'
 
-# Use inp2shp.py to create a shapefile describing the subcatchment routing in
-# the new SWMM5 model
-../utils/inp2gis.py $FPATH${FBASE}.inp 'epsg:3879'
-
-# Remove the inp2gis created subcatchments-shapefile since it only has the
-# center points of subcatchments and move the created routing shapefile to
-# folder SWMM_in/shp
-for FEND in .prj .cpg .shx .shp .dbf
-do
-    rm $FPATH${FBASE}_subcatchments$FEND
-    mv $FPATH${FBASE}_subcatchment_routing$FEND $FPATH/shp/
-done
+    # Remove the inp2gis created subcatchments-shapefile since it only has the
+    # center points of subcatchments and move the created routing shapefile to
+    # folder SWMM_in/shp
+    for FEND in .prj .cpg .shx .shp .dbf
+    do
+        rm $FPATH${FBASE}_subcatchments$FEND
+        mv $FPATH${FBASE}_subcatchment_routing$FEND $FPATH/shp/
+    done
+}
