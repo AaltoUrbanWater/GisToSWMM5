@@ -441,13 +441,16 @@ int main (int argc, char* cArgv[])
             {
                 std::cout << "\nError, input file symbols table was not succesfully loaded.";
             }
+
+            return 1;
         }
     }
     else
     {
         std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " << adapGridParams << " or " << adapGridParamsOld;
+
+        return 1;
     }
 
     return 0;
 }
-
