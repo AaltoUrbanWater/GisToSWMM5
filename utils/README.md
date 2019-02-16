@@ -1,6 +1,7 @@
 # GisToSWMM5 - utils
 ## inp2gis.py
 Extracts subcatchment polygons and routing between subcatchments from a SWMM input file (\*.inp). The tool saves the subcatchments as a polygon shapefile and the routing between the subcatchment polygon centroids as a line shapefile.  
+
 This utility tool is suitable for any SWMM5 input file, i.e., it is not restricted to GisToSWMM5 generated files.
 
 #### Subcatchment polygon shapefile (\*\_subcatchments.shp)  
@@ -76,6 +77,7 @@ The subcatchment routing shapefile has the following attributes:
 
 ## rpt2gis.py
 Extracts subcatchment polygons and node points from a SWMM5 input file (\*.inp) together with subcatchment and node simulation results from the corresponding SWMM5 report file (by default \*.rpt). The tool merges the information and saves the subcatchment results as a polygon shapefile and node results as point shapefile.  
+
 This utility tool is suitable for any SWMM5 input/report file, i.e., it is not restricted to GisToSWMM5 generated files.
 
 #### Subcatchment results shapefile (\*\_subcatchment_result.shp)  
@@ -155,6 +157,7 @@ If there are any flooding nodes, the shapefile will also have the following attr
 ## ExtractLinkData.py
 
 Collates time series data from a given link (in several) SWMM5 report file(s) into a single .csv file.  
+
 This utility tool is suitable for any SWMM5 report file, i.e., it is not restricted to GisToSWMM5 generated files.
 
 ## adap2shp.py
@@ -163,6 +166,7 @@ Creates a shapefile of adaptive subcatchments with given subcatchment attributes
 
 ## ExtractSubcatchmentResults.py
 Extracts subcatchment summary results from the SWMM5 report file (by default \*.rpt) and presents them as subcatchment attributes in a Well-Known-Text file.  
+
 Particularly useful for creating subcatchment runoff results shapefile from adaptive model results, as this shapefile cannot be directly produced using the \*.inp and \*.rpt files. To produce the shapefile, first create a \*.wkt file of subcatchment runoff results using *ExtractSubcatchmentResults.py* and then use *adap2shp.py* with the "[PATH TO OUTPUT BASE FILENAME]\_subcatchments.asc" and the newly created \*.wkt file as inputs to produce the final shapefile.
 
 ## wkt2shp.sh
