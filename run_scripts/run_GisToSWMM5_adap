@@ -27,3 +27,36 @@
 ../demo_catchment/data/table_symbols.csv \
 ../demo_catchment/out/SWMM_in/demo_catchment_adap \
 1
+
+
+# The SWMM5 input file and the accompanying GIS files describing the model have
+# now been created.
+#
+# Following lines use the utility tools from 'utils' folder to convert the GIS
+# files from .asc and .wkt into shapefiles. They have just been added here for
+# convenience, the tools could as well be used directly from 'utils' folder or
+# using the run scripts.
+# In other words, the following lines can be safely removed.
+
+FPATH=../demo_catchment/out/SWMM_in/
+FBASE=demo_catchment_adap
+# Use adap2shp.py to create shapefiles describing the new SWMM5 model
+# '\' is used only to split long lines here
+../utils/adap2shp.py \
+$FPATH${FBASE}_subcatchments.asc \
+$FPATH${FBASE}_subcatchments_attr.wkt \
+$FPATH${FBASE}_subcatchments.shp \
+'epsg:3879'
+
+# Use inp2shp.py to create a shapefile describing the subcatchment routing in
+# the new SWMM5 model
+../utils/inp2gis.py $FPATH${FBASE}.inp 'epsg:3879'
+
+# Remove the inp2gis created subcatchments-shapefile since it only has the
+# center points of subcatchments and move the created routing shapefile to
+# folder SWMM_in/shp
+for FEND in .prj .cpg .shx .shp .dbf
+do
+    rm $FPATH${FBASE}_subcatchments$FEND
+    mv $FPATH${FBASE}_subcatchment_routing$FEND $FPATH/shp/
+done

@@ -6,8 +6,8 @@ REM 	python rpt2gis.py [PATH TO *.inp FILE] [PATH TO *.rpt FILE] 'EPSG:[XXXX]'
 
 
 REM Activate conda environment (with necessary packages installed)
-REM (here called 'geopython')
-call activate geopython
+REM (here called 'gistoswmm5')
+call activate gistoswmm5
 
 REM Example of running rpt2gis.py
 REM '^' is used only to split long lines here

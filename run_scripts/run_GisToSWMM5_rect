@@ -26,3 +26,24 @@
 ../demo_catchment/data/table_report.csv \
 ../demo_catchment/data/table_symbols.csv \
 ../demo_catchment/out/SWMM_in/demo_catchment_rect
+
+# The SWMM5 input file and the accompanying .wkt files describing the model have
+# now been created.
+#
+# Following lines use the utility tool inp2gis from 'utils' folder to create
+# shapefiles describing the newly create SWMM5 model. The lines have been added
+# here for convenience, the tool could as well be used directly from 'utils'
+# folder.
+# In other words, the following lines can be safely removed.
+
+FPATH=../demo_catchment/out/SWMM_in/
+FBASE=demo_catchment_rect
+# Use inp2shp.py to create shapefiles describing the new SWMM5 model
+../utils/inp2gis.py $FPATH${FBASE}.inp 'epsg:3879'
+
+# Move the resulting shapefiles to folder SWMM_in/shp
+for FEND in .prj .cpg .shx .shp .dbf
+do
+    mv $FPATH${FBASE}_subcatchments$FEND $FPATH/shp/
+    mv $FPATH${FBASE}_subcatchment_routing$FEND $FPATH/shp/
+done

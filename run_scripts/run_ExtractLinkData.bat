@@ -5,8 +5,8 @@ REM 		python ExtractLinkData.py [KEY STRING] [PARAMETER] [PATH(S) TO *.rpt FILE(
 REM Allowed parameters are: 'flow', 'velocity', 'depth', or 'capacity'"
 
 REM Activate conda environment (with necessary packages installed)
-REM (here called 'geopython')
-call activate geopython
+REM (here called 'gistoswmm5')
+call activate gistoswmm5
 
 REM Example of running ExtractLinkData.py
 REM '^' is used only to split long lines here

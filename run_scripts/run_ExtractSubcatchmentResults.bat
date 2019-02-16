@@ -8,8 +8,8 @@ REM 	python adap2shp.py [INFILE_subcatchments.asc] [INFILE.wkt] [OUTFILE.shp] 'e
 
 
 REM Activate conda environment (with necessary packages installed)
-REM (here called 'geopython')
-call activate geopython
+REM (here called 'gistoswmm5')
+call activate gistoswmm5
 
 REM Example of running ExtractSubcatchmentResults.py
 REM '^' is used only to split long lines here
