@@ -17,26 +17,26 @@ crs = {'init': 'epsg:4326'}  # Default Coordinate Reference System
 # Check input parameters
 if (len(sys.argv) < 4 or len(sys.argv) > 5):
     print("Usage:\n"
-          """$ python asc2shp.py [PATH TO INPUT *_subcatchments.asc FILE] """
+          """$ python adap2shp.py [PATH TO INPUT *_subcatchments.asc FILE] """
           """[PATH TO INPUT *.wkt FILE] [PATH TO OUTPUT """
           """.shp FILE] 'EPSG:[XXXX]'""")
     sys.exit(1)
 else:
     if (not sys.argv[1].lower().endswith('.asc')):
         print("Usage:\n"
-              """$ python asc2shp.py [PATH TO INPUT *_subcatchments.asc """
+              """$ python adap2shp.py [PATH TO INPUT *_subcatchments.asc """
               """FILE] [PATH TO INPUT *.wkt FILE] [PATH TO OUTPUT """
               """.shp FILE] 'EPSG:[XXXX]'""")
         sys.exit(1)
     if (not sys.argv[2].lower().endswith('.wkt')):
         print("Usage:\n"
-              """$ python asc2shp.py [PATH TO INPUT *_subcatchments.asc """
+              """$ python adap2shp.py [PATH TO INPUT *_subcatchments.asc """
               """FILE] [PATH TO INPUT *.wkt FILE] [PATH TO OUTPUT """
               """.shp FILE] 'EPSG:[XXXX]'""")
         sys.exit(1)
     if (not sys.argv[3].lower().endswith('.shp')):
         print("Usage:\n"
-              """$ python asc2shp.py [PATH TO INPUT *_subcatchments.asc """
+              """$ python adap2shp.py [PATH TO INPUT *_subcatchments.asc """
               """FILE] [PATH TO INPUT *.wkt FILE] [PATH TO OUTPUT """
               """.shp FILE] 'EPSG:[XXXX]'""")
         sys.exit(1)
@@ -45,7 +45,7 @@ else:
     elif (len(sys.argv) == 5):
         if not (sys.argv[4].lower().startswith('epsg:')):
             print("Usage:\n"
-                  """$ python asc2shp.py [PATH TO INPUT *_subcatchments.asc """
+                  """$ python adap2shp.py [PATH TO INPUT *_subcatchments.asc """
                   """FILE] [PATH TO INPUT *.wkt FILE] [PATH TO OUTPUT """
                   """.shp FILE] 'EPSG:[XXXX]'""")
             sys.exit(1)
