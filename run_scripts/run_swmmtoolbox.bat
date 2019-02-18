@@ -2,7 +2,7 @@
 REM Extract data from SWMM binaries and save to text file
 
 REM Activate conda environment (with necessary packages installed)
-call activate swmmtoolbox
+call conda activate swmmtoolbox
 
 REM Run swmmtoolbox
 REM List the objects in output file
@@ -23,7 +23,7 @@ echo Extracting flow rate timeseries for link c5 and saving to new file.
 swmmtoolbox extract "C:\LocalUserData\User-data\tjniemi\GisToSWMM5\demo_catchment\out\SWMM_out\demo_catchment_adap.out" link,c5,0 > c5_flowrate.txt
 
 REM Deactivate conda environment
-call deactivate
+call conda deactivate
 
 REM Wait for user input before closing terminal
 pause 
