@@ -179,14 +179,14 @@ It is recommended to create a conda environment using the available [utils/envir
 
 1. Download and install [Anaconda(/Miniconda)](https://www.anaconda.com/download/)  
 2. Open terminal (Linux) or Anaconda prompt (Windows)
-3. Navigate to [utils/environment.yml](utils/environment.yml)
-3. Run the following command to create the Anaconda/Miniconda environment (not that this may take some time to finish)   
+3. Navigate to [utils/](utils/)
+3. Run the following command to create the Anaconda/Miniconda environment (note that this may take some time to finish)   
 `conda env create -f environment.yml`  
 5. (Linux) Activate the environment using the following command   
 `conda activate gistoswmm5`
 6. Use the utility tools.
 
-While using inp2gis.py, rpt2gis.py, etc. is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running the utility programs are therefore given in  [run_scripts](run_scripts) folder. These batch scripts automatically activate the Anaconda/Miniconda environment before executing the tool.
+While using inp2gis.py, rpt2gis.py, etc. is relatively simple in Linux environment, in Windows environment it is easiest to use them with batch scripts. Batch scripts for running the utility programs are therefore given in  [run_scripts](run_scripts) folder. These batch scripts automatically activate the Anaconda/Miniconda environment before executing the script.
 
 In case 'activate' command for Anaconda(/Miniconda) does not work from command line on Windows, or the batch scripts complain that 'activate' is not recognized as a valid command, the quick fix is to add path to Anaconda(/Miniconda) Scripts folder to the end of your PATH environmental variable (usually 'C:\Users\\[USER]\Miniconda3\Scripts' or 'C:\Users\\[USER]\Anaconda3\Scripts')   
 (On Windows 10: Go to Control Panel &rarr; search for 'path' &rarr; Edit environment variables for your account &rarr; Select 'Path' &rarr; Edit &rarr; New &rarr; Add the path to the Scripts folder &rarr; OK &rarr; OK)
