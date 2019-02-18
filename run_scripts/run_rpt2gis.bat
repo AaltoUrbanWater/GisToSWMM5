@@ -7,7 +7,7 @@ REM 	python rpt2gis.py [PATH TO *.inp FILE] [PATH TO *.rpt FILE] 'EPSG:[XXXX]'
 
 REM Activate conda environment (with necessary packages installed)
 REM (here called 'gistoswmm5')
-call activate gistoswmm5
+call conda activate gistoswmm5
 
 REM Example of running rpt2gis.py
 REM '^' is used only to split long lines here
@@ -17,7 +17,7 @@ python "../utils/rpt2gis.py"^
  "EPSG:3879"
 
 REM Deactivate conda environment
-call deactivate
+call conda deactivate
 
 REM Wait for user input before closing terminal
 pause
