@@ -21,7 +21,7 @@ The following input files are required to build SWMM5 models using GisToSWMM5:
 - <sup>1</sup>Dry weather flow (DWF) table in _.csv_ format
 - <sup>1</sup>Patterns table in _.csv_ format
 - <sup>1</sup>Losses table in _.csv_ format
-- <sup>1</sup>Crossections table in _.csv_ format
+- <sup>1</sup>Xsections table in _.csv_ format
 - <sup>1</sup>Report table in _.csv_ format
 - <sup>1</sup>Symbols table in _.csv_ format
 
@@ -52,19 +52,30 @@ Flow direction raster defines the flow directions across the catchment in the sa
         <td align="center"> 3 </td>
         <td align="center"> 2 </td>
         <td align="center"> 1 </td>
+        <td align="center">  </td>
+        <td align="center"> ↖ </td>
+        <td align="center"> ↑ </td>
+        <td align="center"> ↗ </td>
     </tr>
     <tr>
         <td align="center"> 4 </td>
         <td align="center"> X </td>
         <td align="center"> 8 </td>
+        <td align="center">  </td>
+        <td align="center"> ← </td>
+        <td align="center"> X </td>
+        <td align="center"> → </td>
     </tr>
     <tr>
         <td align="center"> 5 </td>
         <td align="center"> 6 </td>
         <td align="center"> 7 </td>
+        <td align="center">  </td>
+        <td align="center"> ↙ </td>
+        <td align="center"> ↓ </td>
+        <td align="center"> ↘ </td>
     </tr>
 </table>
-
 
 File format is _Arc/Info ASCII Grid_. The file can be directly produced using e.g. ArcMap or QGIS.  
 
@@ -563,8 +574,8 @@ Where the attributes are as follows:
 | *Flap* | `YES` if conduit has a flap valve that prevents back flow, `NO` otherwise; Default: `NO` |
 | *Seepage* | Rate of seepage loss into surrounding soil (mm/hr or in/hr) ||
 
-## Cross sections table
-Cross sections table defines the geometries for all the conduits (pipes, channels, junctions) and regulator links (orifices, weirs) in the drainage system.  
+## Xsections table
+Xsections table defines the geometries for all the conduits (pipes, channels, junctions) and regulator links (orifices, weirs) in the drainage system.  
 
 File format is comma-separated _.csv_ where each row defines the cross section of one conduit in the system. The file must have a header row followed by appropriate rows from below.
 
