@@ -53,27 +53,27 @@ Flow direction raster defines the flow directions across the catchment in the sa
         <td align="center"> 2 </td>
         <td align="center"> 1 </td>
         <td align="center">  </td>
-        <td align="center"> &UpperLeftArrow; </td>
-        <td align="center"> &uarr; </td>
-        <td align="center"> &UpperRightArrow; </td>
+        <td align="center"> :arrow_upper_left: </td>
+        <td align="center"> :arrow_up: </td>
+        <td align="center"> :arrow_upper_right: </td>
     </tr>
     <tr>
         <td align="center"> 4 </td>
         <td align="center"> X </td>
         <td align="center"> 8 </td>
         <td align="center">  </td>
-        <td align="center"> &larr; </td>
+        <td align="center"> :arrow_left: </td>
         <td align="center"> X </td>
-        <td align="center"> &rarr; </td>
+        <td align="center"> :arrow_right: </td>
     </tr>
     <tr>
         <td align="center"> 5 </td>
         <td align="center"> 6 </td>
         <td align="center"> 7 </td>
         <td align="center">  </td>
-        <td align="center"> &LowerLeftArrow; </td>
-        <td align="center"> &darr; </td>
-        <td align="center"> &LowerRightArrow; </td>
+        <td align="center"> :arrow_lower_left: </td>
+        <td align="center"> :arrow_down: </td>
+        <td align="center"> :arrow_lower_right: </td>
     </tr>
 </table>
 
