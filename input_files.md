@@ -53,27 +53,27 @@ Flow direction raster defines the flow directions across the catchment in the sa
         <td align="center"> 2 </td>
         <td align="center"> 1 </td>
         <td align="center">  </td>
-        <td align="center"> ↖ </td>
-        <td align="center"> ↑ </td>
-        <td align="center"> ↗ </td>
+        <td align="center"> &UpperLeftArrow; </td>
+        <td align="center"> &uarr; </td>
+        <td align="center"> &UpperRightArrow; </td>
     </tr>
     <tr>
         <td align="center"> 4 </td>
         <td align="center"> X </td>
         <td align="center"> 8 </td>
         <td align="center">  </td>
-        <td align="center"> ← </td>
+        <td align="center"> &larr; </td>
         <td align="center"> X </td>
-        <td align="center"> → </td>
+        <td align="center"> &rarr; </td>
     </tr>
     <tr>
         <td align="center"> 5 </td>
         <td align="center"> 6 </td>
         <td align="center"> 7 </td>
         <td align="center">  </td>
-        <td align="center"> ↙ </td>
-        <td align="center"> ↓ </td>
-        <td align="center"> ↘ </td>
+        <td align="center"> &LowerLeftArrow; </td>
+        <td align="center"> &darr; </td>
+        <td align="center"> &LowerRightArrow; </td>
     </tr>
 </table>
 
