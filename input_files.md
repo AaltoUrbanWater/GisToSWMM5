@@ -126,7 +126,7 @@ Catchment properties table defines the properties of each GisToSWMM5 landuse cla
 File format is comma-separated _.csv_ where each row defines the properties of one landuse type. The file must have a header row followed by rows with attributes defined as below for each landuse type.
 
 **Example:**  
-*code*, *imperv*, *dst_imp*, *n_imper*, *dst_per*, *percz_i*, *rain_ga*, *conduct*, *initdef*, *suction*, *Snowpacks*, *[Tag]*
+*code*, *imperv*, *dst_imp*, *n_imper*, *dst_per*, *n_per*, *percz_i*, *rain_ga*, *conduct*, *initdef*, *suction*, *Snowpacks*, *[Tag]*
 
 Where the attributes are as follows:  
 
