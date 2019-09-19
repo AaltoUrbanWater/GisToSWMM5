@@ -13,10 +13,11 @@ When using the GisToSWMM5 tool, please refer to the following publications which
 Other studies involving GisToSWMM5 include:  
 - Aarnio, K., 2016. Pintamittauksen hyödyntämismahdollisuudet viemäriverkosto-mallin kalibroinnissa (Utilizing possibilities of level measurement in the calibration of a sewerage model). Master’s Thesis. Aalto University, Espoo, Finland. 94 p. <http://urn.fi/URN:NBN:fi:aalto-201612085848> (In Finnish)  
 - Bangura, E.K., Yang, X., Zaman, M.N., 2018. Application and assessment of an automated subcatchment generator for SWMM (Study project Report). Technische Universität Dresden: Institute of Urban Water Management, Dresden, Germany. 43 p.  
+- Kokkonen, T., Warsta, L., Niemi, T.J., Taka, M., Sillanpää, N., Pusa, M., Kesäniemi, O., Salo H. & Koivusalo, H. 2019, Impact of alternative land cover descriptions on urban hydrological model simulations, *Urban Water Journal*, 16 (2): 103-113, <https://doi.org/10.1080/1573062X.2019.1634742>.
 - Niemi, T.J., Krebs, G. & Kokkonen, T., 2019, Automated Approach for Rainfall-Runoff Model Generation. in G Mannina (ed.), New Trends in Urban Drainage Modelling: UDM 2018. Green Energy and Technology, International Conference on Urban Drainage Modelling, Palermo, Italy, 23-26.9.2018. <https://doi.org/10.1007/978-3-319-99867-1_103>  
-- Niemi, T.J., Warsta, L., Taka, M., Hickman, B., Pulkkinen, S., Krebs, G., Moisseev, D.N., Koivusalo, H., Kokkonen, T., 2017. Applicability of open rainfall data to event-scale urban rainfall-runoff modelling. J. Hydrol. 547, 143–155. <https://doi.org/10.1016/j.jhydrol.2017.01.056>  
+- Niemi, T.J., Warsta, L., Taka, M., Hickman, B., Pulkkinen, S., Krebs, G., Moisseev, D.N., Koivusalo, H., Kokkonen, T., 2017. Applicability of open rainfall data to event-scale urban rainfall-runoff modelling. *Journal of Hydrology*. 547: 143–155. <https://doi.org/10.1016/j.jhydrol.2017.01.056>  
 - Rautiainen, M., 2016. Hulevesimallinnus ja tulvariskin arviointi Turun sataman valuma-alueella (Storm water modelling and flood risk assessment in Turku harbor catchment). Master’s Thesis. Aalto University, Espoo, Finland. 51 p. <http://urn.fi/URN:NBN:fi:aalto-201611025308> (In Finnish)  
-- Taka, M., Kokkonen, T., Kuoppamäki, K., Niemi, T., Sillanpää, N., Valtanen, M., Warsta, L., Setälä, H., 2017. Spatio-temporal patterns of major ions in urban stormwater under cold climate. Hydrol. Process. 31, 1564–1577. <https://doi.org/10.1002/hyp.11126>
+- Taka, M., Kokkonen, T., Kuoppamäki, K., Niemi, T., Sillanpää, N., Valtanen, M., Warsta, L., Setälä, H., 2017. Spatio-temporal patterns of major ions in urban stormwater under cold climate. *Hydrological Processes*. 31: 1564–1577. <https://doi.org/10.1002/hyp.11126>
 
 ### Using GisToSWMM5
 
