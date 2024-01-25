@@ -50,7 +50,7 @@ with open(sys.argv[2], 'rt') as rpt_file:
                 if idx == 4:    # Read second line of column headers
                     subcatchment_headers_2 = row.split()
                 if idx == 5:    # Read column units
-                    subcatchment_units = re.split('\s{2,}', row.strip())
+                    subcatchment_units = re.split(r'\s{2,}', row.strip())
                 if idx < 7:     # Skip extra lines after header
                     continue
                 if row.isspace():    # Stop looking after empty line

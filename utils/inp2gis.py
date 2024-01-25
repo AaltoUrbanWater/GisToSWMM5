@@ -20,7 +20,7 @@ import geopandas as gpd
 import shapely.wkt
 
 
-crs = {'init': 'epsg:4326'}  # Default Coordinate Reference System
+crs = 'epsg:4326'  # Default Coordinate Reference System
 # Check input parameters
 if (len(sys.argv) < 2 or len(sys.argv) > 3):
     print("Usage:\n"
@@ -39,7 +39,7 @@ else:
                   """$ python inp2gis.py [PATH TO *.inp FILE] 'EPSG:[XXXX]'""")
             sys.exit()
         else:
-            crs = {'init': sys.argv[2].lower()}  # Custom CRS
+            crs = sys.argv[2].lower()  # Custom CRS
 
 subcatchment_data = []
 landuse_data = []
