@@ -13,7 +13,7 @@ import rasterio
 from rasterio.features import shapes
 import sys
 
-crs = {'init': 'epsg:4326'}  # Default Coordinate Reference System
+crs = 'epsg:4326'  # Default Coordinate Reference System
 # Check input parameters
 if (len(sys.argv) < 4 or len(sys.argv) > 5):
     print("Usage:\n"
@@ -50,7 +50,7 @@ else:
                   """.shp FILE] 'EPSG:[XXXX]'""")
             sys.exit(1)
         else:
-            crs = {'init': sys.argv[4].lower()}  # Custom CRS
+            crs = sys.argv[4].lower()  # Custom CRS
         print('Using ' + sys.argv[4].upper() +
               ' as Coordinate Reference System.')
 
@@ -68,12 +68,12 @@ geoms = list(results)
 
 # Create a GeoDataFrame from polygonized data
 gdf = gpd.GeoDataFrame.from_features(geoms)
-gdf.crs = crs
+gdf = gdf.set_crs(crs)
 gdf['id'] = gdf['id'].astype(int)
 gdf = gdf[gdf['id'] > 0]
 
 # Read in the attribute data
-attr = pd.read_csv(sys.argv[2], ';')
+attr = pd.read_csv(sys.argv[2], sep=';')
 attr = attr.drop('wkt', axis=1)
 
 # Join attribute tables

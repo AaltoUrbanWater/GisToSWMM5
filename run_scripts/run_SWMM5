@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+# Test SWMM5 simulation
+# This is an example script to run SWMM5 from command line 
+# Syntax:
+# 		[PATH TO runswmm5] [PATH TO SWMM5 INPUT FILE (*.inp)] [PATH TO SWMM5 OUTPUT SUMMARY FILE (*.rpt)] [(OPTIONAL) PATH TO SWMM5 OUTPUT BINARY FILE (*.out)]
+
+
+# Save only the summary (text) output file (*.rpt) with given time series at the end of the file
+../../swmm/build/runswmm ../demo_catchment/out/SWMM_in/demo_catchment_adap.inp ../demo_catchment/out/SWMM_out/demo_catchment_adap.rpt
+
+# Save the summary (text) output file (*.rpt) and the binary file (*.out) with detailed simulation results only in the binary file
+../../swmm/build/runswmm ../demo_catchment/out/SWMM_in/demo_catchment_rect.inp ../demo_catchment/out/SWMM_out/demo_catchment_rect.rpt ../demo_catchment/out/SWMM_out/demo_catchment_rect.out
+
+
+
+
